@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<VBox id="mainScreen" fx:id="mainScreenVBox" prefHeight="552.0001831054688" prefWidth="766.000244140625" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.MainScreen">
+  <children>
+    <MenuBar fx:id="mnuBar" focusTraversable="false" prefWidth="766.0003441406225">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem id="" fx:id="mnuCompany" mnemonicParsing="false" text="Company" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Edit">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Delete" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+          <items>
+            <MenuItem mnemonicParsing="false" text="About" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+      <MenuBar>
+        <menus>
+          <Menu fx:id="mnuDatamaintenance" mnemonicParsing="false">
+               <graphic>
+                  <Label fx:id="lblD" onMouseClicked="#lblDAction" text="Datamaintenance" />
+               </graphic></Menu>
+        </menus>
+      </MenuBar>
+      <MenuBar fx:id="mnuBarDatamaintenance">
+         <menus>
+            <Menu mnemonicParsing="false" text="Company">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Truck">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Trailer">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+              </items>
+            </Menu>
+          <Menu mnemonicParsing="false" text="Resources">
+            <items>
+                  <Menu mnemonicParsing="false" text="Shipper/ Consignee">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Action 1" />
+                    </items>
+                  </Menu>
+              <MenuItem mnemonicParsing="false" text="Drivers" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Lists">
+            <items>
+                  <Menu mnemonicParsing="false" text="Service">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Action 1" />
+                    </items>
+                  </Menu>
+              <MenuItem mnemonicParsing="false" text="Category" />
+                  <MenuItem mnemonicParsing="false" text="Equipment" />
+                  <MenuItem mnemonicParsing="false" text="Terminal" />
+                  <MenuItem mnemonicParsing="false" text="Division" />
+            </items>
+          </Menu>
+         </menus>
+      </MenuBar>
+  </children>
+</VBox>
