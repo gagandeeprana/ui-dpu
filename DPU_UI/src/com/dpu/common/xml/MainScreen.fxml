@@ -9,21 +9,9 @@
   <children>
     <MenuBar fx:id="mnuBar" focusTraversable="false" prefWidth="766.0003441406225">
       <menus>
-        <Menu mnemonicParsing="false" text="File">
-          <items>
-            <MenuItem id="" fx:id="mnuCompany" mnemonicParsing="false" text="Company" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Delete" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Help">
-          <items>
-            <MenuItem mnemonicParsing="false" text="About" />
-          </items>
-        </Menu>
+        <Menu mnemonicParsing="false" text="File" />
+        <Menu mnemonicParsing="false" text="Edit" />
+        <Menu mnemonicParsing="false" text="Help" />
       </menus>
     </MenuBar>
       <MenuBar>
@@ -36,38 +24,30 @@
       </MenuBar>
       <MenuBar fx:id="mnuBarDatamaintenance">
          <menus>
-            <Menu mnemonicParsing="false" text="Company">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-              </items>
+            <Menu mnemonicParsing="false">
+               <graphic>
+                  <Label text="Company" />
+               </graphic>
             </Menu>
-            <Menu mnemonicParsing="false" text="Truck">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-              </items>
+            <Menu mnemonicParsing="false">
+               <graphic>
+                  <Label text="Truck" />
+               </graphic>
             </Menu>
-            <Menu mnemonicParsing="false" text="Trailer">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-              </items>
+            <Menu mnemonicParsing="false">
+               <graphic>
+                  <Label text="Trailer" />
+               </graphic>
             </Menu>
           <Menu mnemonicParsing="false" text="Resources">
             <items>
-                  <Menu mnemonicParsing="false" text="Shipper/ Consignee">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
-                    </items>
-                  </Menu>
+                  <MenuItem mnemonicParsing="false" text="Shipper/ Consignee" />
               <MenuItem mnemonicParsing="false" text="Drivers" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Lists">
             <items>
-                  <Menu mnemonicParsing="false" text="Service">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
-                    </items>
-                  </Menu>
+                  <MenuItem mnemonicParsing="false" text="Service" />
               <MenuItem mnemonicParsing="false" text="Category" />
                   <MenuItem mnemonicParsing="false" text="Equipment" />
                   <MenuItem mnemonicParsing="false" text="Terminal" />

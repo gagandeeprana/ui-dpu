@@ -11,8 +11,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+//import javafx.scene.control.Alert;
+//import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.PasswordField;
@@ -92,7 +92,7 @@ public class Login extends Application implements Initializable{
 			openMainScreen();
 			closeLoginScreen(btnLogin);
 		} else {
-			showDialog("Message", null, "Invalid Credentials");
+//			showDialog("Message", null, "Invalid Credentials");
 		}
 	}
 	
@@ -119,11 +119,11 @@ public class Login extends Application implements Initializable{
 		}
 	}
 	
-	private void showDialog(String title, String headerText, String message) {
+/*	private void showDialog(String title, String headerText, String message) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle(title);
 		alert.setHeaderText(headerText);
 		alert.setContentText(message);
 		alert.show();
-	}
+	}*/
 }
