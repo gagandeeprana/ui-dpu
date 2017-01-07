@@ -3,10 +3,17 @@ package com.dpu.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.dpu.constants.Iconstants;
+
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.MenuBar;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -29,9 +36,14 @@ public class MainScreen extends Application implements Initializable {
 
 	@FXML
 	private void lblDAction() {
-		System.out.println("111111");
 		mnuBarDatamaintenance.setVisible(true);
 	}
+	
+	@FXML
+	private void miTerminalAction() {
+		showTerminalPanel();
+	}
+	
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -42,9 +54,9 @@ public class MainScreen extends Application implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 	}
 	
-	/*private void showCompanyPanel() {
+	private void showTerminalPanel() {
 		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CompanyPanel.fxml"));
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.TERMINAL_BASE_PACKAGE + Iconstants.XML_TERMINAL_SCREEN));
 	        Parent root = (Parent) fxmlLoader.load();
 	        Pane pane  = (Pane)root;
 	        
@@ -54,5 +66,5 @@ public class MainScreen extends Application implements Initializable {
 			System.out.println(e);
 			e.printStackTrace();
 		}
-	}*/
+	}
 }

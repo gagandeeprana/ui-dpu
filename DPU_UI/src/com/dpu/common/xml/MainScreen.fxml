@@ -50,7 +50,7 @@
                   <MenuItem mnemonicParsing="false" text="Service" />
               <MenuItem mnemonicParsing="false" text="Category" />
                   <MenuItem mnemonicParsing="false" text="Equipment" />
-                  <MenuItem mnemonicParsing="false" text="Terminal" />
+                  <MenuItem fx:id="miTerminal" mnemonicParsing="false" onAction="#miTerminalAction" text="Terminal" />
                   <MenuItem mnemonicParsing="false" text="Division" />
             </items>
           </Menu>

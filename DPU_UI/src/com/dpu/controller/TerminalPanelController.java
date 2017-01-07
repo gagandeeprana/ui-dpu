@@ -64,7 +64,7 @@ public class TerminalPanelController extends Application implements Initializabl
 	private void openAddScreen() {
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(
-					getClass().getClassLoader().getResource(Iconstants.BASE_PACKAGE + "AddTerminal.fxml"));
+					getClass().getClassLoader().getResource(Iconstants.TERMINAL_BASE_PACKAGE + "AddTerminal.fxml"));
 			Parent root = (Parent) fxmlLoader.load();
 			// AnchorPane vBox = (AnchorPane)root;
 			// MenuBar mnuBar = (MenuBar)vBox.getChildren().get(0);
@@ -89,8 +89,8 @@ public class TerminalPanelController extends Application implements Initializabl
 		try {
 			System.out.println("start");
 			Parent parent = FXMLLoader
-					.load(getClass().getClassLoader().getResource(Iconstants.BASE_PACKAGE + "ListTerminal.fxml"));
-			System.out.println("XML : " + Iconstants.BASE_PACKAGE + "ListTerminal.fxml");
+					.load(getClass().getClassLoader().getResource(Iconstants.TERMINAL_BASE_PACKAGE + "ListTerminal.fxml"));
+			System.out.println("XML : " + Iconstants.TERMINAL_BASE_PACKAGE + "ListTerminal.fxml");
 			Scene scene = new Scene(parent);
 			primaryStage.setScene(scene);
 			primaryStage.show();

@@ -114,7 +114,7 @@ public class DriverPanelController extends Application implements Initializable 
 	private void openAddScreen() {
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(
-					getClass().getClassLoader().getResource(Iconstants.BASE_PACKAGE + Iconstants.ADD_DRIVER_SCREEN));
+					getClass().getClassLoader().getResource(Iconstants.DRIVER_BASE_PACKAGE + Iconstants.ADD_DRIVER_SCREEN));
 			Parent root = (Parent) fxmlLoader.load();
 			// AnchorPane vBox = (AnchorPane)root;
 			// MenuBar mnuBar = (MenuBar)vBox.getChildren().get(0);
@@ -139,8 +139,8 @@ public class DriverPanelController extends Application implements Initializable 
 		try {
 			System.out.println("start");
 			Parent parent = FXMLLoader
-					.load(getClass().getClassLoader().getResource(Iconstants.BASE_PACKAGE +Iconstants.DRIVER_MAIN_SCREEN));
-			System.out.println("XML : "+Iconstants.BASE_PACKAGE+Iconstants.DRIVER_MAIN_SCREEN);
+					.load(getClass().getClassLoader().getResource(Iconstants.DRIVER_BASE_PACKAGE +Iconstants.DRIVER_MAIN_SCREEN));
+			System.out.println("XML : "+Iconstants.DRIVER_BASE_PACKAGE+Iconstants.DRIVER_MAIN_SCREEN);
 			Scene scene = new Scene(parent);
 			primaryStage.setScene(scene);
 			primaryStage.show();
