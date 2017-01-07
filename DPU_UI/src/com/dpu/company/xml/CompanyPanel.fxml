@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.FlowPane?>
+
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.CompanyPanel">
+   <children>
+      <TableView fx:id="tblMainList" layoutX="5.0" layoutY="40.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="UnitNo" />
+          <TableColumn prefWidth="75.0" text="Name" />
+            <TableColumn prefWidth="75.0" text="Email" />
+            <TableColumn prefWidth="75.0" text="City" />
+            <TableColumn prefWidth="75.0" text="P/S" />
+            <TableColumn prefWidth="75.0" text="Phone" />
+            <TableColumn prefWidth="75.0" text="Home" />
+            <TableColumn prefWidth="75.0" text="Fax" />
+            <TableColumn prefWidth="75.0" text="After Hours" />
+        </columns>
+      </TableView>
+      <Button fx:id="btnAddCompany" layoutX="405.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnAddCompanyAction" text="Add" />
+      <TextField layoutX="72.0" layoutY="14.0" prefHeight="25.0" prefWidth="202.0" />
+      <Button layoutX="366.0" layoutY="14.0" mnemonicParsing="false" text="Go" />
+      <Button layoutX="450.0" layoutY="14.0" mnemonicParsing="false" text="  Edit  " />
+      <Button layoutX="507.0" layoutY="14.0" mnemonicParsing="false" text="Delete" />
+      <Label layoutX="5.0" layoutY="18.0" text="Quick Filter" />
+      <CheckBox layoutX="287.0" layoutY="18.0" mnemonicParsing="false" text="Show All" />
+   </children>
+</Pane>
