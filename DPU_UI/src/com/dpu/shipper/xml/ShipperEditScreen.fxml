@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="541.0" prefWidth="775.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <children>
+    <Label layoutX="14.0" layoutY="14.0" text="Company" />
+    <Label layoutX="14.0" layoutY="48.0" text="Address" />
+    <Label layoutX="14.0" layoutY="85.0" text="Unit #" />
+    <Label layoutX="14.0" layoutY="119.0" text="City" />
+    <Label layoutX="14.0" layoutY="147.0" text="Prov/State" />
+    <Label layoutX="14.0" layoutY="181.0" text="Status" />
+    <Label layoutX="14.0" layoutY="215.0" text="Zone" />
+    <Label layoutX="14.0" layoutY="251.0" text="Lead Time" />
+    <Label layoutX="14.0" layoutY="281.0" text="Time Zone" />
+    <TextField layoutX="71.0" layoutY="14.0" prefWidth="200.0" />
+    <TextField layoutX="71.0" layoutY="48.0" prefWidth="200.0" />
+    <TextField layoutX="71.0" layoutY="85.0" prefWidth="200.0" />
+    <TextField layoutX="71.0" layoutY="119.0" prefWidth="200.0" />
+    <TextField layoutX="71.0" layoutY="147.0" prefWidth="200.0" />
+    <TextField layoutX="71.0" layoutY="181.0" prefWidth="200.0" />
+    <TextField layoutX="71.0" layoutY="215.0" prefWidth="200.0" />
+    <TextField layoutX="71.0" layoutY="251.0" prefWidth="200.0" />
+    <TextField layoutX="71.0" layoutY="281.0" prefWidth="200.0" />
+    <Label layoutX="380.0" layoutY="14.0" text="Contact" />
+    <Label layoutX="380.0" layoutY="56.0" text="Position" />
+    <Label layoutX="380.0" layoutY="88.0" text="Phone" />
+    <Label layoutX="380.0" layoutY="119.0" text="Fax" />
+    <Label layoutX="380.0" layoutY="147.0" text="Toll Free" />
+    <Label layoutX="380.0" layoutY="178.0" text="Cell Number" />
+    <Label layoutX="380.0" layoutY="212.0" text="Email" />
+    <Label layoutX="380.0" layoutY="278.0" text="Importer" />
+    <TextField layoutX="449.0" layoutY="275.0" prefWidth="264.0" />
+    <TextField layoutX="449.0" layoutY="206.0" prefWidth="264.0" />
+    <CheckBox layoutX="451.0" layoutY="237.0" mnemonicParsing="false" text="ETA To Pickup Alert" />
+    <CheckBox layoutX="451.0" layoutY="259.0" mnemonicParsing="false" text="ETA To Deliver Alert" />
+    <CheckBox layoutX="451.0" layoutY="311.0" mnemonicParsing="false" text="Registered C.S.A. Facility" />
+    <CheckBox layoutX="451.0" layoutY="335.0" mnemonicParsing="false" text="Registered  C-TPAT Facility" />
+    <CheckBox layoutX="451.0" layoutY="361.0" mnemonicParsing="false" text="Warehouse or Cross-Dock Facility" />
+    <Label layoutX="14.0" layoutY="391.0" text="Internal Notes" />
+    <Label layoutX="366.0" layoutY="394.0" text="Standard Notes" />
+    <TextArea layoutX="0.0" layoutY="410.0" prefHeight="97.0" prefWidth="347.0" wrapText="true" />
+    <TextArea layoutX="366.0" layoutY="410.0" prefHeight="97.0" prefWidth="347.0" wrapText="true" />
+    <Button layoutX="9.0" layoutY="507.0" mnemonicParsing="false" text="Directions" />
+    <Button layoutX="90.0" layoutY="508.0" mnemonicParsing="false" text="Hours" />
+    <Button layoutX="157.0" layoutY="509.0" mnemonicParsing="false" text="Notes" />
+    <Button layoutX="222.0" layoutY="509.0" mnemonicParsing="false" text="Reports" />
+    <Button layoutX="298.0" layoutY="508.0" mnemonicParsing="false" text="AC" />
+    <Button layoutX="594.0" layoutY="514.0" mnemonicParsing="false" text="Save" />
+    <Button layoutX="665.0" layoutY="514.0" mnemonicParsing="false" text="Cancel" />
+    <TextField layoutX="449.0" layoutY="14.0" prefWidth="258.0" />
+    <TextField layoutX="449.0" layoutY="53.0" prefWidth="258.0" />
+    <TextField layoutX="449.0" layoutY="85.0" prefWidth="83.0" />
+    <TextField layoutX="449.0" layoutY="119.0" prefWidth="83.0" />
+    <TextField layoutX="449.0" layoutY="147.0" prefWidth="83.0" />
+    <TextField layoutX="449.0" layoutY="175.0" prefWidth="264.0" />
+    <Label layoutX="540.0" layoutY="88.0" text="Ext" />
+    <Label layoutX="540.0" layoutY="116.0" text="Prefix" />
+    <Label layoutX="540.0" layoutY="144.0" text="Plant #" />
+    <TextField layoutX="581.0" layoutY="85.0" prefWidth="126.0" />
+    <TextField layoutX="581.0" layoutY="113.0" prefWidth="126.0" />
+    <TextField layoutX="581.0" layoutY="144.0" prefWidth="126.0" />
+    <Button layoutX="522.0" layoutY="514.0" mnemonicParsing="false" text="Update" />
+  </children>
+</AnchorPane>

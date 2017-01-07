@@ -41,17 +41,17 @@
             </Menu>
           <Menu mnemonicParsing="false" text="Resources">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Shipper/ Consignee" />
+                  <MenuItem fx:id="miShipper" mnemonicParsing="false" onAction="#miShipperAction" text="Shipper/ Consignee" />
               <MenuItem fx:id="miDriver" mnemonicParsing="false" onAction="#miDriverAction" text="Drivers" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Lists">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Service" />
-              <MenuItem mnemonicParsing="false" text="Category" />
-                  <MenuItem mnemonicParsing="false" text="Equipment" />
+                  <MenuItem fx:id="miService" mnemonicParsing="false" onAction="#miServiceAction" text="Service" />
+              <MenuItem fx:id="miCategory" mnemonicParsing="false" onAction="#miCategoryAction" text="Category" />
+                  <MenuItem fx:id="miEquipment" mnemonicParsing="false" onAction="#miEquipmentAction" text="Equipment" />
                   <MenuItem fx:id="miTerminal" mnemonicParsing="false" onAction="#miTerminalAction" text="Terminal" />
-                  <MenuItem mnemonicParsing="false" text="Division" />
+                  <MenuItem fx:id="miDivision" mnemonicParsing="false" onAction="#miDivisionAction" text="Division" />
             </items>
           </Menu>
          </menus>

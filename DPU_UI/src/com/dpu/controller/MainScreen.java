@@ -35,8 +35,33 @@ public class MainScreen extends Application implements Initializable {
 	}
 	
 	@FXML
+	private void miDivisionAction() {
+		showPanel(Iconstants.DIVISION_BASE_PACKAGE, Iconstants.XML_DIVISION_SCREEN);
+	}
+	
+	@FXML
+	private void miCategoryAction() {
+		showPanel(Iconstants.CATEGORY_BASE_PACKAGE, Iconstants.XML_CATEGORY_SCREEN);
+	}
+	
+	@FXML
+	private void miEquipmentAction() {
+		showPanel(Iconstants.EQUIPMENT_BASE_PACKAGE, Iconstants.XML_EQUIPMENT_SCREEN);
+	}
+	
+	@FXML
+	private void miServiceAction() {
+		showPanel(Iconstants.SERVICE_BASE_PACKAGE, Iconstants.XML_SERVICE_SCREEN);
+	}
+	
+	@FXML
 	private void lblTrailerHeaderAction() {
-		showPanel(Iconstants.DRIVER_BASE_PACKAGE, Iconstants.XML_DRIVER_SCREEN);
+		showPanel(Iconstants.TRAILER_BASE_PACKAGE, Iconstants.XML_TRAILER_SCREEN);
+	}
+	
+	@FXML
+	private void miShipperAction() {
+		showPanel(Iconstants.SHIPPER_BASE_PACKAGE, Iconstants.XML_SHIPPER_SCREEN);
 	}
 	
 	@FXML
