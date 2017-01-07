@@ -29,10 +29,10 @@ public class MainScreen extends Application implements Initializable {
 	MenuBar mnuBarDatamaintenance;
 	
 	
-	/*@FXML
-	private void mnuCompanyAction() {
-		showCompanyPanel();
-	}*/
+	@FXML
+	private void miDriverAction() {
+		showPanel(Iconstants.DRIVER_BASE_PACKAGE, Iconstants.XML_DRIVER_SCREEN);
+	}
 
 	@FXML
 	private void lblDAction() {
@@ -41,7 +41,7 @@ public class MainScreen extends Application implements Initializable {
 	
 	@FXML
 	private void miTerminalAction() {
-		showTerminalPanel();
+		showPanel(Iconstants.TERMINAL_BASE_PACKAGE, Iconstants.XML_TERMINAL_SCREEN);
 	}
 	
 	
@@ -54,14 +54,22 @@ public class MainScreen extends Application implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 	}
 	
-	private void showTerminalPanel() {
+	private void showPanel(String basePackage, String screenName) {
 		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.TERMINAL_BASE_PACKAGE + Iconstants.XML_TERMINAL_SCREEN));
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(basePackage + screenName));
 	        Parent root = (Parent) fxmlLoader.load();
 	        Pane pane  = (Pane)root;
 	        
 	        ObservableList<Node> nodes = mainScreenVBox.getChildren();
-	        nodes.add(pane);
+	        
+	        if(nodes!= null && nodes.size() >= 4 && nodes.get(3) != null) {
+	        	nodes.remove(3);
+	        	nodes.add(3, pane);
+	        } 
+	        else {
+	        	nodes.add(pane);
+	        }
+	        
 		} catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();

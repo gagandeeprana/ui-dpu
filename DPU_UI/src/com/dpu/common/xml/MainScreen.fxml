@@ -42,7 +42,7 @@
           <Menu mnemonicParsing="false" text="Resources">
             <items>
                   <MenuItem mnemonicParsing="false" text="Shipper/ Consignee" />
-              <MenuItem mnemonicParsing="false" text="Drivers" />
+              <MenuItem fx:id="miDriver" mnemonicParsing="false" onAction="#miDriverAction" text="Drivers" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Lists">

@@ -139,8 +139,8 @@ public class DriverPanelController extends Application implements Initializable 
 		try {
 			System.out.println("start");
 			Parent parent = FXMLLoader
-					.load(getClass().getClassLoader().getResource(Iconstants.DRIVER_BASE_PACKAGE +Iconstants.DRIVER_MAIN_SCREEN));
-			System.out.println("XML : "+Iconstants.DRIVER_BASE_PACKAGE+Iconstants.DRIVER_MAIN_SCREEN);
+					.load(getClass().getClassLoader().getResource(Iconstants.DRIVER_BASE_PACKAGE +Iconstants.XML_DRIVER_SCREEN));
+			System.out.println("XML : "+Iconstants.DRIVER_BASE_PACKAGE+Iconstants.XML_DRIVER_SCREEN);
 			Scene scene = new Scene(parent);
 			primaryStage.setScene(scene);
 			primaryStage.show();
@@ -194,27 +194,27 @@ public class DriverPanelController extends Application implements Initializable 
 		@Override
 		public void run() {
 
-			try {
-				String response = GetAPIClient.callGetAPI(Iconstants.URL_GET_ALL_DRIVER_LIST, null);
-				ObjectMapper mapper = new ObjectMapper();
-				Driver d[] = mapper.readValue(response, Driver[].class);
-				
-				List<Driver> cList = new ArrayList<Driver>();
-				for(Driver ccl : d) {
-					cList.add(ccl);
-				}
-				ObservableList<Driver> data = FXCollections.observableArrayList(cList);
-				
-				setColumnValues();
-				driverTable.setItems(data);
-
-				driverTable.setVisible(true);
-
-			 
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//			try {
+//				String response = GetAPIClient.callGetAPI(Iconstants.URL_GET_ALL_DRIVER_LIST, null);
+//				ObjectMapper mapper = new ObjectMapper();
+//				Driver d[] = mapper.readValue(response, Driver[].class);
+//				
+//				List<Driver> cList = new ArrayList<Driver>();
+//				for(Driver ccl : d) {
+//					cList.add(ccl);
+//				}
+//				ObservableList<Driver> data = FXCollections.observableArrayList(cList);
+//				
+//				setColumnValues();
+//				driverTable.setItems(data);
+//
+//				driverTable.setVisible(true);
+//
+//			 
+//			} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 		}
 	 
 		private void setColumnValues() {

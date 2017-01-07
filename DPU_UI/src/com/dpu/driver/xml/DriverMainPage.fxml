@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="745.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.dpu.driver.controller.DriverPanelController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="745.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.DriverPanelController">
   <children>
     <Label layoutX="14.0" layoutY="13.0" prefWidth="82.0" text="Quick Filter" />
     <TextField layoutX="84.0" layoutY="14.0" prefWidth="157.0" />
@@ -14,22 +14,22 @@
     <Button fx:id="btnAdd" layoutX="301.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnAddAction" prefWidth="56.0" text="ADD" />
     <Button layoutX="371.0" layoutY="14.0" mnemonicParsing="false" prefWidth="59.0" text="EDIT" />
     <Button layoutX="448.0" layoutY="14.0" mnemonicParsing="false" text="DELETE" />
-    <TableView layoutX="0.0" layoutY="36.0" prefHeight="485.0" prefWidth="745.0" fx:id="driverTable">
+    <TableView fx:id="driverTable" layoutX="0.0" layoutY="36.0" prefHeight="485.0" prefWidth="745.0">
       <columns>
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="73.0" text="Driver Code" fx:id="driverCode"/>
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="67.0" text="First Name" fx:id="firstName"/>
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="65.0" text="Last Name" fx:id="lastName"/>
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="52.0" text="Address" fx:id="address"/>
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="38.0" text="Unit" fx:id="unit"/>
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="38.0" text="City" fx:id="city"/>
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="39.0" text="P/s" fx:id="pvs" />
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="63.0" text="Postal Zip" fx:id="postalCode"/>
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="63.0" text="Home" fx:id="home" />
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="54.0" text="Fax No" fx:id="faxNo"/>
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="47.0" text="Cellular"   fx:id="cellular"/>
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="41.0" text="Pager"   fx:id="pager"/>
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="61.0" text="Email" fx:id="email"/>
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="42.0" text="Class" fx:id="classs" />
+        <TableColumn fx:id="driverCode" maxWidth="5000.0" minWidth="10.0" prefWidth="73.0" text="Driver Code" />
+        <TableColumn fx:id="firstName" maxWidth="5000.0" minWidth="10.0" prefWidth="67.0" text="First Name" />
+        <TableColumn fx:id="lastName" maxWidth="5000.0" minWidth="10.0" prefWidth="65.0" text="Last Name" />
+        <TableColumn fx:id="address" maxWidth="5000.0" minWidth="10.0" prefWidth="52.0" text="Address" />
+        <TableColumn fx:id="unit" maxWidth="5000.0" minWidth="10.0" prefWidth="38.0" text="Unit" />
+        <TableColumn fx:id="city" maxWidth="5000.0" minWidth="10.0" prefWidth="38.0" text="City" />
+        <TableColumn fx:id="pvs" maxWidth="5000.0" minWidth="10.0" prefWidth="39.0" text="P/s" />
+        <TableColumn fx:id="postalCode" maxWidth="5000.0" minWidth="10.0" prefWidth="63.0" text="Postal Zip" />
+        <TableColumn fx:id="home" maxWidth="5000.0" minWidth="10.0" prefWidth="63.0" text="Home" />
+        <TableColumn fx:id="faxNo" maxWidth="5000.0" minWidth="10.0" prefWidth="54.0" text="Fax No" />
+        <TableColumn fx:id="cellular" maxWidth="5000.0" minWidth="10.0" prefWidth="47.0" text="Cellular" />
+        <TableColumn fx:id="pager" maxWidth="5000.0" minWidth="10.0" prefWidth="41.0" text="Pager" />
+        <TableColumn fx:id="email" maxWidth="5000.0" minWidth="10.0" prefWidth="61.0" text="Email" />
+        <TableColumn fx:id="classs" maxWidth="5000.0" minWidth="10.0" prefWidth="42.0" text="Class" />
       </columns>
     </TableView>
   </children>
