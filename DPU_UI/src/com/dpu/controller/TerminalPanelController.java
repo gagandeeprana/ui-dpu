@@ -49,15 +49,11 @@ public class TerminalPanelController extends Application implements Initializabl
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		try {
-			System.out.println("[[initialize]]: intialize method called");
 			fetchColumns();
 			Thread t = new Thread(new TerminalThread());
-			System.out.println(t);
 			t.start();
-
 		} catch (Exception e) {
 			System.out.println("[initialize] Exception : " + e);
-			// TODO: handle exception
 		}
 	}
 

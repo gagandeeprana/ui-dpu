@@ -105,11 +105,9 @@ public class MainScreen extends Application implements Initializable {
 	        if(nodes!= null && nodes.size() >= 4 && nodes.get(3) != null) {
 	        	nodes.remove(3);
 	        	nodes.add(3, pane);
-	        } 
-	        else {
+	        } else {
 	        	nodes.add(pane);
 	        }
-	        
 		} catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();

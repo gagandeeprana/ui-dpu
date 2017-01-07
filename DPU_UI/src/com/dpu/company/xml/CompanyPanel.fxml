@@ -7,17 +7,17 @@
 
 <Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.CompanyController">
    <children>
-      <TableView fx:id="tblMainList" layoutX="5.0" layoutY="40.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0">
+      <TableView fx:id="tblCompany" layoutX="5.0" layoutY="40.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="UnitNo" />
-          <TableColumn prefWidth="75.0" text="Name" />
-            <TableColumn prefWidth="75.0" text="Email" />
-            <TableColumn prefWidth="75.0" text="City" />
-            <TableColumn prefWidth="75.0" text="P/S" />
-            <TableColumn prefWidth="75.0" text="Phone" />
-            <TableColumn prefWidth="75.0" text="Home" />
-            <TableColumn prefWidth="75.0" text="Fax" />
-            <TableColumn prefWidth="75.0" text="After Hours" />
+          <TableColumn fx:id="unitNo" prefWidth="75.0" text="UnitNo" />
+          <TableColumn fx:id="name" prefWidth="75.0" text="Name" />
+            <TableColumn fx:id="email" prefWidth="75.0" text="Email" />
+            <TableColumn fx:id="city" prefWidth="75.0" text="City" />
+            <TableColumn fx:id="ps" prefWidth="75.0" text="P/S" />
+            <TableColumn fx:id="phone" prefWidth="75.0" text="Phone" />
+            <TableColumn fx:id="home" prefWidth="75.0" text="Home" />
+            <TableColumn fx:id="fax" prefWidth="75.0" text="Fax" />
+            <TableColumn fx:id="afterHours" prefWidth="75.0" text="After Hours" />
         </columns>
       </TableView>
       <Button fx:id="btnAddCompany" layoutX="405.0" layoutY="14.0" mnemonicParsing="false" text="Add" />

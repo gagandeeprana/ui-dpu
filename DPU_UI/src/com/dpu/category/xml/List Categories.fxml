@@ -23,10 +23,10 @@
             <Button layoutX="529.0" layoutY="7.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="E-Mail" />
          </children>
       </AnchorPane>
-      <TableView layoutY="42.0" prefHeight="758.0" prefWidth="969.0">
+      <TableView fx:id="tblCategory" layoutY="42.0" prefHeight="758.0" prefWidth="969.0">
         <columns>
-          <TableColumn prefWidth="321.0" text="Type" />
-          <TableColumn prefWidth="343.0" text="Category" />
+          <TableColumn fx:id="type" prefWidth="321.0" text="Type" />
+          <TableColumn fx:id="category" prefWidth="343.0" text="Category" />
         </columns>
       </TableView>
    </children>

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="483.0" prefWidth="666.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.TruckController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="483.0" prefWidth="666.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.TrailerController">
   <children>
     <Pane fx:id="TruckMain" layoutX="1.0" prefHeight="483.0" prefWidth="666.0">
       <children>
@@ -16,7 +16,7 @@
         <Button fx:id="btnAddTruck" layoutX="423.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="38.0" text="Add" />
         <Button layoutX="472.0" layoutY="11.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="38.0" text="Edit" />
         <Button layoutX="518.0" layoutY="10.0" mnemonicParsing="false" text="Delete" />
-        <TableView fx:id="tblTruck" layoutX="0.0" layoutY="43.0" prefHeight="438.0" prefWidth="666.0">
+        <TableView fx:id="tblTrailer" layoutX="0.0" layoutY="43.0" prefHeight="438.0" prefWidth="666.0">
           <columns>
             <TableColumn fx:id="unitNo" maxWidth="5000.0" minWidth="10.0" prefWidth="57.0" text="Unit No." />
             <TableColumn fx:id="owner" maxWidth="5000.0" minWidth="10.0" prefWidth="55.0" text="Owner" />
@@ -26,7 +26,7 @@
             <TableColumn fx:id="usage" maxWidth="5000.0" minWidth="10.0" prefWidth="46.0" text="Usage" />
             <TableColumn fx:id="division" maxWidth="5000.0" minWidth="10.0" prefWidth="77.0" text="Division" />
             <TableColumn fx:id="terminal" maxWidth="5000.0" minWidth="0.0" prefWidth="61.0" text="Terminal" />
-            <TableColumn fx:id="truckType" maxWidth="5000.0" minWidth="10.0" prefWidth="84.0" text="Truck Type" />
+            <TableColumn fx:id="trailerType" maxWidth="5000.0" minWidth="10.0" prefWidth="84.0" text="Truck Type" />
             <TableColumn fx:id="finance" maxWidth="5000.0" minWidth="10.0" prefWidth="97.0" text="Finance" />
           </columns>
         </TableView>
