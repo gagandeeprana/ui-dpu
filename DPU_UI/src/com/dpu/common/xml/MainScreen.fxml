@@ -26,17 +26,17 @@
          <menus>
             <Menu mnemonicParsing="false">
                <graphic>
-                  <Label text="Company" />
+                  <Label fx:id="lblCompanyHeader" onMouseClicked="#lblCompanyHeaderAction" text="Company" />
                </graphic>
             </Menu>
             <Menu mnemonicParsing="false">
                <graphic>
-                  <Label text="Truck" />
+                  <Label fx:id="lblTruckHeader" onMouseClicked="#lblTruckHeaderAction" text="Truck" />
                </graphic>
             </Menu>
             <Menu mnemonicParsing="false">
                <graphic>
-                  <Label text="Trailer" />
+                  <Label fx:id="lblTrailerHeader" onMouseClicked="#lblTrailerHeaderAction" text="Trailer" />
                </graphic>
             </Menu>
           <Menu mnemonicParsing="false" text="Resources">

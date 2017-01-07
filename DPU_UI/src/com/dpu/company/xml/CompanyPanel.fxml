@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.FlowPane?>
 
-<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.CompanyPanel">
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.CompanyController">
    <children>
       <TableView fx:id="tblMainList" layoutX="5.0" layoutY="40.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0">
         <columns>
@@ -20,7 +20,7 @@
             <TableColumn prefWidth="75.0" text="After Hours" />
         </columns>
       </TableView>
-      <Button fx:id="btnAddCompany" layoutX="405.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnAddCompanyAction" text="Add" />
+      <Button fx:id="btnAddCompany" layoutX="405.0" layoutY="14.0" mnemonicParsing="false" text="Add" />
       <TextField layoutX="72.0" layoutY="14.0" prefHeight="25.0" prefWidth="202.0" />
       <Button layoutX="366.0" layoutY="14.0" mnemonicParsing="false" text="Go" />
       <Button layoutX="450.0" layoutY="14.0" mnemonicParsing="false" text="  Edit  " />
