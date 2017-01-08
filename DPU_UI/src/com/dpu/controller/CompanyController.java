@@ -20,10 +20,14 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -34,6 +38,26 @@ public class CompanyController extends Application implements Initializable {
 	
 	@FXML
 	TableColumn<Company, String> unitNo, name, email, city, ps, phone, home, fax, afterHours;
+	
+	@FXML
+	private void btnAddCompanyAction() {
+		openAddCompanyScreen();
+	}
+	
+	private void openAddCompanyScreen() {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_ADD_SCREEN));
+	        Parent root = (Parent) fxmlLoader.load();
+	        
+	        Stage stage = new Stage();
+	        stage.initModality(Modality.APPLICATION_MODAL);
+	        stage.setTitle("Add New Company");
+	        stage.setScene(new Scene(root)); 
+	        stage.show();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -71,19 +95,21 @@ public class CompanyController extends Application implements Initializable {
 				try {
 					ObjectMapper mapper = new ObjectMapper();
 					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API, null);
-					Company c[] = mapper.readValue(response, Company[].class);
-					List<Company> cList = new ArrayList<Company>();
-					for(Company ccl : c) {
-						cList.add(ccl);
+					if(response != null && response.length() > 0) {
+						Company c[] = mapper.readValue(response, Company[].class);
+						List<Company> cList = new ArrayList<Company>();
+						for(Company ccl : c) {
+							cList.add(ccl);
+						}
+						ObservableList<Company> data = FXCollections.observableArrayList(cList);
+						
+						setColumnValues();
+						tblCompany.setItems(data);
+			
+			            tblCompany.setVisible(true);
 					}
-					ObservableList<Company> data = FXCollections.observableArrayList(cList);
-					
-					setColumnValues();
-					tblCompany.setItems(data);
-		
-		            tblCompany.setVisible(true);
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					JOptionPane.showMessageDialog(null, "Try Again.." + e , "Info", 1);
 				}
 			}
 		});

@@ -8,7 +8,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 public class Company {
 
 	@JsonProperty(value = "company_id")
-	private int companyId;
+	private Integer companyId;
 	
 	@JsonProperty(value = "name")
 	private String name;
@@ -67,11 +67,11 @@ public class Company {
 	@JsonProperty(value = "after_hours")
 	private String afterHours;
 
-	public int getCompanyId() {
+	public Integer getCompanyId() {
 		return companyId;
 	}
 
-	public void setCompanyId(int companyId) {
+	public void setCompanyId(Integer companyId) {
 		this.companyId = companyId;
 	}
 

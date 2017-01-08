@@ -20,7 +20,7 @@
             <TableColumn fx:id="afterHours" prefWidth="75.0" text="After Hours" />
         </columns>
       </TableView>
-      <Button fx:id="btnAddCompany" layoutX="405.0" layoutY="14.0" mnemonicParsing="false" text="Add" />
+      <Button fx:id="btnAddCompany" layoutX="405.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnAddCompanyAction" text="Add" />
       <TextField layoutX="72.0" layoutY="14.0" prefHeight="25.0" prefWidth="202.0" />
       <Button layoutX="366.0" layoutY="14.0" mnemonicParsing="false" text="Go" />
       <Button layoutX="450.0" layoutY="14.0" mnemonicParsing="false" text="  Edit  " />
