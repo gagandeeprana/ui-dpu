@@ -28,6 +28,7 @@ public class MainScreen extends Application implements Initializable {
 	@FXML
 	MenuBar mnuBarDatamaintenance;
 	
+	static CompanyController companyController;
 	
 	@FXML
 	private void miDriverAction() {
@@ -71,7 +72,7 @@ public class MainScreen extends Application implements Initializable {
 	
 	@FXML
 	private void lblCompanyHeaderAction() {
-		showPanel(Iconstants.COMPANY_BASE_PACKAGE, Iconstants.XML_COMPANY_SCREEN);
+		companyController = (CompanyController) showPanel(Iconstants.COMPANY_BASE_PACKAGE, Iconstants.XML_COMPANY_SCREEN);
 	}
 	
 	@FXML
@@ -94,7 +95,7 @@ public class MainScreen extends Application implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 	}
 	
-	private void showPanel(String basePackage, String screenName) {
+	private Object showPanel(String basePackage, String screenName) {
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(basePackage + screenName));
 	        Parent root = (Parent) fxmlLoader.load();
@@ -108,9 +109,11 @@ public class MainScreen extends Application implements Initializable {
 	        } else {
 	        	nodes.add(pane);
 	        }
+	        return fxmlLoader.getController();
 		} catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
 		}
+		return null;
 	}
 }

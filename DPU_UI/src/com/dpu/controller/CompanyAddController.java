@@ -14,12 +14,17 @@ import com.dpu.model.Company;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class CompanyAddController extends Application implements Initializable{
 
+	@FXML
+	Button btnSaveCompany;
+	
 	@FXML
 	TextField txtCompany, txtContact, txtAddress, txtPosition, txtUnitNo, txtPhone, txtExt, txtCity, txtFax, txtPrefix, 
 	txtProvince, txtZip, txtAfterHours, txtEmail, txtTollFree, txtWebsite, txtCellular, txtPager;
@@ -27,6 +32,12 @@ public class CompanyAddController extends Application implements Initializable{
 	@FXML
 	private void btnSaveCompanyAction() {
 		addCompany();
+		closeAddCompanyScreen(btnSaveCompany);
+	}
+	
+	private void closeAddCompanyScreen(Button clickedButton) {
+		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
+        loginStage.close();
 	}
 	
 	private void addCompany() {
@@ -39,13 +50,17 @@ public class CompanyAddController extends Application implements Initializable{
 					ObjectMapper mapper = new ObjectMapper();
 					Company company = setCompanyValue();
 					String payload = mapper.writeValueAsString(company);
-					JOptionPane.showMessageDialog(null, payload, "Info", 1);
 
 					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API, null, payload);
 					
+					/*FXMLLoader fxmlLoader = new FXMLLoader();
+					fxmlLoader.setLocation(getClass().getClassLoader().getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_SCREEN));
+					CompanyController c = (CompanyController) fxmlLoader.getController();
+					c.fetchCompanies();*/
+					MainScreen.companyController.fetchCompanies();
 					JOptionPane.showMessageDialog(null, response , "Info", 1);
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
 				}
 			}
 		});

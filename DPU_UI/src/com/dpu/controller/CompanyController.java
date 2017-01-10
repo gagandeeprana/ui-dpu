@@ -36,6 +36,8 @@ public class CompanyController extends Application implements Initializable {
 	@FXML
 	TableView<Company> tblCompany;
 	
+	public List<Company> cList = null;
+	
 	@FXML
 	TableColumn<Company, String> unitNo, name, email, city, ps, phone, home, fax, afterHours;
 	
@@ -47,6 +49,7 @@ public class CompanyController extends Application implements Initializable {
 	private void openAddCompanyScreen() {
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_ADD_SCREEN));
+			
 	        Parent root = (Parent) fxmlLoader.load();
 	        
 	        Stage stage = new Stage();
@@ -85,7 +88,7 @@ public class CompanyController extends Application implements Initializable {
 		afterHours = (TableColumn<Company, String>) tblCompany.getColumns().get(8);
 	}
 
-	private void fetchCompanies() {
+	public void fetchCompanies() {
 	
 		fetchColumns();
 		Platform.runLater(new Runnable() {
@@ -97,7 +100,7 @@ public class CompanyController extends Application implements Initializable {
 					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API, null);
 					if(response != null && response.length() > 0) {
 						Company c[] = mapper.readValue(response, Company[].class);
-						List<Company> cList = new ArrayList<Company>();
+						cList = new ArrayList<Company>();
 						for(Company ccl : c) {
 							cList.add(ccl);
 						}
