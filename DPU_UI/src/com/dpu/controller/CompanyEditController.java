@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.dpu.client.PostAPIClient;
+import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.Company;
 import com.dpu.model.Failed;
@@ -21,27 +22,30 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class CompanyAddController extends Application implements Initializable{
+public class CompanyEditController extends Application implements Initializable{
 
 	@FXML
-	Button btnSaveCompany;
+	Button btnUpdateCompany;
+	
+	int companyId = 0;
 	
 	@FXML
 	TextField txtCompany, txtContact, txtAddress, txtPosition, txtUnitNo, txtPhone, txtExt, txtCity, txtFax, txtPrefix, 
 	txtProvince, txtZip, txtAfterHours, txtEmail, txtTollFree, txtWebsite, txtCellular, txtPager;
 	
 	@FXML
-	private void btnSaveCompanyAction() {
-		addCompany();
-		closeAddCompanyScreen(btnSaveCompany);
+	private void btnUpdateCompanyAction() {
+		editCompany();
+		closeEditCompanyScreen(btnUpdateCompany);
+		
 	}
 	
-	private void closeAddCompanyScreen(Button clickedButton) {
+	private void closeEditCompanyScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
         loginStage.close();
 	}
 	
-	private void addCompany() {
+	private void editCompany() {
 		
 		Platform.runLater(new Runnable() {
 			
@@ -52,7 +56,7 @@ public class CompanyAddController extends Application implements Initializable{
 					Company company = setCompanyValue();
 					String payload = mapper.writeValueAsString(company);
 
-					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API, null, payload);
+					String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + companyId, null, payload);
 					
 					if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
@@ -83,6 +87,7 @@ public class CompanyAddController extends Application implements Initializable{
 	
 	private Company setCompanyValue() {
 		Company company = new Company();
+		company.setCompanyId(companyId);
 		company.setName(txtCompany.getText());
 		company.setContact(txtContact.getText());
 		company.setAddress(txtAddress.getText());
@@ -102,5 +107,27 @@ public class CompanyAddController extends Application implements Initializable{
 		company.setCellular(txtCellular.getText());
 		company.setPager(txtPager.getText());
 		return company;
+	}
+
+	public void initData(Company c) {
+		companyId = c.getCompanyId();
+		txtCompany.setText(c.getName());
+		txtContact.setText(c.getContact());
+		txtAddress.setText(c.getAddress());
+		txtPosition.setText(c.getPosition());
+		txtUnitNo.setText(c.getUnitNo());
+		txtPhone.setText(c.getPhone());
+		txtExt.setText(c.getExt());
+		txtCity.setText(c.getCity());
+		txtFax.setText(c.getFax());
+		txtPrefix.setText(c.getCompanyPrefix());
+		txtProvince.setText(c.getProvinceState());
+		txtZip.setText(c.getZip());
+		txtAfterHours.setText(c.getAfterHours());
+		txtEmail.setText(c.getEmail());
+		txtTollFree.setText(c.getTollfree());
+		txtWebsite.setText(c.getWebsite());
+		txtCellular.setText(c.getCellular());
+		txtPager.setText(c.getPager());
 	}
 }

@@ -9,9 +9,12 @@ import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.Company;
+import com.dpu.model.Failed;
+import com.dpu.model.Success;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -46,6 +49,57 @@ public class CompanyController extends Application implements Initializable {
 		openAddCompanyScreen();
 	}
 	
+	@FXML
+	private void btnEditCompanyAction() {
+		Company company = tblCompany.getSelectionModel().getSelectedItem();
+		if(company != null) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + company.getCompanyId(), null);
+						if(response != null && response.length() > 0) {
+							Company c = mapper.readValue(response, Company.class);
+							CompanyEditController companyEditController = (CompanyEditController) openEditCompanyScreen();
+							companyEditController.initData(c);
+						}
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					}
+				}
+			});
+		}
+	}
+	
+	@FXML
+	private void btnDeleteCompanyAction() {
+		Company company = tblCompany.getSelectionModel().getSelectedItem();
+		if(company != null) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + company.getCompanyId(), null);
+						if(response != null && response.contains("message")) {
+							Success success = mapper.readValue(response, Success.class);
+							JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
+						} else {
+							Failed failed = mapper.readValue(response, Failed.class);
+							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
+						}
+						fetchCompanies();
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					}
+				}
+			});
+		}
+	}
+	
 	private void openAddCompanyScreen() {
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_ADD_SCREEN));
@@ -60,6 +114,24 @@ public class CompanyController extends Application implements Initializable {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+	}
+	
+	private Object openEditCompanyScreen() {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_EDIT_SCREEN));
+			
+	        Parent root = (Parent) fxmlLoader.load();
+	        
+	        Stage stage = new Stage();
+	        stage.initModality(Modality.APPLICATION_MODAL);
+	        stage.setTitle("Edit Company");
+	        stage.setScene(new Scene(root)); 
+	        stage.show();
+	        return fxmlLoader.getController();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
 	}
 	
 	@Override
@@ -112,7 +184,7 @@ public class CompanyController extends Application implements Initializable {
 			            tblCompany.setVisible(true);
 					}
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "Try Again.." + e , "Info", 1);
+					JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
 				}
 			}
 		});
@@ -184,5 +256,4 @@ public class CompanyController extends Application implements Initializable {
 			}
 		});
 	}
-
 }
