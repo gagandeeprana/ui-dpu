@@ -27,6 +27,8 @@ public class MainScreen extends Application implements Initializable {
 	
 	@FXML
 	MenuBar mnuBarDatamaintenance;
+
+	static TruckController truckController;
 	
 	static CompanyController companyController;
 	
@@ -67,7 +69,7 @@ public class MainScreen extends Application implements Initializable {
 	
 	@FXML
 	private void lblTruckHeaderAction() {
-		showPanel(Iconstants.TRUCK_BASE_PACKAGE, Iconstants.XML_TRUCK_SCREEN);
+		truckController = (TruckController) showPanel(Iconstants.TRUCK_BASE_PACKAGE, Iconstants.XML_TRUCK_SCREEN);
 	}
 	
 	@FXML

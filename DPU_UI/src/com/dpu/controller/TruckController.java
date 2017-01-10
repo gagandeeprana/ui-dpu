@@ -39,6 +39,16 @@ public class TruckController extends Application implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		fetchTrucks();
 	}
+	
+	@FXML
+	private void btnAddTruckAction() {
+		openAddTruckScreen();
+	}
+
+	private void openAddTruckScreen() {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -62,7 +72,7 @@ public class TruckController extends Application implements Initializable {
 		finance = (TableColumn<Truck, String>) tblTruck.getColumns().get(9);
 	}
 	
-	private void fetchTrucks() {
+	public void fetchTrucks() {
 		
 		fetchColumns();
 		Platform.runLater(new Runnable() {
