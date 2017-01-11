@@ -1,61 +1,40 @@
 package com.dpu.model;
 
-import java.util.Date;
-
-import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
 @JsonSerialize(include = Inclusion.NON_NULL)
 public class Trailer {
 
-	@JsonProperty(value = "trailer_id")
 	private Integer trailerId;
 	
-	@JsonProperty(value = "class_id")
-	private Integer classId;
+	private Integer unitNo;
 	
-	@JsonProperty(value = "equipment_id")
-	private Integer equipmentId;
+	private String usage;
 	
-	@JsonProperty(value = "length")
-	private Integer length;
+	private String owner;
 	
-	@JsonProperty(value = "vin")
-	private String vin;
+	private String division;
 	
-	@JsonProperty(value = "make")
-	private String make;
+	private String oOName;
 	
-	@JsonProperty(value = "model")
-	private String model;
+	private String terminal;
 	
-	@JsonProperty(value = "year")
-	private Integer year;
+	private String category;
 	
-	@JsonProperty(value = "plate_no")
-	private String plateNo;
+	private String trailerType;
 	
-	@JsonProperty(value = "jurisdiction")
-	private String jurisdiction;
+	private String status;
 	
-	@JsonProperty(value = "tare_weight")
-	private String tareWeight;
-	
-	@JsonProperty(value = "rgw")
-	private String rgw;
-	
-	@JsonProperty(value = "current_odometer")
-	private String currentOdometer;
-	
-	@JsonProperty(value = "reading_taken_date")
-	private Date readingTakenDate;
-	
-	@JsonProperty(value = "created_by")
-	private Integer createdBy;
-	
-	@JsonProperty(value = "created_on")
-	private Date createdOn;
+	private String finance;
+
+	public Integer getUnitNo() {
+		return unitNo;
+	}
+
+	public void setUnitNo(Integer unitNo) {
+		this.unitNo = unitNo;
+	}
 
 	public Integer getTrailerId() {
 		return trailerId;
@@ -65,123 +44,75 @@ public class Trailer {
 		this.trailerId = trailerId;
 	}
 
-	public Integer getClassId() {
-		return classId;
+	public String getUsage() {
+		return usage;
 	}
 
-	public void setClassId(Integer classId) {
-		this.classId = classId;
+	public void setUsage(String usage) {
+		this.usage = usage;
 	}
 
-	public Integer getEquipmentId() {
-		return equipmentId;
+	public String getOwner() {
+		return owner;
 	}
 
-	public void setEquipmentId(Integer equipmentId) {
-		this.equipmentId = equipmentId;
+	public void setOwner(String owner) {
+		this.owner = owner;
 	}
 
-	public Integer getLength() {
-		return length;
+	public String getDivision() {
+		return division;
 	}
 
-	public void setLength(Integer length) {
-		this.length = length;
+	public void setDivision(String division) {
+		this.division = division;
 	}
 
-	public String getVin() {
-		return vin;
+	public String getoOName() {
+		return oOName;
 	}
 
-	public void setVin(String vin) {
-		this.vin = vin;
+	public void setoOName(String oOName) {
+		this.oOName = oOName;
 	}
 
-	public String getMake() {
-		return make;
+	public String getTerminal() {
+		return terminal;
 	}
 
-	public void setMake(String make) {
-		this.make = make;
+	public void setTerminal(String terminal) {
+		this.terminal = terminal;
 	}
 
-	public String getModel() {
-		return model;
+	public String getCategory() {
+		return category;
 	}
 
-	public void setModel(String model) {
-		this.model = model;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
-	public Integer getYear() {
-		return year;
+	public String getTrailerType() {
+		return trailerType;
 	}
 
-	public void setYear(Integer year) {
-		this.year = year;
+	public void setTrailerType(String trailerType) {
+		this.trailerType = trailerType;
 	}
 
-	public String getPlateNo() {
-		return plateNo;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setPlateNo(String plateNo) {
-		this.plateNo = plateNo;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
-	public String getJurisdiction() {
-		return jurisdiction;
+	public String getFinance() {
+		return finance;
 	}
 
-	public void setJurisdiction(String jurisdiction) {
-		this.jurisdiction = jurisdiction;
-	}
-
-	public String getTareWeight() {
-		return tareWeight;
-	}
-
-	public void setTareWeight(String tareWeight) {
-		this.tareWeight = tareWeight;
-	}
-
-	public String getRgw() {
-		return rgw;
-	}
-
-	public void setRgw(String rgw) {
-		this.rgw = rgw;
-	}
-
-	public String getCurrentOdometer() {
-		return currentOdometer;
-	}
-
-	public void setCurrentOdometer(String currentOdometer) {
-		this.currentOdometer = currentOdometer;
-	}
-
-	public Date getReadingTakenDate() {
-		return readingTakenDate;
-	}
-
-	public void setReadingTakenDate(Date readingTakenDate) {
-		this.readingTakenDate = readingTakenDate;
-	}
-
-	public Integer getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public Date getCreatedOn() {
-		return createdOn;
-	}
-
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
+	public void setFinance(String finance) {
+		this.finance = finance;
 	}
 }

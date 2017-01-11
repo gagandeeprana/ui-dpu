@@ -12,24 +12,31 @@ import com.dpu.constants.Iconstants;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
 import com.dpu.model.Trailer;
-import com.dpu.model.Truck;
 
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class TrailerAddController extends Application implements Initializable{
 
 	@FXML
 	Button btnSaveTrailer;
-
+	
+	@FXML
+	TextField txtUnitNo, txtUsage, txtOwner, txtDivision, txtOoName, txtTerminal, txtCategory, txtTrailerType;
+	
+	@FXML
+	ComboBox<Object> ddlStatus, ddlFinance;
+	
 	@FXML
 	private void btnSaveTrailerAction() {
 		addTrailer();
-		closeAddTruckScreen(btnSaveTrailer);
+		closeAddTrailerScreen(btnSaveTrailer);
 	}
 	
 	private void addTrailer() {
@@ -64,18 +71,30 @@ public class TrailerAddController extends Application implements Initializable{
 	private Trailer setTrailerValue() {
 		Trailer trailer = new Trailer();
 		trailer.setUnitNo(Integer.parseInt(txtUnitNo.getText()));
+		trailer.setUsage(txtUsage.getText());
+		trailer.setOwner(txtOwner.getText());
+		trailer.setDivision(txtDivision.getText());
+		trailer.setoOName(txtOoName.getText());
+		trailer.setTerminal(txtTerminal.getText());
+		trailer.setCategory(txtCategory.getText());
+		trailer.setTrailerType(txtTrailerType.getText());
+		trailer.setStatus(ddlStatus.getSelectionModel().getSelectedItem().toString());
+		trailer.setFinance(ddlFinance.getSelectionModel().getSelectedItem().toString());
 		return trailer;
 	}
 
-	private void closeAddTruckScreen(Button btnSaveTrailer2) {
-		// TODO Auto-generated method stub
+	private void closeAddTrailerScreen(Button btnSaveTrailer) {
+		Stage loginStage = (Stage) btnSaveTrailer.getScene().getWindow();
+        loginStage.close();
 		
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-		
+		ddlStatus.setValue("Active");
+		ddlStatus.setValue("Inactive");
+		ddlFinance.setValue("Fin 1");
+		ddlFinance.setValue("Fin 2");
 	}
 
 	@Override

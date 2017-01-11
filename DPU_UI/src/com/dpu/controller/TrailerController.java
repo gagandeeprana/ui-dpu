@@ -87,7 +87,7 @@ public class TrailerController extends Application implements Initializable {
 		finance = (TableColumn<Trailer, String>) tblTrailer.getColumns().get(9);
 	}
 	
-	private void fetchTrailers() {
+	public void fetchTrailers() {
 		
 		fetchColumns();
 		Platform.runLater(new Runnable() {
@@ -121,70 +121,70 @@ public class TrailerController extends Application implements Initializable {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Trailer, String> param) {
-				return new SimpleStringProperty(param.getValue().getTrailerId() + "");
+				return new SimpleStringProperty(param.getValue().getUnitNo() + "");
 			}
 		});
 		owner.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Trailer,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Trailer, String> param) {
-				return new SimpleStringProperty(param.getValue().getCurrentOdometer() + "");
+				return new SimpleStringProperty(param.getValue().getOwner() + "");
 			}
 		});
 		oOName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Trailer,String>, ObservableValue<String>>() {
 					
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<Trailer, String> param) {
-						return new SimpleStringProperty(param.getValue().getPlateNo() + "");
+						return new SimpleStringProperty(param.getValue().getoOName() + "");
 					}
 				});
 		category.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Trailer,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Trailer, String> param) {
-				return new SimpleStringProperty(param.getValue().getCurrentOdometer() + "");
+				return new SimpleStringProperty(param.getValue().getCategory() + "");
 			}
 		});
 		status.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Trailer,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Trailer, String> param) {
-				return new SimpleStringProperty(param.getValue().getModel() + "");
+				return new SimpleStringProperty(param.getValue().getStatus() + "");
 			}
 		});
 		usage.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Trailer,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Trailer, String> param) {
-				return new SimpleStringProperty(param.getValue().getTareWeight() + "");
+				return new SimpleStringProperty(param.getValue().getUsage() + "");
 			}
 		});
 		division.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Trailer,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Trailer, String> param) {
-				return new SimpleStringProperty(param.getValue().getPlateNo() + "");
+				return new SimpleStringProperty(param.getValue().getDivision() + "");
 			}
 		});
 		terminal.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Trailer,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Trailer, String> param) {
-				return new SimpleStringProperty(param.getValue().getTrailerId() + "");
+				return new SimpleStringProperty(param.getValue().getTerminal() + "");
 			}
 		});
 		trailerType.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Trailer,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Trailer, String> param) {
-				return new SimpleStringProperty(param.getValue().getEquipmentId() + "");
+				return new SimpleStringProperty(param.getValue().getTrailerType() + "");
 			}
 		});
 		finance.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Trailer,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Trailer, String> param) {
-				return new SimpleStringProperty(param.getValue().getRgw() + "");
+				return new SimpleStringProperty(param.getValue().getFinance() + "");
 			}
 		});
 	}
