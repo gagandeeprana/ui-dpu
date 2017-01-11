@@ -66,7 +66,7 @@ public class CompanyController extends Application implements Initializable {
 							companyEditController.initData(c);
 						}
 					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+						JOptionPane.showMessageDialog(null, "Try Again.." + e , "Info", 1);
 					}
 				}
 			});
@@ -184,7 +184,7 @@ public class CompanyController extends Application implements Initializable {
 			            tblCompany.setVisible(true);
 					}
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
+					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
 				}
 			}
 		});

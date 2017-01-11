@@ -1,12 +1,14 @@
 package com.dpu.model;
 
-import java.util.Date;
+import java.io.Serializable;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
 @JsonSerialize(include = Inclusion.NON_NULL)
-public class Truck {
+public class Truck implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 
 	private String usage;
 	
@@ -19,10 +21,16 @@ public class Truck {
 	private String terminal;
 	
 	private String category;
-	
+
 	private String truckType;
 	
 	private String finance;
+	
+	private Long truckId;
+	
+	private Integer unitNo;
+	
+	private String status;
 	
 	public String getUsage() {
 		return usage;
@@ -88,61 +96,77 @@ public class Truck {
 		this.finance = finance;
 	}
 
-	//@JsonProperty(value="truck_id")
-	private Long truckId;
+	public Long getTruckId() {
+		return truckId;
+	}
+
+	public void setTruckId(Long truckId) {
+		this.truckId = truckId;
+	}
+
+	public Integer getUnitNo() {
+		return unitNo;
+	}
+
+	public void setUnitNo(Integer unitNo) {
+		this.unitNo = unitNo;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	
-	//@JsonProperty(value="unit_no")
-	private Integer unitNo;
-	
-	//@JsonProperty(value = "status")
-	private String status;
-	
-	//@JsonProperty(value = "truck_class")
+	/*@Column(name = "truck_class")
 	private String truckClass;
 	
-	//@JsonProperty(value = "owner_id")
+	@Column(name = "owner_id")
 	private Integer ownerId;
 	
-	//@JsonProperty(value = "VIN")
+	@Column(name = "VIN")
 	private String vin;
 	
-	//@JsonProperty(value = "make")
+	@Column(name = "make")
 	private String make;
 	
-	//@JsonProperty(value = "model")
+	@Column(name = "model")
 	private String model;
 	
-	//@JsonProperty(value = "truck_year")
+	@Column(name = "truck_year")
 	private Integer truckYear;
 	
-	//@JsonProperty(value = "plate_no")
+	@Column(name = "plate_no")
 	private String plateNo;
 	
-	//@JsonProperty(value = "jurisdiction")
+	@Column(name = "jurisdiction")
 	private String jurisdiction;
 	
-	//@JsonProperty(value = "tare_weight")
+	@Column(name = "tare_weight")
 	private Integer tareWeight;
 	
-	//@JsonProperty(value = "rgw")
+	@Column(name = "rgw")
 	private String rgw;
+	
 	 
-	//@JsonProperty(value = "current_odometer")
+	@Column(name = "current_odometer")
 	private String currentOdometer;
 	
-	//@JsonProperty(value = "equipment_type")
+	@Column(name = "equipment_type")
 	private String equipmentType;
 	
-	//@JsonProperty(value = "created_by")
+	@Column(name = "created_by")
 	private String createdBy;
 	
-	//@JsonProperty(value = "created_on")
+	@Column(name = "created_on")
 	private Date createdOn;
 	
-	//@JsonProperty(value = "modified_by")
+	@Column(name = "modified_by")
 	private String modifiedBy;
 	
-	//@JsonProperty(value = "modified_on")
+	@Column(name = "modified_on")
 	private Date modifiedOn;
 
 	public Long getTruckId() {
@@ -295,6 +319,6 @@ public class Truck {
 
 	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
-	}
+	}*/
 }	 
 	 

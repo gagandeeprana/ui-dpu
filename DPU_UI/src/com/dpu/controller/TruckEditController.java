@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-import com.dpu.client.PostAPIClient;
+import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
@@ -21,27 +21,30 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class TruckAddController extends Application implements Initializable{
+public class TruckEditController extends Application implements Initializable{
 
 	@FXML
-	Button btnSaveTruck;
+	Button btnUpdateTruck;
+	
+	Long truckId = 0l;
 	
 	@FXML
 	TextField txtUnitNo, txtUsage, txtOwner, txtDivision, txtOoName, txtTerminal, 
 	txtCategory, txtTruckType, txtStatus, txtFinance;
 	
 	@FXML
-	private void btnSaveTruckAction() {
-		addTruck();
-		closeAddTruckScreen(btnSaveTruck);
+	private void btnUpdateTruckAction() {
+		editTruck();
+		closeEditTruckScreen(btnUpdateTruck);
+		
 	}
 	
-	private void closeAddTruckScreen(Button clickedButton) {
+	private void closeEditTruckScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
         loginStage.close();
 	}
 	
-	private void addTruck() {
+	private void editTruck() {
 		
 		Platform.runLater(new Runnable() {
 			
@@ -51,8 +54,8 @@ public class TruckAddController extends Application implements Initializable{
 					ObjectMapper mapper = new ObjectMapper();
 					Truck truck = setTruckValue();
 					String payload = mapper.writeValueAsString(truck);
-					System.out.println(payload);
-					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_TRUCK_API, null, payload);
+
+					String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_TRUCK_API + "/" + truckId, null, payload);
 					
 					if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
@@ -63,7 +66,7 @@ public class TruckAddController extends Application implements Initializable{
 					}
 					MainScreen.truckController.fetchTrucks();
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+					JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
 				}
 			}
 		});
@@ -94,5 +97,19 @@ public class TruckAddController extends Application implements Initializable{
 		truck.setStatus(txtStatus.getText());
 		truck.setFinance(txtFinance.getText());
 		return truck;
+	}
+
+	public void initData(Truck t) {
+		truckId = t.getTruckId();
+		txtUnitNo.setText(String.valueOf(t.getUnitNo()));
+		txtUsage.setText(t.getUsage());
+		txtOwner.setText(t.getOwner());
+		txtDivision.setText(t.getDivision());
+		txtOoName.setText(t.getoOName());
+		txtTerminal.setText(t.getTerminal());
+		txtCategory.setText(t.getCategory());
+		txtTruckType.setText(t.getTruckType());
+		txtStatus.setText(t.getStatus());
+		txtFinance.setText(t.getFinance());
 	}
 }

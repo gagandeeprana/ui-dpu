@@ -30,6 +30,8 @@ public class MainScreen extends Application implements Initializable {
 
 	static TruckController truckController;
 	
+	static TrailerController trailerController;
+	
 	static CompanyController companyController;
 	
 	@FXML
@@ -59,7 +61,7 @@ public class MainScreen extends Application implements Initializable {
 	
 	@FXML
 	private void lblTrailerHeaderAction() {
-		showPanel(Iconstants.TRAILER_BASE_PACKAGE, Iconstants.XML_TRAILER_SCREEN);
+		trailerController = (TrailerController) showPanel(Iconstants.TRAILER_BASE_PACKAGE, Iconstants.XML_TRAILER_SCREEN);
 	}
 	
 	@FXML

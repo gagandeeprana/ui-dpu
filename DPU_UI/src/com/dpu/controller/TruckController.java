@@ -9,8 +9,12 @@ import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.model.Company;
+import com.dpu.model.Failed;
+import com.dpu.model.Success;
 import com.dpu.model.Truck;
 
 import javafx.application.Application;
@@ -20,10 +24,14 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -44,10 +52,93 @@ public class TruckController extends Application implements Initializable {
 	private void btnAddTruckAction() {
 		openAddTruckScreen();
 	}
+	
+	@FXML
+	private void btnEditTruckAction() {
+		Truck truck = tblTruck.getSelectionModel().getSelectedItem();
+		if(truck != null) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						System.out.println(truck.getTruckId());
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_TRUCK_API + "/" + truck.getTruckId(), null);
+						System.out.println(response);
+						if(response != null && response.length() > 0) {
+							Truck t = mapper.readValue(response, Truck.class);
+							TruckEditController truckEditController = (TruckEditController) openEditTruckScreen();
+							truckEditController.initData(t);
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+						JOptionPane.showMessageDialog(null, "Try Again.." + e , "Info", 1);
+					}
+				}
+			});
+		}
+	}
+	
+	@FXML
+	private void btnDeleteTruckAction() {
+		Truck truck = tblTruck.getSelectionModel().getSelectedItem();
+		if(truck != null) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_TRUCK_API + "/" + truck.getTruckId(), null);
+						if(response != null && response.contains("message")) {
+							Success success = mapper.readValue(response, Success.class);
+							JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
+						} else {
+							Failed failed = mapper.readValue(response, Failed.class);
+							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
+						}
+						fetchTrucks();
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					}
+				}
+			});
+		}
+	}
+	
+	private Object openEditTruckScreen() {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.TRUCK_BASE_PACKAGE + Iconstants.XML_TRUCK_EDIT_SCREEN));
+			
+	        Parent root = (Parent) fxmlLoader.load();
+	        
+	        Stage stage = new Stage();
+	        stage.initModality(Modality.APPLICATION_MODAL);
+	        stage.setTitle("Edit Truck");
+	        stage.setScene(new Scene(root)); 
+	        stage.show();
+	        return fxmlLoader.getController();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
 
 	private void openAddTruckScreen() {
-		// TODO Auto-generated method stub
-		
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.TRUCK_BASE_PACKAGE + Iconstants.XML_TRUCK_ADD_SCREEN));
+			
+	        Parent root = (Parent) fxmlLoader.load();
+	        
+	        Stage stage = new Stage();
+	        stage.initModality(Modality.APPLICATION_MODAL);
+	        stage.setTitle("Add New Truck");
+	        stage.setScene(new Scene(root)); 
+	        stage.show();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 
 	@Override
@@ -94,7 +185,7 @@ public class TruckController extends Application implements Initializable {
 		
 					tblTruck.setVisible(true);
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					JOptionPane.showMessageDialog(null, "Try Again.." + e , "Info", 1);
 				}
 			}
 		});
@@ -113,21 +204,21 @@ public class TruckController extends Application implements Initializable {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
-				return new SimpleStringProperty(param.getValue().getOwnerId() + "");
+				return new SimpleStringProperty(param.getValue().getOwner() + "");
 			}
 		});
 		oOName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Truck,String>, ObservableValue<String>>() {
 					
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
-						return new SimpleStringProperty(param.getValue().getPlateNo() + "");
+						return new SimpleStringProperty(param.getValue().getoOName() + "");
 					}
 				});
 		category.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Truck,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
-				return new SimpleStringProperty(param.getValue().getCurrentOdometer() + "");
+				return new SimpleStringProperty(param.getValue().getCategory() + "");
 			}
 		});
 		status.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Truck,String>, ObservableValue<String>>() {
@@ -141,35 +232,35 @@ public class TruckController extends Application implements Initializable {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
-				return new SimpleStringProperty(param.getValue().getTareWeight() + "");
+				return new SimpleStringProperty(param.getValue().getUsage() + "");
 			}
 		});
 		division.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Truck,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
-				return new SimpleStringProperty(param.getValue().getPlateNo() + "");
+				return new SimpleStringProperty(param.getValue().getDivision() + "");
 			}
 		});
 		terminal.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Truck,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
-				return new SimpleStringProperty(param.getValue().getTruckClass() + "");
+				return new SimpleStringProperty(param.getValue().getTerminal() + "");
 			}
 		});
 		truckType.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Truck,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
-				return new SimpleStringProperty(param.getValue().getTruckClass() + "");
+				return new SimpleStringProperty(param.getValue().getTruckType() + "");
 			}
 		});
 		finance.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Truck,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
-				return new SimpleStringProperty(param.getValue().getRgw() + "");
+				return new SimpleStringProperty(param.getValue().getFinance() + "");
 			}
 		});
 	}

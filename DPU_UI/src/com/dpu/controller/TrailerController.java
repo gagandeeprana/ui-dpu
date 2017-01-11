@@ -20,10 +20,14 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -38,6 +42,27 @@ public class TrailerController extends Application implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		fetchTrailers();
+	}
+	
+	@FXML
+	private void btnAddTrailerAction() {
+		openAddTrailerScreen();
+	}
+	
+	private void openAddTrailerScreen() {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.TRAILER_BASE_PACKAGE + Iconstants.XML_TRAILER_ADD_SCREEN));
+			
+	        Parent root = (Parent) fxmlLoader.load();
+	        
+	        Stage stage = new Stage();
+	        stage.initModality(Modality.APPLICATION_MODAL);
+	        stage.setTitle("Add New Trailer");
+	        stage.setScene(new Scene(root)); 
+	        stage.show();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 
 	@Override
