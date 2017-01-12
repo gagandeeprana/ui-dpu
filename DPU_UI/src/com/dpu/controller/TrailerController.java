@@ -9,8 +9,11 @@ import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.model.Failed;
+import com.dpu.model.Success;
 import com.dpu.model.Trailer;
 
 import javafx.application.Application;
@@ -47,6 +50,75 @@ public class TrailerController extends Application implements Initializable {
 	@FXML
 	private void btnAddTrailerAction() {
 		openAddTrailerScreen();
+	}
+	
+	@FXML
+	private void btnEditTrailerAction() {
+		Trailer trailer = tblTrailer.getSelectionModel().getSelectedItem();
+		if(trailer != null) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_TRAILER_API + "/" + trailer.getTrailerId(), null);
+						if(response != null && response.length() > 0) {
+							Trailer c = mapper.readValue(response, Trailer.class);
+							TrailerEditController trailerEditController = (TrailerEditController) openEditTrailerScreen();
+							trailerEditController.initData(c);
+						}
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." + e , "Info", 1);
+					}
+				}
+			});
+		}
+	}
+	
+	private Object openEditTrailerScreen() {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.TRAILER_BASE_PACKAGE + Iconstants.XML_TRAILER_EDIT_SCREEN));
+			
+	        Parent root = (Parent) fxmlLoader.load();
+	        
+	        Stage stage = new Stage();
+	        stage.initModality(Modality.APPLICATION_MODAL);
+	        stage.setTitle("Edit Company");
+	        stage.setScene(new Scene(root)); 
+	        stage.show();
+	        return fxmlLoader.getController();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	
+	@FXML
+	private void btnDeleteTrailerAction() {
+		Trailer trailer = tblTrailer.getSelectionModel().getSelectedItem();
+		if(trailer != null) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_TRAILER_API + "/" + trailer.getTrailerId(), null);
+						if(response != null && response.contains("message")) {
+							Success success = mapper.readValue(response, Success.class);
+							JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
+						} else {
+							Failed failed = mapper.readValue(response, Failed.class);
+							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
+						}
+						fetchTrailers();
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					}
+				}
+			});
+		}
 	}
 	
 	private void openAddTrailerScreen() {

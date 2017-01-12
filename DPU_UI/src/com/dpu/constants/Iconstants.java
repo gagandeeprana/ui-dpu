@@ -30,9 +30,11 @@ public class Iconstants {
 	public static final String XML_TRUCK_EDIT_SCREEN = "TruckEditScreen.fxml";
 
 	public static final String TRAILER_BASE_PACKAGE = "com/dpu/trailer/xml/";
-	public static final String XML_TRAILER_SCREEN = "TrailerMainScreen.fxml";
+	public static final String XML_TRAILER_SCREEN = "TrailerMainScreen1.fxml";
 	public static final String URL_TRAILER_API = "trailer";
 	public static final String XML_TRAILER_ADD_SCREEN = "Add Trailer.fxml";
+	public static final String XML_TRAILER_EDIT_SCREEN = "Edit Trailer.fxml";
+
 
 	public static final String SHIPPER_BASE_PACKAGE = "com/dpu/shipper/xml/";
 	public static final String XML_SHIPPER_SCREEN = "ShipperListingScreen.fxml";
@@ -52,5 +54,4 @@ public class Iconstants {
 	public static final String EQUIPMENT_BASE_PACKAGE = "com/dpu/equipment/xml/";
 	public static final String XML_EQUIPMENT_SCREEN = "List Equipment.fxml";
 	public static final String URL_EQUIPMENT_API = "equipment";
-
 }
