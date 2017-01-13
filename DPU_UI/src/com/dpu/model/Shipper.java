@@ -1,80 +1,87 @@
 package com.dpu.model;
 
-import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
 @JsonSerialize(include = Inclusion.NON_NULL)
 public class Shipper {
 
-	@JsonProperty(value = "shipper_id")
+	//@JsonProperty(value = "shipper_id")
 	private int shipperId;
 
-	@JsonProperty(value = "company")
+	//@JsonProperty(value = "company")
 	private String company;
 
-	@JsonProperty(value = "address")
+	//@JsonProperty(value = "address")
 	private String address;
 
-	@JsonProperty(value = "unit")
+	//@JsonProperty(value = "unit")
 	private String unit;
 
-	@JsonProperty(value = "city")
+	//@JsonProperty(value = "city")
 	private String city;
 
-	@JsonProperty(value = "province_state")
+	//@JsonProperty(value = "province_state")
 	private String provinceState;
 
-	@JsonProperty(value = "postal_zip")
+	//@JsonProperty(value = "postal_zip")
 	private String postalZip;
 
-	@JsonProperty(value = "status")
-	private int status;
+	//@JsonProperty(value = "status")
+	private String status;
 
-	@JsonProperty(value = "zone")
+	//@JsonProperty(value = "zone")
 	private String zone;
 
-	@JsonProperty(value = "lead_time")
+	//@JsonProperty(value = "lead_time")
 	private String leadTime;
 
-	@JsonProperty(value = "time_zone")
+	//@JsonProperty(value = "time_zone")
 	private String timeZone;
 
-	@JsonProperty(value = "contact")
+	//@JsonProperty(value = "contact")
 	private String contact;
 
-	@JsonProperty(value = "position")
+	//@JsonProperty(value = "position")
 	private String position;
 
-	@JsonProperty(value = "phone")
+	//@JsonProperty(value = "phone")
 	private String phone;
 
-	@JsonProperty(value = "ext")
+	//@JsonProperty(value = "ext")
 	private String ext;
 
-	@JsonProperty(value = "fax")
+	//@JsonProperty(value = "fax")
 	private String fax;
 
-	@JsonProperty(value = "prefix")
+	//@JsonProperty(value = "prefix")
 	private String prefix;
 
-	@JsonProperty(value = "toll_free")
+	//@JsonProperty(value = "toll_free")
 	private String tollFree;
 
-	@JsonProperty(value = "plant")
+	//@JsonProperty(value = "plant")
 	private String plant;
 
-	@JsonProperty(value = "email")
+	//@JsonProperty(value = "email")
 	private String email;
 
-	@JsonProperty(value = "importer")
+	//@JsonProperty(value = "importer")
 	private String importer;
 
-	@JsonProperty(value = "internal_notes")
+	//@JsonProperty(value = "internal_notes")
 	private String internalNotes;
 
-	@JsonProperty(value = "standard_notes")
+	//@JsonProperty(value = "standard_notes")
 	private String standardNotes;
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	public int getShipperId() {
 		return shipperId;
@@ -130,14 +137,6 @@ public class Shipper {
 
 	public void setPostalZip(String postalZip) {
 		this.postalZip = postalZip;
-	}
-
-	public int getStatus() {
-		return status;
-	}
-
-	public void setStatus(int status) {
-		this.status = status;
 	}
 
 	public String getZone() {

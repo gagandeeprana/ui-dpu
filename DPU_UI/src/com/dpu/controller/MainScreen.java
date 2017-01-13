@@ -31,6 +31,8 @@ public class MainScreen extends Application implements Initializable {
 	static TruckController truckController;
 	
 	static TrailerController trailerController;
+
+	static ShipperController shipperController;
 	
 	static CompanyController companyController;
 	
@@ -66,7 +68,7 @@ public class MainScreen extends Application implements Initializable {
 	
 	@FXML
 	private void miShipperAction() {
-		showPanel(Iconstants.SHIPPER_BASE_PACKAGE, Iconstants.XML_SHIPPER_SCREEN);
+		shipperController = (ShipperController) showPanel(Iconstants.SHIPPER_BASE_PACKAGE, Iconstants.XML_SHIPPER_SCREEN);
 	}
 	
 	@FXML

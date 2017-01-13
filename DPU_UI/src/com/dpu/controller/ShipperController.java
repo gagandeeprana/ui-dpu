@@ -9,9 +9,13 @@ import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.model.Company;
+import com.dpu.model.Failed;
 import com.dpu.model.Shipper;
+import com.dpu.model.Success;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -20,10 +24,14 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -48,6 +56,96 @@ public class ShipperController extends Application implements Initializable {
 		launch(args);
 	}
 	
+	@FXML
+	private void btnAddShipperAction() {
+		openAddShipperScreen();
+	}
+	
+	@FXML
+	private void btnEditShipperAction() {
+		Shipper shipper = tblShipper.getSelectionModel().getSelectedItem();
+		if(shipper != null) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_SHIPPER_API + "/" + shipper.getShipperId(), null);
+						if(response != null && response.length() > 0) {
+							Shipper c = mapper.readValue(response, Shipper.class);
+							ShipperEditController shipperEditController = (ShipperEditController) openEditShipperScreen();
+							shipperEditController.initData(c);
+						}
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." + e , "Info", 1);
+					}
+				}
+			});
+		}
+	}
+	
+	private Object openEditShipperScreen() {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.SHIPPER_BASE_PACKAGE + Iconstants.XML_SHIPPER_EDIT_SCREEN));
+			
+	        Parent root = (Parent) fxmlLoader.load();
+	        
+	        Stage stage = new Stage();
+	        stage.initModality(Modality.APPLICATION_MODAL);
+	        stage.setTitle("Edit Shipper");
+	        stage.setScene(new Scene(root)); 
+	        stage.show();
+	        return fxmlLoader.getController();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	
+	@FXML
+	private void btnDeleteShipperAction() {
+		Shipper shipper = tblShipper.getSelectionModel().getSelectedItem();
+		if(shipper != null) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_SHIPPER_API + "/" + shipper.getShipperId(), null);
+						if(response != null && response.contains("message")) {
+							Success success = mapper.readValue(response, Success.class);
+							JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
+						} else {
+							Failed failed = mapper.readValue(response, Failed.class);
+							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
+						}
+						fetchShippers();
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					}
+				}
+			});
+		}
+	}
+	
+	private void openAddShipperScreen() {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.SHIPPER_BASE_PACKAGE + Iconstants.XML_SHIPPER_ADD_SCREEN));
+			
+	        Parent root = (Parent) fxmlLoader.load();
+	        
+	        Stage stage = new Stage();
+	        stage.initModality(Modality.APPLICATION_MODAL);
+	        stage.setTitle("Add New Shipper");
+	        stage.setScene(new Scene(root)); 
+	        stage.show();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
 	@SuppressWarnings("unchecked")
 	private void fetchColumns() {
 		company = (TableColumn<Shipper, String>) tblShipper.getColumns().get(0);
@@ -64,7 +162,7 @@ public class ShipperController extends Application implements Initializable {
 		importer = (TableColumn<Shipper, String>) tblShipper.getColumns().get(11);
 	}
 
-	private void fetchShippers() {
+	public void fetchShippers() {
 	
 		fetchColumns();
 		Platform.runLater(new Runnable() {

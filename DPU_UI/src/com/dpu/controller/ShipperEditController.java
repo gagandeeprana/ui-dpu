@@ -10,6 +10,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.Failed;
+import com.dpu.model.Shipper;
 import com.dpu.model.Success;
 import com.dpu.model.Trailer;
 
@@ -18,27 +19,28 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class TrailerEditController extends Application implements Initializable{
+public class ShipperEditController extends Application implements Initializable{
 
 	@FXML
 	Button btnUpdateTrailer;
 	
-	Integer trailerId = 0;
+	@FXML
+	TextField txtCompany, txtContact, txtAddress, txtPosition, txtUnitNo, txtPhone, txtExt, txtCity, txtFax, txtPrefix, 
+	txtProvince, txtTollFree, txtPlant, txtStatus, txtCellNumber, txtZone, txtEmail, txtLeadTime, txtTimeZone, txtImporter;
 	
 	@FXML
-	TextField txtUnitNo, txtUsage, txtOwner, txtDivision, txtOoName, txtTerminal, txtCategory, txtTrailerType;
+	TextArea txtInternalNotes, txtStandardNotes;
+
+	private int shipperId = 0;
 	
 	@FXML
-	ComboBox<Object> ddlStatus, ddlFinance;
-	
-	@FXML
-	private void btnUpdateTrailerAction() {
+	private void btnUpdateShipperAction() {
 		editTrailer();
-		closeEditTrailerScreen(btnUpdateTrailer);
+		closeEditTrailerScreen(btnUpdateShipper);
 	}
 	
 	private void editTrailer() {
@@ -95,10 +97,7 @@ public class TrailerEditController extends Application implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		ddlStatus.setValue("Active");
-		ddlStatus.setValue("Inactive");
-		ddlFinance.setValue("Fin 1");
-		ddlFinance.setValue("Fin 2");
+		
 	}
 
 	@Override
@@ -107,19 +106,26 @@ public class TrailerEditController extends Application implements Initializable{
 		
 	}
 	
-	public void initData(Trailer t) {
-		trailerId = t.getTrailerId();
-		txtUnitNo.setText(String.valueOf(t.getUnitNo()));
-		txtUsage.setText(t.getUsage());
-		txtOwner.setText(t.getUsage());
-		txtDivision.setText(t.getUsage());
-		txtOoName.setText(t.getUsage());
-		txtTerminal.setText(t.getUsage());
-		txtCategory.setText(t.getUsage());
-		txtTrailerType.setText(t.getUsage());
-		ddlStatus.setValue(t.getStatus());
-		ddlFinance.setValue(t.getFinance());
-
+	public void initData(Shipper s) {
+		shipperId = s.getShipperId();
+		txtCompa.setText(c.getName());
+		txtContact.setText(c.getContact());
+		txtAddress.setText(c.getAddress());
+		txtPosition.setText(c.getPosition());
+		txtUnitNo.setText(c.getUnitNo());
+		txtPhone.setText(c.getPhone());
+		txtExt.setText(c.getExt());
+		txtCity.setText(c.getCity());
+		txtFax.setText(c.getFax());
+		txtPrefix.setText(c.getCompanyPrefix());
+		txtProvince.setText(c.getProvinceState());
+		txtZip.setText(c.getZip());
+		txtAfterHours.setText(c.getAfterHours());
+		txtEmail.setText(c.getEmail());
+		txtTollFree.setText(c.getTollfree());
+		txtWebsite.setText(c.getWebsite());
+		txtCellular.setText(c.getCellular());
+		txtPager.setText(c.getPager());
 	}
 	
 }

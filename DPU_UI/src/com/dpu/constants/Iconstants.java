@@ -39,7 +39,10 @@ public class Iconstants {
 	public static final String SHIPPER_BASE_PACKAGE = "com/dpu/shipper/xml/";
 	public static final String XML_SHIPPER_SCREEN = "ShipperListingScreen.fxml";
 	public static final String URL_SHIPPER_API = "shipper";
+	public static final String XML_SHIPPER_ADD_SCREEN = "ShipperAddScreen.fxml";
+	public static final String XML_SHIPPER_EDIT_SCREEN = "ShipperEditScreen.fxml";
 
+	
 	public static final String SERVICE_BASE_PACKAGE = "com/dpu/service/xml/";
 	public static final String XML_SERVICE_SCREEN = "ServiceListing.fxml";
 	public static final String URL_SERVICE_API = "service";
@@ -54,4 +57,6 @@ public class Iconstants {
 	public static final String EQUIPMENT_BASE_PACKAGE = "com/dpu/equipment/xml/";
 	public static final String XML_EQUIPMENT_SCREEN = "List Equipment.fxml";
 	public static final String URL_EQUIPMENT_API = "equipment";
+
+
 }
