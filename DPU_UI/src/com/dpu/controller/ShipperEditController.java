@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 public class ShipperEditController extends Application implements Initializable{
 
 	@FXML
-	Button btnUpdateTrailer;
+	Button btnUpdateShipper;
 	
 	@FXML
 	TextField txtCompany, txtContact, txtAddress, txtPosition, txtUnitNo, txtPhone, txtExt, txtCity, txtFax, txtPrefix, 
