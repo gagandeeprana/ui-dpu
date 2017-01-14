@@ -27,6 +27,12 @@ public class MainScreen extends Application implements Initializable {
 	
 	@FXML
 	MenuBar mnuBarDatamaintenance;
+
+	static TruckController truckController;
+	
+	static TrailerController trailerController;
+
+	static ShipperController shipperController;
 	
 	static CompanyController companyController;
 	
@@ -57,17 +63,17 @@ public class MainScreen extends Application implements Initializable {
 	
 	@FXML
 	private void lblTrailerHeaderAction() {
-		showPanel(Iconstants.TRAILER_BASE_PACKAGE, Iconstants.XML_TRAILER_SCREEN);
+		trailerController = (TrailerController) showPanel(Iconstants.TRAILER_BASE_PACKAGE, Iconstants.XML_TRAILER_SCREEN);
 	}
 	
 	@FXML
 	private void miShipperAction() {
-		showPanel(Iconstants.SHIPPER_BASE_PACKAGE, Iconstants.XML_SHIPPER_SCREEN);
+		shipperController = (ShipperController) showPanel(Iconstants.SHIPPER_BASE_PACKAGE, Iconstants.XML_SHIPPER_SCREEN);
 	}
 	
 	@FXML
 	private void lblTruckHeaderAction() {
-		showPanel(Iconstants.TRUCK_BASE_PACKAGE, Iconstants.XML_TRUCK_SCREEN);
+		truckController = (TruckController) showPanel(Iconstants.TRUCK_BASE_PACKAGE, Iconstants.XML_TRUCK_SCREEN);
 	}
 	
 	@FXML

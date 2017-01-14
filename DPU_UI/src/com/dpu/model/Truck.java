@@ -1,69 +1,172 @@
 package com.dpu.model;
 
-import java.util.Date;
+import java.io.Serializable;
 
-import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
 @JsonSerialize(include = Inclusion.NON_NULL)
-public class Truck {
+public class Truck implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 
-	@JsonProperty(value="truck_id")
+	private String usage;
+	
+	private String owner;
+	
+	private String division;
+	
+	private String oOName;
+	
+	private String terminal;
+	
+	private String category;
+
+	private String truckType;
+	
+	private String finance;
+	
 	private Long truckId;
 	
-	@JsonProperty(value="unit_no")
 	private Integer unitNo;
 	
-	@JsonProperty(value = "status")
 	private String status;
 	
-	@JsonProperty(value = "truck_class")
+	public String getUsage() {
+		return usage;
+	}
+
+	public void setUsage(String usage) {
+		this.usage = usage;
+	}
+
+	public String getOwner() {
+		return owner;
+	}
+
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
+
+	public String getDivision() {
+		return division;
+	}
+
+	public void setDivision(String division) {
+		this.division = division;
+	}
+
+	public String getoOName() {
+		return oOName;
+	}
+
+	public void setoOName(String oOName) {
+		this.oOName = oOName;
+	}
+
+	public String getTerminal() {
+		return terminal;
+	}
+
+	public void setTerminal(String terminal) {
+		this.terminal = terminal;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getTruckType() {
+		return truckType;
+	}
+
+	public void setTruckType(String truckType) {
+		this.truckType = truckType;
+	}
+
+	public String getFinance() {
+		return finance;
+	}
+
+	public void setFinance(String finance) {
+		this.finance = finance;
+	}
+
+	public Long getTruckId() {
+		return truckId;
+	}
+
+	public void setTruckId(Long truckId) {
+		this.truckId = truckId;
+	}
+
+	public Integer getUnitNo() {
+		return unitNo;
+	}
+
+	public void setUnitNo(Integer unitNo) {
+		this.unitNo = unitNo;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	/*@Column(name = "truck_class")
 	private String truckClass;
 	
-	@JsonProperty(value = "owner_id")
+	@Column(name = "owner_id")
 	private Integer ownerId;
 	
-	@JsonProperty(value = "VIN")
+	@Column(name = "VIN")
 	private String vin;
 	
-	@JsonProperty(value = "make")
+	@Column(name = "make")
 	private String make;
 	
-	@JsonProperty(value = "model")
+	@Column(name = "model")
 	private String model;
 	
-	@JsonProperty(value = "truck_year")
+	@Column(name = "truck_year")
 	private Integer truckYear;
 	
-	@JsonProperty(value = "plate_no")
+	@Column(name = "plate_no")
 	private String plateNo;
 	
-	@JsonProperty(value = "jurisdiction")
+	@Column(name = "jurisdiction")
 	private String jurisdiction;
 	
-	@JsonProperty(value = "tare_weight")
+	@Column(name = "tare_weight")
 	private Integer tareWeight;
 	
-	@JsonProperty(value = "rgw")
+	@Column(name = "rgw")
 	private String rgw;
+	
 	 
-	@JsonProperty(value = "current_odometer")
+	@Column(name = "current_odometer")
 	private String currentOdometer;
 	
-	@JsonProperty(value = "equipment_type")
+	@Column(name = "equipment_type")
 	private String equipmentType;
 	
-	@JsonProperty(value = "created_by")
+	@Column(name = "created_by")
 	private String createdBy;
 	
-	@JsonProperty(value = "created_on")
+	@Column(name = "created_on")
 	private Date createdOn;
 	
-	@JsonProperty(value = "modified_by")
+	@Column(name = "modified_by")
 	private String modifiedBy;
 	
-	@JsonProperty(value = "modified_on")
+	@Column(name = "modified_on")
 	private Date modifiedOn;
 
 	public Long getTruckId() {
@@ -216,6 +319,6 @@ public class Truck {
 
 	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
-	}
+	}*/
 }	 
 	 

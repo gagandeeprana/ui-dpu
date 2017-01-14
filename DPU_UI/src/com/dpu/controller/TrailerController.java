@@ -9,8 +9,11 @@ import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.model.Failed;
+import com.dpu.model.Success;
 import com.dpu.model.Trailer;
 
 import javafx.application.Application;
@@ -20,10 +23,14 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -38,6 +45,96 @@ public class TrailerController extends Application implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		fetchTrailers();
+	}
+	
+	@FXML
+	private void btnAddTrailerAction() {
+		openAddTrailerScreen();
+	}
+	
+	@FXML
+	private void btnEditTrailerAction() {
+		Trailer trailer = tblTrailer.getSelectionModel().getSelectedItem();
+		if(trailer != null) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_TRAILER_API + "/" + trailer.getTrailerId(), null);
+						if(response != null && response.length() > 0) {
+							Trailer c = mapper.readValue(response, Trailer.class);
+							TrailerEditController trailerEditController = (TrailerEditController) openEditTrailerScreen();
+							trailerEditController.initData(c);
+						}
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." + e , "Info", 1);
+					}
+				}
+			});
+		}
+	}
+	
+	private Object openEditTrailerScreen() {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.TRAILER_BASE_PACKAGE + Iconstants.XML_TRAILER_EDIT_SCREEN));
+			
+	        Parent root = (Parent) fxmlLoader.load();
+	        
+	        Stage stage = new Stage();
+	        stage.initModality(Modality.APPLICATION_MODAL);
+	        stage.setTitle("Edit Company");
+	        stage.setScene(new Scene(root)); 
+	        stage.show();
+	        return fxmlLoader.getController();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	
+	@FXML
+	private void btnDeleteTrailerAction() {
+		Trailer trailer = tblTrailer.getSelectionModel().getSelectedItem();
+		if(trailer != null) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_TRAILER_API + "/" + trailer.getTrailerId(), null);
+						if(response != null && response.contains("message")) {
+							Success success = mapper.readValue(response, Success.class);
+							JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
+						} else {
+							Failed failed = mapper.readValue(response, Failed.class);
+							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
+						}
+						fetchTrailers();
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					}
+				}
+			});
+		}
+	}
+	
+	private void openAddTrailerScreen() {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.TRAILER_BASE_PACKAGE + Iconstants.XML_TRAILER_ADD_SCREEN));
+			
+	        Parent root = (Parent) fxmlLoader.load();
+	        
+	        Stage stage = new Stage();
+	        stage.initModality(Modality.APPLICATION_MODAL);
+	        stage.setTitle("Add New Trailer");
+	        stage.setScene(new Scene(root)); 
+	        stage.show();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 
 	@Override
@@ -62,7 +159,7 @@ public class TrailerController extends Application implements Initializable {
 		finance = (TableColumn<Trailer, String>) tblTrailer.getColumns().get(9);
 	}
 	
-	private void fetchTrailers() {
+	public void fetchTrailers() {
 		
 		fetchColumns();
 		Platform.runLater(new Runnable() {
@@ -96,70 +193,70 @@ public class TrailerController extends Application implements Initializable {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Trailer, String> param) {
-				return new SimpleStringProperty(param.getValue().getTrailerId() + "");
+				return new SimpleStringProperty(param.getValue().getUnitNo() + "");
 			}
 		});
 		owner.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Trailer,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Trailer, String> param) {
-				return new SimpleStringProperty(param.getValue().getCurrentOdometer() + "");
+				return new SimpleStringProperty(param.getValue().getOwner() + "");
 			}
 		});
 		oOName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Trailer,String>, ObservableValue<String>>() {
 					
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<Trailer, String> param) {
-						return new SimpleStringProperty(param.getValue().getPlateNo() + "");
+						return new SimpleStringProperty(param.getValue().getoOName() + "");
 					}
 				});
 		category.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Trailer,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Trailer, String> param) {
-				return new SimpleStringProperty(param.getValue().getCurrentOdometer() + "");
+				return new SimpleStringProperty(param.getValue().getCategory() + "");
 			}
 		});
 		status.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Trailer,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Trailer, String> param) {
-				return new SimpleStringProperty(param.getValue().getModel() + "");
+				return new SimpleStringProperty(param.getValue().getStatus() + "");
 			}
 		});
 		usage.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Trailer,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Trailer, String> param) {
-				return new SimpleStringProperty(param.getValue().getTareWeight() + "");
+				return new SimpleStringProperty(param.getValue().getUsage() + "");
 			}
 		});
 		division.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Trailer,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Trailer, String> param) {
-				return new SimpleStringProperty(param.getValue().getPlateNo() + "");
+				return new SimpleStringProperty(param.getValue().getDivision() + "");
 			}
 		});
 		terminal.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Trailer,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Trailer, String> param) {
-				return new SimpleStringProperty(param.getValue().getTrailerId() + "");
+				return new SimpleStringProperty(param.getValue().getTerminal() + "");
 			}
 		});
 		trailerType.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Trailer,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Trailer, String> param) {
-				return new SimpleStringProperty(param.getValue().getEquipmentId() + "");
+				return new SimpleStringProperty(param.getValue().getTrailerType() + "");
 			}
 		});
 		finance.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Trailer,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Trailer, String> param) {
-				return new SimpleStringProperty(param.getValue().getRgw() + "");
+				return new SimpleStringProperty(param.getValue().getFinance() + "");
 			}
 		});
 	}

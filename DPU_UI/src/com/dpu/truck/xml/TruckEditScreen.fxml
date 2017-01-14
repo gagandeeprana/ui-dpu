@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.TruckEditController">
   <children>
     <TabPane layoutX="14.0" layoutY="14.0" prefHeight="322.0" prefWidth="572.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
@@ -24,16 +24,16 @@
                 <Label layoutX="293.0" layoutY="94.0" text="Terminal" />
                 <Label layoutX="293.0" layoutY="135.0" text="Truck Type" />
                 <Label layoutX="293.0" layoutY="181.0" text="Finance" />
-                <TextField layoutX="93.0" layoutY="11.0" prefWidth="183.0" />
-                <TextField layoutX="93.0" layoutY="52.0" prefWidth="183.0" />
-                <TextField layoutX="93.0" layoutY="91.0" prefWidth="183.0" />
-                <TextField layoutX="93.0" layoutY="135.0" prefWidth="183.0" />
-                <TextField layoutX="93.0" layoutY="178.0" prefWidth="183.0" />
-                <TextField layoutX="356.0" layoutY="11.0" prefWidth="174.0" />
-                <TextField layoutX="358.0" layoutY="52.0" prefWidth="174.0" />
-                <TextField layoutX="356.0" layoutY="94.0" prefWidth="174.0" />
-                <TextField layoutX="356.0" layoutY="132.0" prefWidth="172.0" />
-                <TextField layoutX="358.0" layoutY="178.0" prefWidth="174.0" />
+                <TextField fx:id="txtUnitNo" layoutX="93.0" layoutY="11.0" prefWidth="183.0" />
+                <TextField fx:id="txtOwner" layoutX="93.0" layoutY="52.0" prefWidth="183.0" />
+                <TextField fx:id="txtOoName" layoutX="93.0" layoutY="91.0" prefWidth="183.0" />
+                <TextField fx:id="txtCategory" layoutX="93.0" layoutY="135.0" prefWidth="183.0" />
+                <TextField fx:id="txtStatus" layoutX="93.0" layoutY="178.0" prefWidth="183.0" />
+                <TextField fx:id="txtUsage" layoutX="356.0" layoutY="11.0" prefWidth="174.0" />
+                <TextField fx:id="txtDivision" layoutX="358.0" layoutY="52.0" prefWidth="174.0" />
+                <TextField fx:id="txtTerminal" layoutX="356.0" layoutY="94.0" prefWidth="174.0" />
+                <TextField fx:id="txtTruckType" layoutX="356.0" layoutY="132.0" prefWidth="172.0" />
+                <TextField fx:id="txtFinance" layoutX="358.0" layoutY="178.0" prefWidth="174.0" />
               </children>
             </AnchorPane>
           </content>
@@ -45,7 +45,7 @@
         </Tab>
       </tabs>
     </TabPane>
-    <Button layoutX="433.0" layoutY="357.0" mnemonicParsing="false" text="Save" />
+    <Button fx:id="btnUpdateTruck" layoutX="433.0" layoutY="357.0" mnemonicParsing="false" onAction="#btnUpdateTruckAction" text="Save" />
     <Button layoutX="492.0" layoutY="357.0" mnemonicParsing="false" text="Cancel" />
     <Button layoutX="382.0" layoutY="357.0" mnemonicParsing="false" text="Edit" />
   </children>

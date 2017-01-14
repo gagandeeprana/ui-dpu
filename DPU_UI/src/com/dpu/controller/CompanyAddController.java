@@ -63,7 +63,7 @@ public class CompanyAddController extends Application implements Initializable{
 					}
 					MainScreen.companyController.fetchCompanies();
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
+					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
 				}
 			}
 		});

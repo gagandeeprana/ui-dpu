@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane fx:id="addCompanyPane" prefHeight="278.0" prefWidth="705.0" stylesheets="@../search1.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AddCompany">
+<Pane fx:id="addCompanyPane" prefHeight="278.0" prefWidth="705.0" stylesheets="@../search1.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.TrailerEditController">
    <children>
       <TabPane layoutX="5.0" layoutY="26.0" prefHeight="212.0" prefWidth="696.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -38,16 +38,16 @@
                               <Font size="14.0" />
                            </font>
                         </Text>
-                        <TextField layoutX="92.0" layoutY="11.0" prefHeight="25.0" prefWidth="247.0" />
-                        <TextField layoutX="92.0" layoutY="44.0" prefHeight="25.0" prefWidth="247.0" />
-                        <TextField layoutX="442.0" layoutY="109.0" prefHeight="25.0" prefWidth="247.0" />
-                        <TextField layoutX="442.0" layoutY="76.0" prefHeight="25.0" prefWidth="247.0" />
-                        <TextField layoutX="442.0" layoutY="44.0" prefHeight="25.0" prefWidth="247.0" />
-                        <TextField layoutX="442.0" layoutY="11.0" prefHeight="25.0" prefWidth="247.0" />
-                        <TextField layoutX="92.0" layoutY="76.0" prefHeight="25.0" prefWidth="247.0" />
-                        <TextField layoutX="92.0" layoutY="109.0" prefHeight="25.0" prefWidth="247.0" />
-                        <ComboBox layoutX="92.0" layoutY="141.0" prefHeight="25.0" prefWidth="247.0" />
-                        <ComboBox layoutX="442.0" layoutY="141.0" prefHeight="25.0" prefWidth="247.0" />
+                        <TextField fx:id="txtUnitNo" layoutX="92.0" layoutY="11.0" prefHeight="25.0" prefWidth="247.0" />
+                        <TextField fx:id="txtOwner" layoutX="92.0" layoutY="44.0" prefHeight="25.0" prefWidth="247.0" />
+                        <TextField fx:id="txtTrailerType" layoutX="442.0" layoutY="109.0" prefHeight="25.0" prefWidth="247.0" />
+                        <TextField fx:id="txtTerminal" layoutX="442.0" layoutY="76.0" prefHeight="25.0" prefWidth="247.0" />
+                        <TextField fx:id="txtDivision" layoutX="442.0" layoutY="44.0" prefHeight="25.0" prefWidth="247.0" />
+                        <TextField fx:id="txtUsage" layoutX="442.0" layoutY="11.0" prefHeight="25.0" prefWidth="247.0" />
+                        <TextField fx:id="txtOoName" layoutX="92.0" layoutY="76.0" prefHeight="25.0" prefWidth="247.0" />
+                        <TextField fx:id="txtCategory" layoutX="92.0" layoutY="109.0" prefHeight="25.0" prefWidth="247.0" />
+                        <ComboBox fx:id="ddlStatus" layoutX="92.0" layoutY="141.0" prefHeight="25.0" prefWidth="247.0" />
+                        <ComboBox fx:id="ddlFinance" layoutX="442.0" layoutY="141.0" prefHeight="25.0" prefWidth="247.0" />
                         <Text layoutX="365.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usage" wrappingWidth="51.904296875">
                            <font>
                               <Font size="14.0" />
@@ -82,8 +82,8 @@
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <TextArea layoutX="7.0" prefHeight="178.0" prefWidth="594.0" />
-                        <Button fx:id="btnSaveCompany1" layoutX="609.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnSaveCompanyAction" prefHeight="25.0" prefWidth="80.0" text="Date Stamp" />
-                        <Button fx:id="btnSaveCompany11" layoutX="609.0" layoutY="53.0" mnemonicParsing="false" onAction="#btnSaveCompanyAction" prefHeight="25.0" prefWidth="80.0" text="Print" />
+                        <Button fx:id="btnSaveCompany1" layoutX="609.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnUpdateTrailerAction" prefHeight="25.0" prefWidth="80.0" text="Date Stamp" />
+                        <Button fx:id="btnSaveCompany11" layoutX="609.0" layoutY="53.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Print" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -93,7 +93,7 @@
          <font>
             <Font size="13.0" />
          </font></Button>
-      <Button fx:id="btnSaveCompany" layoutX="530.0" layoutY="246.0" mnemonicParsing="false" onAction="#btnSaveCompanyAction" prefHeight="25.0" prefWidth="80.0" text="Save">
+      <Button fx:id="btnUpdateTrailer" layoutX="530.0" layoutY="246.0" mnemonicParsing="false" onAction="#btnUpdateTrailerAction" prefHeight="25.0" prefWidth="80.0" text="Save">
          <font>
             <Font size="13.0" />
          </font></Button>
