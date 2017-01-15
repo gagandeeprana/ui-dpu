@@ -11,7 +11,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.model.Company;
 import com.dpu.model.Equipment;
 
 import javafx.application.Application;
@@ -23,8 +22,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 

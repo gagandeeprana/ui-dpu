@@ -26,51 +26,36 @@ public class Driver implements Serializable{
 	private String address;
 
 	private String unit;
-
 	 
 	private String city;
  
 	private String pvs;
-
 	 
 	private String postalCode;
 
-	 
 	private String email;
 
-	 
 	private String home;
-
 	 
 	private String faxNo;
 
-	 
 	private String cellular;
-
 	 
 	private String pager;
-
 	 
 	private String division;
 
-	 
 	private String terminalId;
 
- 
 	private String catogoryId;
-
 	 
 	private String roleId;
-
 	 
 	private String statusId;
-
 	 
 	private String classId;
-
  
 	private String createdBy;
-
 	 
 	private Date createdOn;
 

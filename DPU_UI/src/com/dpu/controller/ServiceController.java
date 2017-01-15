@@ -11,7 +11,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.model.Service;
+import com.dpu.model.DPUService;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -20,20 +20,24 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class ServiceController extends Application implements Initializable {
 
 	@FXML
-	TableView<Service> tblService;
+	TableView<DPUService> tblService;
 	
 	@FXML
-	TableColumn<Service, String> service, textField, associationWith, status;
+	TableColumn<DPUService, String> service, textField, associationWith, status;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -48,15 +52,37 @@ public class ServiceController extends Application implements Initializable {
 		launch(args);
 	}
 	
+	@FXML
+	private void btnAddServiceAction() {
+		openAddServiceScreen();
+	}
+	
+	private void openAddServiceScreen() {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.SERVICE_BASE_PACKAGE + Iconstants.XML_SERVICE_ADD_SCREEN));
+			
+	        Parent root = (Parent) fxmlLoader.load();
+	        
+	        Stage stage = new Stage();
+	        stage.initModality(Modality.APPLICATION_MODAL);
+	        stage.setTitle("Add New Service");
+	        stage.setScene(new Scene(root)); 
+	        stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+	}
+	
 	@SuppressWarnings("unchecked")
 	private void fetchColumns() {
-		service = (TableColumn<Service, String>) tblService.getColumns().get(0);
-		textField = (TableColumn<Service, String>) tblService.getColumns().get(1);
-		associationWith = (TableColumn<Service, String>) tblService.getColumns().get(2);
-		status = (TableColumn<Service, String>) tblService.getColumns().get(3);
+		service = (TableColumn<DPUService, String>) tblService.getColumns().get(0);
+		textField = (TableColumn<DPUService, String>) tblService.getColumns().get(1);
+		associationWith = (TableColumn<DPUService, String>) tblService.getColumns().get(2);
+		status = (TableColumn<DPUService, String>) tblService.getColumns().get(3);
 	}
 
-	private void fetchServices() {
+	public void fetchServices() {
 	
 		fetchColumns();
 		Platform.runLater(new Runnable() {
@@ -66,12 +92,12 @@ public class ServiceController extends Application implements Initializable {
 				try {
 					ObjectMapper mapper = new ObjectMapper();
 					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_SERVICE_API, null);
-					Service s[] = mapper.readValue(response, Service[].class);
-					List<Service> cList = new ArrayList<Service>();
-					for(Service ccl : s) {
+					DPUService s[] = mapper.readValue(response, DPUService[].class);
+					List<DPUService> cList = new ArrayList<DPUService>();
+					for(DPUService ccl : s) {
 						cList.add(ccl);
 					}
-					ObservableList<Service> data = FXCollections.observableArrayList(cList);
+					ObservableList<DPUService> data = FXCollections.observableArrayList(cList);
 					
 					setColumnValues();
 					tblService.setItems(data);
@@ -86,32 +112,32 @@ public class ServiceController extends Application implements Initializable {
 	
 	private void setColumnValues() {
 		
-		service.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Service,String>, ObservableValue<String>>() {
+		service.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<DPUService,String>, ObservableValue<String>>() {
 			
 			@Override
-			public ObservableValue<String> call(CellDataFeatures<Service, String> param) {
+			public ObservableValue<String> call(CellDataFeatures<DPUService, String> param) {
 				return new SimpleStringProperty(param.getValue().getServiceName() + "");
 			}
 		});
-		textField.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Service,String>, ObservableValue<String>>() {
+		textField.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<DPUService,String>, ObservableValue<String>>() {
 			
 			@Override
-			public ObservableValue<String> call(CellDataFeatures<Service, String> param) {
-				return new SimpleStringProperty(param.getValue().getServiceResponse() + "");
+			public ObservableValue<String> call(CellDataFeatures<DPUService, String> param) {
+				return new SimpleStringProperty(param.getValue().getTextField() + "");
 			}
 		});
-		associationWith.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Service,String>, ObservableValue<String>>() {
+		associationWith.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<DPUService,String>, ObservableValue<String>>() {
 			
 			@Override
-			public ObservableValue<String> call(CellDataFeatures<Service, String> param) {
-				return new SimpleStringProperty(param.getValue().getServiceId() + "");
+			public ObservableValue<String> call(CellDataFeatures<DPUService, String> param) {
+				return new SimpleStringProperty(param.getValue().getAssociationWith() + "");
 			}
 		});
-		status.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Service,String>, ObservableValue<String>>() {
+		status.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<DPUService,String>, ObservableValue<String>>() {
 			
 			@Override
-			public ObservableValue<String> call(CellDataFeatures<Service, String> param) {
-				return new SimpleStringProperty(param.getValue().getStatus() + "");
+			public ObservableValue<String> call(CellDataFeatures<DPUService, String> param) {
+				return new SimpleStringProperty(param.getValue().getStatus() == 1 ? "Active":"Inactive");
 			}
 		});
 

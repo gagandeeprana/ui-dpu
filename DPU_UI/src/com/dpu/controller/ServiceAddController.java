@@ -9,8 +9,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.model.DPUService;
 import com.dpu.model.Failed;
-import com.dpu.model.Shipper;
 import com.dpu.model.Success;
 
 import javafx.application.Application;
@@ -18,7 +18,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -28,7 +28,10 @@ public class ServiceAddController extends Application implements Initializable{
 	Button btnSaveService;
 	
 	@FXML
-	TextField txtService, ddlTextField, ddlAssociationWith, ddlStatus;
+	TextField txtService;
+	
+	@FXML
+	ComboBox<String> ddlTextField, ddlAssociationWith, ddlStatus;
 	
 	@FXML
 	private void btnSaveServiceAction() {
@@ -49,11 +52,11 @@ public class ServiceAddController extends Application implements Initializable{
 			public void run() {
 				try {
 					ObjectMapper mapper = new ObjectMapper();
-					Service service = setServiceValue();
+					DPUService service = setServiceValue();
 					String payload = mapper.writeValueAsString(service);
 					System.out.println(payload);
 					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_SERVICE_API, null, payload);
-					
+					System.out.println(response);
 					if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
 						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
@@ -71,6 +74,9 @@ public class ServiceAddController extends Application implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		ddlTextField.setValue("Yes");
+		ddlAssociationWith.setValue("Asso 1");
+		ddlStatus.setValue("Active");
 	}
 
 	@Override
@@ -81,30 +87,12 @@ public class ServiceAddController extends Application implements Initializable{
 		launch(args);
 	}
 	
-	private Shipper setServiceValue() {
-		Shipper shipper = new Shipper();
-		shipper.setCompany(txtCompany.getText());
-		shipper.setContact(txtContact.getText());
-		shipper.setAddress(txtAddress.getText());
-		shipper.setPosition(txtPosition.getText());
-		shipper.setUnit(txtUnitNo.getText());
-		shipper.setPhone(txtPhone.getText());
-		shipper.setExt(txtExt.getText());
-		shipper.setCity(txtCity.getText());
-		shipper.setFax(txtFax.getText());
-		shipper.setPrefix(txtPrefix.getText());
-		shipper.setProvinceState(txtProvince.getText());
-		shipper.setTollFree(txtTollFree.getText());
-		shipper.setPlant(txtPlant.getText());
-		shipper.setStatus(txtStatus.getText());
-		//cellnumber yet to be done
-		shipper.setZone(txtZone.getText());
-		shipper.setEmail(txtEmail.getText());
-		shipper.setLeadTime(txtLeadTime.getText());
-		shipper.setTimeZone(txtTimeZone.getText());
-		shipper.setImporter(txtImporter.getText());
-		shipper.setInternalNotes(txtInternalNotes.getText());
-		shipper.setStandardNotes(txtStandardNotes.getText());
-		return shipper;
+	private DPUService setServiceValue() {
+		DPUService dPUService = new DPUService();
+		dPUService.setServiceName(txtService.getText());
+		dPUService.setTextField(ddlTextField.getSelectionModel().getSelectedItem());
+		dPUService.setAssociationWith(ddlAssociationWith.getSelectionModel().getSelectedItem());
+		dPUService.setStatus(ddlStatus.getSelectionModel().getSelectedItem().equals("Active")?1:0);
+		return dPUService;
 	}
 }

@@ -36,6 +36,8 @@ public class MainScreen extends Application implements Initializable {
 	
 	static CompanyController companyController;
 	
+	static ServiceController serviceController;
+	
 	@FXML
 	private void miDriverAction() {
 		showPanel(Iconstants.DRIVER_BASE_PACKAGE, Iconstants.XML_DRIVER_SCREEN);
@@ -58,7 +60,7 @@ public class MainScreen extends Application implements Initializable {
 	
 	@FXML
 	private void miServiceAction() {
-		showPanel(Iconstants.SERVICE_BASE_PACKAGE, Iconstants.XML_SERVICE_SCREEN);
+		serviceController = (ServiceController) showPanel(Iconstants.SERVICE_BASE_PACKAGE, Iconstants.XML_SERVICE_SCREEN);
 	}
 	
 	@FXML

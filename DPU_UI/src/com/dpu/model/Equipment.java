@@ -1,6 +1,5 @@
 package com.dpu.model;
 
-import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
@@ -12,13 +11,13 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 @JsonSerialize(include = Inclusion.NON_NULL)
 public class Equipment {
 
-	@JsonProperty(value = "equipment_id")
+	//@JsonProperty(value = "equipment_id")
 	private int equipmentId;
 
-	@JsonProperty(value = "equipment_name")
+	//@JsonProperty(value = "equipment_name")
 	private String equipmentName;
 
-	@JsonProperty(value = "description")
+	//@JsonProperty(value = "description")
 	private String description;
 
 	public int getEquipmentId() {

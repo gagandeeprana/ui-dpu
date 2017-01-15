@@ -13,9 +13,9 @@ public class Iconstants {
 	public static final String XML_TERMINAL_SCREEN = "ListTerminal.fxml";
 
 	public static final String DRIVER_BASE_PACKAGE = "com/dpu/driver/xml/";
-	public static final String ADD_DRIVER_SCREEN = "AddDriverScreen2.fxml";
 	public static final String XML_DRIVER_SCREEN = "DriverMainPage.fxml";
-	public static final String URL_GET_ALL_DRIVER_LIST = "http://localhost:9090/DPUWebProject/driver/";
+	public static final String XML_DRIVER_ADD_SCREEN = "AddDriverScreen2.fxml";
+	public static final String URL_DRIVER_API = "driver";
 
 	public static final String COMPANY_BASE_PACKAGE = "com/dpu/company/xml/";
 	public static final String XML_COMPANY_SCREEN = "CompanyPanel.fxml";
@@ -46,6 +46,7 @@ public class Iconstants {
 	public static final String SERVICE_BASE_PACKAGE = "com/dpu/service/xml/";
 	public static final String XML_SERVICE_SCREEN = "ServiceListing.fxml";
 	public static final String URL_SERVICE_API = "service";
+	public static final String XML_SERVICE_ADD_SCREEN = "Add Service.fxml";
 
 	public static final String DIVISION_BASE_PACKAGE = "com/dpu/division/xml/";
 	public static final String XML_DIVISION_SCREEN = "List Division.fxml";
@@ -57,6 +58,5 @@ public class Iconstants {
 	public static final String EQUIPMENT_BASE_PACKAGE = "com/dpu/equipment/xml/";
 	public static final String XML_EQUIPMENT_SCREEN = "List Equipment.fxml";
 	public static final String URL_EQUIPMENT_API = "equipment";
-
 
 }
