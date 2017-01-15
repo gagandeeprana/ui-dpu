@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220.0" prefWidth="436.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220.0" prefWidth="436.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.ServiceAddController">
    <children>
       <BorderPane layoutX="8.0" layoutY="34.0" prefHeight="143.0" prefWidth="415.0" style="-fx-border-color: lightgray;" />
       <Text layoutX="14.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Service" wrappingWidth="107.759765625" AnchorPane.bottomAnchor="205.984375" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="441.240234375" AnchorPane.topAnchor="41.734375">
@@ -23,15 +23,15 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <TextField layoutX="160.0" layoutY="43.0" prefHeight="25.0" prefWidth="250.0" />
-      <Button layoutX="225.0" layoutY="185.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="95.0" text="Add">
+      <TextField fx:id="txtService" layoutX="160.0" layoutY="43.0" prefHeight="25.0" prefWidth="250.0" />
+      <Button fx:id="btnSaveService" layoutX="225.0" layoutY="185.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="95.0" text="Add">
          <font>
             <Font size="13.0" />
          </font>
       </Button>
-      <ComboBox layoutX="160.0" layoutY="109.0" prefHeight="25.0" prefWidth="250.0" />
-      <ComboBox layoutX="160.0" layoutY="76.0" prefHeight="25.0" prefWidth="250.0" />
-      <ComboBox layoutX="161.0" layoutY="142.0" prefHeight="25.0" prefWidth="250.0" />
+      <ComboBox fx:id="ddlAssociationWith" layoutX="160.0" layoutY="109.0" prefHeight="25.0" prefWidth="250.0" />
+      <ComboBox fx:id="ddlTextField" layoutX="160.0" layoutY="76.0" prefHeight="25.0" prefWidth="250.0" />
+      <ComboBox fx:id="ddlStatus" layoutX="161.0" layoutY="142.0" prefHeight="25.0" prefWidth="250.0" />
       <Text layoutX="15.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status" wrappingWidth="131.759765625">
          <font>
             <Font size="14.0" />

@@ -12,7 +12,6 @@ import com.dpu.constants.Iconstants;
 import com.dpu.model.Failed;
 import com.dpu.model.Shipper;
 import com.dpu.model.Success;
-import com.dpu.model.Trailer;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -39,11 +38,11 @@ public class ShipperEditController extends Application implements Initializable{
 	
 	@FXML
 	private void btnUpdateShipperAction() {
-		editTrailer();
-		closeEditTrailerScreen(btnUpdateShipper);
+		editShipper();
+		closeEditShipperScreen(btnUpdateShipper);
 	}
 	
-	private void editTrailer() {
+	private void editShipper() {
 		
 		Platform.runLater(new Runnable() {
 			
@@ -51,10 +50,10 @@ public class ShipperEditController extends Application implements Initializable{
 			public void run() {
 				try {
 					ObjectMapper mapper = new ObjectMapper();
-					Trailer trailer = setTrailerValue();
-					String payload = mapper.writeValueAsString(trailer);
+					Shipper shipper = setShipperValue();
+					String payload = mapper.writeValueAsString(shipper);
 
-					String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_TRAILER_API + "/" + trailerId, null, payload);
+					String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_SHIPPER_API + "/" + shipperId, null, payload);
 					
 					if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
@@ -63,7 +62,7 @@ public class ShipperEditController extends Application implements Initializable{
 						Failed failed = mapper.readValue(response, Failed.class);
 						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
 					}
-					MainScreen.trailerController.fetchTrailers();
+					MainScreen.shipperController.fetchShippers();
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
 				}
@@ -72,24 +71,36 @@ public class ShipperEditController extends Application implements Initializable{
 		
 	}
 	
-	private Trailer setTrailerValue() {
-		Trailer trailer = new Trailer();
-		
-		trailer.setTrailerId(trailerId);
-		trailer.setUnitNo(Integer.parseInt(txtUnitNo.getText()));
-		trailer.setUsage(txtUsage.getText());
-		trailer.setOwner(txtOwner.getText());
-		trailer.setDivision(txtDivision.getText());
-		trailer.setoOName(txtOoName.getText());
-		trailer.setTerminal(txtTerminal.getText());
-		trailer.setCategory(txtCategory.getText());
-		trailer.setTrailerType(txtTrailerType.getText());
-		trailer.setStatus(ddlStatus.getSelectionModel().getSelectedItem().toString());
-		trailer.setFinance(ddlFinance.getSelectionModel().getSelectedItem().toString());
-		return trailer;
+	//to update, set these values
+	private Shipper setShipperValue() {
+		Shipper shipper = new Shipper();
+		shipper.setCompany(txtCompany.getText());
+		shipper.setContact(txtContact.getText());
+		shipper.setAddress(txtAddress.getText());
+		shipper.setPosition(txtPosition.getText());
+		shipper.setUnit(txtUnitNo.getText());
+		shipper.setPhone(txtPhone.getText());
+		shipper.setExt(txtExt.getText());
+		shipper.setCity(txtCity.getText());
+		shipper.setFax(txtFax.getText());
+		shipper.setPrefix(txtPrefix.getText());
+		shipper.setProvinceState(txtProvince.getText());
+		shipper.setTollFree(txtTollFree.getText());
+		shipper.setPlant(txtPlant.getText());
+		shipper.setStatus(txtStatus.getText());
+		//cellnumber yet to be done
+		shipper.setZone(txtZone.getText());
+		shipper.setEmail(txtEmail.getText());
+		shipper.setLeadTime(txtLeadTime.getText());
+		shipper.setTimeZone(txtTimeZone.getText());
+		shipper.setImporter(txtImporter.getText());
+		shipper.setInternalNotes(txtInternalNotes.getText());
+		shipper.setStandardNotes(txtStandardNotes.getText());	
+		shipper.setCompany(txtCompany.getText());
+		return shipper;
 	}
 
-	private void closeEditTrailerScreen(Button btnSaveTrailer) {
+	private void closeEditShipperScreen(Button btnSaveTrailer) {
 		Stage loginStage = (Stage) btnSaveTrailer.getScene().getWindow();
         loginStage.close();
 		
@@ -108,24 +119,27 @@ public class ShipperEditController extends Application implements Initializable{
 	
 	public void initData(Shipper s) {
 		shipperId = s.getShipperId();
-		txtCompa.setText(c.getName());
-		txtContact.setText(c.getContact());
-		txtAddress.setText(c.getAddress());
-		txtPosition.setText(c.getPosition());
-		txtUnitNo.setText(c.getUnitNo());
-		txtPhone.setText(c.getPhone());
-		txtExt.setText(c.getExt());
-		txtCity.setText(c.getCity());
-		txtFax.setText(c.getFax());
-		txtPrefix.setText(c.getCompanyPrefix());
-		txtProvince.setText(c.getProvinceState());
-		txtZip.setText(c.getZip());
-		txtAfterHours.setText(c.getAfterHours());
-		txtEmail.setText(c.getEmail());
-		txtTollFree.setText(c.getTollfree());
-		txtWebsite.setText(c.getWebsite());
-		txtCellular.setText(c.getCellular());
-		txtPager.setText(c.getPager());
+		txtCompany.setText(s.getCompany());
+		txtContact.setText(s.getContact());
+		txtAddress.setText(s.getAddress());
+		txtPosition.setText(s.getPosition());
+		txtUnitNo.setText(s.getUnit());
+		txtPhone.setText(s.getPhone());
+		txtExt.setText(s.getExt());
+		txtCity.setText(s.getCity());
+		txtFax.setText(s.getFax());
+		txtPrefix.setText(s.getPrefix());
+		txtProvince.setText(s.getProvinceState());
+		txtTollFree.setText(s.getTollFree());
+		txtPlant.setText(s.getPlant());
+		txtStatus.setText(s.getStatus());
+		txtCellNumber.setText(s.getPhone());
+		txtZone.setText(s.getZone());
+		txtEmail.setText(s.getEmail());
+		txtLeadTime.setText(s.getLeadTime());
+		txtTimeZone.setText(s.getTimeZone());
+		txtImporter.setText(s.getImporter());
+		txtInternalNotes.setText(s.getInternalNotes());
+		txtStandardNotes.setText(s.getStandardNotes());
 	}
-	
 }
