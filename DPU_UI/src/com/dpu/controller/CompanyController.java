@@ -52,6 +52,7 @@ public class CompanyController extends Application implements Initializable {
 	@FXML
 	private void btnEditCompanyAction() {
 		Company company = tblCompany.getSelectionModel().getSelectedItem();
+		System.out.println(company + "   company:: ");
 		if(company != null) {
 			Platform.runLater(new Runnable() {
 				

@@ -1,6 +1,5 @@
 package com.dpu.model;
 
-import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
@@ -12,23 +11,33 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 @JsonSerialize(include = Inclusion.NON_NULL)
 public class Category {
 
-	@JsonProperty(value = "category_id")
+	//@JsonProperty(value = "category_id")
 	private int categoryId;
 
-	@JsonProperty(value = "type_id")
+	//@JsonProperty(value = "type_id")
 	private int typeId;
 
-	@JsonProperty(value = "name")
+	//@JsonProperty(value = "name")
 	private String name;
 
-	@JsonProperty(value = "status")
+	//@JsonProperty(value = "status")
 	private int status;
+	
+	private String highlight;
 
-	@JsonProperty(value = "created_on")
+	//@JsonProperty(value = "created_on")
 	private String createdOn;
 
-	@JsonProperty(value = "created_by")
+	//@JsonProperty(value = "created_by")
 	private String createdBy;
+
+	public String getHighlight() {
+		return highlight;
+	}
+
+	public void setHighlight(String highlight) {
+		this.highlight = highlight;
+	}
 
 	public int getCategoryId() {
 		return categoryId;

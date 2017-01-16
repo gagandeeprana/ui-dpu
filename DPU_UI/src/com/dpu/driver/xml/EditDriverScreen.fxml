@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="541.0" prefWidth="766.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.DriverAddController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="541.0" prefWidth="766.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.DriverEditController">
   <children>
     <Pane layoutX="0.0" layoutY="30.0" prefHeight="511.0" prefWidth="766.0">
       <children>
@@ -101,7 +101,7 @@
             </FXCollections>
           </items>
         </ComboBox>
-        <Button fx:id="btnSaveDriver" layoutX="694.0" layoutY="315.0" mnemonicParsing="false" onAction="#btnSaveDriverAction" prefWidth="56.0" text="Save" />
+        <Button fx:id="btnUpdateDriver" layoutX="694.0" layoutY="315.0" mnemonicParsing="false" onAction="#btnUpdateDriverAction" prefWidth="56.0" text="Update" />
         <Button layoutX="696.0" layoutY="370.0" mnemonicParsing="false" prefWidth="56.0" text="Cancel" />
       </children>
     </Pane>

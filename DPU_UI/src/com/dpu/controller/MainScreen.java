@@ -38,9 +38,17 @@ public class MainScreen extends Application implements Initializable {
 	
 	static TerminalPanelController terminalController;
 	
+	static ServiceController serviceController;
+	
+	static DriverController driverController;
+	
+	static CategoryController categoryController;
+	
+	static EquipmentController equipmentController;
+
 	@FXML
 	private void miDriverAction() {
-		showPanel(Iconstants.DRIVER_BASE_PACKAGE, Iconstants.XML_DRIVER_SCREEN);
+		driverController = (DriverController) showPanel(Iconstants.DRIVER_BASE_PACKAGE, Iconstants.XML_DRIVER_SCREEN);
 	}
 	
 	@FXML
@@ -50,17 +58,17 @@ public class MainScreen extends Application implements Initializable {
 	
 	@FXML
 	private void miCategoryAction() {
-		showPanel(Iconstants.CATEGORY_BASE_PACKAGE, Iconstants.XML_CATEGORY_SCREEN);
+		categoryController = (CategoryController)showPanel(Iconstants.CATEGORY_BASE_PACKAGE, Iconstants.XML_CATEGORY_SCREEN);
 	}
 	
 	@FXML
 	private void miEquipmentAction() {
-		showPanel(Iconstants.EQUIPMENT_BASE_PACKAGE, Iconstants.XML_EQUIPMENT_SCREEN);
+		equipmentController = (EquipmentController) showPanel(Iconstants.EQUIPMENT_BASE_PACKAGE, Iconstants.XML_EQUIPMENT_SCREEN);
 	}
 	
 	@FXML
 	private void miServiceAction() {
-		showPanel(Iconstants.SERVICE_BASE_PACKAGE, Iconstants.XML_SERVICE_SCREEN);
+		serviceController = (ServiceController) showPanel(Iconstants.SERVICE_BASE_PACKAGE, Iconstants.XML_SERVICE_SCREEN);
 	}
 	
 	@FXML
