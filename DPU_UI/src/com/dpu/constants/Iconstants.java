@@ -2,7 +2,7 @@ package com.dpu.constants;
 
 public class Iconstants {
 
-	public static final String URL_SERVER = "http://localhost:8082/DPUWebProject/";
+	public static final String URL_SERVER = "http://localhost:8080/DPUWebProject/";
 	
 	public static final String COMMON_BASE_PACKAGE = "com/dpu/common/xml/";
 
@@ -13,6 +13,7 @@ public class Iconstants {
 	public static final String XML_TERMINAL_SCREEN = "ListTerminal.fxml";
 	public static final String URL_TERMINAL_API = "terminal";
 	public static final String XML_TERMINAL_ADD_SCREEN = "AddTerminal.fxml";
+	public static final String XML_TERMINAL_EDIT_SCREEN= "EditTerminal.fxml";
 
 	public static final String DRIVER_BASE_PACKAGE = "com/dpu/driver/xml/";
 	public static final String ADD_DRIVER_SCREEN = "AddDriverScreen2.fxml";

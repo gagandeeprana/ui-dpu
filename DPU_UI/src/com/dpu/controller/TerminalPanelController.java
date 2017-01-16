@@ -5,13 +5,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.swing.JOptionPane;
+
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.model.Failed;
+import com.dpu.model.Success;
 import com.dpu.model.Terminal;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,137 +27,188 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class TerminalPanelController extends Application implements Initializable {
 
 	@FXML
-	Button btnAdd;
-
-	@FXML
 	TableView<Terminal> tblTerminal;
-
+	
+	public List<Terminal> tList = null;
+	
 	@FXML
-	private TableColumn<Terminal, String> terminalName, facility, location;
-
+	TableColumn<Terminal, String> terminalName, facility, location;
+	
 	@FXML
-	public void btnAddAction() {
-		try {
-			openAddScreen();
-		} catch (Exception e) {
-			e.printStackTrace();
+	private void btnAddTerminalAction() {
+		System.out.println("fuddu");
+		openAddTerminalScreen();
+	}
+	
+	@FXML
+	private void btnEditTerminalAction() {
+		Terminal terminal = tblTerminal.getSelectionModel().getSelectedItem();
+		if(terminal != null) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_TERMINAL_API + "/" + terminal.getTerminalId(), null);
+						if(response != null && response.length() > 0) {
+							Terminal c = mapper.readValue(response, Terminal.class);
+							TerminalEditController terminalEditController = (TerminalEditController) openEditTerminalScreen();
+							terminalEditController.initData(c);
+						}
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					}
+				}
+			});
 		}
 	}
-
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		try {
-			fetchColumns();
-			Thread t = new Thread(new TerminalThread());
-			t.start();
-		} catch (Exception e) {
-			System.out.println("[initialize] Exception : " + e);
+	
+	@FXML
+	private void btnDeleteTerminalAction() {
+		Terminal terminal = tblTerminal.getSelectionModel().getSelectedItem();
+		if(terminal != null) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_TERMINAL_API + "/" + terminal.getTerminalId(), null);
+						if(response != null && response.contains("message")) {
+							Success success = mapper.readValue(response, Success.class);
+							JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
+						} else {
+							Failed failed = mapper.readValue(response, Failed.class);
+							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
+						}
+						fetchTerminals();
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					}
+				}
+			});
 		}
 	}
-
-	private void openAddScreen() {
+	
+	private void openAddTerminalScreen() {
 		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(
-					getClass().getClassLoader().getResource(Iconstants.TERMINAL_BASE_PACKAGE + "AddTerminal.fxml"));
-			Parent root = (Parent) fxmlLoader.load();
-			// AnchorPane vBox = (AnchorPane)root;
-			// MenuBar mnuBar = (MenuBar)vBox.getChildren().get(0);
-
-			Stage stage = new Stage();
-			stage.initModality(Modality.APPLICATION_MODAL);
-			// stage.initStyle(StageStyle.UNDECORATED);
-			stage.setTitle("MainScreen");
-			stage.setScene(new Scene(root));
-			// stage.setMaximized(true);
-			// mnuBar.prefWidthProperty().bind(stage.widthProperty());
-			// fxmlLoader.setController(MainScreen.class);
-			stage.show();
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.TERMINAL_BASE_PACKAGE + Iconstants.XML_TERMINAL_ADD_SCREEN));
+			
+	        Parent root = (Parent) fxmlLoader.load();
+	        
+	        Stage stage = new Stage();
+	        stage.initModality(Modality.APPLICATION_MODAL);
+	        stage.setTitle("Add New Terminal");
+	        stage.setScene(new Scene(root)); 
+	        stage.show();
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+	}
+	
+	private Object openEditTerminalScreen() {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.TERMINAL_BASE_PACKAGE + Iconstants.XML_TERMINAL_EDIT_SCREEN));
+			
+	        Parent root = (Parent) fxmlLoader.load();
+	        
+	        Stage stage = new Stage();
+	        stage.initModality(Modality.APPLICATION_MODAL);
+	        stage.setTitle("Edit Terminal");
+	        stage.setScene(new Scene(root)); 
+	        stage.show();
+	        return fxmlLoader.getController();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		fetchTerminals();
 	}
 
 	@Override
 	public void start(Stage primaryStage) {
-
-		try {
-			System.out.println("start");
-			Parent parent = FXMLLoader
-					.load(getClass().getClassLoader().getResource(Iconstants.TERMINAL_BASE_PACKAGE + "ListTerminal.fxml"));
-			System.out.println("XML : " + Iconstants.TERMINAL_BASE_PACKAGE + "ListTerminal.fxml");
-			Scene scene = new Scene(parent);
-			primaryStage.setScene(scene);
-			primaryStage.show();
-
-		} catch (Exception e) {
-			System.out.println(e);
-			e.printStackTrace();
-		}
 	}
 
 	public static void main(String[] args) {
-		System.out.println("main method called");
 		launch(args);
 	}
-	// new added
-
-	@SuppressWarnings("unchecked")
+	
+	
 	private void fetchColumns() {
-		try {
-			System.out.println("[fetchColumns]: Enter ");
-			terminalName = (TableColumn<Terminal, String>) tblTerminal.getColumns().get(0);
-			facility = (TableColumn<Terminal, String>) tblTerminal.getColumns().get(1);
-			location = (TableColumn<Terminal, String>) tblTerminal.getColumns().get(2);
-			System.out.println("[fetchColumns]: Exit ");
-		} catch (Exception e) {
-			System.out.println("[fetchColumns]:Exception " + e);
-		}
+		System.out.println("[fetchColumns]: Enter ");
+		terminalName = (TableColumn<Terminal, String>) tblTerminal.getColumns().get(0);
+		facility = (TableColumn<Terminal, String>) tblTerminal.getColumns().get(1);
+		location = (TableColumn<Terminal, String>) tblTerminal.getColumns().get(2);
+		System.out.println("[fetchColumns]: Exit ");
 	}
-
-	// Add One More class as Thread Class
-	class TerminalThread implements Runnable {
-
-		@Override
-		public void run() {
-
-			try {
-				String response = GetAPIClient.callGetAPI("http://localhost:8080/DPUWebProject/terminal", null);
-				System.out.println("response " + response);
-				ObjectMapper mapper = new ObjectMapper();
-				Terminal d[] = mapper.readValue(response, Terminal[].class);
-
-				List<Terminal> cList = new ArrayList<Terminal>();
-				for (Terminal ccl : d) {
-					cList.add(ccl);
+	
+	public void fetchTerminals() {
+		
+		fetchColumns();
+		Platform.runLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					ObjectMapper mapper = new ObjectMapper();
+					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_TERMINAL_API, null);
+					if(response != null && response.length() > 0) {
+						Terminal t[] = mapper.readValue(response, Terminal[].class);
+						tList = new ArrayList<Terminal>();
+						for(Terminal ttl : t) {
+							tList.add(ttl);
+						}
+						ObservableList<Terminal> data = FXCollections.observableArrayList(tList);
+						
+						setColumnValues();
+						tblTerminal.setItems(data);
+			
+						tblTerminal.setVisible(true);
+					}
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Try Again.." + e , "Info", 1);
 				}
-				ObservableList<Terminal> data = FXCollections.observableArrayList(cList);
-
-				setColumnValues();
-				tblTerminal.setItems(data);
-
-				tblTerminal.setVisible(true);
-
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-		}
-
-		private void setColumnValues() {
-			terminalName.setCellValueFactory(new PropertyValueFactory<Terminal, String>("terminalName"));
-			facility.setCellValueFactory(new PropertyValueFactory<Terminal, String>("firstName"));
-			location.setCellValueFactory(new PropertyValueFactory<Terminal, String>("lastName"));
-		}
-
+		});
+	}
+	
+private void setColumnValues() {
+		
+	terminalName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Terminal,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Terminal, String> param) {
+				return new SimpleStringProperty(param.getValue().getTerminalName() + "");
+			}
+		});
+	facility.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Terminal,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Terminal, String> param) {
+				return new SimpleStringProperty(param.getValue().getFacility() + "");
+			}
+		});
+	location.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Terminal,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Terminal, String> param) {
+				return new SimpleStringProperty(param.getValue().getLocation() + "");
+			}
+		});
 	}
 }
