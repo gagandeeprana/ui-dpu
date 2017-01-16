@@ -36,6 +36,8 @@ public class MainScreen extends Application implements Initializable {
 	
 	static CompanyController companyController;
 	
+	static DivisionController divisionController;
+	
 	@FXML
 	private void miDriverAction() {
 		showPanel(Iconstants.DRIVER_BASE_PACKAGE, Iconstants.XML_DRIVER_SCREEN);
@@ -80,6 +82,12 @@ public class MainScreen extends Application implements Initializable {
 	private void lblCompanyHeaderAction() {
 		companyController = (CompanyController) showPanel(Iconstants.COMPANY_BASE_PACKAGE, Iconstants.XML_COMPANY_SCREEN);
 	}
+	
+	@FXML
+	private void lblDivisionHeaderAction() {
+		divisionController = (DivisionController) showPanel(Iconstants.DIVISION_BASE_PACKAGE, Iconstants.XML_DIVISION_SCREEN);
+	}
+	
 	
 	@FXML
 	private void lblDAction() {
