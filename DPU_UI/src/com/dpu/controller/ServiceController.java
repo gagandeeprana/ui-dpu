@@ -9,9 +9,14 @@ import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.model.Company;
 import com.dpu.model.DPUService;
+import com.dpu.model.Driver;
+import com.dpu.model.Failed;
+import com.dpu.model.Success;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -55,6 +60,49 @@ public class ServiceController extends Application implements Initializable {
 	@FXML
 	private void btnAddServiceAction() {
 		openAddServiceScreen();
+	}
+	
+	@FXML
+	private void btnEditServiceAction() {
+		DPUService dpuService = tblService.getSelectionModel().getSelectedItem();
+		System.out.println(dpuService + "   service:: ");
+		if(dpuService != null) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_SERVICE_API + "/" + dpuService.getServiceId(), null);
+						if(response != null && response.length() > 0) {
+							DPUService c = mapper.readValue(response, DPUService.class);
+							ServiceEditController serviceEditController = (ServiceEditController) openEditServiceScreen();
+							serviceEditController.initData(c);
+						}
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." + e , "Info", 1);
+					}
+				}
+			});
+		}
+	}
+	
+	private Object openEditServiceScreen() {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.SERVICE_BASE_PACKAGE + Iconstants.XML_SERVICE_EDIT_SCREEN));
+			
+	        Parent root = (Parent) fxmlLoader.load();
+	        
+	        Stage stage = new Stage();
+	        stage.initModality(Modality.APPLICATION_MODAL);
+	        stage.setTitle("Edit Service");
+	        stage.setScene(new Scene(root)); 
+	        stage.show();
+	        return fxmlLoader.getController();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
 	}
 	
 	private void openAddServiceScreen() {
@@ -108,6 +156,33 @@ public class ServiceController extends Application implements Initializable {
 				}
 			}
 		});
+	}
+	
+	@FXML
+	private void btnDeleteServiceAction() {
+		DPUService service = tblService.getSelectionModel().getSelectedItem();
+		if(service != null) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_SERVICE_API + "/" + service.getServiceId(), null);
+						if(response != null && response.contains("message")) {
+							Success success = mapper.readValue(response, Success.class);
+							JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
+						} else {
+							Failed failed = mapper.readValue(response, Failed.class);
+							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
+						}
+						fetchServices();
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					}
+				}
+			});
+		}
 	}
 	
 	private void setColumnValues() {

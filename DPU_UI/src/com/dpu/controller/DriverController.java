@@ -9,9 +9,13 @@ import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.model.Company;
 import com.dpu.model.Driver;
+import com.dpu.model.Failed;
+import com.dpu.model.Success;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -59,6 +63,7 @@ public class DriverController extends Application implements Initializable {
 	        stage.setScene(new Scene(root)); 
 	        stage.show();
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println(e);
 		}
 	}
@@ -119,6 +124,76 @@ public class DriverController extends Application implements Initializable {
 		pager = (TableColumn<Driver, String>) tblDriver.getColumns().get(11);
 		email = (TableColumn<Driver, String>) tblDriver.getColumns().get(12);
 		driverClass = (TableColumn<Driver, String>) tblDriver.getColumns().get(13);
+	}
+	
+	@FXML
+	private void btnDeleteDriverAction() {
+		Driver driver = tblDriver.getSelectionModel().getSelectedItem();
+		if(driver != null) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_DRIVER_API + "/" + driver.getDriverId(), null);
+						if(response != null && response.contains("message")) {
+							Success success = mapper.readValue(response, Success.class);
+							JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
+						} else {
+							Failed failed = mapper.readValue(response, Failed.class);
+							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
+						}
+						fetchDrivers();
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					}
+				}
+			});
+		}
+	}
+	
+	@FXML
+	private void btnEditDriverAction() {
+		Driver driver = tblDriver.getSelectionModel().getSelectedItem();
+		System.out.println(driver + "   driver:: ");
+		if(driver != null) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_DRIVER_API + "/" + driver.getDriverId(), null);
+						if(response != null && response.length() > 0) {
+							Driver c = mapper.readValue(response, Driver.class);
+							DriverEditController driverEditController = (DriverEditController) openEditDriverScreen();
+							driverEditController.initData(c);
+						}
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." + e , "Info", 1);
+					}
+				}
+			});
+		}
+	}
+	
+	private Object openEditDriverScreen() {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.DRIVER_BASE_PACKAGE + Iconstants.XML_DRIVER_EDIT_SCREEN));
+			
+	        Parent root = (Parent) fxmlLoader.load();
+	        
+	        Stage stage = new Stage();
+	        stage.initModality(Modality.APPLICATION_MODAL);
+	        stage.setTitle("Edit Driver");
+	        stage.setScene(new Scene(root)); 
+	        stage.show();
+	        return fxmlLoader.getController();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
 	}
 	
 	private void setColumnValues() {
@@ -218,7 +293,7 @@ public class DriverController extends Application implements Initializable {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Driver, String> param) {
-				return new SimpleStringProperty(param.getValue().getClassId() + "");
+				return new SimpleStringProperty(param.getValue().getDriverClassId() + "");
 			}
 		});
 	}

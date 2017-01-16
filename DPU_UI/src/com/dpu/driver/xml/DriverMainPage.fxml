@@ -12,8 +12,8 @@
     <TextField layoutX="84.0" layoutY="14.0" prefWidth="157.0" />
     <Button layoutX="249.0" layoutY="14.0" mnemonicParsing="false" prefWidth="42.0" text="GO" /> 
     <Button fx:id="btnAddDriver" layoutX="301.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnAddDriverAction" prefWidth="56.0" text="ADD" />
-    <Button layoutX="371.0" layoutY="14.0" mnemonicParsing="false" prefWidth="59.0" text="EDIT" />
-    <Button layoutX="448.0" layoutY="14.0" mnemonicParsing="false" text="DELETE" />
+    <Button fx:id="btnEditDriver" layoutX="371.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnEditDriverAction" prefWidth="59.0" text="EDIT" />
+    <Button fx:id="btnDeleteDriver" layoutX="448.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnDeleteDriverAction" text="DELETE" />
     <TableView fx:id="tblDriver" layoutX="0.0" layoutY="36.0" prefHeight="485.0" prefWidth="745.0">
       <columns>
         <TableColumn fx:id="driverCode" maxWidth="5000.0" minWidth="10.0" prefWidth="73.0" text="Driver Code" />
