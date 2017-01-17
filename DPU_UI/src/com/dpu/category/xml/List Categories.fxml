@@ -17,9 +17,9 @@
             <TextField layoutX="88.0" layoutY="9.0" />
             <CheckBox layoutX="276.0" layoutY="11.0" mnemonicParsing="false" text="Show All" />
             <Button layoutX="238.0" layoutY="8.0" mnemonicParsing="false" text="Go" />
-            <Button layoutX="349.0" layoutY="7.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="Add" />
-            <Button layoutX="409.0" layoutY="7.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="Edit" />
-            <Button layoutX="469.0" layoutY="7.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="Delete" />
+            <Button fx:id="btnAddCategory" layoutX="349.0" layoutY="7.0" mnemonicParsing="false" onAction="#btnAddCategoryAction" prefHeight="25.0" prefWidth="55.0" text="Add" />
+            <Button fx:id="btnEditCategory" layoutX="409.0" layoutY="7.0" mnemonicParsing="false" onAction="#btnEditCategoryAction" prefHeight="25.0" prefWidth="55.0" text="Edit" />
+            <Button fx:id="btnDeleteCategory" layoutX="469.0" layoutY="7.0" mnemonicParsing="false" onAction="#btnDeleteCategoryAction" prefHeight="25.0" prefWidth="55.0" text="Delete" />
             <Button layoutX="529.0" layoutY="7.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="E-Mail" />
          </children>
       </AnchorPane>
