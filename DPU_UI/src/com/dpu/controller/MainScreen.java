@@ -19,111 +19,116 @@ import javafx.stage.Stage;
 
 public class MainScreen extends Application implements Initializable {
 
-//	@FXML
-//	MenuItem mnuCompany;
-	
+	// @FXML
+	// MenuItem mnuCompany;
+
 	@FXML
 	VBox mainScreenVBox;
-	
+
 	@FXML
 	MenuBar mnuBarDatamaintenance;
 
 	static TruckController truckController;
-	
+
 	static TrailerController trailerController;
 
 	static ShipperController shipperController;
-	
+
 	static CompanyController companyController;
-	
+
 	static DivisionController divisionController;
-	
+
+	static ServiceController serviceController;
+
 	@FXML
 	private void miDriverAction() {
 		showPanel(Iconstants.DRIVER_BASE_PACKAGE, Iconstants.XML_DRIVER_SCREEN);
 	}
-	
+
 	@FXML
 	private void miDivisionAction() {
 		showPanel(Iconstants.DIVISION_BASE_PACKAGE, Iconstants.XML_DIVISION_SCREEN);
 	}
-	
+
 	@FXML
 	private void miCategoryAction() {
 		showPanel(Iconstants.CATEGORY_BASE_PACKAGE, Iconstants.XML_CATEGORY_SCREEN);
 	}
-	
+
 	@FXML
 	private void miEquipmentAction() {
 		showPanel(Iconstants.EQUIPMENT_BASE_PACKAGE, Iconstants.XML_EQUIPMENT_SCREEN);
 	}
-	
+
 	@FXML
 	private void miServiceAction() {
-		showPanel(Iconstants.SERVICE_BASE_PACKAGE, Iconstants.XML_SERVICE_SCREEN);
+		serviceController = (ServiceController) showPanel(Iconstants.SERVICE_BASE_PACKAGE,
+				Iconstants.XML_SERVICE_SCREEN);
 	}
-	
+
 	@FXML
 	private void lblTrailerHeaderAction() {
-		trailerController = (TrailerController) showPanel(Iconstants.TRAILER_BASE_PACKAGE, Iconstants.XML_TRAILER_SCREEN);
+		trailerController = (TrailerController) showPanel(Iconstants.TRAILER_BASE_PACKAGE,
+				Iconstants.XML_TRAILER_SCREEN);
 	}
-	
+
 	@FXML
 	private void miShipperAction() {
-		shipperController = (ShipperController) showPanel(Iconstants.SHIPPER_BASE_PACKAGE, Iconstants.XML_SHIPPER_SCREEN);
+		shipperController = (ShipperController) showPanel(Iconstants.SHIPPER_BASE_PACKAGE,
+				Iconstants.XML_SHIPPER_SCREEN);
 	}
-	
+
 	@FXML
 	private void lblTruckHeaderAction() {
 		truckController = (TruckController) showPanel(Iconstants.TRUCK_BASE_PACKAGE, Iconstants.XML_TRUCK_SCREEN);
 	}
-	
+
 	@FXML
 	private void lblCompanyHeaderAction() {
-		companyController = (CompanyController) showPanel(Iconstants.COMPANY_BASE_PACKAGE, Iconstants.XML_COMPANY_SCREEN);
+		companyController = (CompanyController) showPanel(Iconstants.COMPANY_BASE_PACKAGE,
+				Iconstants.XML_COMPANY_SCREEN);
 	}
-	
+
 	@FXML
 	private void lblDivisionHeaderAction() {
-		divisionController = (DivisionController) showPanel(Iconstants.DIVISION_BASE_PACKAGE, Iconstants.XML_DIVISION_SCREEN);
+		divisionController = (DivisionController) showPanel(Iconstants.DIVISION_BASE_PACKAGE,
+				Iconstants.XML_DIVISION_SCREEN);
 	}
-	
-	
+
 	@FXML
 	private void lblDAction() {
 		mnuBarDatamaintenance.setVisible(true);
 	}
-	
+
 	@FXML
 	private void miTerminalAction() {
 		showPanel(Iconstants.TERMINAL_BASE_PACKAGE, Iconstants.XML_TERMINAL_SCREEN);
 	}
-	
-	
+
 	@Override
 	public void start(Stage primaryStage) {
-		
+
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 	}
-	
+
 	private Object showPanel(String basePackage, String screenName) {
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(basePackage + screenName));
-	        Parent root = (Parent) fxmlLoader.load();
-	        Pane pane  = (Pane)root;
-	        
-	        ObservableList<Node> nodes = mainScreenVBox.getChildren();
-	        
-	        if(nodes!= null && nodes.size() >= 4 && nodes.get(3) != null) {
-	        	nodes.remove(3);
-	        	nodes.add(3, pane);
-	        } else {
-	        	nodes.add(pane);
-	        }
-	        return fxmlLoader.getController();
+			Parent root = (Parent) fxmlLoader.load();
+			Pane pane = (Pane) root;
+
+			ObservableList<Node> nodes = mainScreenVBox.getChildren();
+
+			if (nodes != null && nodes.size() >= 4 && nodes.get(3) != null) {
+				nodes.remove(3);
+				nodes.add(3, pane);
+			} else {
+				nodes.add(pane);
+			}
+			return fxmlLoader.getController();
 		} catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
