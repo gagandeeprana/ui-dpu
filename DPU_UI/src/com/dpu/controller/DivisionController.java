@@ -140,6 +140,7 @@ public class DivisionController extends Application implements Initializable {
 		}
 		return null;
 	}
+	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
