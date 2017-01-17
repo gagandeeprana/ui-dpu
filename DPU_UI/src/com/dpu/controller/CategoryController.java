@@ -95,7 +95,7 @@ public class CategoryController extends Application implements Initializable {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Category, String> param) {
-				return new SimpleStringProperty(param.getValue().getCategoryId() + "");
+				return new SimpleStringProperty(param.getValue().getName() + "");
 			}
 		});
 

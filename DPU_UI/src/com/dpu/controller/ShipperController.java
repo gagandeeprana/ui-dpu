@@ -12,7 +12,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.model.Company;
 import com.dpu.model.Failed;
 import com.dpu.model.Shipper;
 import com.dpu.model.Success;
@@ -63,7 +62,9 @@ public class ShipperController extends Application implements Initializable {
 	
 	@FXML
 	private void btnEditShipperAction() {
+		System.out.println("121212");
 		Shipper shipper = tblShipper.getSelectionModel().getSelectedItem();
+		System.out.println(shipper);
 		if(shipper != null) {
 			Platform.runLater(new Runnable() {
 				

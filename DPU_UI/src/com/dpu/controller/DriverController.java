@@ -1,0 +1,226 @@
+package com.dpu.controller;
+
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+
+import javax.swing.JOptionPane;
+
+import org.codehaus.jackson.map.ObjectMapper;
+
+import com.dpu.client.GetAPIClient;
+import com.dpu.constants.Iconstants;
+import com.dpu.model.Driver;
+
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.util.Callback;
+
+public class DriverController extends Application implements Initializable {
+
+	@FXML
+	TableView<Driver> tblDriver;
+	
+	public List<Driver> dList = null;
+	
+	@FXML
+	TableColumn<Driver, String> driverCode, firstName, lastName, address, unit, city, province, postalCode, home,
+	faxNo, cellular, pager, email, driverClass;
+	
+	@FXML
+	public void btnAddDriverAction() {
+		openAddDriverScreen();
+	}
+
+	private void openAddDriverScreen() {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.DRIVER_BASE_PACKAGE + Iconstants.XML_DRIVER_ADD_SCREEN));
+			
+	        Parent root = (Parent) fxmlLoader.load();
+	        
+	        Stage stage = new Stage();
+	        stage.initModality(Modality.APPLICATION_MODAL);
+	        stage.setTitle("Add New Driver");
+	        stage.setScene(new Scene(root)); 
+	        stage.show();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		fetchDrivers();	
+	}
+	
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+	}
+	
+	public void fetchDrivers() {
+		
+		fetchColumns();
+		Platform.runLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					ObjectMapper mapper = new ObjectMapper();
+
+					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_DRIVER_API, null);
+					if(response != null && response.length() > 0) {
+						Driver d[] = mapper.readValue(response, Driver[].class);
+						dList = new ArrayList<Driver>();
+						for(Driver ddl : d) {
+							dList.add(ddl);
+						}
+						ObservableList<Driver> data = FXCollections.observableArrayList(dList);
+						
+						setColumnValues();
+						tblDriver.setItems(data);
+			
+			            tblDriver.setVisible(true);
+					}
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+				}
+			}
+		});
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void fetchColumns() {
+		driverCode = (TableColumn<Driver, String>) tblDriver.getColumns().get(0);
+		firstName = (TableColumn<Driver, String>) tblDriver.getColumns().get(1);
+		lastName = (TableColumn<Driver, String>) tblDriver.getColumns().get(2);
+		address = (TableColumn<Driver, String>) tblDriver.getColumns().get(3);
+		unit = (TableColumn<Driver, String>) tblDriver.getColumns().get(4);
+		city = (TableColumn<Driver, String>) tblDriver.getColumns().get(5);
+		province = (TableColumn<Driver, String>) tblDriver.getColumns().get(6);
+		postalCode = (TableColumn<Driver, String>) tblDriver.getColumns().get(7);
+		home = (TableColumn<Driver, String>) tblDriver.getColumns().get(8);
+		faxNo = (TableColumn<Driver, String>) tblDriver.getColumns().get(9);
+		cellular = (TableColumn<Driver, String>) tblDriver.getColumns().get(10);
+		pager = (TableColumn<Driver, String>) tblDriver.getColumns().get(11);
+		email = (TableColumn<Driver, String>) tblDriver.getColumns().get(12);
+		driverClass = (TableColumn<Driver, String>) tblDriver.getColumns().get(13);
+	}
+	
+	private void setColumnValues() {
+		
+		driverCode.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Driver,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Driver, String> param) {
+				return new SimpleStringProperty(param.getValue().getDriverCode() + "");
+			}
+		});
+		firstName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Driver,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Driver, String> param) {
+				return new SimpleStringProperty(param.getValue().getFirstName() + "");
+			}
+		});
+		lastName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Driver,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Driver, String> param) {
+				return new SimpleStringProperty(param.getValue().getLastName() + "");
+			}
+		});
+		address.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Driver,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Driver, String> param) {
+				return new SimpleStringProperty(param.getValue().getAddress() + "");
+			}
+		});
+		unit.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Driver,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Driver, String> param) {
+				return new SimpleStringProperty(param.getValue().getUnit() + "");
+			}
+		});
+		city.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Driver,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Driver, String> param) {
+				return new SimpleStringProperty(param.getValue().getCity() + "");
+			}
+		});
+		province.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Driver,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Driver, String> param) {
+				return new SimpleStringProperty(param.getValue().getPvs() + "");
+			}
+		});
+		postalCode.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Driver,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Driver, String> param) {
+				return new SimpleStringProperty(param.getValue().getPostalCode() + "");
+			}
+		});
+		home.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Driver,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Driver, String> param) {
+				return new SimpleStringProperty(param.getValue().getHome() + "");
+			}
+		});
+		faxNo.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Driver,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Driver, String> param) {
+				return new SimpleStringProperty(param.getValue().getFaxNo() + "");
+			}
+		});
+		cellular.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Driver,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Driver, String> param) {
+				return new SimpleStringProperty(param.getValue().getCellular() + "");
+			}
+		});
+		pager.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Driver,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Driver, String> param) {
+				return new SimpleStringProperty(param.getValue().getPager() + "");
+			}
+		});
+		email.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Driver,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Driver, String> param) {
+				return new SimpleStringProperty(param.getValue().getEmail() + "");
+			}
+		});
+		driverClass.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Driver,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Driver, String> param) {
+				return new SimpleStringProperty(param.getValue().getClassId() + "");
+			}
+		});
+	}
+
+}

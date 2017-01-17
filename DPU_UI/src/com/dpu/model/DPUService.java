@@ -1,6 +1,5 @@
 package com.dpu.model;
 
-import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
@@ -10,19 +9,39 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
  */
 
 @JsonSerialize(include = Inclusion.NON_NULL)
-public class Service {
+public class DPUService {
 	
-	@JsonProperty(value = "service_id")
+	//@JsonProperty(value = "service_id")
 	private int serviceId;
 
-	@JsonProperty(value = "service_name")
+	//@JsonProperty(value = "service_name")
 	private String serviceName;
 
-	@JsonProperty(value = "service_response")
+	//@JsonProperty(value = "service_response")
 	private int serviceResponse;
 
-	@JsonProperty(value = "status")
+	//@JsonProperty(value = "status")
 	private int status;
+	
+	private String textField;
+	
+	private String associationWith;
+
+	public String getTextField() {
+		return textField;
+	}
+
+	public void setTextField(String textField) {
+		this.textField = textField;
+	}
+
+	public String getAssociationWith() {
+		return associationWith;
+	}
+
+	public void setAssociationWith(String associationWith) {
+		this.associationWith = associationWith;
+	}
 
 	public int getServiceId() {
 		return serviceId;
