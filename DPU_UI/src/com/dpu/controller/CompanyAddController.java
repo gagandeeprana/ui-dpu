@@ -1,6 +1,7 @@
 package com.dpu.controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
@@ -9,7 +10,9 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.model.BillingLocations;
 import com.dpu.model.Company;
+import com.dpu.model.Driver;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
 
@@ -18,15 +21,20 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class CompanyAddController extends Application implements Initializable{
@@ -50,7 +58,13 @@ public class CompanyAddController extends Application implements Initializable{
 	}
 	
 	@FXML
-	TableView tableBillingLocations;
+	TableView<BillingLocations> tableBillingLocations;
+	
+	public List<BillingLocations> billLocList = null;
+	
+	@FXML
+	TableColumn<BillingLocations, String> name, address, unitNo, city, provinceState, zip, arCDN, arUS, status,
+	contact, position, email, cellular, phone,ext,fax,prefix,tollfree,companyId;
 	
 	@FXML public void handleMouseClick(MouseEvent arg0) {
 	    System.out.println("clicked on " );
@@ -81,7 +95,9 @@ public class CompanyAddController extends Application implements Initializable{
  
             @Override
             public void handle(ActionEvent event) {
-                label.setText("Select Menu Item 1");
+            	System.out.println("[btnAddDriverAction]  : Enter");
+        		openAddBillingLocationScreen();
+               // label.setText("Select Menu Item 1");
             }
         });
         MenuItem item2 = new MenuItem("EDIT");
@@ -126,6 +142,25 @@ public class CompanyAddController extends Application implements Initializable{
         stage.setScene(scene);
         stage.show();*/
 		
+	}
+	
+	// method added for add billing location screen
+	private void openAddBillingLocationScreen() {
+		System.out.println("[openAddDriverScreen]  : Enter");
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.DRIVER_BASE_PACKAGE + Iconstants.XML_DRIVER_ADD_SCREEN));
+			
+	        Parent root = (Parent) fxmlLoader.load();
+	        
+	        Stage stage = new Stage();
+	        stage.initModality(Modality.APPLICATION_MODAL);
+	        stage.setTitle("Add New Driver");
+	        stage.setScene(new Scene(root)); 
+	        stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Exception :"+e);
+		}
 	}
 	
 	private void addCompany() {
