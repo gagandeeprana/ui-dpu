@@ -1,19 +1,20 @@
 package com.dpu.model;
 
-import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
 @JsonSerialize(include = Inclusion.NON_NULL)
 public class Terminal {
-	@JsonProperty(value = "terminal_id")
+	//@JsonProperty(value = "terminal_id")
 	private int terminalId;
-	@JsonProperty(value = "terminal_name")
+	//@JsonProperty(value = "terminal_name")
 	private String terminalName;
-	@JsonProperty(value = "facility")
+	//@JsonProperty(value = "facility")
 	private String facility;
-	@JsonProperty(value = "location")
+	//@JsonProperty(value = "location")
 	private String location;
+	
+	private String availableServices;
 
 	public int getTerminalId() {
 		return terminalId;
@@ -46,5 +47,14 @@ public class Terminal {
 	public void setLocation(String location) {
 		this.location = location;
 	}
+
+	public String getAvailableServices() {
+		return availableServices;
+	}
+
+	public void setAvailableServices(String availableServices) {
+		this.availableServices = availableServices;
+	}
+	
 	
 }

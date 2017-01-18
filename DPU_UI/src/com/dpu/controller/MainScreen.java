@@ -35,7 +35,9 @@ public class MainScreen extends Application implements Initializable {
 	static ShipperController shipperController;
 
 	static CompanyController companyController;
-
+	
+	static TerminalPanelController terminalController;
+	
 	static DivisionController divisionController;
 
 	static ServiceController serviceController;
@@ -110,7 +112,7 @@ public class MainScreen extends Application implements Initializable {
 
 	@FXML
 	private void miTerminalAction() {
-		showPanel(Iconstants.TERMINAL_BASE_PACKAGE, Iconstants.XML_TERMINAL_SCREEN);
+		terminalController = (TerminalPanelController)showPanel(Iconstants.TERMINAL_BASE_PACKAGE, Iconstants.XML_TERMINAL_SCREEN);
 	}
 
 	@Override

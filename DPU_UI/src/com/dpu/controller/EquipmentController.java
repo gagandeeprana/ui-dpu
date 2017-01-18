@@ -16,7 +16,6 @@ import com.dpu.model.Category;
 import com.dpu.model.Equipment;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;

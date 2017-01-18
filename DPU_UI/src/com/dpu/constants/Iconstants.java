@@ -3,6 +3,10 @@ package com.dpu.constants;
 public class Iconstants {
 
 	public static final String URL_SERVER = "http://localhost:8080/DPUWebProject/";
+<<<<<<< HEAD
+=======
+	
+>>>>>>> 707f65e56666730182188ec922895995530a27d2
 
 	public static final String COMMON_BASE_PACKAGE = "com/dpu/common/xml/";
 
@@ -11,6 +15,9 @@ public class Iconstants {
 
 	public static final String TERMINAL_BASE_PACKAGE = "com/dpu/terminal/xml/";
 	public static final String XML_TERMINAL_SCREEN = "ListTerminal.fxml";
+	public static final String URL_TERMINAL_API = "terminal";
+	public static final String XML_TERMINAL_ADD_SCREEN = "AddTerminal.fxml";
+	public static final String XML_TERMINAL_EDIT_SCREEN= "EditTerminal.fxml";
 
 	public static final String DRIVER_BASE_PACKAGE = "com/dpu/driver/xml/";
 	public static final String XML_DRIVER_SCREEN = "DriverMainPage.fxml";
@@ -57,10 +64,16 @@ public class Iconstants {
 	public static final String CATEGORY_BASE_PACKAGE = "com/dpu/category/xml/";
 	public static final String XML_CATEGORY_SCREEN = "List Categories.fxml";
 	public static final String URL_CATEGORY_API = "category";
+<<<<<<< HEAD
 
 	public static final String XML_CATEGORY_ADD_SCREEN = "Add Categories.fxml";
 	public static final String XML_CATEGORY_EDIT_SCREEN = "Edit Categories.fxml";
 
+=======
+	public static final String XML_CATEGORY_ADD_SCREEN = "Add Categories.fxml";
+	public static final String XML_CATEGORY_EDIT_SCREEN = "Edit Categories.fxml";
+	
+>>>>>>> 707f65e56666730182188ec922895995530a27d2
 	public static final String EQUIPMENT_BASE_PACKAGE = "com/dpu/equipment/xml/";
 	public static final String XML_EQUIPMENT_SCREEN = "List Equipment.fxml";
 	public static final String URL_EQUIPMENT_API = "equipment";

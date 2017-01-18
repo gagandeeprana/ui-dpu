@@ -53,6 +53,9 @@ public class ShipperEditController extends Application implements Initializable{
 					Shipper shipper = setShipperValue();
 					String payload = mapper.writeValueAsString(shipper);
 
+
+				//	String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_TRAILER_API + "/" + "trailerId", null, payload);
+
 					String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_SHIPPER_API + "/" + shipperId, null, payload);
 					
 					if(response != null && response.contains("message")) {
@@ -71,6 +74,7 @@ public class ShipperEditController extends Application implements Initializable{
 		
 	}
 	
+
 	//to update, set these values
 	private Shipper setShipperValue() {
 		Shipper shipper = new Shipper();
@@ -119,6 +123,7 @@ public class ShipperEditController extends Application implements Initializable{
 	
 	public void initData(Shipper s) {
 		shipperId = s.getShipperId();
+
 		txtCompany.setText(s.getCompany());
 		txtContact.setText(s.getContact());
 		txtAddress.setText(s.getAddress());
