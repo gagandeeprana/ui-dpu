@@ -59,13 +59,9 @@ public class Iconstants {
 	public static final String CATEGORY_BASE_PACKAGE = "com/dpu/category/xml/";
 	public static final String XML_CATEGORY_SCREEN = "List Categories.fxml";
 	public static final String URL_CATEGORY_API = "category";
-<<<<<<< HEAD
-
-=======
 	public static final String XML_CATEGORY_ADD_SCREEN = "Add Categories.fxml";
 	public static final String XML_CATEGORY_EDIT_SCREEN = "Edit Categories.fxml";
 	
->>>>>>> aa0476973b3211b65c8023723047642eb6dde38b
 	public static final String EQUIPMENT_BASE_PACKAGE = "com/dpu/equipment/xml/";
 	public static final String XML_EQUIPMENT_SCREEN = "List Equipment.fxml";
 	public static final String URL_EQUIPMENT_API = "equipment";
