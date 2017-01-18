@@ -34,7 +34,7 @@ import javafx.stage.Stage;
 public class DivisionEditController extends Application implements Initializable {
 
 	@FXML
-	Button btnUpdateDivision,btnCancel;
+	Button btnUpdateDivision, btnCancel;
 
 	int divisionId = 0;
 
@@ -116,6 +116,8 @@ public class DivisionEditController extends Application implements Initializable
 	}
 
 	public void initData(Division d) {
+		System.out.println("pppppppppppp");
+		System.out.println(d.getDivisionId() + " " + d.getCarrierCode() + " " + d.getDivisionCode());
 		divisionId = d.getDivisionId();
 		txtCarrierCode.setText(d.getCarrierCode());
 		txtContractPrefix.setText(d.getContractPrefix());
@@ -125,6 +127,7 @@ public class DivisionEditController extends Application implements Initializable
 		txtInvoicePrefix.setText(d.getInvoicePrefix());
 		txtProvincial.setText(d.getProvincial());
 		txtSCAC.setText(d.getSCAC());
+
 	}
 
 }

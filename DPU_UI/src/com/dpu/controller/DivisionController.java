@@ -63,9 +63,14 @@ public class DivisionController extends Application implements Initializable {
 						String response = GetAPIClient.callGetAPI(
 								Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API + "/" + division.getDivisionId(),
 								null);
+						System.out.println("resp " + response);
 						if (response != null && response.length() > 0) {
+
+							System.out.println("1111111111111");
 							Division division = mapper.readValue(response, Division.class);
+							System.out.println("2222222222   " + division.getDivisionId());
 							DivisionEditController divisionEditController = (DivisionEditController) openEditDivisionScreen();
+							System.out.println("333333333");
 							divisionEditController.initData(division);
 						}
 					} catch (Exception e) {
@@ -140,7 +145,6 @@ public class DivisionController extends Application implements Initializable {
 		}
 		return null;
 	}
-	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
