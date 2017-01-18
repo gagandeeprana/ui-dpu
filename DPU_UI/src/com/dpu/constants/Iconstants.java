@@ -76,5 +76,8 @@ public class Iconstants {
 	public static final String URL_ADD_COMPANY_BILLING_LOCATION_API="company/108/billinglocations";
 	// For Billing Location Screen
 	public static int val = 0;
+	
+	// for Additional contact screen
+	public static final String XML_ADD_ADDITIONAL_CONTACT_SCREEN ="AdditionalContactAddScreen.fxml";
 
 }

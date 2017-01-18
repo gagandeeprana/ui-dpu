@@ -12,6 +12,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.GetAPIClient;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.model.AdditionalContact;
 import com.dpu.model.BillingLocations;
 import com.dpu.model.Company;
 import com.dpu.model.Failed;
@@ -76,6 +77,8 @@ public class CompanyAddController extends Application implements Initializable {
 		
 	}
 	
+	
+	
 	@FXML
 	TableView<BillingLocations> tableBillingLocations;
 	
@@ -85,6 +88,91 @@ public class CompanyAddController extends Application implements Initializable {
 	TableColumn<BillingLocations, String> name, address, unitNo, city, provinceState, zip, arCDN, arUS, status,
 	contact, position, email, cellular, phone,ext,fax,prefix,tollfree,companyId;
 	
+	
+	// for Additional contact screen
+	@FXML
+	TableView<AdditionalContact> tableAdditionalContact;
+	
+	public List<AdditionalContact> AddConList = null;
+	
+	@FXML
+	TableColumn<AdditionalContact, String> additionalContact,positionn, phoneNumber,ExtensionNumber,faxNumber,pagerNumber,
+	 cellularNumber,statuss,emaill;
+	
+	
+	 
+	//for Additional Contact Screen table
+	@FXML public void handleAddContMouseClick(MouseEvent arg0) {
+	    System.out.println("clicked on " );
+	 
+         System.out.println("OK");
+      
+	 
+		System.out.println("[CompanyController] : [start] : Enter Start method.");
+		 
+		 
+       Label label = new Label();
+ 
+       
+        // Create ContextMenu
+        ContextMenu contextMenu = new ContextMenu();
+ 
+        MenuItem item1 = new MenuItem("ADD");
+        item1.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+            	System.out.println("[btnAddBillingLocationAction]  : Enter");
+            	openAddAdditionalScreenScreen();
+               // label.setText("Select Menu Item 1");
+            }
+        });
+        MenuItem item2 = new MenuItem("EDIT");
+        item2.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+                label.setText("Select Menu Item 2");
+            }
+        });
+        
+        MenuItem item3 = new MenuItem("DELETE");
+        item3.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+                label.setText("Select Menu Item 1");
+            }
+        });
+ 
+        // Add MenuItem to ContextMenu
+        contextMenu.getItems().addAll(item1, item2, item3);
+        int count = 0;
+        if(count == 0){
+        // When user right-click on Table
+        	tableAdditionalContact.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+  
+            @Override
+            public void handle(ContextMenuEvent event) {
+            	
+                contextMenu.show(tableBillingLocations, event.getScreenX(), event.getScreenY());
+                
+            }
+           
+        });
+        count =1;
+        }
+ 
+       // Scene scene = new Scene(root, 400, 200);
+ 
+        /*stage.setTitle("JavaFX ContextMenu (o7planning.org)");
+        stage.setScene(scene);
+        stage.show();*/
+		
+	}
+	
+	
+	// for Billing Location
 	@FXML public void handleMouseClick(MouseEvent arg0) {
 	    System.out.println("clicked on " );
 	 
@@ -182,6 +270,25 @@ public class CompanyAddController extends Application implements Initializable {
 		}
 	}
 	
+	// open Additional Contact Screen
+	 
+		private void openAddAdditionalScreenScreen() {
+			System.out.println("[openAddAdditionalScreenScreen]  : Enter");
+			try {
+				//FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_ADD_BILLING_LOCATION_SCREEN));
+				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_ADD_ADDITIONAL_CONTACT_SCREEN));
+		        Parent root = (Parent) fxmlLoader.load();
+		        
+		        Stage stage = new Stage();
+		        stage.initModality(Modality.APPLICATION_MODAL);
+		        stage.setTitle("ADD ADDITIONAL CONTACT");
+		        stage.setScene(new Scene(root)); 
+		        stage.show();
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Exception :"+e);
+			}
+		}
 	private void addCompany() {
 		
 		Platform.runLater(new Runnable() {
