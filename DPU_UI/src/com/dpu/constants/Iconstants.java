@@ -4,6 +4,7 @@ public class Iconstants {
 
 	public static final String URL_SERVER = "http://localhost:8080/DPUWebProject/";
 	
+
 	public static final String COMMON_BASE_PACKAGE = "com/dpu/common/xml/";
 
 	public static final String XML_LOGIN_SCREEN = "Login.fxml";
@@ -39,14 +40,12 @@ public class Iconstants {
 	public static final String XML_TRAILER_ADD_SCREEN = "Add Trailer.fxml";
 	public static final String XML_TRAILER_EDIT_SCREEN = "Edit Trailer.fxml";
 
-
 	public static final String SHIPPER_BASE_PACKAGE = "com/dpu/shipper/xml/";
 	public static final String XML_SHIPPER_SCREEN = "ShipperListingScreen.fxml";
 	public static final String URL_SHIPPER_API = "shipper";
 	public static final String XML_SHIPPER_ADD_SCREEN = "ShipperAddScreen.fxml";
 	public static final String XML_SHIPPER_EDIT_SCREEN = "ShipperEditScreen.fxml";
 
-	
 	public static final String SERVICE_BASE_PACKAGE = "com/dpu/service/xml/";
 	public static final String XML_SERVICE_SCREEN = "ServiceListing.fxml";
 	public static final String URL_SERVICE_API = "service";
@@ -54,8 +53,11 @@ public class Iconstants {
 	public static final String XML_SERVICE_EDIT_SCREEN = "Edit Service.fxml";
 
 	public static final String DIVISION_BASE_PACKAGE = "com/dpu/division/xml/";
-	public static final String XML_DIVISION_SCREEN = "List Division.fxml";
-	
+	public static final String XML_DIVISION_SCREEN = "ListDivision.fxml";
+	public static final String URL_DIVISION_API = "division";
+	public static final String XML_DIVISION_ADD_SCREEN = "AddDivision.fxml";
+	public static final String XML_DIVISION_EDIT_SCREEN = "EditDivision.fxml";
+
 	public static final String CATEGORY_BASE_PACKAGE = "com/dpu/category/xml/";
 	public static final String XML_CATEGORY_SCREEN = "List Categories.fxml";
 	public static final String URL_CATEGORY_API = "category";
