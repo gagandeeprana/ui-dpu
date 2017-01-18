@@ -1,6 +1,7 @@
 package com.dpu.controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
@@ -9,16 +10,31 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.model.BillingLocations;
 import com.dpu.model.Company;
+import com.dpu.model.Driver;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class CompanyAddController extends Application implements Initializable{
@@ -39,6 +55,112 @@ public class CompanyAddController extends Application implements Initializable{
 	private void closeAddCompanyScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
         loginStage.close();
+	}
+	
+	@FXML
+	TableView<BillingLocations> tableBillingLocations;
+	
+	public List<BillingLocations> billLocList = null;
+	
+	@FXML
+	TableColumn<BillingLocations, String> name, address, unitNo, city, provinceState, zip, arCDN, arUS, status,
+	contact, position, email, cellular, phone,ext,fax,prefix,tollfree,companyId;
+	
+	@FXML public void handleMouseClick(MouseEvent arg0) {
+	    System.out.println("clicked on " );
+	 
+         System.out.println("OK");
+      
+	 
+		System.out.println("[CompanyController] : [start] : Enter Start method.");
+		 
+		 
+       Label label = new Label();
+ 
+       /* Circle circle = new Circle();
+        circle.setRadius(80);
+        circle.setFill(Color.AQUA);
+ 
+        VBox root = new VBox();
+        root.setPadding(new Insets(5));
+        root.setSpacing(5);
+ 
+        root.getChildren().addAll(label, circle);*/
+ 
+        // Create ContextMenu
+        ContextMenu contextMenu = new ContextMenu();
+ 
+        MenuItem item1 = new MenuItem("ADD");
+        item1.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+            	System.out.println("[btnAddDriverAction]  : Enter");
+        		openAddBillingLocationScreen();
+               // label.setText("Select Menu Item 1");
+            }
+        });
+        MenuItem item2 = new MenuItem("EDIT");
+        item2.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+                label.setText("Select Menu Item 2");
+            }
+        });
+        
+        MenuItem item3 = new MenuItem("DELETE");
+        item3.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+                label.setText("Select Menu Item 1");
+            }
+        });
+ 
+        // Add MenuItem to ContextMenu
+        contextMenu.getItems().addAll(item1, item2, item3);
+        int count = 0;
+        if(count == 0){
+        // When user right-click on Table
+        tableBillingLocations.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+  
+            @Override
+            public void handle(ContextMenuEvent event) {
+            	
+                contextMenu.show(tableBillingLocations, event.getScreenX(), event.getScreenY());
+                
+            }
+           
+        });
+        count =1;
+        }
+ 
+       // Scene scene = new Scene(root, 400, 200);
+ 
+        /*stage.setTitle("JavaFX ContextMenu (o7planning.org)");
+        stage.setScene(scene);
+        stage.show();*/
+		
+	}
+	
+	// method added for add billing location screen
+	private void openAddBillingLocationScreen() {
+		System.out.println("[openAddDriverScreen]  : Enter");
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.DRIVER_BASE_PACKAGE + Iconstants.XML_DRIVER_ADD_SCREEN));
+			
+	        Parent root = (Parent) fxmlLoader.load();
+	        
+	        Stage stage = new Stage();
+	        stage.initModality(Modality.APPLICATION_MODAL);
+	        stage.setTitle("Add New Driver");
+	        stage.setScene(new Scene(root)); 
+	        stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Exception :"+e);
+		}
 	}
 	
 	private void addCompany() {
@@ -74,8 +196,12 @@ public class CompanyAddController extends Application implements Initializable{
 	}
 
 	@Override
-	public void start(Stage primaryStage) {
-	}
+	public void start(Stage stage) {
+		
+	    }
+	 
+	     
+	
 
 	public static void main(String[] args) {
 		launch(args);

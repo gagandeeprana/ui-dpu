@@ -22,13 +22,24 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.control.TableView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -140,12 +151,76 @@ public class CompanyController extends Application implements Initializable {
 		fetchCompanies();
 	}
 
+	/*@FXML public void handleMouseClick(MouseEvent arg0) {
+	    System.out.println("clicked on " );
+	 
+         System.out.println("OK");
+      
+	 
+		System.out.println("[CompanyController] : [start] : Enter Start method.");
+		 
+		 
+        Label label = new Label();
+ 
+        Circle circle = new Circle();
+        circle.setRadius(80);
+        circle.setFill(Color.AQUA);
+ 
+        VBox root = new VBox();
+        root.setPadding(new Insets(5));
+        root.setSpacing(5);
+ 
+        root.getChildren().addAll(label, circle);
+ 
+        // Create ContextMenu
+        ContextMenu contextMenu = new ContextMenu();
+ 
+        MenuItem item1 = new MenuItem("Menu Item 1");
+        item1.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+                label.setText("Select Menu Item 1");
+            }
+        });
+        MenuItem item2 = new MenuItem("Menu Item 2");
+        item2.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+                label.setText("Select Menu Item 2");
+            }
+        });
+ 
+        // Add MenuItem to ContextMenu
+        contextMenu.getItems().addAll(item1, item2);
+ 
+        // When user right-click on Circle
+        circle.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+ 
+            @Override
+            public void handle(ContextMenuEvent event) {
+ 
+                contextMenu.show(circle, event.getScreenX(), event.getScreenY());
+            }
+        });
+ 
+        Scene scene = new Scene(root, 400, 200);
+ 
+        stage.setTitle("JavaFX ContextMenu (o7planning.org)");
+        stage.setScene(scene);
+        stage.show();
+		
+	}*/
+	
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage stage) {
+		
 	}
 
 	public static void main(String[] args) {
-		launch(args);
+		System.out.println("[Company Controller]: Enter main method start.");
+		 launch(args);
 	}
 	
 	@SuppressWarnings("unchecked")

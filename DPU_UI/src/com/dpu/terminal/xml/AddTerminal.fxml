@@ -30,7 +30,7 @@
             <Font size="13.0" />
          </font>
       </Button>
-      <Button fx:id="btnCancel" layoutX="334.0" layoutY="172.0" mnemonicParsing="false" onAction="#closeAddTerminalScreen" prefHeight="29.0" prefWidth="95.0" text="Cancel">
+      <Button fx:id="btnCancelTerminal" layoutX="334.0" layoutY="172.0" mnemonicParsing="false" onAction="#btnCancelTerminalAction" prefHeight="29.0" prefWidth="95.0" text="Cancel">
          <font>
             <Font size="13.0" />
          </font>
