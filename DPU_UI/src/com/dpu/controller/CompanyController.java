@@ -58,6 +58,10 @@ public class CompanyController extends Application implements Initializable {
 	@FXML
 	private void btnAddCompanyAction() {
 		openAddCompanyScreen();
+		
+		// fetch data for billing Location table
+		// CompanyAddController compAddCtrl = new CompanyAddController();
+	     //compAddCtrl.fetchBillingLocations();
 	}
 	
 	@FXML
@@ -123,6 +127,8 @@ public class CompanyController extends Application implements Initializable {
 	        stage.setTitle("Add New Company");
 	        stage.setScene(new Scene(root)); 
 	        stage.show();
+	        
+	       
 		} catch (Exception e) {
 			System.out.println(e);
 		}

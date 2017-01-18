@@ -1,9 +1,15 @@
 package com.dpu.model;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+
+@JsonIgnoreProperties(ignoreUnknown =true)
+@JsonSerialize(include = Inclusion.NON_NULL)
 public class BillingLocations {
 
     
-    private int billingLocationId;
+    private Long billingLocationId;
 
     private String name;
 
@@ -43,11 +49,15 @@ public class BillingLocations {
  
     private Integer companyId;
 
-	public int getBillingLocationId() {
+	 
+	 
+
+	 
+	public Long getBillingLocationId() {
 		return billingLocationId;
 	}
 
-	public void setBillingLocationId(int billingLocationId) {
+	public void setBillingLocationId(Long billingLocationId) {
 		this.billingLocationId = billingLocationId;
 	}
 

@@ -1,6 +1,7 @@
 package com.dpu.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -8,16 +9,20 @@ import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.dpu.client.GetAPIClient;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.BillingLocations;
 import com.dpu.model.Company;
-import com.dpu.model.Driver;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -32,13 +37,16 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
-public class CompanyAddController extends Application implements Initializable{
+public class CompanyAddController extends Application implements Initializable {
 
+	int count = 0;
 	@FXML
 	Button btnSaveCompany;
 	
@@ -55,6 +63,17 @@ public class CompanyAddController extends Application implements Initializable{
 	private void closeAddCompanyScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
         loginStage.close();
+	}
+	
+	// billing Location button
+	@FXML
+	Button btnSaveBillingLocation;
+	
+	@FXML
+	private void btnSaveBillingLocationAction() {
+		addBillingLocation();
+		closeAddCompanyScreen(btnSaveBillingLocation);
+		
 	}
 	
 	@FXML
@@ -95,7 +114,7 @@ public class CompanyAddController extends Application implements Initializable{
  
             @Override
             public void handle(ActionEvent event) {
-            	System.out.println("[btnAddDriverAction]  : Enter");
+            	System.out.println("[btnAddBillingLocationAction]  : Enter");
         		openAddBillingLocationScreen();
                // label.setText("Select Menu Item 1");
             }
@@ -146,15 +165,15 @@ public class CompanyAddController extends Application implements Initializable{
 	
 	// method added for add billing location screen
 	private void openAddBillingLocationScreen() {
-		System.out.println("[openAddDriverScreen]  : Enter");
+		System.out.println("[openAddDBillingLocScreen]  : Enter");
 		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.DRIVER_BASE_PACKAGE + Iconstants.XML_DRIVER_ADD_SCREEN));
-			
+			//FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_ADD_BILLING_LOCATION_SCREEN));
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_ADD_BILLING_LOCATION_SCREEN));
 	        Parent root = (Parent) fxmlLoader.load();
 	        
 	        Stage stage = new Stage();
 	        stage.initModality(Modality.APPLICATION_MODAL);
-	        stage.setTitle("Add New Driver");
+	        stage.setTitle("Add Billing Location");
 	        stage.setScene(new Scene(root)); 
 	        stage.show();
 		} catch (Exception e) {
@@ -190,9 +209,168 @@ public class CompanyAddController extends Application implements Initializable{
 			}
 		});
 	}
+	
+	// Add Billing Location
+	private void  addBillingLocation(){
+
+		Platform.runLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					ObjectMapper mapper = new ObjectMapper();
+					
+					 
+					
+					BillingLocations company = setBillingLocationValues();
+					String payload = mapper.writeValueAsString(company);
+
+					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_ADD_COMPANY_BILLING_LOCATION_API, null, payload);
+					
+					if(response != null && response.contains("message")) {
+						Success success = mapper.readValue(response, Success.class);
+						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
+					} else {
+						Failed failed = mapper.readValue(response, Failed.class);
+						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
+					}
+					//MainScreen.companyController.fetchCompanies();
+					
+					fetchBillingLocations();
+					
+				} catch (Exception e) {
+					System.out.println(e);
+					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+				}
+			}
+		});
+	
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public    void fetchColumns() {
+		System.out.println("[fetchColumns] : Enter :");
+		name = (TableColumn<BillingLocations, String>) tableBillingLocations.getColumns().get(0);
+		address = (TableColumn<BillingLocations, String>) tableBillingLocations.getColumns().get(1);
+		city = (TableColumn<BillingLocations, String>) tableBillingLocations.getColumns().get(2);
+		phone = (TableColumn<BillingLocations, String>) tableBillingLocations.getColumns().get(3);
+		contact = (TableColumn<BillingLocations, String>) tableBillingLocations.getColumns().get(4);
+		zip = (TableColumn<BillingLocations, String>) tableBillingLocations.getColumns().get(5);
+		fax = (TableColumn<BillingLocations, String>) tableBillingLocations.getColumns().get(6);
+		System.out.println("[fetchColumns] : Enter :");
+		 
+	}
+	//fetch Billing Locations
+	public void fetchBillingLocations() {
+		System.out.println("[fetchBillingLocations] : Enter :");
+		fetchColumns();
+		
+		Platform.runLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				System.out.println("[fetchBillingLocations] [run ]: Enter :");
+				try {
+					ObjectMapper mapper = new ObjectMapper();
+					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_BILLING_LOCATION_API, null);
+					if(response != null && response.length() > 0) {
+						BillingLocations c[] = mapper.readValue(response, BillingLocations[].class);
+						System.out.println("c: "+c);
+						billLocList = new ArrayList<BillingLocations>();
+						for(BillingLocations ccl : c) {
+							System.out.println("ccl: "+ccl);
+							billLocList.add(ccl);
+						}
+						ObservableList<BillingLocations> data = FXCollections.observableArrayList(billLocList);
+						
+						setColumnValues();
+						tableBillingLocations.setItems(data);
+			
+						tableBillingLocations.setVisible(true);
+					}
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+				}
+			}
+		});
+	}
+	
+	
+// set columns value for BillingLocations
+private void setColumnValues() {
+		
+		name.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<BillingLocations,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<BillingLocations, String> param) {
+				return new SimpleStringProperty(param.getValue().getUnitNo() + "");
+			}
+		});
+		address.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<BillingLocations,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<BillingLocations, String> param) {
+				return new SimpleStringProperty(param.getValue().getName() + "");
+			}
+		});
+		city.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<BillingLocations,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<BillingLocations, String> param) {
+				return new SimpleStringProperty(param.getValue().getEmail() + "");
+			}
+		});
+		phone.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<BillingLocations,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<BillingLocations, String> param) {
+				return new SimpleStringProperty(param.getValue().getCity() + "");
+			}
+		});
+		contact.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<BillingLocations,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<BillingLocations, String> param) {
+				return new SimpleStringProperty(param.getValue().getProvinceState() + "");
+			}
+		});
+		zip.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<BillingLocations,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<BillingLocations, String> param) {
+				return new SimpleStringProperty(param.getValue().getPhone() + "");
+			}
+		});
+		fax.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<BillingLocations,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<BillingLocations, String> param) {
+				return new SimpleStringProperty(param.getValue().getCellular() + "");
+			}
+		});
+		 
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		System.out.println("location :  "+location);
+		String loc = location.toString();
+		System.out.println("loc:"+loc);
+		if(loc.endsWith("AddBillingLocationScreen.fxml")){
+			Iconstants.val = 1;
+			System.out.println("AddBillingLocationScreen.xml");
+		}
+		if(loc.endsWith("AddCompany.fxml")){
+			Iconstants.val = 0;
+			System.out.println("AddCompany.xml");
+		}
+		 
+		 
+		if(count == Iconstants.val){
+			fetchBillingLocations();
+			
+		}
 	}
 
 	@Override
@@ -228,5 +406,30 @@ public class CompanyAddController extends Application implements Initializable{
 		company.setCellular(txtCellular.getText());
 		company.setPager(txtPager.getText());
 		return company;
+	}
+	
+	// set billing Location Value
+	private BillingLocations setBillingLocationValues() {
+		BillingLocations billingLocation = new BillingLocations();
+		billingLocation.setName(txtCompany.getText());
+		billingLocation.setAddress(txtAddress.getText());
+		billingLocation.setCity(txtCity.getText());
+		billingLocation.setPhone(txtPhone.getText());
+		billingLocation.setContact(txtContact.getText());
+		billingLocation.setZip(txtZip.getText());
+		
+		/*billingLocation.setExt(txtExt.getText());
+		billingLocation.setCity(txtCity.getText());
+		billingLocation.setFax(txtFax.getText());
+		billingLocation.setCompanyPrefix(txtPrefix.getText());
+		billingLocation.setProvinceState(txtProvince.getText());
+		billingLocation.setZip(txtZip.getText());
+		billingLocation.setAfterHours(txtAfterHours.getText());
+		billingLocation.setEmail(txtEmail.getText());
+		billingLocation.setTollfree(txtTollFree.getText());
+		billingLocation.setWebsite(txtWebsite.getText());
+		billingLocation.setCellular(txtCellular.getText());
+		billingLocation.setPager(txtPager.getText());*/
+		return billingLocation;
 	}
 }

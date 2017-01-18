@@ -68,5 +68,13 @@ public class Iconstants {
 	public static final String XML_EQUIPMENT_SCREEN = "List Equipment.fxml";
 	public static final String URL_EQUIPMENT_API = "equipment";
 	public static final String XML_EQUIPMENT_ADD_SCREEN = "Add Equipment Type.fxml";
+	
+	//Added for Billing Location
+	public static final String XML_ADD_BILLING_LOCATION_SCREEN = "AddBillingLocationScreen.fxml";
+	public static final String URL_BILLING_LOCATION_API= "company/108/billinglocations";
+		
+	public static final String URL_ADD_COMPANY_BILLING_LOCATION_API="company/108/billinglocations";
+	// For Billing Location Screen
+	public static int val = 0;
 
 }
