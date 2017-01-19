@@ -13,6 +13,7 @@ import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.Category;
+import com.dpu.model.Company;
 import com.dpu.model.Equipment;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
@@ -104,6 +105,31 @@ public class EquipmentController extends Application implements Initializable {
 						fetchEquipments();
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					}
+				}
+			});
+		}
+	}
+	
+	@FXML
+	private void btnEditEquipmentAction() {
+		Equipment equipment = tblEquipment.getSelectionModel().getSelectedItem();
+		System.out.println(equipment + "   company:: ");
+		if(equipment != null) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + company.getCompanyId(), null);
+						if(response != null && response.length() > 0) {
+							Company c = mapper.readValue(response, Company.class);
+							CompanyEditController companyEditController = (CompanyEditController) openEditCompanyScreen();
+							companyEditController.initData(c);
+						}
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." + e , "Info", 1);
 					}
 				}
 			});
