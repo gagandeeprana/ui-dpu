@@ -121,10 +121,10 @@ public class EquipmentController extends Application implements Initializable {
 				public void run() {
 					try {
 						ObjectMapper mapper = new ObjectMapper();
-						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + company.getCompanyId(), null);
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + equipment.getEquipmentId(), null);
 						if(response != null && response.length() > 0) {
 							Company c = mapper.readValue(response, Company.class);
-							CompanyEditController companyEditController = (CompanyEditController) openEditCompanyScreen();
+							CompanyEditController companyEditController = (CompanyEditController) openEditEquipmentScreen();
 							companyEditController.initData(c);
 						}
 					} catch (Exception e) {
@@ -133,6 +133,24 @@ public class EquipmentController extends Application implements Initializable {
 				}
 			});
 		}
+	}
+	
+	private Object openEditEquipmentScreen() {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.EQUIPMENT_BASE_PACKAGE + Iconstants.XML_EQUIPMENT_EDIT_SCREEN));
+			
+	        Parent root = (Parent) fxmlLoader.load();
+	        
+	        Stage stage = new Stage();
+	        stage.initModality(Modality.APPLICATION_MODAL);
+	        stage.setTitle("Edit Company");
+	        stage.setScene(new Scene(root)); 
+	        stage.show();
+	        return fxmlLoader.getController();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
 	}
 	
 	public void fetchEquipments() {
