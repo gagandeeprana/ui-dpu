@@ -19,8 +19,6 @@ import com.dpu.model.Type;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -34,7 +32,7 @@ public class EquipmentAddController extends Application implements Initializable
 	Button btnSaveEquipment;
 	
 	@FXML
-	TextField txtDescription;
+	TextField txtName, txtDescription;
 	
 	@FXML
 	ComboBox<String> ddlType;
@@ -50,6 +48,8 @@ public class EquipmentAddController extends Application implements Initializable
         loginStage.close();
 	}
 	
+	List<Type> cList = null;
+	
 	public void fetchTypes() {
 		
 		Platform.runLater(new Runnable() {
@@ -62,16 +62,11 @@ public class EquipmentAddController extends Application implements Initializable
 					System.out.println(response);
 					if(response != null && response.length() > 0) {
 						Type c[] = mapper.readValue(response, Type[].class);
-						List<Type> cList = new ArrayList<Type>();
+						cList = new ArrayList<Type>();
 						for(Type ccl : c) {
 							ddlType.getItems().add(ccl.getTypeName());
 							cList.add(ccl);
 						}
-//						ObservableList<Equipment> data = FXCollections.observableArrayList(cList);
-//						
-//						tblEquipment.setItems(data);
-//			
-//			            tblEquipment.setVisible(true);
 					}
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Try Again..  " + e , "Info", 1);
@@ -123,8 +118,9 @@ public class EquipmentAddController extends Application implements Initializable
 	
 	private Equipment setEquipmentValue() {
 		Equipment equipment = new Equipment();
-		equipment.setEquipmentName(ddlType.getSelectionModel().getSelectedItem());
+		equipment.setEquipmentName(txtName.getText());
 		equipment.setDescription(txtDescription.getText());
+		equipment.setTypeId(cList.get(ddlType.getSelectionModel().getSelectedIndex()).getTypeId());
 		return equipment;
 	}
 }

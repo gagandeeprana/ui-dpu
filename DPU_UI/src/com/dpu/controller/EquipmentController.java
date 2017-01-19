@@ -2,6 +2,7 @@ package com.dpu.controller;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -161,6 +162,7 @@ public class EquipmentController extends Application implements Initializable {
 			@Override
 			public void run() {
 				try {
+					long startTime = new Date().getTime();
 					ObjectMapper mapper = new ObjectMapper();
 					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_EQUIPMENT_API, null);
 					System.out.println(response);
@@ -176,12 +178,15 @@ public class EquipmentController extends Application implements Initializable {
 						tblEquipment.setItems(data);
 			
 			            tblEquipment.setVisible(true);
+			            System.out.println("Time to fetch equipments: " + (new Date().getTime() - startTime));
 					}
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "Try Again..  " + e , "Info", 1);
+																																																					JOptionPane.showMessageDialog(null, "Try Again..  " + e , "Info", 1);
 				}
 			}
 		});
+		
+
 	}
 	
 	private void setColumnValues() {
