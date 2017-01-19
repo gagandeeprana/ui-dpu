@@ -18,15 +18,16 @@
             <CheckBox layoutX="276.0" layoutY="11.0" mnemonicParsing="false" text="Show All" />
             <Button layoutX="238.0" layoutY="8.0" mnemonicParsing="false" text="Go" />
             <Button fx:id="btnAddEquipment" layoutX="349.0" layoutY="7.0" mnemonicParsing="false" onAction="#btnAddEquipmentAction" prefHeight="25.0" prefWidth="55.0" text="Add" />
-            <Button layoutX="409.0" layoutY="7.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="Edit" />
+            <Button fx:id="btnEditEquipment" layoutX="409.0" layoutY="7.0" mnemonicParsing="false" onAction="#btnEditEquipmentAction" prefHeight="25.0" prefWidth="55.0" text="Edit" />
             <Button fx:id="btnDeleteEquipment" layoutX="469.0" layoutY="7.0" mnemonicParsing="false" onAction="#btnDeleteEquipmentAction" prefHeight="25.0" prefWidth="55.0" text="Delete" />
             <Button layoutX="529.0" layoutY="7.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="E-Mail" />
          </children>
       </AnchorPane>
       <TableView fx:id="tblEquipment" layoutY="42.0" prefHeight="758.0" prefWidth="969.0">
         <columns>
-          <TableColumn fx:id="type" prefWidth="321.0" text="Type" />
-          <TableColumn fx:id="description" prefWidth="343.0" text="Description" />
+            <TableColumn fx:id="name" prefWidth="206.0" text="Name" />
+          <TableColumn fx:id="type" prefWidth="190.0" text="Type" />
+          <TableColumn fx:id="description" prefWidth="525.0" text="Description" />
         </columns>
       </TableView>
    </children>

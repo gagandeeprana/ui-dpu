@@ -27,7 +27,7 @@ public class EquipmentEditController extends Application implements Initializabl
 	@FXML
 	Button btnUpdateEquipment;
 	
-	int equipmentId = 0;
+	Long equipmentId = 0l;
 	
 	@FXML
 	TextField txtDescription;

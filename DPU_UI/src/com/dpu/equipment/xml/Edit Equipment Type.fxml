@@ -5,14 +5,14 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="221.0" prefWidth="378.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.EquipmentAddController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="171.0" prefWidth="378.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.EquipmentEditController">
    <children>
-      <BorderPane layoutX="8.0" layoutY="35.0" prefHeight="135.0" prefWidth="362.0" style="-fx-border-color: lightgray;" />
-      <Button layoutX="302.0" layoutY="178.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Cancel">
+      <BorderPane layoutX="8.0" layoutY="35.0" prefHeight="90.0" prefWidth="362.0" style="-fx-border-color: lightgray;" />
+      <Button layoutX="308.0" layoutY="134.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Cancel">
          <font>
             <Font size="13.0" />
          </font></Button>
-      <Button fx:id="btnSaveEquipment" layoutX="236.0" layoutY="178.0" mnemonicParsing="false" onAction="#btnSaveEquipmentAction" prefHeight="25.0" prefWidth="60.0" text="Save">
+      <Button fx:id="btnUpdateEquipment" layoutX="232.0" layoutY="134.0" mnemonicParsing="false" onAction="#btnUpdateEquipmentAction" prefHeight="29.0" prefWidth="70.0" text="Update">
          <font>
             <Font size="13.0" />
          </font></Button>

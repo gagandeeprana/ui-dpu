@@ -1,20 +1,26 @@
 package com.dpu.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.dpu.client.GetAPIClient;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.Equipment;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
+import com.dpu.model.Type;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -42,6 +48,36 @@ public class EquipmentAddController extends Application implements Initializable
 	private void closeAddEquipmentScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
         loginStage.close();
+	}
+	
+	public void fetchTypes() {
+		
+		Platform.runLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					ObjectMapper mapper = new ObjectMapper();
+					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_TYPE_API, null);
+					System.out.println(response);
+					if(response != null && response.length() > 0) {
+						Type c[] = mapper.readValue(response, Type[].class);
+						List<Type> cList = new ArrayList<Type>();
+						for(Type ccl : c) {
+							ddlType.getItems().add(ccl.getTypeName());
+							cList.add(ccl);
+						}
+//						ObservableList<Equipment> data = FXCollections.observableArrayList(cList);
+//						
+//						tblEquipment.setItems(data);
+//			
+//			            tblEquipment.setVisible(true);
+					}
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Try Again..  " + e , "Info", 1);
+				}
+			}
+		});
 	}
 	
 	private void addEquipment() {
@@ -74,7 +110,7 @@ public class EquipmentAddController extends Application implements Initializable
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		ddlType.setValue("Type1");
+		fetchTypes();
 	}
 
 	@Override
