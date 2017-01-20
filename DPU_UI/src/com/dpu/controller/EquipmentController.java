@@ -40,6 +40,8 @@ public class EquipmentController extends Application implements Initializable {
 	@FXML
 	TableView<Equipment> tblEquipment;
 	
+	List<Equipment> equipments = null;
+	
 	@FXML
 	TableColumn<Equipment, String> name, type, description;
 	
@@ -113,8 +115,8 @@ public class EquipmentController extends Application implements Initializable {
 	
 	@FXML
 	private void btnEditEquipmentAction() {
-		Equipment equipment = tblEquipment.getSelectionModel().getSelectedItem();
-		System.out.println(equipment + "   equipment:: ");
+		
+		Equipment equipment = equipments.get(tblEquipment.getSelectionModel().getSelectedIndex());
 		if(equipment != null) {
 			Platform.runLater(new Runnable() {
 				
@@ -123,6 +125,7 @@ public class EquipmentController extends Application implements Initializable {
 					try {
 						ObjectMapper mapper = new ObjectMapper();
 						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_EQUIPMENT_API + "/" + equipment.getEquipmentId(), null);
+						System.out.println("EE:: " + response);
 						if(response != null && response.length() > 0) {
 							Equipment e = mapper.readValue(response, Equipment.class);
 							EquipmentEditController equipmentEditController = (EquipmentEditController) openEditEquipmentScreen();
@@ -168,11 +171,11 @@ public class EquipmentController extends Application implements Initializable {
 					System.out.println(response);
 					if(response != null && response.length() > 0) {
 						Equipment c[] = mapper.readValue(response, Equipment[].class);
-						List<Equipment> cList = new ArrayList<Equipment>();
+						equipments = new ArrayList<Equipment>();
 						for(Equipment ccl : c) {
-							cList.add(ccl);
+							equipments.add(ccl);
 						}
-						ObservableList<Equipment> data = FXCollections.observableArrayList(cList);
+						ObservableList<Equipment> data = FXCollections.observableArrayList(equipments);
 						
 						setColumnValues();
 						tblEquipment.setItems(data);

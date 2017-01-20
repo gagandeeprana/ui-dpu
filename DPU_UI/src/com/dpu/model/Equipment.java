@@ -32,7 +32,6 @@ public class Equipment {
 		this.typeId = typeId;
 	}
 
-
 	public String getType() {
 		return type;
 	}
