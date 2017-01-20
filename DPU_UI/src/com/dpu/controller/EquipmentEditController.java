@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.dpu.client.GetAPIClient;
-import com.dpu.client.PostAPIClient;
+import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.Equipment;
 import com.dpu.model.Failed;
@@ -26,10 +26,12 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class EquipmentAddController extends Application implements Initializable{
+public class EquipmentEditController extends Application implements Initializable{
 
 	@FXML
-	Button btnSaveEquipment;
+	Button btnUpdateEquipment;
+	
+	Long equipmentId = 0l;
 	
 	@FXML
 	TextField txtName, txtDescription;
@@ -38,12 +40,12 @@ public class EquipmentAddController extends Application implements Initializable
 	ComboBox<String> ddlType;
 	
 	@FXML
-	private void btnSaveEquipmentAction() {
-		addEquipment();
-		closeAddEquipmentScreen(btnSaveEquipment);
+	private void btnUpdateEquipmentAction() {
+		editEquipment();
+		closeEditEquipmentScreen(btnUpdateEquipment);
 	}
 	
-	private void closeAddEquipmentScreen(Button clickedButton) {
+	private void closeEditEquipmentScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
         loginStage.close();
 	}
@@ -75,7 +77,7 @@ public class EquipmentAddController extends Application implements Initializable
 		});
 	}
 	
-	private void addEquipment() {
+	private void editEquipment() {
 		
 		Platform.runLater(new Runnable() {
 			
@@ -85,8 +87,8 @@ public class EquipmentAddController extends Application implements Initializable
 					ObjectMapper mapper = new ObjectMapper();
 					Equipment equipment = setEquipmentValue();
 					String payload = mapper.writeValueAsString(equipment);
-					System.out.println(payload);
-					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_EQUIPMENT_API, null, payload);
+
+					String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_EQUIPMENT_API + "/" + equipmentId, null, payload);
 					
 					if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
@@ -97,7 +99,7 @@ public class EquipmentAddController extends Application implements Initializable
 					}
 					MainScreen.equipmentController.fetchEquipments();
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+					JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
 				}
 			}
 		});
@@ -105,7 +107,7 @@ public class EquipmentAddController extends Application implements Initializable
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		fetchTypes();
+//		fetchTypes();
 	}
 
 	@Override
@@ -118,9 +120,23 @@ public class EquipmentAddController extends Application implements Initializable
 	
 	private Equipment setEquipmentValue() {
 		Equipment equipment = new Equipment();
-		equipment.setEquipmentName(txtName.getText());
+		equipment.setEquipmentId(equipmentId);
 		equipment.setDescription(txtDescription.getText());
-		equipment.setTypeId(cList.get(ddlType.getSelectionModel().getSelectedIndex()).getTypeId());
+		equipment.setEquipmentName(ddlType.getSelectionModel().getSelectedItem());
 		return equipment;
+	}
+
+	public void initData(Equipment e) {
+		fetchTypes();
+		equipmentId = e.getEquipmentId();
+		txtName.setText(e.getEquipmentName());
+		System.out.println();
+		for(int i = 0; i<cList.size();i++) {
+			Type type = cList.get(i);
+			if(type.getTypeId() == e.getTypeId()) {
+				ddlType.getSelectionModel().select(i);
+			}
+		}
+		txtDescription.setText(e.getDescription());
 	}
 }

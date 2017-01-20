@@ -12,19 +12,39 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 public class Equipment {
 
 	//@JsonProperty(value = "equipment_id")
-	private int equipmentId;
+	private Long equipmentId;
 
 	//@JsonProperty(value = "equipment_name")
 	private String equipmentName;
 
 	//@JsonProperty(value = "description")
 	private String description;
+	
+	private String type;
+	
+	private Long typeId;
+	
+	public Long getTypeId() {
+		return typeId;
+	}
 
-	public int getEquipmentId() {
+	public void setTypeId(Long typeId) {
+		this.typeId = typeId;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public Long getEquipmentId() {
 		return equipmentId;
 	}
 
-	public void setEquipmentId(int equipmentId) {
+	public void setEquipmentId(Long equipmentId) {
 		this.equipmentId = equipmentId;
 	}
 

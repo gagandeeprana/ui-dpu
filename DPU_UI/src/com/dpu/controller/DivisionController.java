@@ -62,9 +62,14 @@ public class DivisionController extends Application implements Initializable {
 						String response = GetAPIClient.callGetAPI(
 								Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API + "/" + division.getDivisionId(),
 								null);
+						System.out.println("resp " + response);
 						if (response != null && response.length() > 0) {
+
+							System.out.println("1111111111111");
 							Division division = mapper.readValue(response, Division.class);
+							System.out.println("2222222222   " + division.getDivisionId());
 							DivisionEditController divisionEditController = (DivisionEditController) openEditDivisionScreen();
+							System.out.println("333333333 " + division.getCarrierCode());
 							divisionEditController.initData(division);
 						}
 					} catch (Exception e) {
@@ -105,16 +110,18 @@ public class DivisionController extends Application implements Initializable {
 	}
 
 	private void openAddDivisionScreen() {
+		System.out.println("openAddDivisionScreen");
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
 					.getResource(Iconstants.DIVISION_BASE_PACKAGE + Iconstants.XML_DIVISION_ADD_SCREEN));
-
+			System.out.println("openAddDivisionScreen     aaaaaaaaaaa"+fxmlLoader);
 			Parent root = (Parent) fxmlLoader.load();
-
+			System.out.println("openAddDivisionScreen     bbbbbbbb");
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.setTitle("Add New Division");
 			stage.setScene(new Scene(root));
+			System.out.println("openAddDivisionScreen     cccccccc");
 			stage.show();
 		} catch (Exception e) {
 			System.out.println(e);
@@ -139,7 +146,6 @@ public class DivisionController extends Application implements Initializable {
 		}
 		return null;
 	}
-	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

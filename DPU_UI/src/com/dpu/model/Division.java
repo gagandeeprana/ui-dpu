@@ -9,37 +9,37 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 @JsonSerialize(include = Inclusion.NON_NULL)
 public class Division {
 
-	@JsonProperty(value = "division_id")
+	// @JsonProperty(value = "division_id")
 	private int divisionId;
 
-	@JsonProperty(value = "division_code")
+	// @JsonProperty(value = "division_code")
 	private String divisionCode;
 
-	@JsonProperty(value = "division_name")
+	// @JsonProperty(value = "division_name")
 	private String divisionName;
 
-	@JsonProperty(value = "federal")
+	// @JsonProperty(value = "federal")
 	private String fedral;
 
-	@JsonProperty(value = "provincial")
+	// @JsonProperty(value = "provincial")
 	private String provincial;
 
-	@JsonProperty(value = "SCAC")
+	// @JsonProperty(value = "SCAC")
 	private String SCAC;
 
-	@JsonProperty(value = "carrier_code")
+	// @JsonProperty(value = "carrier_code")
 	private String carrierCode;
 
-	@JsonProperty(value = "contact_prefix")
+	// @JsonProperty(value = "contact_prefix")
 	private String contractPrefix;
 
-	@JsonProperty(value = "invoice_prefix")
+	// @JsonProperty(value = "invoice_prefix")
 	private String invoicePrefix;
 
-	@JsonProperty(value = "created_on")
+	// @JsonProperty(value = "created_on")
 	private Date createdOn;
 
-	@JsonProperty(value = "created_by")
+	// @JsonProperty(value = "created_by")
 	private int createdBy;
 
 	public int getDivisionId() {

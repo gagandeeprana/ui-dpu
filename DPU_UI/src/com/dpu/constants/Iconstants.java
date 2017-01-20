@@ -2,8 +2,7 @@ package com.dpu.constants;
 
 public class Iconstants {
 
-	public static final String URL_SERVER = "http://localhost:8080/DPUWebProject/";
-	
+	public static final String URL_SERVER = "http://localhost:8082/DPUWebProject/";
 
 	public static final String COMMON_BASE_PACKAGE = "com/dpu/common/xml/";
 
@@ -14,7 +13,7 @@ public class Iconstants {
 	public static final String XML_TERMINAL_SCREEN = "ListTerminal.fxml";
 	public static final String URL_TERMINAL_API = "terminal";
 	public static final String XML_TERMINAL_ADD_SCREEN = "AddTerminal.fxml";
-	public static final String XML_TERMINAL_EDIT_SCREEN= "EditTerminal.fxml";
+	public static final String XML_TERMINAL_EDIT_SCREEN = "EditTerminal.fxml";
 
 	public static final String DRIVER_BASE_PACKAGE = "com/dpu/driver/xml/";
 	public static final String XML_DRIVER_SCREEN = "DriverMainPage.fxml";
@@ -61,12 +60,23 @@ public class Iconstants {
 	public static final String CATEGORY_BASE_PACKAGE = "com/dpu/category/xml/";
 	public static final String XML_CATEGORY_SCREEN = "List Categories.fxml";
 	public static final String URL_CATEGORY_API = "category";
+
 	public static final String XML_CATEGORY_ADD_SCREEN = "Add Categories.fxml";
 	public static final String XML_CATEGORY_EDIT_SCREEN = "Edit Categories.fxml";
-	
+
 	public static final String EQUIPMENT_BASE_PACKAGE = "com/dpu/equipment/xml/";
 	public static final String XML_EQUIPMENT_SCREEN = "List Equipment.fxml";
 	public static final String URL_EQUIPMENT_API = "equipment";
 	public static final String XML_EQUIPMENT_ADD_SCREEN = "Add Equipment Type.fxml";
+	public static final String XML_EQUIPMENT_EDIT_SCREEN = "Edit Equipment Type.fxml";
+	
+	public static final String URL_TYPE_API = "type";
+	
+	public static final String XML_ADD_BILLING_LOCATION_SCREEN = "AddBillingLocationScreen.fxml";
+	public static final String URL_BILLING_LOCATION_API= "company/108/billinglocations";
+	public static final String URL_ADD_COMPANY_BILLING_LOCATION_API="company/108/billinglocations";
+	public static int val = 0;
+	
+	public static final String XML_ADD_ADDITIONAL_CONTACT_SCREEN ="AdditionalContactAddScreen.fxml";
 
 }

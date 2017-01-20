@@ -2,6 +2,7 @@ package com.dpu.controller;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -12,10 +13,10 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.model.Category;
 import com.dpu.model.Equipment;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -39,8 +40,10 @@ public class EquipmentController extends Application implements Initializable {
 	@FXML
 	TableView<Equipment> tblEquipment;
 	
+	List<Equipment> equipments = null;
+	
 	@FXML
-	TableColumn<Equipment, String> type, description;
+	TableColumn<Equipment, String> name, type, description;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -57,8 +60,9 @@ public class EquipmentController extends Application implements Initializable {
 	
 	@SuppressWarnings("unchecked")
 	private void fetchColumns() {
-		type = (TableColumn<Equipment, String>) tblEquipment.getColumns().get(0);
-		description = (TableColumn<Equipment, String>) tblEquipment.getColumns().get(1);
+		name = (TableColumn<Equipment, String>) tblEquipment.getColumns().get(0);
+		type = (TableColumn<Equipment, String>) tblEquipment.getColumns().get(1);
+		description = (TableColumn<Equipment, String>) tblEquipment.getColumns().get(2);
 	}
 
 	@FXML
@@ -109,6 +113,50 @@ public class EquipmentController extends Application implements Initializable {
 		}
 	}
 	
+	@FXML
+	private void btnEditEquipmentAction() {
+		
+		Equipment equipment = equipments.get(tblEquipment.getSelectionModel().getSelectedIndex());
+		if(equipment != null) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_EQUIPMENT_API + "/" + equipment.getEquipmentId(), null);
+						System.out.println("EE:: " + response);
+						if(response != null && response.length() > 0) {
+							Equipment e = mapper.readValue(response, Equipment.class);
+							EquipmentEditController equipmentEditController = (EquipmentEditController) openEditEquipmentScreen();
+							equipmentEditController.initData(e);
+						}
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." + e , "Info", 1);
+					}
+				}
+			});
+		}
+	}
+	
+	private Object openEditEquipmentScreen() {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.EQUIPMENT_BASE_PACKAGE + Iconstants.XML_EQUIPMENT_EDIT_SCREEN));
+			
+	        Parent root = (Parent) fxmlLoader.load();
+	        
+	        Stage stage = new Stage();
+	        stage.initModality(Modality.APPLICATION_MODAL);
+	        stage.setTitle("Edit Equipment");
+	        stage.setScene(new Scene(root)); 
+	        stage.show();
+	        return fxmlLoader.getController();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	
 	public void fetchEquipments() {
 	
 		fetchColumns();
@@ -117,33 +165,47 @@ public class EquipmentController extends Application implements Initializable {
 			@Override
 			public void run() {
 				try {
+					long startTime = new Date().getTime();
 					ObjectMapper mapper = new ObjectMapper();
 					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_EQUIPMENT_API, null);
-					Equipment c[] = mapper.readValue(response, Equipment[].class);
-					List<Equipment> cList = new ArrayList<Equipment>();
-					for(Equipment ccl : c) {
-						cList.add(ccl);
+					System.out.println(response);
+					if(response != null && response.length() > 0) {
+						Equipment c[] = mapper.readValue(response, Equipment[].class);
+						equipments = new ArrayList<Equipment>();
+						for(Equipment ccl : c) {
+							equipments.add(ccl);
+						}
+						ObservableList<Equipment> data = FXCollections.observableArrayList(equipments);
+						
+						setColumnValues();
+						tblEquipment.setItems(data);
+			
+			            tblEquipment.setVisible(true);
+			            System.out.println("Time to fetch equipments: " + (new Date().getTime() - startTime));
 					}
-					ObservableList<Equipment> data = FXCollections.observableArrayList(cList);
-					
-					setColumnValues();
-					tblEquipment.setItems(data);
-		
-		            tblEquipment.setVisible(true);
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+																																																					JOptionPane.showMessageDialog(null, "Try Again..  " + e , "Info", 1);
 				}
 			}
 		});
+		
+
 	}
 	
 	private void setColumnValues() {
 		
-		type.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Equipment,String>, ObservableValue<String>>() {
+		name.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Equipment,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Equipment, String> param) {
 				return new SimpleStringProperty(param.getValue().getEquipmentName() + "");
+			}
+		});
+		type.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Equipment,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Equipment, String> param) {
+				return new SimpleStringProperty(param.getValue().getType() + "");
 			}
 		});
 		description.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Equipment,String>, ObservableValue<String>>() {

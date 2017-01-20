@@ -30,8 +30,8 @@
          </font>
       </Text>
       <TextField fx:id="txtDivisionCode" layoutX="158.0" layoutY="48.0" prefHeight="25.0" prefWidth="136.0" />
-      <CheckBox fx:id="chkIncludeInManagementReporting" layoutX="158.0" layoutY="153.0" mnemonicParsing="false" text="Include In Management Reporting" />
-      <CheckBox fx:id="chkIncludeInAccountingTransfers" layoutX="158.0" layoutY="179.0" mnemonicParsing="false" text="Include In Accounting Transfers" />
+      <CheckBox  fx:id="chkIncludeInManagementReporting" layoutX="158.0" layoutY="153.0" mnemonicParsing="false" text="Include In Management Reporting" />
+      <CheckBox  fx:id="chkIncludeInAccountingTransfers" layoutX="158.0" layoutY="179.0" mnemonicParsing="false" text="Include In Accounting Transfers" />
       <TextField fx:id="txtFedral" layoutX="160.0" layoutY="223.0" prefHeight="25.0" prefWidth="203.0" />
       <Text layoutX="26.0" layoutY="241.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fedral">
          <font>
