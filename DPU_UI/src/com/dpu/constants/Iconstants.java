@@ -2,7 +2,8 @@ package com.dpu.constants;
 
 public class Iconstants {
 
-	public static final String URL_SERVER = "http://localhost:8082/DPUWebProject/";
+//	public static final String URL_SERVER = "http://localhost:8080/DPUWebProject/";
+	public static final String URL_SERVER = "http://35.154.6.180:8080/DPUWebProject/";
 
 	public static final String COMMON_BASE_PACKAGE = "com/dpu/common/xml/";
 
@@ -70,7 +71,7 @@ public class Iconstants {
 	public static final String XML_EQUIPMENT_ADD_SCREEN = "Add Equipment Type.fxml";
 	public static final String XML_EQUIPMENT_EDIT_SCREEN = "Edit Equipment Type.fxml";
 	
-	public static final String URL_TYPE_API = "type";
+	public static final String URL_TYPE_API = "masterData/type";
 	
 	public static final String XML_ADD_BILLING_LOCATION_SCREEN = "AddBillingLocationScreen.fxml";
 	public static final String URL_BILLING_LOCATION_API= "company/108/billinglocations";

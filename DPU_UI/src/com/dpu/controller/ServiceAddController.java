@@ -1,17 +1,21 @@
 package com.dpu.controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.dpu.client.GetAPIClient;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.DPUService;
 import com.dpu.model.Failed;
+import com.dpu.model.Status;
 import com.dpu.model.Success;
+import com.dpu.model.Type;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -22,7 +26,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class ServiceAddController extends Application implements Initializable{
+public class ServiceAddController<T> extends Application implements Initializable{
 
 	@FXML
 	Button btnSaveService;
@@ -32,6 +36,12 @@ public class ServiceAddController extends Application implements Initializable{
 	
 	@FXML
 	ComboBox<String> ddlTextField, ddlAssociationWith, ddlStatus;
+	
+	ObjectMapper mapper = new ObjectMapper();
+	
+	List<Type> typeList, associatedWithList;
+	
+	List<Status> statusList;
 	
 	@FXML
 	private void btnSaveServiceAction() {
@@ -57,14 +67,14 @@ public class ServiceAddController extends Application implements Initializable{
 					System.out.println(payload);
 					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_SERVICE_API, null, payload);
 					System.out.println(response);
-					if(response != null && response.contains("message")) {
+					MainScreen.serviceController.fillServices(response);
+					/*if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
 						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
 					} else {
 						Failed failed = mapper.readValue(response, Failed.class);
 						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-					}
-					MainScreen.serviceController.fetchServices();
+					}*/
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
 				}
@@ -74,9 +84,48 @@ public class ServiceAddController extends Application implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		ddlTextField.setValue("Yes");
-		ddlAssociationWith.setValue("Asso 1");
-		ddlStatus.setValue("Active");
+		fetchMasterDataForDropDowns();
+	}
+	
+	
+	private void fillDropDown(ComboBox<String> comboBox, List<?> list) {
+		for(int i=0;i<list.size();i++) {
+			Object object = list.get(i);
+			if(object != null && object instanceof Type && comboBox.equals(ddlTextField)) {
+				Type textField = (Type) object;
+				comboBox.getItems().add(textField.getTypeName());
+			}
+			if(object != null && object instanceof Type && comboBox.equals(ddlAssociationWith)) {
+				Type associatedWith = (Type) object;
+				comboBox.getItems().add(associatedWith.getTypeName());
+			}
+			if(object != null && object instanceof Status) {
+				Status status = (Status) object;
+				comboBox.getItems().add(status.getStatus());
+			}
+		}
+	}
+	
+	private void fetchMasterDataForDropDowns() {
+		
+		Platform.runLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_SERVICE_API + "/openAdd", null);
+					DPUService service = mapper.readValue(response, DPUService.class);
+					typeList = service.getTextFieldList();
+					fillDropDown(ddlTextField, typeList);
+					associatedWithList = service.getAssociatedWithList();
+					fillDropDown(ddlAssociationWith, associatedWithList);
+					statusList = service.getStatusList();
+					fillDropDown(ddlStatus, statusList);
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+				}
+			}
+		});
 	}
 
 	@Override
@@ -90,9 +139,9 @@ public class ServiceAddController extends Application implements Initializable{
 	private DPUService setServiceValue() {
 		DPUService dPUService = new DPUService();
 		dPUService.setServiceName(txtService.getText());
-		dPUService.setTextField(ddlTextField.getSelectionModel().getSelectedItem());
-		dPUService.setAssociationWith(ddlAssociationWith.getSelectionModel().getSelectedItem());
-		dPUService.setStatus(ddlStatus.getSelectionModel().getSelectedItem().equals("Active")?1:0);
+		dPUService.setTextFieldId(typeList.get(ddlTextField.getSelectionModel().getSelectedIndex()).getTypeId());
+		dPUService.setAssociationWithId(associatedWithList.get(ddlAssociationWith.getSelectionModel().getSelectedIndex()).getTypeId());
+		dPUService.setStatusId(statusList.get(ddlStatus.getSelectionModel().getSelectedIndex()).getId());
 		return dPUService;
 	}
 }

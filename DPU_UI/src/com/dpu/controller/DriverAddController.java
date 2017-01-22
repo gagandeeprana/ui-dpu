@@ -20,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.stage.Stage;
 
 public class DriverAddController extends Application implements Initializable{
@@ -36,8 +37,14 @@ public class DriverAddController extends Application implements Initializable{
 	
 	@FXML
 	private void btnSaveDriverAction() {
-		addDriver();
-		closeAddDriverScreen(btnSaveDriver);
+		if(txtCode.getText().equals("")) {
+			final Tooltip tooltip = new Tooltip();
+			tooltip.setText("Code reqd.");
+			txtCode.setTooltip(tooltip);
+		} else {
+			addDriver();
+			closeAddDriverScreen(btnSaveDriver);
+		}
 	}
 	
 	private void closeAddDriverScreen(Button clickedButton) {
@@ -75,7 +82,12 @@ public class DriverAddController extends Application implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		ddlTerminal.setValue("Terminal1");
+		ddlTerminal.getItems().add("Terminal1");
+		ddlTerminal.getItems().add("Terminal2");
+		ddlTerminal.getItems().add("Terminal3");
+		ddlTerminal.getItems().add("Terminal4");
+
+//		ddlTerminal.setValue("Terminal1");
 		ddlCategory.setValue("Category1");
 		ddlRole.setValue("Role1");
 		ddlStatus.setValue("Active");

@@ -1,5 +1,6 @@
 package com.dpu.model;
 
+
 public class Type {
 
 	private Long typeId;
@@ -21,4 +22,5 @@ public class Type {
 	public void setTypeName(String typeName) {
 		this.typeName = typeName;
 	}
+
 }

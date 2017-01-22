@@ -10,9 +10,10 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.DPUService;
-import com.dpu.model.Driver;
 import com.dpu.model.Failed;
+import com.dpu.model.Status;
 import com.dpu.model.Success;
+import com.dpu.model.Type;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -28,7 +29,7 @@ public class ServiceEditController extends Application implements Initializable{
 	@FXML
 	Button btnUpdateService;
 	
-	int serviceId = 0;
+	Long serviceId = 0l;
 	
 	@FXML
 	TextField txtService;
@@ -82,7 +83,7 @@ public class ServiceEditController extends Application implements Initializable{
 		dpuService.setServiceName(txtService.getText());
 		dpuService.setTextField(ddlTextField.getSelectionModel().getSelectedItem());
 		dpuService.setAssociationWith(ddlAssociationWith.getSelectionModel().getSelectedItem());
-		dpuService.setStatus(ddlStatus.getSelectionModel().getSelectedItem().equals("Active")?1:0);
+		dpuService.setStatus(ddlStatus.getSelectionModel().getSelectedItem());
 		return null;
 	}
 
@@ -101,8 +102,28 @@ public class ServiceEditController extends Application implements Initializable{
 	public void initData(DPUService service) {
 		serviceId = service.getServiceId();
 		txtService.setText(service.getServiceName());
-		ddlTextField.setValue(service.getTextField());
-		ddlAssociationWith.setValue(service.getAssociationWith());
-		ddlStatus.setValue(service.getStatus() == 1? "Active":"Inactive");
+		for(int i = 0; i< service.getTextFieldList().size();i++) {
+			Type type = service.getTextFieldList().get(i);
+			ddlTextField.getItems().add(type.getTypeName());
+			if(type.getTypeId() == service.getTextFieldId()) {
+				ddlTextField.getSelectionModel().select(i);
+			}
+		}
+		
+		for(int i = 0; i< service.getAssociatedWithList().size();i++) {
+			Type type = service.getAssociatedWithList().get(i);
+			ddlAssociationWith.getItems().add(type.getTypeName());
+			if(type.getTypeId() == service.getAssociationWithId()) {
+				ddlAssociationWith.getSelectionModel().select(i);
+			}
+		}
+		
+		for(int i = 0; i< service.getStatusList().size();i++) {
+			Status status = service.getStatusList().get(i);
+			ddlStatus.getItems().add(status.getStatus());
+			if(status.getId() == service.getStatusId()) {
+				ddlStatus.getSelectionModel().select(i);
+			}
+		}
 	}
 }

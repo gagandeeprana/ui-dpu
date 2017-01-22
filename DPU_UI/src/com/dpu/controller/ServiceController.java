@@ -12,9 +12,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.model.Company;
 import com.dpu.model.DPUService;
-import com.dpu.model.Driver;
+import com.dpu.model.Equipment;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
 
@@ -44,6 +43,8 @@ public class ServiceController extends Application implements Initializable {
 	@FXML
 	TableColumn<DPUService, String> service, textField, associationWith, status;
 	
+	ObjectMapper mapper = new ObjectMapper();
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		fetchServices();
@@ -60,6 +61,27 @@ public class ServiceController extends Application implements Initializable {
 	@FXML
 	private void btnAddServiceAction() {
 		openAddServiceScreen();
+	}
+	
+	public void fillServices(String response) {
+		
+		try {
+			if(response != null && response.length() > 0) {
+				DPUService c[] = mapper.readValue(response, DPUService[].class);
+				List<DPUService> services = new ArrayList<DPUService>();
+				for(DPUService ccl : c) {
+					services.add(ccl);
+				}
+				ObservableList<DPUService> data = FXCollections.observableArrayList(services);
+				
+				setColumnValues();
+				tblService.setItems(data);
+	
+	            tblService.setVisible(true);
+			}
+		} catch (Exception e) {
+			System.out.println("ServiceController: fillEquipments(): "+ e.getMessage());
+		}
 	}
 	
 	@FXML
@@ -212,7 +234,7 @@ public class ServiceController extends Application implements Initializable {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<DPUService, String> param) {
-				return new SimpleStringProperty(param.getValue().getStatus() == 1 ? "Active":"Inactive");
+				return new SimpleStringProperty(param.getValue().getStatus());
 			}
 		});
 
