@@ -35,13 +35,13 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <ComboBox fx:id="ddlType" layoutX="121.0" layoutY="133.0" prefHeight="25.0" prefWidth="255.0" />
+            <ComboBox fx:id="ddlType" layoutX="121.0" layoutY="133.0" onAction="#ddlTypeAction" prefHeight="25.0" prefWidth="255.0" />
             <Text layoutX="14.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" wrappingWidth="79.2939453125">
                <font>
                   <Font size="14.0" />
                </font>
             </Text>
-            <TextField fx:id="txtName" layoutX="120.0" layoutY="38.0" prefHeight="29.0" prefWidth="255.0" />
+            <TextField fx:id="txtName" layoutX="120.0" layoutY="38.0" onKeyTyped="#txtNameKeyTyped" prefHeight="29.0" prefWidth="255.0" />
          </children>
       </AnchorPane>
    </children>
