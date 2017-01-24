@@ -13,7 +13,7 @@ import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.Category;
-import com.dpu.model.Company;
+import com.dpu.model.DPUService;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
 
@@ -31,6 +31,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -42,6 +43,9 @@ public class CategoryController extends Application implements Initializable {
 	
 	@FXML
 	TableColumn<Category, String> type, category;
+	
+	@FXML
+	TextField txtSearchCategory;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -55,8 +59,7 @@ public class CategoryController extends Application implements Initializable {
 	
 	@FXML
 	private void btnEditCategoryAction() {
-		Category category = tblCategory.getSelectionModel().getSelectedItem();
-		System.out.println(category + "   category:: ");
+		Category category = cList.get(tblCategory.getSelectionModel().getSelectedIndex());
 		if(category != null) {
 			Platform.runLater(new Runnable() {
 				
@@ -65,13 +68,14 @@ public class CategoryController extends Application implements Initializable {
 					try {
 						ObjectMapper mapper = new ObjectMapper();
 						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_CATEGORY_API + "/" + category.getCategoryId(), null);
-						System.out.println("Category response: " + response);
+						System.out.println("OpenEditResponse: " + response);
 						if(response != null && response.length() > 0) {
 							Category c = mapper.readValue(response, Category.class);
 							CategoryEditController categoryEditController = (CategoryEditController) openEditCategoryScreen();
 							categoryEditController.initData(c);
 						}
 					} catch (Exception e) {
+						e.printStackTrace();
 						JOptionPane.showMessageDialog(null, "Try Again.." + e , "Info", 1);
 					}
 				}
@@ -112,7 +116,33 @@ public class CategoryController extends Application implements Initializable {
 			System.out.println(e);
 		}
 	}
+	
+	ObjectMapper mapper = new ObjectMapper();
 
+	public void fillCategories(String response) {
+		
+		try {
+			cList = new ArrayList<Category>();
+			setColumnValues();
+			ObservableList<Category> data = null;
+			if(response != null && response.length() > 0) {
+				Category c[] = mapper.readValue(response, Category[].class);
+				for(Category ccl : c) {
+					cList.add(ccl);
+				}
+				data = FXCollections.observableArrayList(cList);
+				
+			} else {
+				data = FXCollections.observableArrayList(cList);
+			}
+			tblCategory.setItems(data);
+			
+			tblCategory.setVisible(true);
+		} catch (Exception e) {
+			System.out.println("CategoryController: fillCategories(): "+ e.getMessage());
+		}
+	}
+	
 	@Override
 	public void start(Stage primaryStage) {
 	}
@@ -128,6 +158,41 @@ public class CategoryController extends Application implements Initializable {
 	}
 	
 	@FXML
+	private void btnGoCategoryAction() {
+		String searchCategory = txtSearchCategory.getText();
+
+		if(searchCategory != null && searchCategory.length() > 0) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_CATEGORY_API + "/" + searchCategory + "/search", null);
+						fillCategories(response);
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					}
+				}
+			});
+		}
+		
+		if(searchCategory != null && searchCategory.length() == 0) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_CATEGORY_API, null);
+						fillCategories(response);
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					}
+				}
+			});
+		}
+	}
+	
+	@FXML
 	private void btnDeleteCategoryAction() {
 		Category category = tblCategory.getSelectionModel().getSelectedItem();
 		if(category != null) {
@@ -136,16 +201,15 @@ public class CategoryController extends Application implements Initializable {
 				@Override
 				public void run() {
 					try {
-						ObjectMapper mapper = new ObjectMapper();
 						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_CATEGORY_API + "/" + category.getCategoryId(), null);
-						if(response != null && response.contains("message")) {
+						fillCategories(response);
+						/*if(response != null && response.contains("message")) {
 							Success success = mapper.readValue(response, Success.class);
 							JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
 						} else {
 							Failed failed = mapper.readValue(response, Failed.class);
 							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-						}
-						fetchCategories();
+						}*/
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
 					}
@@ -154,6 +218,8 @@ public class CategoryController extends Application implements Initializable {
 		}
 	}
 
+	List<Category> cList= null;
+	
 	public void fetchCategories() {
 	
 		fetchColumns();
@@ -165,7 +231,7 @@ public class CategoryController extends Application implements Initializable {
 					ObjectMapper mapper = new ObjectMapper();
 					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_CATEGORY_API, null);
 					Category c[] = mapper.readValue(response, Category[].class);
-					List<Category> cList = new ArrayList<Category>();
+					cList = new ArrayList<Category>();
 					for(Category ccl : c) {
 						cList.add(ccl);
 					}
@@ -188,7 +254,7 @@ public class CategoryController extends Application implements Initializable {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Category, String> param) {
-				return new SimpleStringProperty(param.getValue().getTypeId() + "");
+				return new SimpleStringProperty(param.getValue().getTypeName() + "");
 			}
 		});
 		category.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Category,String>, ObservableValue<String>>() {

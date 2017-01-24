@@ -12,10 +12,9 @@ import com.dpu.client.GetAPIClient;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.DPUService;
-import com.dpu.model.Failed;
 import com.dpu.model.Status;
-import com.dpu.model.Success;
 import com.dpu.model.Type;
+import com.dpu.util.Validate;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -24,6 +23,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.stage.Stage;
 
 public class ServiceAddController<T> extends Application implements Initializable{
@@ -43,15 +43,58 @@ public class ServiceAddController<T> extends Application implements Initializabl
 	
 	List<Status> statusList;
 	
+	Validate validate = new Validate();
+	
 	@FXML
 	private void btnSaveServiceAction() {
-		addService();
-		closeAddServiceScreen(btnSaveService);
+		boolean response = validateAddServiceScreen();
+		if(response) {
+			addService();
+			closeAddServiceScreen(btnSaveService);
+		}
 	}
 	
 	private void closeAddServiceScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
         loginStage.close();
+	}
+	
+	private boolean validateAddServiceScreen() {
+		String name = txtService.getText();
+		String textField = ddlTextField.getSelectionModel().getSelectedItem();
+		String association = ddlAssociationWith.getSelectionModel().getSelectedItem();
+		String status = ddlStatus.getSelectionModel().getSelectedItem();
+
+		
+		boolean result = validate.validateEmptyness(name);
+		if(!result) {
+			txtService.setTooltip(new Tooltip("Equipment Name is Mandatory"));
+			txtService.setStyle("-fx-focus-color: red;");
+			txtService.requestFocus();
+			return result;
+		}
+		result = validate.validateEmptyness(textField);
+		if(!result) {
+			ddlTextField.setTooltip(new Tooltip("TextField is Mandatory"));
+			ddlTextField.setStyle("-fx-focus-color: red;");
+			ddlTextField.requestFocus();
+			return result;
+		}
+		result = validate.validateEmptyness(association);
+		if(!result) {
+			ddlAssociationWith.setTooltip(new Tooltip("Association is Mandatory"));
+			ddlAssociationWith.setStyle("-fx-focus-color: red;");
+			ddlAssociationWith.requestFocus();
+			return result;
+		}
+		result = validate.validateEmptyness(status);
+		if(!result) {
+			ddlStatus.setTooltip(new Tooltip("Status is Mandatory"));
+			ddlStatus.setStyle("-fx-focus-color: red;");
+			ddlStatus.requestFocus();
+			return result;
+		}
+		return result;
 	}
 	
 	private void addService() {

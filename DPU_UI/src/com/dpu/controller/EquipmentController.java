@@ -241,19 +241,20 @@ public class EquipmentController extends Application implements Initializable {
 	public void fillEquipments(String response) {
 		
 		try {
+			ObservableList<Equipment> data = null;
+			equipments = new ArrayList<Equipment>();
+			setColumnValues();
 			if(response != null && response.length() > 0) {
 				Equipment c[] = mapper.readValue(response, Equipment[].class);
-				equipments = new ArrayList<Equipment>();
 				for(Equipment ccl : c) {
 					equipments.add(ccl);
 				}
-				ObservableList<Equipment> data = FXCollections.observableArrayList(equipments);
-				
-				setColumnValues();
-				tblEquipment.setItems(data);
-	
-	            tblEquipment.setVisible(true);
+				data = FXCollections.observableArrayList(equipments);
+			} else {
+				data = FXCollections.observableArrayList(equipments);
 			}
+			tblEquipment.setItems(data);
+            tblEquipment.setVisible(true);
 		} catch (Exception e) {
 			System.out.println("EquipmentController: fillEquipments(): "+ e.getMessage());
 		}
