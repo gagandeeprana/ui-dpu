@@ -2,6 +2,7 @@ package com.dpu.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
@@ -9,10 +10,9 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 @JsonSerialize(include = Inclusion.NON_NULL)
 public class Driver implements Serializable{
 
-	 
 	private static final long serialVersionUID = 1L;
 
-	private int driverId;
+	private Long driverId;
 
 	private String driverCode;
 
@@ -40,67 +40,87 @@ public class Driver implements Serializable{
 	 
 	private String pager;
 	 
-	private String division;
+	private String divisionName;
+	private Long divisionId;
+	private List<Division> divisionList;
 
-	private Integer terminalId;
+	private String terminalName;
+	private Long terminalId;
+	private List<Terminal> terminalList;
 
-	private Integer catogoryId;
+	private String catogoryName;
+	private Long categoryId;
+	private List<Category> categoryList;
 	 
-	private Integer roleId;
+	private String roleName;
+	private Long roleId;
+	private List<Type> roleList;
 	 
-	private Integer statusId;
+	private String statusName;
+	private Long statusId;
+	private List<Status> statusList;
 	 
-	private Integer driverClassId;
+	private String driverClassName;
+	private Long driverClassId;
+	private List<Type> driverClassList;
  
+	public List<Division> getDivisionList() {
+		return divisionList;
+	}
+
+	public void setDivisionList(List<Division> divisionList) {
+		this.divisionList = divisionList;
+	}
+
+	public List<Terminal> getTerminalList() {
+		return terminalList;
+	}
+
+	public void setTerminalList(List<Terminal> terminalList) {
+		this.terminalList = terminalList;
+	}
+
+	public List<Category> getCategoryList() {
+		return categoryList;
+	}
+
+	public void setCategoryList(List<Category> categoryList) {
+		this.categoryList = categoryList;
+	}
+
+	public List<Type> getRoleList() {
+		return roleList;
+	}
+
+	public void setRoleList(List<Type> roleList) {
+		this.roleList = roleList;
+	}
+
+	public List<Type> getDriverClassList() {
+		return driverClassList;
+	}
+
+	public void setDriverClassList(List<Type> driverClassList) {
+		this.driverClassList = driverClassList;
+	}
+
+	public List<Status> getStatusList() {
+		return statusList;
+	}
+
+	public void setStatusList(List<Status> statusList) {
+		this.statusList = statusList;
+	}
+
 	private String createdBy;
 	 
 	private Date createdOn;
 	
-	public Integer getTerminalId() {
-		return terminalId;
-	}
-
-	public void setTerminalId(Integer terminalId) {
-		this.terminalId = terminalId;
-	}
-
-	public Integer getCatogoryId() {
-		return catogoryId;
-	}
-
-	public void setCatogoryId(Integer catogoryId) {
-		this.catogoryId = catogoryId;
-	}
-
-	public Integer getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
-	}
-
-	public Integer getStatusId() {
-		return statusId;
-	}
-
-	public void setStatusId(Integer statusId) {
-		this.statusId = statusId;
-	}
-
-	public Integer getDriverClassId() {
-		return driverClassId;
-	}
-
-	public void setDriverClassId(Integer driverClassId) {
-		this.driverClassId = driverClassId;
-	}
-
-	public int getDriverId() {
+	public Long getDriverId() {
 		return driverId;
 	}
 
-	public void setDriverId(int driverId) {
+	public void setDriverId(Long driverId) {
 		this.driverId = driverId;
 	}
 
@@ -208,12 +228,100 @@ public class Driver implements Serializable{
 		this.pager = pager;
 	}
 
-	public String getDivision() {
-		return division;
+	public String getDivisionName() {
+		return divisionName;
 	}
 
-	public void setDivision(String division) {
-		this.division = division;
+	public void setDivisionName(String divisionName) {
+		this.divisionName = divisionName;
+	}
+
+	public Long getDivisionId() {
+		return divisionId;
+	}
+
+	public void setDivisionId(Long divisionId) {
+		this.divisionId = divisionId;
+	}
+
+	public String getTerminalName() {
+		return terminalName;
+	}
+
+	public void setTerminalName(String terminalName) {
+		this.terminalName = terminalName;
+	}
+
+	public Long getTerminalId() {
+		return terminalId;
+	}
+
+	public void setTerminalId(Long terminalId) {
+		this.terminalId = terminalId;
+	}
+
+	public String getCatogoryName() {
+		return catogoryName;
+	}
+
+	public void setCatogoryName(String catogoryName) {
+		this.catogoryName = catogoryName;
+	}
+
+	public Long getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+
+	public Long getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Long roleId) {
+		this.roleId = roleId;
+	}
+
+	public String getStatusName() {
+		return statusName;
+	}
+
+	public void setStatusName(String statusName) {
+		this.statusName = statusName;
+	}
+
+	public Long getStatusId() {
+		return statusId;
+	}
+
+	public void setStatusId(Long statusId) {
+		this.statusId = statusId;
+	}
+
+	public String getDriverClassName() {
+		return driverClassName;
+	}
+
+	public void setDriverClassName(String driverClassName) {
+		this.driverClassName = driverClassName;
+	}
+
+	public Long getDriverClassId() {
+		return driverClassId;
+	}
+
+	public void setDriverClassId(Long driverClassId) {
+		this.driverClassId = driverClassId;
 	}
 
 	public String getCreatedBy() {
@@ -231,6 +339,4 @@ public class Driver implements Serializable{
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
-	
-	
 }

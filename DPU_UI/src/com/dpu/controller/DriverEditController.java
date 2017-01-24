@@ -102,17 +102,17 @@ public class DriverEditController extends Application implements Initializable{
 		driver.setFaxNo(txtFaxNo.getText());
 		driver.setCellular(txtCellular.getText());
 		driver.setPager(txtPager.getText());
-		driver.setDivision(txtDivision.getText());
-		driver.setTerminalId(ddlTerminal.getSelectionModel().getSelectedItem().equals("Terminal1")?1:2);
-		driver.setCatogoryId(ddlCategory.getSelectionModel().getSelectedItem().equals("Category1")?1:2);
-		driver.setRoleId(ddlRole.getSelectionModel().getSelectedItem().equals("Role1")?1:2);
-		driver.setStatusId(ddlStatus.getSelectionModel().getSelectedItem().equals("Active")?1:0);
-		driver.setDriverClassId(ddlDriverClass.getSelectionModel().getSelectedItem().equals("Class1")?1:2);
+//		driver.setDivision(txtDivision.getText());
+//		driver.setTerminalId(ddlTerminal.getSelectionModel().getSelectedItem().equals("Terminal1")?1:2);
+//		driver.setCatogoryId(ddlCategory.getSelectionModel().getSelectedItem().equals("Category1")?1:2);
+//		driver.setRoleId(ddlRole.getSelectionModel().getSelectedItem().equals("Role1")?1:2);
+//		driver.setStatusId(ddlStatus.getSelectionModel().getSelectedItem().equals("Active")?1:0);
+//		driver.setDriverClassId(ddlDriverClass.getSelectionModel().getSelectedItem().equals("Class1")?1:2);
 		return driver;
 	}
 
 	public void initData(Driver driver) {
-		driverId = driver.getDriverId();
+//		driverId = driver.getDriverId();
 		txtCode.setText(driver.getDriverCode());
 		txtFirstName.setText(driver.getFirstName());
 		txtLastName.setText(driver.getLastName());
@@ -125,9 +125,9 @@ public class DriverEditController extends Application implements Initializable{
 		txtFaxNo.setText(driver.getFaxNo());
 		txtCellular.setText(driver.getCellular());
 		txtPager.setText(driver.getPager());
-		txtDivision.setText(driver.getDivision());
-		ddlTerminal.setValue(driver.getTerminalId() == 1?"Terminal1":"Terminal2");
-		ddlCategory.setValue(driver.getCatogoryId() == 1?"Category1":"Category2");
+//		txtDivision.setText(driver.getDivision());
+//		ddlTerminal.setValue(driver.getTerminalId() == 1?"Terminal1":"Terminal2");
+//		ddlCategory.setValue(driver.getCatogoryId() == 1?"Category1":"Category2");
 		ddlRole.setValue(driver.getRoleId() == 1?"Role1":"Role2");
 		ddlStatus.setValue(driver.getStatusId() == 1 ? "Active":"Inactive");
 		ddlDriverClass.setValue(driver.getDriverClassId() == 1?"Class1":"Class2");
