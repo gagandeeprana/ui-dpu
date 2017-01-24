@@ -47,6 +47,8 @@ import javafx.util.Callback;
 
 public class CompanyController extends Application implements Initializable {
 
+	
+	static CompanyAddController companyAddController;
 	@FXML
 	TableView<Company> tblCompany;
 	

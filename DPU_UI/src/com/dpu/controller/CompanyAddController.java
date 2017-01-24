@@ -9,7 +9,6 @@ import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-import com.dpu.client.GetAPIClient;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.AdditionalContact;
@@ -29,6 +28,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -36,17 +36,32 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class CompanyAddController extends Application implements Initializable {
 
+	//----------------
+	
+	@FXML
+	Pane addCompanyPane;
+	
+	static CompanyAddController companyAddController;
+	
+	@FXML
+	private void btnSaveBillingLocationAction() {
+		companyAddController = (CompanyAddController) showPanel(Iconstants.EQUIPMENT_BASE_PACKAGE, Iconstants.XML_EQUIPMENT_SCREEN);
+	}
+	
+	//-----------------------------
+	
 	int count = 0;
 	@FXML
 	Button btnSaveCompany;
@@ -66,16 +81,7 @@ public class CompanyAddController extends Application implements Initializable {
         loginStage.close();
 	}
 	
-	// billing Location button
-	@FXML
-	Button btnSaveBillingLocation;
-	
-	@FXML
-	private void btnSaveBillingLocationAction() {
-		addBillingLocation();
-		closeAddCompanyScreen(btnSaveBillingLocation);
-		
-	}
+	 
 	
 	
 	
@@ -183,17 +189,7 @@ public class CompanyAddController extends Application implements Initializable {
 		 
 		 
        Label label = new Label();
- 
-       /* Circle circle = new Circle();
-        circle.setRadius(80);
-        circle.setFill(Color.AQUA);
- 
-        VBox root = new VBox();
-        root.setPadding(new Insets(5));
-        root.setSpacing(5);
- 
-        root.getChildren().addAll(label, circle);*/
- 
+  
         // Create ContextMenu
         ContextMenu contextMenu = new ContextMenu();
  
@@ -242,12 +238,7 @@ public class CompanyAddController extends Application implements Initializable {
         });
         count =1;
         }
- 
-       // Scene scene = new Scene(root, 400, 200);
- 
-        /*stage.setTitle("JavaFX ContextMenu (o7planning.org)");
-        stage.setScene(scene);
-        stage.show();*/
+  
 		
 	}
 	
@@ -317,42 +308,7 @@ public class CompanyAddController extends Application implements Initializable {
 		});
 	}
 	
-	// Add Billing Location
-	private void  addBillingLocation(){
-
-		Platform.runLater(new Runnable() {
-			
-			@Override
-			public void run() {
-				try {
-					ObjectMapper mapper = new ObjectMapper();
-					
-					 
-					
-					BillingLocations company = setBillingLocationValues();
-					String payload = mapper.writeValueAsString(company);
-
-					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_ADD_COMPANY_BILLING_LOCATION_API, null, payload);
-					
-					if(response != null && response.contains("message")) {
-						Success success = mapper.readValue(response, Success.class);
-						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
-					} else {
-						Failed failed = mapper.readValue(response, Failed.class);
-						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-					}
-					//MainScreen.companyController.fetchCompanies();
-					
-					fetchBillingLocations();
-					
-				} catch (Exception e) {
-					System.out.println(e);
-					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
-				}
-			}
-		});
-	
-	}
+	 
 	
 	
 	@SuppressWarnings("unchecked")
@@ -369,7 +325,7 @@ public class CompanyAddController extends Application implements Initializable {
 		 
 	}
 	//fetch Billing Locations
-	public void fetchBillingLocations() {
+	public void fetchBillingLocations(String response) {
 		System.out.println("[fetchBillingLocations] : Enter :");
 		fetchColumns();
 		
@@ -380,7 +336,9 @@ public class CompanyAddController extends Application implements Initializable {
 				System.out.println("[fetchBillingLocations] [run ]: Enter :");
 				try {
 					ObjectMapper mapper = new ObjectMapper();
-					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_BILLING_LOCATION_API, null);
+					String response = "[{\"billingLocationId\":18,\"name\":\"XXX\",\"address\":\"XXX\",\"city\":\"XXX\",\"zip\":\"0000\",\"status\":1,\"contact\":\"XXX\",\"position\":\"XXX\",\"email\":\"XXX\",\"cellular\":\"(868) 686-8686\",\"phone\":\"(777) 777-7777\",\"ext\":\"7777\",\"fax\":\"(876) 876-8768\",\"tollfree\":\"(___) ___-____\"},{\"billingLocationId\":24,\"name\":\"AAA\",\"address\":\"AAA\",\"city\":\"AAA\",\"zip\":\"6786\",\"status\":1,\"contact\":\"AAA\",\"position\":\"AAA\",\"email\":\"AAA\",\"cellular\":\"(868) 686-8686\",\"phone\":\"(777) 777-7777\",\"ext\":\"7777\",\"fax\":\"(876) 876-8768\",\"tollfree\":\"(___) ___-____\"},{\"billingLocationId\":25,\"name\":\"AAA\",\"address\":\"AAA\",\"city\":\"AAA\",\"zip\":\"6786\",\"status\":1,\"contact\":\"AAA\",\"position\":\"AAA\",\"email\":\"AAA\",\"cellular\":\"(868) 686-8686\",\"phone\":\"(777) 777-7777\",\"ext\":\"7777\",\"fax\":\"(876) 876-8768\",\"tollfree\":\"(___) ___-____\"}]";
+					System.out.println("RESPONSE------"+response);
+					 
 					if(response != null && response.length() > 0) {
 						BillingLocations c[] = mapper.readValue(response, BillingLocations[].class);
 						System.out.println("c: "+c);
@@ -406,7 +364,7 @@ public class CompanyAddController extends Application implements Initializable {
 	
 // set columns value for BillingLocations
 private void setColumnValues() {
-		
+		System.out.println("Enter setColumns");
 		name.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<BillingLocations,String>, ObservableValue<String>>() {
 			
 			@Override
@@ -456,6 +414,7 @@ private void setColumnValues() {
 				return new SimpleStringProperty(param.getValue().getCellular() + "");
 			}
 		});
+		System.out.println("Exit setColumns");
 		 
 	}
 
@@ -475,7 +434,7 @@ private void setColumnValues() {
 		 
 		 
 		if(count == Iconstants.val){
-			fetchBillingLocations();
+			//fetchBillingLocations();
 			
 		}
 	}
@@ -515,28 +474,47 @@ private void setColumnValues() {
 		return company;
 	}
 	
-	// set billing Location Value
-	private BillingLocations setBillingLocationValues() {
-		BillingLocations billingLocation = new BillingLocations();
-		billingLocation.setName(txtCompany.getText());
-		billingLocation.setAddress(txtAddress.getText());
-		billingLocation.setCity(txtCity.getText());
-		billingLocation.setPhone(txtPhone.getText());
-		billingLocation.setContact(txtContact.getText());
-		billingLocation.setZip(txtZip.getText());
+public void fillBillingLocation(String response) {
 		
-		/*billingLocation.setExt(txtExt.getText());
-		billingLocation.setCity(txtCity.getText());
-		billingLocation.setFax(txtFax.getText());
-		billingLocation.setCompanyPrefix(txtPrefix.getText());
-		billingLocation.setProvinceState(txtProvince.getText());
-		billingLocation.setZip(txtZip.getText());
-		billingLocation.setAfterHours(txtAfterHours.getText());
-		billingLocation.setEmail(txtEmail.getText());
-		billingLocation.setTollfree(txtTollFree.getText());
-		billingLocation.setWebsite(txtWebsite.getText());
-		billingLocation.setCellular(txtCellular.getText());
-		billingLocation.setPager(txtPager.getText());*/
-		return billingLocation;
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			if(response != null && response.length() > 0) {
+				BillingLocations c[] = mapper.readValue(response, BillingLocations[].class);
+				billLocList = new ArrayList<BillingLocations>();
+				for(BillingLocations ccl : c) {
+					billLocList.add(ccl);
+				}
+				ObservableList<BillingLocations> data = FXCollections.observableArrayList(billLocList);
+				
+				setColumnValues();
+				tableBillingLocations.setItems(data);
+	
+				tableBillingLocations.setVisible(true);
+			}
+		} catch (Exception e) {
+			System.out.println("EquipmentController: fillEquipments(): "+ e.getMessage());
+		}
 	}
+	 
+private Object showPanel(String basePackage, String screenName) {
+	try {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(basePackage + screenName));
+		Parent root = (Parent) fxmlLoader.load();
+		Pane pane = (Pane) root;
+
+		ObservableList<Node> nodes = addCompanyPane.getChildren();
+
+		if (nodes != null && nodes.size() >= 4 && nodes.get(3) != null) {
+			nodes.remove(3);
+			nodes.add(3, pane);
+		} else {
+			nodes.add(pane);
+		}
+		return fxmlLoader.getController();
+	} catch (Exception e) {
+		System.out.println(e);
+		e.printStackTrace();
+	}
+	return null;
+}
 }
