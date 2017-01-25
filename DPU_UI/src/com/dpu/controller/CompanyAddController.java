@@ -48,8 +48,6 @@ import javafx.util.Callback;
 
 public class CompanyAddController extends Application implements Initializable {
 
-	//----------------
-	
 	@FXML
 	Pane addCompanyPane;
 	
@@ -57,12 +55,11 @@ public class CompanyAddController extends Application implements Initializable {
 	
 	@FXML
 	private void btnSaveBillingLocationAction() {
-		companyAddController = (CompanyAddController) showPanel(Iconstants.EQUIPMENT_BASE_PACKAGE, Iconstants.XML_EQUIPMENT_SCREEN);
+		companyAddController = (CompanyAddController) showPanel(Iconstants.COMPANY_BASE_PACKAGE, Iconstants.XML_COMPANY_ADD_SCREEN);
 	}
 	
-	//-----------------------------
-	
 	int count = 0;
+	
 	@FXML
 	Button btnSaveCompany;
 	
@@ -81,10 +78,6 @@ public class CompanyAddController extends Application implements Initializable {
         loginStage.close();
 	}
 	
-	 
-	
-	
-	
 	@FXML
 	TableView<BillingLocations> tableBillingLocations;
 	
@@ -94,8 +87,6 @@ public class CompanyAddController extends Application implements Initializable {
 	TableColumn<BillingLocations, String> name, address, unitNo, city, provinceState, zip, arCDN, arUS, status,
 	contact, position, email, cellular, phone,ext,fax,prefix,tollfree,companyId;
 	
-	
-	// for Additional contact screen
 	@FXML
 	TableView<AdditionalContact> tableAdditionalContact;
 	
@@ -109,16 +100,9 @@ public class CompanyAddController extends Application implements Initializable {
 	 
 	//for Additional Contact Screen table
 	@FXML public void handleAddContMouseClick(MouseEvent arg0) {
-	    System.out.println("clicked on " );
-	 
-         System.out.println("OK");
-      
-	 
 		System.out.println("[CompanyController] : [start] : Enter Start method.");
 		 
-		 
        Label label = new Label();
- 
        
         // Create ContextMenu
         ContextMenu contextMenu = new ContextMenu();
@@ -133,6 +117,7 @@ public class CompanyAddController extends Application implements Initializable {
                // label.setText("Select Menu Item 1");
             }
         });
+        
         MenuItem item2 = new MenuItem("EDIT");
         item2.setOnAction(new EventHandler<ActionEvent>() {
  
@@ -336,17 +321,18 @@ public class CompanyAddController extends Application implements Initializable {
 				System.out.println("[fetchBillingLocations] [run ]: Enter :");
 				try {
 					ObjectMapper mapper = new ObjectMapper();
-					String response = "[{\"billingLocationId\":18,\"name\":\"XXX\",\"address\":\"XXX\",\"city\":\"XXX\",\"zip\":\"0000\",\"status\":1,\"contact\":\"XXX\",\"position\":\"XXX\",\"email\":\"XXX\",\"cellular\":\"(868) 686-8686\",\"phone\":\"(777) 777-7777\",\"ext\":\"7777\",\"fax\":\"(876) 876-8768\",\"tollfree\":\"(___) ___-____\"},{\"billingLocationId\":24,\"name\":\"AAA\",\"address\":\"AAA\",\"city\":\"AAA\",\"zip\":\"6786\",\"status\":1,\"contact\":\"AAA\",\"position\":\"AAA\",\"email\":\"AAA\",\"cellular\":\"(868) 686-8686\",\"phone\":\"(777) 777-7777\",\"ext\":\"7777\",\"fax\":\"(876) 876-8768\",\"tollfree\":\"(___) ___-____\"},{\"billingLocationId\":25,\"name\":\"AAA\",\"address\":\"AAA\",\"city\":\"AAA\",\"zip\":\"6786\",\"status\":1,\"contact\":\"AAA\",\"position\":\"AAA\",\"email\":\"AAA\",\"cellular\":\"(868) 686-8686\",\"phone\":\"(777) 777-7777\",\"ext\":\"7777\",\"fax\":\"(876) 876-8768\",\"tollfree\":\"(___) ___-____\"}]";
+//					String response = "[{\"billingLocationId\":18,\"name\":\"XXX\",\"address\":\"XXX\",\"city\":\"XXX\",\"zip\":\"0000\",\"status\":1,\"contact\":\"XXX\",\"position\":\"XXX\",\"email\":\"XXX\",\"cellular\":\"(868) 686-8686\",\"phone\":\"(777) 777-7777\",\"ext\":\"7777\",\"fax\":\"(876) 876-8768\",\"tollfree\":\"(___) ___-____\"},{\"billingLocationId\":24,\"name\":\"AAA\",\"address\":\"AAA\",\"city\":\"AAA\",\"zip\":\"6786\",\"status\":1,\"contact\":\"AAA\",\"position\":\"AAA\",\"email\":\"AAA\",\"cellular\":\"(868) 686-8686\",\"phone\":\"(777) 777-7777\",\"ext\":\"7777\",\"fax\":\"(876) 876-8768\",\"tollfree\":\"(___) ___-____\"},{\"billingLocationId\":25,\"name\":\"AAA\",\"address\":\"AAA\",\"city\":\"AAA\",\"zip\":\"6786\",\"status\":1,\"contact\":\"AAA\",\"position\":\"AAA\",\"email\":\"AAA\",\"cellular\":\"(868) 686-8686\",\"phone\":\"(777) 777-7777\",\"ext\":\"7777\",\"fax\":\"(876) 876-8768\",\"tollfree\":\"(___) ___-____\"}]";
 					System.out.println("RESPONSE------"+response);
 					 
 					if(response != null && response.length() > 0) {
 						BillingLocations c[] = mapper.readValue(response, BillingLocations[].class);
-						System.out.println("c: "+c);
+						System.out.println("c: "+c.length);
 						billLocList = new ArrayList<BillingLocations>();
 						for(BillingLocations ccl : c) {
 							System.out.println("ccl: "+ccl);
 							billLocList.add(ccl);
 						}
+						System.out.println("bill loca : "  + billLocList.size());
 						ObservableList<BillingLocations> data = FXCollections.observableArrayList(billLocList);
 						
 						setColumnValues();
@@ -355,6 +341,7 @@ public class CompanyAddController extends Application implements Initializable {
 						tableBillingLocations.setVisible(true);
 					}
 				} catch (Exception e) {
+					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
 				}
 			}
@@ -369,7 +356,7 @@ private void setColumnValues() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<BillingLocations, String> param) {
-				return new SimpleStringProperty(param.getValue().getUnitNo() + "");
+				return new SimpleStringProperty(param.getValue().getName() + "");
 			}
 		});
 		address.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<BillingLocations,String>, ObservableValue<String>>() {
@@ -383,7 +370,7 @@ private void setColumnValues() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<BillingLocations, String> param) {
-				return new SimpleStringProperty(param.getValue().getEmail() + "");
+				return new SimpleStringProperty(param.getValue().getAddress() + "");
 			}
 		});
 		phone.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<BillingLocations,String>, ObservableValue<String>>() {
@@ -397,21 +384,21 @@ private void setColumnValues() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<BillingLocations, String> param) {
-				return new SimpleStringProperty(param.getValue().getProvinceState() + "");
+				return new SimpleStringProperty(param.getValue().getContact() + "");
 			}
 		});
 		zip.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<BillingLocations,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<BillingLocations, String> param) {
-				return new SimpleStringProperty(param.getValue().getPhone() + "");
+				return new SimpleStringProperty(param.getValue().getZip() + "");
 			}
 		});
 		fax.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<BillingLocations,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<BillingLocations, String> param) {
-				return new SimpleStringProperty(param.getValue().getCellular() + "");
+				return new SimpleStringProperty(param.getValue().getFax() + "");
 			}
 		});
 		System.out.println("Exit setColumns");

@@ -7,14 +7,15 @@ import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.BillingLocations;
 
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -28,14 +29,30 @@ public class BillingAddController extends Application implements Initializable{
 	
 	@FXML
 	TextField txtCompany, txtAddress,txtCity,txtPhone,txtContact,txtZip,txtFax;
+
+	private CompanyAddController companyAddController;
 	
 	 
 	@FXML
 	private void btnSaveBillingLocationAction() {
 		 
+			companyAddController = (CompanyAddController) showPanel(Iconstants.COMPANY_BASE_PACKAGE, Iconstants.XML_COMPANY_ADD_SCREEN);
 			addBillingLocationDetail();
+
 			closeAddBillingScreen(btnSaveBillingLocation);
 		 
+	}
+	
+	private Object showPanel(String basePackage, String screenName) {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(basePackage + screenName));
+			Parent root = (Parent) fxmlLoader.load();
+			return fxmlLoader.getController();
+		} catch (Exception e) {
+			System.out.println(e);
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	private void closeAddBillingScreen(Button clickedButton) {
@@ -44,6 +61,7 @@ public class BillingAddController extends Application implements Initializable{
 	}
 	
 	 
+	
 	private void addBillingLocationDetail() {
 		
 		Platform.runLater(new Runnable() {
@@ -60,10 +78,11 @@ public class BillingAddController extends Application implements Initializable{
 					String response = "[{\"billingLocationId\":18,\"name\":\"XXX\",\"address\":\"XXX\",\"city\":\"XXX\",\"zip\":\"0000\",\"status\":1,\"contact\":\"XXX\",\"position\":\"XXX\",\"email\":\"XXX\",\"cellular\":\"(868) 686-8686\",\"phone\":\"(777) 777-7777\",\"ext\":\"7777\",\"fax\":\"(876) 876-8768\",\"tollfree\":\"(___) ___-____\"},{\"billingLocationId\":24,\"name\":\"AAA\",\"address\":\"AAA\",\"city\":\"AAA\",\"zip\":\"6786\",\"status\":1,\"contact\":\"AAA\",\"position\":\"AAA\",\"email\":\"AAA\",\"cellular\":\"(868) 686-8686\",\"phone\":\"(777) 777-7777\",\"ext\":\"7777\",\"fax\":\"(876) 876-8768\",\"tollfree\":\"(___) ___-____\"},{\"billingLocationId\":25,\"name\":\"AAA\",\"address\":\"AAA\",\"city\":\"AAA\",\"zip\":\"6786\",\"status\":1,\"contact\":\"AAA\",\"position\":\"AAA\",\"email\":\"AAA\",\"cellular\":\"(868) 686-8686\",\"phone\":\"(777) 777-7777\",\"ext\":\"7777\",\"fax\":\"(876) 876-8768\",\"tollfree\":\"(___) ___-____\"}]";
 					System.out.println(response);
 					//MainScreen.equipmentController.fillEquipments(response);
-					CompanyAddController.companyAddController.fetchBillingLocations(response);
+					companyAddController.fetchBillingLocations(response);
 
  
 				} catch (Exception e) {
+					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
 				}
 			}
