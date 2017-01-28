@@ -10,6 +10,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.model.AdditionalContact;
 import com.dpu.model.BillingControllerModel;
 import com.dpu.model.Company;
 import com.dpu.model.Failed;
@@ -42,7 +43,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import javafx.util.Callback;
 
 public class CompanyAddController extends Application implements Initializable {
@@ -56,6 +56,35 @@ public class CompanyAddController extends Application implements Initializable {
 
 	@FXML
 	private Pane addCompanyPane;
+	
+	//-------------------------
+	 @FXML
+	    private TableColumn<AdditionalContact, String> additionalContact;
+	 
+	 @FXML
+	    private TableColumn<AdditionalContact, String> position;
+	 
+	 @FXML
+	    private TableColumn<AdditionalContact, String> phoneNo;
+	 
+	 @FXML
+	    private TableColumn<AdditionalContact, String> faxNo;
+	
+	 @FXML
+	    private TableColumn<AdditionalContact, String> cellular;
+	 
+	  @FXML
+	    private TableColumn<AdditionalContact, String> email;
+	  
+	  @FXML
+	    private TableColumn<AdditionalContact, String> extension;
+	  
+	  @FXML
+	    private TableColumn<AdditionalContact, String> pager;
+	  
+	  @FXML
+	    private TableColumn<AdditionalContact, String> status;
+	//------------------
 
 	@FXML
 	private TableColumn<BillingControllerModel, String> address;
@@ -82,7 +111,7 @@ public class CompanyAddController extends Application implements Initializable {
 	private TableColumn<BillingControllerModel, String> phone;
 
 	@FXML
-	private TableView<?> tableAdditionalContact;
+	private TableView<AdditionalContact> tableAdditionalContact;
 
 	@FXML
 	private TableView<BillingControllerModel> tableBillingLocations;
@@ -146,6 +175,63 @@ public class CompanyAddController extends Application implements Initializable {
 
 	@FXML
 	void handleAddContMouseClick(MouseEvent event) {
+		 
+		// Create ContextMenu
+		ContextMenu contextMenu = new ContextMenu();
+
+		MenuItem item1 = new MenuItem("ADD");
+		item1.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+
+				openAddAdditionalContactScreen();
+				
+				try {
+					 closeAddCompanyScreen(btnSaveCompany);
+					   
+				} catch (Exception e) {
+					e.printStackTrace();
+					System.exit(0);
+				}
+
+				
+			}
+		});
+		MenuItem item2 = new MenuItem("EDIT");
+		item2.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				 
+			}
+		});
+
+		MenuItem item3 = new MenuItem("DELETE");
+		item3.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				 
+			}
+		});
+
+		// Add MenuItem to ContextMenu
+		contextMenu.getItems().addAll(item1, item2, item3);
+		int count = 0;
+		if (count == 0) {
+			// When user right-click on Table
+			tableAdditionalContact.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+				@Override
+				public void handle(ContextMenuEvent event) {
+					contextMenu.show(tableAdditionalContact, event.getScreenX(), event.getScreenY());
+
+				}
+
+			});
+			count = 1;
+		}
+
 	}
 
 	@FXML
@@ -208,6 +294,7 @@ public class CompanyAddController extends Application implements Initializable {
 	}
 
 	public static ArrayList<BillingControllerModel> listOfBilling = new ArrayList<BillingControllerModel>();
+	public static ArrayList<AdditionalContact> listOfAdditionalContact = new ArrayList<AdditionalContact>();
 
 	// new added
 	public void fetchBillingLocations() {
@@ -293,25 +380,122 @@ public class CompanyAddController extends Application implements Initializable {
 					}
 				});
 	}
+	
+	
+	public void fetchAdditionalContacts() {
+		// fetchColumns();
+
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+
+					if(listOfAdditionalContact != null & !(listOfAdditionalContact.isEmpty())){
+						ObservableList<AdditionalContact> data = FXCollections.observableArrayList(listOfAdditionalContact);
+						setAdditionalContactColumnValues();
+						tableAdditionalContact.setItems(data);
+						tableAdditionalContact.setVisible(true);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Try Again..  " + e, "Info", 1);
+				}
+			}
+
+		});
+	}
+
+	private void setAdditionalContactColumnValues() {
+
+		additionalContact.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+						return new SimpleStringProperty(param.getValue().getAdditionalContact()+ "");
+					}
+				});
+		position.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+						return new SimpleStringProperty(param.getValue().getPosition() + "");
+					}
+				});
+		phoneNo.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+						return new SimpleStringProperty(param.getValue().getPhone() + "");
+					}
+				});
+		faxNo.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+						return new SimpleStringProperty(param.getValue().getFax() + "");
+					}
+				});
+		cellular.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+						return new SimpleStringProperty(param.getValue().getCellular()+ "");
+					}
+				});
+		email.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+						return new SimpleStringProperty(param.getValue().getEmail() + "");
+					}
+				});
+		extension.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+						return new SimpleStringProperty(param.getValue().getExtension() + "");
+					}
+				});
+		pager.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+						return new SimpleStringProperty(param.getValue().getPager() + "");
+					}
+				});
+		status.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+						return new SimpleStringProperty(param.getValue().getStatus() + "");
+					}
+				});
+	}
+
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		System.out.println("Location  " + location);
-		String loc = location + "";
-		if (loc.endsWith("AddCompany.fxml")) {
+		 
+		 
 			fetchBillingLocations();
-		}
+			fetchAdditionalContacts();
+		 
 
 	}
 
 	@FXML
 	public void handleMouseClick(MouseEvent arg0) {
-		System.out.println("clicked on ");
-
-		System.out.println("OK");
-
-		System.out.println("[CompanyController] : [start] : Enter Start method.");
-
+		 
 		Label label = new Label();
 
 		// Create ContextMenu
@@ -390,6 +574,26 @@ public class CompanyAddController extends Application implements Initializable {
 			System.out.println("Exception :" + e);
 		}
 	}
+	
+
+	private void openAddAdditionalContactScreen() {
+		System.out.println("[openAddDBillingLocScreen]  : Enter");
+		try {
+
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
+					.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_ADD_ADDITIONAL_CONTACT_SCREEN));
+			Parent root = (Parent) fxmlLoader.load();
+
+			Stage stage = new Stage();
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setTitle("Add Additional Contact");
+			stage.setScene(new Scene(root));
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Exception :" + e);
+		}
+	}
 
 	@FXML
 	private void btnSaveCompanyAction() {
@@ -401,6 +605,7 @@ public class CompanyAddController extends Application implements Initializable {
 	@FXML
 	private void btnCancelCompanyAction() {
 		listOfBilling = new ArrayList<BillingControllerModel>();
+		listOfAdditionalContact = new ArrayList<AdditionalContact>();
 		closeAddCompanyScreen(btnCancelCompany);
 	}
 
