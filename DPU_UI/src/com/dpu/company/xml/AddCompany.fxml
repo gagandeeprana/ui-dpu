@@ -94,6 +94,6 @@
       </tabs>
     </TabPane>
     <Button fx:id="btnSaveCompany" layoutX="593.0" layoutY="591.0" mnemonicParsing="false" onAction="#btnSaveCompanyAction" text="Save" />
-    <Button layoutX="645.0" layoutY="591.0" mnemonicParsing="false" text="Cancel" />
+    <Button fx:id="btnCancelCompany" layoutX="645.0" layoutY="591.0" mnemonicParsing="false" onAction="#btnCancelCompanyAction" text="Cancel" />
   </children>
 </Pane>
