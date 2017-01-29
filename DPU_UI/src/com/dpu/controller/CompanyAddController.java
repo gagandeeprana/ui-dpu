@@ -2,6 +2,7 @@ package com.dpu.controller;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
@@ -12,9 +13,10 @@ import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.AdditionalContact;
 import com.dpu.model.BillingControllerModel;
-import com.dpu.model.Company;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
+import com.dpu.request.BillingLocation;
+import com.dpu.request.CompanyModel;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -59,10 +61,10 @@ public class CompanyAddController extends Application implements Initializable {
 	
 	//-------------------------
 	 @FXML
-	    private TableColumn<AdditionalContact, String> additionalContact;
+	 private TableColumn<AdditionalContact, String> additionalContact;
 	 
 	 @FXML
-	    private TableColumn<AdditionalContact, String> position;
+	 private TableColumn<AdditionalContact, String> position;
 	 
 	 @FXML
 	    private TableColumn<AdditionalContact, String> phoneNo;
@@ -117,61 +119,61 @@ public class CompanyAddController extends Application implements Initializable {
 	private TableView<BillingControllerModel> tableBillingLocations;
 
 	@FXML
-	private TextField txtAddress;
+	public TextField txtAddress;
 
 	@FXML
-	private TextField txtAfterHours;
+	public TextField txtAfterHours;
 
 	@FXML
-	private TextField txtCellular;
+	public TextField txtCellular;
 
 	@FXML
-	private TextField txtCity;
+	public TextField txtCity;
 
 	@FXML
-	private TextField txtCompany;
+	public TextField txtCompany;
 
 	@FXML
-	private TextField txtContact;
+	public TextField txtContact;
 
 	@FXML
-	private TextField txtEmail;
+	public TextField txtEmail;
 
 	@FXML
-	private TextField txtExt;
+	public TextField txtExt;
 
 	@FXML
-	private TextField txtFax;
+	public TextField txtFax;
 
 	@FXML
-	private TextField txtPager;
+	public TextField txtPager;
 
 	@FXML
-	private TextField txtPhone;
+	public TextField txtPhone;
 
 	@FXML
-	private TextField txtPosition;
+	public TextField txtPosition;
 
 	@FXML
-	private TextField txtPrefix;
+	public TextField txtPrefix;
 
 	@FXML
-	private TextField txtProvince;
+	public TextField txtProvince;
 
 	@FXML
-	private TextField txtTollFree;
+	public TextField txtTollFree;
 
 	@FXML
-	private TextField txtUnitNo;
+	public TextField txtUnitNo;
 
 	@FXML
-	private TextField txtWebsite;
+	public TextField txtWebsite;
 
 	@FXML
-	private TextField txtZip;
+	public TextField txtZip;
 
 	@FXML
-	private TableColumn<BillingControllerModel, String> zip;
+	public TableColumn<BillingControllerModel, String> zip;
 
 	@FXML
 	void handleAddContMouseClick(MouseEvent event) {
@@ -184,6 +186,25 @@ public class CompanyAddController extends Application implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
+				
+				company.setName(txtCompany.getText());
+				company.setAddress(txtAddress.getText());
+				company.setUnitNo(txtUnitNo.getText());
+				company.setCity(txtCity.getText());
+				company.setProvinceState(txtProvince.getText());
+				company.setZip(txtZip.getText());
+				company.setEmail(txtEmail.getText());
+				company.setWebsite(txtWebsite.getText());
+				company.setContact(txtContact.getText());
+				company.setPosition(txtPosition.getText());
+				company.setPhone(txtPhone.getText());
+				company.setExt(txtExt.getText());
+				company.setFax(txtFax.getText());
+				company.setCompanyPrefix(txtPrefix.getText());
+				company.setTollfree(txtTollFree.getText());
+				company.setCellular(txtCellular.getText());
+				company.setPager(txtPager.getText());
+				company.setAfterHours(txtAfterHours.getText());
 
 				openAddAdditionalContactScreen();
 				
@@ -295,7 +316,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 	public static ArrayList<BillingControllerModel> listOfBilling = new ArrayList<BillingControllerModel>();
 	public static ArrayList<AdditionalContact> listOfAdditionalContact = new ArrayList<AdditionalContact>();
-
+	public static CompanyModel company = new CompanyModel();
 	// new added
 	public void fetchBillingLocations() {
 		// fetchColumns();
@@ -489,6 +510,27 @@ public class CompanyAddController extends Application implements Initializable {
 		 
 			fetchBillingLocations();
 			fetchAdditionalContacts();
+			
+			
+			txtCompany.setText(company.getName());
+	    	txtAddress.setText( company.getAddress());
+	    	txtUnitNo.setText( company.getUnitNo());
+	    	txtCity.setText( company.getCity());
+	    	txtProvince.setText( company.getProvinceState());
+	    	txtZip.setText( company.getZip());
+	    	txtEmail.setText( company.getEmail());
+	    	txtWebsite.setText( company.getWebsite());
+	    	txtContact.setText( company.getContact());
+	    	txtPosition.setText( company.getPosition());
+	    	txtPhone.setText( company.getPhone());
+	    	txtExt.setText( company.getExt());
+	    	txtFax.setText( company.getFax());
+	    	txtPrefix.setText( company.getCompanyPrefix());
+	    	txtTollFree.setText( company.getTollfree());
+	    	txtCellular.setText( company.getCellular());
+	    	txtPager.setText( company.getPager());
+	    	txtAfterHours.setText( company.getAfterHours());
+			
 		 
 
 	}
@@ -507,6 +549,25 @@ public class CompanyAddController extends Application implements Initializable {
 			@Override
 			public void handle(ActionEvent event) {
 
+				company.setName(txtCompany.getText());
+				company.setAddress(txtAddress.getText());
+				company.setUnitNo(txtUnitNo.getText());
+				company.setCity(txtCity.getText());
+				company.setProvinceState(txtProvince.getText());
+				company.setZip(txtZip.getText());
+				company.setEmail(txtEmail.getText());
+				company.setWebsite(txtWebsite.getText());
+				company.setContact(txtContact.getText());
+				company.setPosition(txtPosition.getText());
+				company.setPhone(txtPhone.getText());
+				company.setExt(txtExt.getText());
+				company.setFax(txtFax.getText());
+				company.setCompanyPrefix(txtPrefix.getText());
+				company.setTollfree(txtTollFree.getText());
+				company.setCellular(txtCellular.getText());
+				company.setPager(txtPager.getText());
+				company.setAfterHours(txtAfterHours.getText());
+				
 				openAddBillingLocationScreen();
 				
 				try {
@@ -597,6 +658,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 	@FXML
 	private void btnSaveCompanyAction() {
+		
 		addCompany();
 		closeAddCompanyScreen(btnSaveCompany);
 	}
@@ -606,6 +668,7 @@ public class CompanyAddController extends Application implements Initializable {
 	private void btnCancelCompanyAction() {
 		listOfBilling = new ArrayList<BillingControllerModel>();
 		listOfAdditionalContact = new ArrayList<AdditionalContact>();
+		company = new CompanyModel();
 		closeAddCompanyScreen(btnCancelCompany);
 	}
 
@@ -622,7 +685,7 @@ public class CompanyAddController extends Application implements Initializable {
 			public void run() {
 				try {
 					ObjectMapper mapper = new ObjectMapper();
-					Company company = setCompanyValue();
+					CompanyModel company = setCompanyValue();
 					String payload = mapper.writeValueAsString(company);
 
 					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API,
@@ -643,27 +706,83 @@ public class CompanyAddController extends Application implements Initializable {
 		});
 	}
 
-	private Company setCompanyValue() {
-		Company company = new Company();
+	private CompanyModel setCompanyValue() {
+		
+		
+		List<BillingLocation> billingLocations = new ArrayList<BillingLocation>();
+		List<com.dpu.request.AdditionalContact> additionalContacts = new ArrayList<com.dpu.request.AdditionalContact>();
+		
+		
 		company.setName(txtCompany.getText());
-		company.setContact(txtContact.getText());
 		company.setAddress(txtAddress.getText());
-		company.setPosition(txtPosition.getText());
 		company.setUnitNo(txtUnitNo.getText());
-		company.setPhone(txtPhone.getText());
-		company.setExt(txtExt.getText());
 		company.setCity(txtCity.getText());
-		company.setFax(txtFax.getText());
-		company.setCompanyPrefix(txtPrefix.getText());
 		company.setProvinceState(txtProvince.getText());
 		company.setZip(txtZip.getText());
-		company.setAfterHours(txtAfterHours.getText());
 		company.setEmail(txtEmail.getText());
-		company.setTollfree(txtTollFree.getText());
 		company.setWebsite(txtWebsite.getText());
+		company.setContact(txtContact.getText());
+		company.setPosition(txtPosition.getText());
+		company.setPhone(txtPhone.getText());
+		company.setExt(txtExt.getText());
+		company.setFax(txtFax.getText());
+		company.setCompanyPrefix(txtPrefix.getText());
+		company.setTollfree(txtTollFree.getText());
 		company.setCellular(txtCellular.getText());
 		company.setPager(txtPager.getText());
+		company.setAfterHours(txtAfterHours.getText());
+		
+		// need to use for loop here
+		
+		BillingLocation billingLocation = new BillingLocation();
+		if(listOfBilling != null){
+			int sizeOfBilling = listOfBilling.size();
+			for(int i=0 ; i<sizeOfBilling ;i++){
+				BillingControllerModel billingModel = listOfBilling.get(i);
+				billingLocation.setName(billingModel.getCompany());
+				billingLocation.setAddress(billingModel.getAddress() );
+				billingLocation.setCity(billingModel.getCity() );
+				billingLocation.setZip(billingModel.getZip() );
+				// need to get Status
+				billingLocation.setStatus(1);
+				billingLocation.setContact(billingModel.getContact());
+				billingLocation.setPosition(txtPosition.getText());
+				billingLocation.setEmail(txtEmail.getText());
+				billingLocation.setCellular(txtCellular.getText());
+				billingLocation.setPhone(billingModel.getPhone());
+				billingLocation.setExt(txtExt.getText());
+				billingLocation.setFax(billingModel.getFax());
+				billingLocation.setTollfree(billingModel.getCompany());
+				billingLocations.add(billingLocation);
+			}
+		}
+		
+		company.setBillingLocations(billingLocations);
+		
+		// need to use for loop here
+		if(listOfAdditionalContact != null){
+			int sizeOfAdditionalContact = listOfAdditionalContact.size();
+			for(int i=0 ; i<sizeOfAdditionalContact ;i++){	
+				
+				AdditionalContact additionalContactModel = listOfAdditionalContact.get(i);
+				com.dpu.request.AdditionalContact additionalContact = new com.dpu.request.AdditionalContact();
+				additionalContact.setCustomerName(additionalContactModel.getAdditionalContact());
+				additionalContact.setPosition(additionalContactModel.getPosition());
+				additionalContact.setPhone(additionalContactModel.getPhone());
+				additionalContact.setExt(additionalContactModel.getExtension());
+				additionalContact.setFax(additionalContactModel.getFax());
+				// set Pager in prefix.. chnage it
+				additionalContact.setPrefix(additionalContactModel.getPager());
+				additionalContact.setCellular(additionalContactModel.getCellular());
+				// need to set Status here
+				additionalContact.setStatus(1);
+				additionalContact.setEmail(additionalContactModel.getEmail());
+				
+				additionalContacts.add(additionalContact);
+			}}
+		company.setAdditionalContacts(additionalContacts);
 		return company;
+		 
 	}
 
 	@SuppressWarnings("unchecked")
@@ -698,5 +817,29 @@ public class CompanyAddController extends Application implements Initializable {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public   void setValueToCompanyTextField(){
+		 
+		System.out.println("name : "+company.getName());
+		/*txtCompany.setText(company.getName());
+    	txtAddress.setText( company.getAddress());
+    	txtUnitNo.setText( company.getUnitNo());
+    	txtCity.setText( company.getCity());
+    	txtProvince.setText( company.getProvinceState());
+    	txtZip.setText( company.getZip());
+    	txtEmail.setText( company.getEmail());
+    	txtWebsite.setText( company.getWebsite());
+    	txtContact.setText( company.getContact());
+    	txtPosition.setText( company.getPosition());
+    	txtPhone.setText( company.getPhone());
+    	txtExt.setText( company.getExt());
+    	txtFax.setText( company.getFax());
+    	txtPrefix.setText( company.getCompanyPrefix());
+    	txtTollFree.setText( company.getTollfree());
+    	txtCellular.setText( company.getCellular());
+    	txtPager.setText( company.getPager());
+    	txtAfterHours.setText( company.getAfterHours());
+		*/
 	}
 }

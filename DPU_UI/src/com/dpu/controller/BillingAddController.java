@@ -6,11 +6,9 @@ import java.util.ResourceBundle;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.BillingControllerModel;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -18,7 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class BillingAddController extends Application implements Initializable{
+public class BillingAddController extends CompanyAddController{
 	@FXML
     private ResourceBundle resources;
 
@@ -57,6 +55,9 @@ public class BillingAddController extends Application implements Initializable{
     	try{
     		
     	System.out.println("clicked on save Button.");
+    	
+    	
+    	
     	//CompanyAddController companyAddController =  new CompanyAddController();
     	
     	String company = txtCompany.getText();
@@ -71,16 +72,23 @@ public class BillingAddController extends Application implements Initializable{
     	
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.COMPANY_BASE_PACKAGE+Iconstants.XML_COMPANY_ADD_SCREEN));
         Parent root = (Parent) fxmlLoader.load();
-       
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Add Company");
         stage.setScene(new Scene(root)); 
         stage.show();
+        
+     
+        
+     
     	}catch(Exception e){
     		e.printStackTrace();
     	}
     	closeAddBillingScreen(btnSaveBillingLocation);
+    	
+    	// set Vlaue to text field.
+    	/*CompanyAddController companyAdd = new CompanyAddController();
+    	companyAdd.setValueToCompanyTextField();*/
     }
     
     private void closeAddBillingScreen(Button clickedButton) {

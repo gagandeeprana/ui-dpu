@@ -6,11 +6,9 @@ import java.util.ResourceBundle;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.AdditionalContact;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,7 +19,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
-public class AdditionalContactAddController extends Application implements Initializable {
+public class AdditionalContactAddController extends CompanyAddController {
 
     @FXML
     private ResourceBundle resources;
@@ -51,7 +49,7 @@ public class AdditionalContactAddController extends Application implements Initi
     private CheckBox chkOrderConfirmation;
 
     @FXML
-    private ComboBox<?> ddlStatus;
+    private ComboBox<String> ddlStatus;
 
     @FXML
     private TextField txtAdditionalContact;
@@ -97,6 +95,9 @@ public class AdditionalContactAddController extends Application implements Initi
     @FXML
     void btnSaveAdditionalContactAction(ActionEvent event) {
     	
+    	
+    	 
+    	
     	try{
     		
         	System.out.println("clicked on save Button.");
@@ -109,7 +110,7 @@ public class AdditionalContactAddController extends Application implements Initi
         	String fax = txtFax.getText();
         	String pager = txtPager.getText();
         	String cellular = txtCellular.getText();
-        	String status = ddlStatus.getPromptText();
+        	String status = ddlStatus.getSelectionModel().getSelectedItem();
         	String email = txtEmail.getText();
         	AdditionalContact bcm1 = new AdditionalContact(additionalContact,position,phone,fax, cellular, email,extension,pager,status);
         	CompanyAddController.listOfAdditionalContact.add(bcm1);
@@ -122,6 +123,10 @@ public class AdditionalContactAddController extends Application implements Initi
             stage.setTitle("Add New Company");
             stage.setScene(new Scene(root)); 
             stage.show();
+            
+            // set Vlaue to Company text field.
+        	/*CompanyAddController companyAdd = new CompanyAddController();
+        	companyAdd.setValueToCompanyTextField();*/
         	}catch(Exception e){
         		e.printStackTrace();
         	}
@@ -155,17 +160,19 @@ public class AdditionalContactAddController extends Application implements Initi
 
 
     }
+    
+    @Override
+	public void start(Stage arg0) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
+		//companyAddController.fetchBillingLocations();
+		
 		
 	}
-
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
+ 
 
 }
