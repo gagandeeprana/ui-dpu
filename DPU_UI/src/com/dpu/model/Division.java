@@ -1,52 +1,56 @@
 package com.dpu.model;
 
-import java.util.Date;
+import java.util.List;
 
-import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
 @JsonSerialize(include = Inclusion.NON_NULL)
 public class Division {
 
-	// @JsonProperty(value = "division_id")
-	private int divisionId;
+	private Long divisionId;
 
-	// @JsonProperty(value = "division_code")
 	private String divisionCode;
 
-	// @JsonProperty(value = "division_name")
 	private String divisionName;
 
-	// @JsonProperty(value = "federal")
 	private String fedral;
 
-	// @JsonProperty(value = "provincial")
 	private String provincial;
 
-	// @JsonProperty(value = "SCAC")
-	private String SCAC;
+	private String scac;
 
-	// @JsonProperty(value = "carrier_code")
 	private String carrierCode;
 
-	// @JsonProperty(value = "contact_prefix")
 	private String contractPrefix;
 
-	// @JsonProperty(value = "invoice_prefix")
+	private String status;
+
+	private Long statusId;
+
+	private List<Status> statusList;
+
 	private String invoicePrefix;
 
-	// @JsonProperty(value = "created_on")
-	private Date createdOn;
+//	private Date createdOn;
 
-	// @JsonProperty(value = "created_by")
-	private int createdBy;
+	private String createdBy;
 
-	public int getDivisionId() {
+	private String modifiedBy;
+
+	public String getScac() {
+		return scac;
+	}
+
+	public void setScac(String scac) {
+		this.scac = scac;
+	}
+
+	public Long getDivisionId() {
 		return divisionId;
 	}
 
-	public void setDivisionId(int divisionId) {
+	public void setDivisionId(Long divisionId) {
 		this.divisionId = divisionId;
 	}
 
@@ -82,14 +86,6 @@ public class Division {
 		this.provincial = provincial;
 	}
 
-	public String getSCAC() {
-		return SCAC;
-	}
-
-	public void setSCAC(String sCAC) {
-		SCAC = sCAC;
-	}
-
 	public String getCarrierCode() {
 		return carrierCode;
 	}
@@ -106,6 +102,30 @@ public class Division {
 		this.contractPrefix = contractPrefix;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Long getStatusId() {
+		return statusId;
+	}
+
+	public void setStatusId(Long statusId) {
+		this.statusId = statusId;
+	}
+
+	public List<Status> getStatusList() {
+		return statusList;
+	}
+
+	public void setStatusList(List<Status> statusList) {
+		this.statusList = statusList;
+	}
+
 	public String getInvoicePrefix() {
 		return invoicePrefix;
 	}
@@ -114,20 +134,21 @@ public class Division {
 		this.invoicePrefix = invoicePrefix;
 	}
 
-	public Date getCreatedOn() {
-		return createdOn;
-	}
-
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
-	}
-
-	public int getCreatedBy() {
+	public String getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
 
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+//	private Date modifiedOn;
 }

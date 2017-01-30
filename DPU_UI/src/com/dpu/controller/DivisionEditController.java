@@ -36,7 +36,7 @@ public class DivisionEditController extends Application implements Initializable
 	@FXML
 	Button btnUpdateDivision, btnCancel;
 
-	int divisionId = 0;
+	Long divisionId = 0l;
 
 	@FXML
 	TextField txtDivisionName, txtDivisionCode, txtFedral, txtProvincial, txtSCAC, txtCarrierCode, txtContractPrefix,
@@ -111,13 +111,11 @@ public class DivisionEditController extends Application implements Initializable
 		division.setFedral(txtFedral.getText());
 		division.setInvoicePrefix(txtInvoicePrefix.getText());
 		division.setProvincial(txtProvincial.getText());
-		division.setSCAC(txtSCAC.getText());
+		division.setScac(txtSCAC.getText());
 		return division;
 	}
 
 	public void initData(Division d) {
-		System.out.println("pppppppppppp");
-		System.out.println(d.getDivisionId() + " " + d.getCarrierCode() + " " + d.getDivisionCode());
 		divisionId = d.getDivisionId();
 		txtCarrierCode.setText(d.getCarrierCode());
 		txtContractPrefix.setText(d.getContractPrefix());
@@ -126,7 +124,7 @@ public class DivisionEditController extends Application implements Initializable
 		txtFedral.setText(d.getFedral());
 		txtInvoicePrefix.setText(d.getInvoicePrefix());
 		txtProvincial.setText(d.getProvincial());
-		txtSCAC.setText(d.getSCAC());
+		txtSCAC.setText(d.getScac());
 
 	}
 

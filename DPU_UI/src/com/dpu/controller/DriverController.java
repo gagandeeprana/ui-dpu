@@ -49,6 +49,35 @@ public class DriverController extends Application implements Initializable {
 	public void btnAddDriverAction() {
 		openAddDriverScreen();
 	}
+	
+	@FXML
+	public void btnGoDriverAction() {
+		
+	}
+	
+	ObjectMapper mapper = new ObjectMapper();
+	
+	public void fillDriver(String response) {
+		
+		try {
+			ObservableList<Driver> data = null;
+			dList = new ArrayList<Driver>();
+			setColumnValues();
+			if(response != null && response.length() > 0) {
+				Driver c[] = mapper.readValue(response, Driver[].class);
+				for(Driver ccl : c) {
+					dList.add(ccl);
+				}
+				data = FXCollections.observableArrayList(dList);
+			} else {
+				data = FXCollections.observableArrayList(dList);
+			}
+			tblDriver.setItems(data);
+            tblDriver.setVisible(true);
+		} catch (Exception e) {
+			System.out.println("DriverController: fillDriver(): "+ e.getMessage());
+		}
+	}
 
 	private void openAddDriverScreen() {
 		try {

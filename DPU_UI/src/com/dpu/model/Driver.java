@@ -10,6 +10,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 @JsonSerialize(include = Inclusion.NON_NULL)
 public class Driver implements Serializable{
 
+	 
 	private static final long serialVersionUID = 1L;
 
 	private Long driverId;
@@ -25,7 +26,7 @@ public class Driver implements Serializable{
 	private String unit;
 	 
 	private String city;
- 
+
 	private String pvs;
 	 
 	private String postalCode;
@@ -63,22 +64,10 @@ public class Driver implements Serializable{
 	private String driverClassName;
 	private Long driverClassId;
 	private List<Type> driverClassList;
- 
-	public List<Division> getDivisionList() {
-		return divisionList;
-	}
 
-	public void setDivisionList(List<Division> divisionList) {
-		this.divisionList = divisionList;
-	}
-
-	public List<Terminal> getTerminalList() {
-		return terminalList;
-	}
-
-	public void setTerminalList(List<Terminal> terminalList) {
-		this.terminalList = terminalList;
-	}
+	private String createdBy;
+	
+	private Date createdOn;
 
 	public List<Category> getCategoryList() {
 		return categoryList;
@@ -104,6 +93,23 @@ public class Driver implements Serializable{
 		this.driverClassList = driverClassList;
 	}
 
+	public List<Division> getDivisionList() {
+		return divisionList;
+	}
+
+	public void setDivisionList(List<Division> divisionList) {
+		this.divisionList = divisionList;
+	}
+
+	public List<Terminal> getTerminalList() {
+		return terminalList;
+	}
+
+	public void setTerminalList(List<Terminal> terminalList) {
+		this.terminalList = terminalList;
+	}
+
+
 	public List<Status> getStatusList() {
 		return statusList;
 	}
@@ -112,9 +118,6 @@ public class Driver implements Serializable{
 		this.statusList = statusList;
 	}
 
-	private String createdBy;
-	 
-	private Date createdOn;
 	
 	public Long getDriverId() {
 		return driverId;

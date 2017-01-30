@@ -12,7 +12,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.model.Company;
 import com.dpu.model.Division;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
@@ -66,9 +65,7 @@ public class DivisionController extends Application implements Initializable {
 						System.out.println("resp " + response);
 						if (response != null && response.length() > 0) {
 
-							System.out.println("1111111111111");
 							Division division = mapper.readValue(response, Division.class);
-							System.out.println("2222222222   " + division.getDivisionId());
 							DivisionEditController divisionEditController = (DivisionEditController) openEditDivisionScreen();
 							System.out.println("333333333 " + division.getCarrierCode());
 							divisionEditController.initData(division);
@@ -113,16 +110,12 @@ public class DivisionController extends Application implements Initializable {
 	private void openAddDivisionScreen() {
 		System.out.println("openAddDivisionScreen");
 		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-					.getResource(Iconstants.DIVISION_BASE_PACKAGE + Iconstants.XML_DIVISION_ADD_SCREEN));
-			System.out.println("openAddDivisionScreen     aaaaaaaaaaa"+fxmlLoader);
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.DIVISION_BASE_PACKAGE + Iconstants.XML_DIVISION_ADD_SCREEN));
 			Parent root = (Parent) fxmlLoader.load();
-			System.out.println("openAddDivisionScreen     bbbbbbbb");
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.setTitle("Add New Division");
 			stage.setScene(new Scene(root));
-			System.out.println("openAddDivisionScreen     cccccccc");
 			stage.show();
 		} catch (Exception e) {
 			System.out.println(e);
@@ -131,11 +124,8 @@ public class DivisionController extends Application implements Initializable {
 
 	private Object openEditDivisionScreen() {
 		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-					.getResource(Iconstants.DIVISION_BASE_PACKAGE + Iconstants.XML_DIVISION_EDIT_SCREEN));
-
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.DIVISION_BASE_PACKAGE + Iconstants.XML_DIVISION_EDIT_SCREEN));
 			Parent root = (Parent) fxmlLoader.load();
-
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.setTitle("Edit Division");
@@ -146,6 +136,33 @@ public class DivisionController extends Application implements Initializable {
 			System.out.println(e);
 		}
 		return null;
+	}
+	
+	List<Division> divisions = null;
+	
+	ObjectMapper mapper = new ObjectMapper();
+	
+	public void fillDivisions(String response) {
+		System.out.println(response + " ::: in fill Division:");
+		try {
+			divisions = new ArrayList<Division>();
+			setColumnValues();
+			ObservableList<Division> data = null;
+			if(response != null && response.length() > 0) {
+				Division c[] = mapper.readValue(response, Division[].class);
+				for(Division ccl : c) {
+					divisions.add(ccl);
+				}
+				System.out.println("division di list: " + divisions.size());
+				data = FXCollections.observableArrayList(divisions);
+			} else {
+				data = FXCollections.observableArrayList(divisions);
+			}
+			tblDivision.setItems(data);
+            tblDivision.setVisible(true);
+		} catch (Exception e) {
+			System.out.println("DivisionController: fillDivisions(): "+ e.getMessage());
+		}
 	}
 
 	@Override
@@ -178,8 +195,7 @@ public class DivisionController extends Application implements Initializable {
 			public void run() {
 				try {
 					ObjectMapper mapper = new ObjectMapper();
-					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API,
-							null);
+					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API, null);
 					if (response != null && response.length() > 0) {
 						Division d[] = mapper.readValue(response, Division[].class);
 						divisionList = new ArrayList<Division>();
