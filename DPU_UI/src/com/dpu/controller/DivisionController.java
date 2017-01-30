@@ -62,12 +62,10 @@ public class DivisionController extends Application implements Initializable {
 						String response = GetAPIClient.callGetAPI(
 								Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API + "/" + division.getDivisionId(),
 								null);
-						System.out.println("resp " + response);
 						if (response != null && response.length() > 0) {
 
 							Division division = mapper.readValue(response, Division.class);
 							DivisionEditController divisionEditController = (DivisionEditController) openEditDivisionScreen();
-							System.out.println("333333333 " + division.getCarrierCode());
 							divisionEditController.initData(division);
 						}
 					} catch (Exception e) {

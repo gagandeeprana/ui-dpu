@@ -8,7 +8,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 @JsonSerialize(include = Inclusion.NON_NULL)
 public class Division {
 
-	private Long divisionId;
+	private long divisionId;
 
 	private String divisionCode;
 
@@ -38,19 +38,52 @@ public class Division {
 
 	private String modifiedBy;
 
-	public String getScac() {
-		return scac;
+//	private Date modifiedOn;
+
+	
+	
+	public String getModifiedBy() {
+		return modifiedBy;
 	}
 
-	public void setScac(String scac) {
-		this.scac = scac;
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
 	}
 
-	public Long getDivisionId() {
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Long getStatusId() {
+		return statusId;
+	}
+
+	public void setStatusId(Long statusId) {
+		this.statusId = statusId;
+	}
+
+	public List<Status> getStatusList() {
+		return statusList;
+	}
+
+	public void setStatusList(List<Status> statusList) {
+		this.statusList = statusList;
+	}
+
+	public long getDivisionId() {
 		return divisionId;
 	}
 
-	public void setDivisionId(Long divisionId) {
+	public void setDivisionId(long divisionId) {
 		this.divisionId = divisionId;
 	}
 
@@ -86,6 +119,14 @@ public class Division {
 		this.provincial = provincial;
 	}
 
+	public String getScac() {
+		return scac;
+	}
+
+	public void setScac(String scac) {
+		this.scac = scac;
+	}
+
 	public String getCarrierCode() {
 		return carrierCode;
 	}
@@ -102,30 +143,6 @@ public class Division {
 		this.contractPrefix = contractPrefix;
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public Long getStatusId() {
-		return statusId;
-	}
-
-	public void setStatusId(Long statusId) {
-		this.statusId = statusId;
-	}
-
-	public List<Status> getStatusList() {
-		return statusList;
-	}
-
-	public void setStatusList(List<Status> statusList) {
-		this.statusList = statusList;
-	}
-
 	public String getInvoicePrefix() {
 		return invoicePrefix;
 	}
@@ -134,21 +151,19 @@ public class Division {
 		this.invoicePrefix = invoicePrefix;
 	}
 
-	public String getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public String getModifiedBy() {
-		return modifiedBy;
-	}
-
-	public void setModifiedBy(String modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-//	private Date modifiedOn;
+//	public Date getCreatedOn() {
+//		return createdOn;
+//	}
+//
+//	public void setCreatedOn(Date createdOn) {
+//		this.createdOn = createdOn;
+//	}
+//
+//	public Date getModifiedOn() {
+//		return modifiedOn;
+//	}
+//	
+//	public void setModifiedOn(Date modifiedOn) {
+//		this.modifiedOn = modifiedOn;
+//	}
 }

@@ -4,12 +4,10 @@ package com.dpu.model;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonPropertyOrder;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import javafx.beans.property.SimpleStringProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonInclude(JsonInclude.Include.NON_NULL)
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
 
 		"company", "address", "city", "phone", "contact", "zip", "fax"

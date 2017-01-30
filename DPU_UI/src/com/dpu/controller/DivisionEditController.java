@@ -4,6 +4,7 @@
 package com.dpu.controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
@@ -12,10 +13,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.model.Company;
 import com.dpu.model.Division;
-import com.dpu.model.Failed;
-import com.dpu.model.Success;
+import com.dpu.model.Status;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -46,7 +45,7 @@ public class DivisionEditController extends Application implements Initializable
 	CheckBox chkIncludeInManagementReporting, chkIncludeInAccountingTransfers;
 
 	@FXML
-	ComboBox ddlStatus;
+	ComboBox<String> ddlStatus;
 
 	@FXML
 	private void btnUpdateDivisionAction() {
@@ -70,18 +69,17 @@ public class DivisionEditController extends Application implements Initializable
 					ObjectMapper mapper = new ObjectMapper();
 					Division division = setDivisionValue();
 					String payload = mapper.writeValueAsString(division);
+					System.out.println("update payload: " + payload);
+					String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API + "/" + divisionId, null, payload);
+					MainScreen.divisionController.fillDivisions(response);
 
-					String response = PutAPIClient.callPutAPI(
-							Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + divisionId, null, payload);
-
-					if (response != null && response.contains("message")) {
+					/*if (response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
 						JOptionPane.showMessageDialog(null, success.getMessage(), "Info", 1);
 					} else {
 						Failed failed = mapper.readValue(response, Failed.class);
 						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-					}
-					MainScreen.companyController.fetchCompanies();
+					}*/
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
 				}
@@ -103,29 +101,38 @@ public class DivisionEditController extends Application implements Initializable
 
 	private Division setDivisionValue() {
 		Division division = new Division();
-		division.setDivisionId(divisionId);
-		division.setCarrierCode(txtCarrierCode.getText());
-		division.setContractPrefix(txtContractPrefix.getText());
 		division.setDivisionCode(txtDivisionCode.getText());
 		division.setDivisionName(txtDivisionName.getText());
+		division.setStatusId(statusList.get(ddlStatus.getSelectionModel().getSelectedIndex()).getId());
 		division.setFedral(txtFedral.getText());
-		division.setInvoicePrefix(txtInvoicePrefix.getText());
 		division.setProvincial(txtProvincial.getText());
 		division.setScac(txtSCAC.getText());
+		division.setCarrierCode(txtCarrierCode.getText());
+		division.setContractPrefix(txtContractPrefix.getText());
+		division.setInvoicePrefix(txtInvoicePrefix.getText());
 		return division;
 	}
 
+	List<Status> statusList = null;
+	
 	public void initData(Division d) {
 		divisionId = d.getDivisionId();
-		txtCarrierCode.setText(d.getCarrierCode());
-		txtContractPrefix.setText(d.getContractPrefix());
-		txtDivisionCode.setText(d.getDivisionName());
+		txtDivisionCode.setText(d.getDivisionCode());
 		txtDivisionName.setText(d.getDivisionName());
+		statusList = d.getStatusList();
+		for(int i = 0; i< d.getStatusList().size();i++) {
+			Status status = d.getStatusList().get(i);
+			ddlStatus.getItems().add(status.getStatus());
+			if(status.getId() == d.getStatusId()) {
+				ddlStatus.getSelectionModel().select(i);
+			}
+		}
 		txtFedral.setText(d.getFedral());
-		txtInvoicePrefix.setText(d.getInvoicePrefix());
 		txtProvincial.setText(d.getProvincial());
 		txtSCAC.setText(d.getScac());
-
+		txtCarrierCode.setText(d.getCarrierCode());
+		txtContractPrefix.setText(d.getContractPrefix());
+		txtInvoicePrefix.setText(d.getInvoicePrefix());
 	}
 
 }

@@ -5,17 +5,15 @@ import java.io.Serializable;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonPropertyOrder;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import javafx.beans.property.SimpleStringProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
 
 		"additionalContact", "position", "phone", "fax", "cellular", "email", "extension", "pager", "status"
 
 })
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AdditionalContact implements Serializable {
 
 	/**
