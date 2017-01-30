@@ -5,7 +5,7 @@
 <?import javafx.collections.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
+<?import javafx.scene.paint.*?> 
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="541.0000999999975" prefWidth="766.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.dpu.controller.BillingAddController">
   <children>
@@ -18,13 +18,14 @@
         <Label layoutX="383.0" layoutY="17.0" text="Contact" />
         <Label layoutX="383.0" layoutY="47.0" text="Zip" />
         <Label layoutX="383.0" layoutY="85.0" text="Fax No" />
-        <TextField id="txtCode" fx:id="txtCompany" layoutX="89.0" layoutY="14.0" prefWidth="200.0" />
-        <TextField id="txtFirstName" fx:id="txtAddress" layoutX="89.0" layoutY="50.0" prefWidth="200.0" />
-        <TextField id="txtLastName" fx:id="txtCity" layoutX="89.0" layoutY="93.0" prefWidth="200.0" />
-        <TextField id="txtAddress" fx:id="txtPhone" layoutX="89.0" layoutY="129.0" prefWidth="200.0" />
-        <TextField id="txtCity" fx:id="txtFax" layoutX="436.0" layoutY="83.0" prefWidth="240.0" />
-        <TextField id="txtEmail" fx:id="txtContact" layoutX="433.0" layoutY="11.0" prefWidth="243.0" />
-        <TextField id="txtHome" fx:id="txtZip" layoutX="433.0" layoutY="44.0" prefWidth="243.0" />
+        <TextField fx:id="txtCompany"   layoutX="89.0" layoutY="14.0" prefWidth="200.0" />
+        <TextField fx:id="txtAddress"  layoutX="89.0" layoutY="50.0" prefWidth="200.0" />
+        <TextField fx:id="txtCity"   layoutX="89.0" layoutY="93.0" prefWidth="200.0" />
+        <TextField fx:id="txtPhone"  layoutX="89.0" layoutY="129.0" prefWidth="200.0" />
+        
+        <TextField fx:id="txtContact"  layoutX="433.0" layoutY="11.0" prefWidth="243.0" />
+        <TextField fx:id="txtZip"   layoutX="433.0" layoutY="44.0" prefWidth="243.0" />
+        <TextField fx:id="txtFax"  layoutX="436.0" layoutY="83.0" prefWidth="240.0" />
         <Button id="btnSaveDriver" fx:id="btnSaveBillingLocation" layoutX="528.0" layoutY="174.0" mnemonicParsing="false" onAction="#btnSaveBillingLocationAction" prefWidth="56.0" text="Save" />
         <Button layoutX="613.0" layoutY="174.0" mnemonicParsing="false" prefWidth="56.0" text="Cancel" />
       </children>

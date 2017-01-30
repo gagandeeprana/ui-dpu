@@ -2,8 +2,13 @@ package com.dpu.constants;
 
 public class Iconstants {
 
+<<<<<<< HEAD
 	public static final String URL_SERVER = "http://localhost:8080/DPUWebProject/";
 //	public static final String URL_SERVER = "http://35.154.6.180:8080/DPUWebProject/";
+=======
+ 	public static final String URL_SERVER = "http://localhost:9090/DPUWebProject/";
+	//public static final String URL_SERVER = "http://35.154.6.180:9090/DPUWebProject/";
+>>>>>>> b8be11f73c2aa46d29758b5d0d22beb889303062
 
 	public static final String COMMON_BASE_PACKAGE = "com/dpu/common/xml/";
 

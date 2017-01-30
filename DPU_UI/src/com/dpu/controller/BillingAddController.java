@@ -3,114 +3,123 @@ package com.dpu.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javax.swing.JOptionPane;
-
-import org.codehaus.jackson.map.ObjectMapper;
-
 import com.dpu.constants.Iconstants;
-import com.dpu.model.BillingLocations;
+import com.dpu.model.BillingControllerModel;
 
-import javafx.application.Application;
-import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class BillingAddController extends Application implements Initializable{
-	
-	
-
+public class BillingAddController extends CompanyAddController{
 	@FXML
-	Button btnSaveBillingLocation;
-	
-	@FXML
-	TextField txtCompany, txtAddress,txtCity,txtPhone,txtContact,txtZip,txtFax;
+    private ResourceBundle resources;
 
-	private CompanyAddController companyAddController;
-	
-	 
-	@FXML
-	private void btnSaveBillingLocationAction() {
-		 
-			companyAddController = (CompanyAddController) showPanel(Iconstants.COMPANY_BASE_PACKAGE, Iconstants.XML_COMPANY_ADD_SCREEN);
-			addBillingLocationDetail();
+    @FXML
+    private URL location;
 
-			closeAddBillingScreen(btnSaveBillingLocation);
-		 
-	}
-	
-	private Object showPanel(String basePackage, String screenName) {
-		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(basePackage + screenName));
-			Parent root = (Parent) fxmlLoader.load();
-			return fxmlLoader.getController();
-		} catch (Exception e) {
-			System.out.println(e);
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	private void closeAddBillingScreen(Button clickedButton) {
+    @FXML
+    private Button btnSaveBillingLocation;
+    
+   
+
+    @FXML
+    private TextField txtAddress;
+
+    @FXML
+    private TextField txtCity;
+
+    @FXML
+    private TextField txtCompany;
+
+    @FXML
+    private TextField txtContact;
+
+    @FXML
+    private TextField txtFax;
+
+    @FXML
+    private TextField txtPhone;
+
+    @FXML
+    private TextField txtZip;
+
+
+    @FXML
+    void btnSaveBillingLocationAction(ActionEvent event) {
+    	try{
+    		
+    	System.out.println("clicked on save Button.");
+    	
+    	
+    	
+    	//CompanyAddController companyAddController =  new CompanyAddController();
+    	
+    	String company = txtCompany.getText();
+    	String address = txtAddress.getText();
+    	String city = txtCity.getText();
+    	String phone = txtPhone.getText();
+    	String contact = txtContact.getText();
+    	String zip = txtZip.getText();
+    	String fax = txtFax.getText();
+    	BillingControllerModel bcm1 = new BillingControllerModel(company,address,city,phone,contact,zip,fax);
+    	CompanyAddController.listOfBilling.add(bcm1);
+    	
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.COMPANY_BASE_PACKAGE+Iconstants.XML_COMPANY_ADD_SCREEN));
+        Parent root = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Add Company");
+        stage.setScene(new Scene(root)); 
+        stage.show();
+        
+     
+        
+     
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
+    	closeAddBillingScreen(btnSaveBillingLocation);
+    	
+    	// set Vlaue to text field.
+    	/*CompanyAddController companyAdd = new CompanyAddController();
+    	companyAdd.setValueToCompanyTextField();*/
+    }
+    
+    private void closeAddBillingScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
         loginStage.close();
 	}
-	
-	 
-	
-	private void addBillingLocationDetail() {
-		
-		Platform.runLater(new Runnable() {
-			
-			@Override
-			public void run() {
-				try {
-					ObjectMapper mapper = new ObjectMapper();
-					BillingLocations billingLocation = setBillingLocationsValue();
-					String payload = mapper.writeValueAsString(billingLocation);
-					
-					System.out.println("Add Payload: " + payload);
-					 
-					String response = "[{\"billingLocationId\":18,\"name\":\"XXX\",\"address\":\"XXX\",\"city\":\"XXX\",\"zip\":\"0000\",\"status\":1,\"contact\":\"XXX\",\"position\":\"XXX\",\"email\":\"XXX\",\"cellular\":\"(868) 686-8686\",\"phone\":\"(777) 777-7777\",\"ext\":\"7777\",\"fax\":\"(876) 876-8768\",\"tollfree\":\"(___) ___-____\"},{\"billingLocationId\":24,\"name\":\"AAA\",\"address\":\"AAA\",\"city\":\"AAA\",\"zip\":\"6786\",\"status\":1,\"contact\":\"AAA\",\"position\":\"AAA\",\"email\":\"AAA\",\"cellular\":\"(868) 686-8686\",\"phone\":\"(777) 777-7777\",\"ext\":\"7777\",\"fax\":\"(876) 876-8768\",\"tollfree\":\"(___) ___-____\"},{\"billingLocationId\":25,\"name\":\"AAA\",\"address\":\"AAA\",\"city\":\"AAA\",\"zip\":\"6786\",\"status\":1,\"contact\":\"AAA\",\"position\":\"AAA\",\"email\":\"AAA\",\"cellular\":\"(868) 686-8686\",\"phone\":\"(777) 777-7777\",\"ext\":\"7777\",\"fax\":\"(876) 876-8768\",\"tollfree\":\"(___) ___-____\"}]";
-					System.out.println(response);
-					//MainScreen.equipmentController.fillEquipments(response);
-					companyAddController.fetchBillingLocations(response);
 
- 
-				} catch (Exception e) {
-					e.printStackTrace();
-					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
-				}
-			}
-		});
+    @FXML
+    void initialize() {
+        assert btnSaveBillingLocation != null : "fx:id=\"btnSaveBillingLocation\" was not injected: check your FXML file 'AddBillingLocationScreen.fxml'.";
+        assert txtAddress != null : "fx:id=\"txtAddress\" was not injected: check your FXML file 'AddBillingLocationScreen.fxml'.";
+        assert txtCity != null : "fx:id=\"txtCity\" was not injected: check your FXML file 'AddBillingLocationScreen.fxml'.";
+        assert txtCompany != null : "fx:id=\"txtCompany\" was not injected: check your FXML file 'AddBillingLocationScreen.fxml'.";
+        assert txtContact != null : "fx:id=\"txtContact\" was not injected: check your FXML file 'AddBillingLocationScreen.fxml'.";
+        assert txtFax != null : "fx:id=\"txtFax\" was not injected: check your FXML file 'AddBillingLocationScreen.fxml'.";
+        assert txtPhone != null : "fx:id=\"txtPhone\" was not injected: check your FXML file 'AddBillingLocationScreen.fxml'.";
+        assert txtZip != null : "fx:id=\"txtZip\" was not injected: check your FXML file 'AddBillingLocationScreen.fxml'.";
+
+
+    }
+
+	@Override
+	public void start(Stage arg0) throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		//fetchTypes();
-	}
-
-	@Override
-	public void start(Stage primaryStage) {
-	}
-
-	public static void main(String[] args) {
-		launch(args);
-	}
-	
-	private BillingLocations setBillingLocationsValue() {
-		BillingLocations billingLocation = new BillingLocations();
-		billingLocation.setName(txtCompany.getText());
-		billingLocation.setAddress(txtAddress.getText());
-		billingLocation.setCity(txtCity.getText());
-		billingLocation.setPhone(txtPhone.getText());
-		billingLocation.setContact(txtContact.getText());
-		billingLocation.setZip(txtZip.getText());
-		billingLocation.setFax(txtFax.getText());
-		return billingLocation;
+		//companyAddController.fetchBillingLocations();
+		
+		
 	}
 }

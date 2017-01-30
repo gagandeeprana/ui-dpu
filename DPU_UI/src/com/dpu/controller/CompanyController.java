@@ -49,10 +49,7 @@ public class CompanyController extends Application implements Initializable {
 	@FXML
 	private void btnAddCompanyAction() {
 		openAddCompanyScreen();
-		
-		// fetch data for billing Location table
-		// CompanyAddController compAddCtrl = new CompanyAddController();
-	     //compAddCtrl.fetchBillingLocations();
+		 
 	}
 	
 	@FXML
@@ -148,68 +145,7 @@ public class CompanyController extends Application implements Initializable {
 		fetchCompanies();
 	}
 
-	/*@FXML public void handleMouseClick(MouseEvent arg0) {
-	    System.out.println("clicked on " );
 	 
-         System.out.println("OK");
-      
-	 
-		System.out.println("[CompanyController] : [start] : Enter Start method.");
-		 
-		 
-        Label label = new Label();
- 
-        Circle circle = new Circle();
-        circle.setRadius(80);
-        circle.setFill(Color.AQUA);
- 
-        VBox root = new VBox();
-        root.setPadding(new Insets(5));
-        root.setSpacing(5);
- 
-        root.getChildren().addAll(label, circle);
- 
-        // Create ContextMenu
-        ContextMenu contextMenu = new ContextMenu();
- 
-        MenuItem item1 = new MenuItem("Menu Item 1");
-        item1.setOnAction(new EventHandler<ActionEvent>() {
- 
-            @Override
-            public void handle(ActionEvent event) {
-                label.setText("Select Menu Item 1");
-            }
-        });
-        MenuItem item2 = new MenuItem("Menu Item 2");
-        item2.setOnAction(new EventHandler<ActionEvent>() {
- 
-            @Override
-            public void handle(ActionEvent event) {
-                label.setText("Select Menu Item 2");
-            }
-        });
- 
-        // Add MenuItem to ContextMenu
-        contextMenu.getItems().addAll(item1, item2);
- 
-        // When user right-click on Circle
-        circle.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
- 
-            @Override
-            public void handle(ContextMenuEvent event) {
- 
-                contextMenu.show(circle, event.getScreenX(), event.getScreenY());
-            }
-        });
- 
-        Scene scene = new Scene(root, 400, 200);
- 
-        stage.setTitle("JavaFX ContextMenu (o7planning.org)");
-        stage.setScene(scene);
-        stage.show();
-		
-	}*/
-	
 	@Override
 	public void start(Stage stage) {
 		
