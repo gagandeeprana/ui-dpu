@@ -41,7 +41,7 @@ public class DriverAddController extends Application implements Initializable{
 	
 	@FXML
 	TextField txtCode, txtFirstName, txtLastName, txtAddress, txtUnit, txtPostal, txtHome, txtCity, txtFaxNo, txtCellular, 
-	txtPager, txtDivision, txtEmail;
+	txtPager, txtDivision, txtEmail, txtProvince;
 	
 	@FXML
 	ComboBox<String> ddlTerminal, ddlCategory, ddlRole, ddlStatus, ddlDriverClass, ddlDivision;
@@ -122,6 +122,8 @@ public class DriverAddController extends Application implements Initializable{
 					fillDropDown(ddlDriverClass, classList);
 					divisionList = driver.getDivisionList();
 					fillDropDown(ddlDivision, divisionList);
+					terminalList = driver.getTerminalList();
+					fillDropDown(ddlTerminal, terminalList);
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
 				}
@@ -151,6 +153,10 @@ public class DriverAddController extends Application implements Initializable{
 			if(object != null && object instanceof Division) {
 				Division division = (Division) object;
 				comboBox.getItems().add(division.getDivisionName());
+			}
+			if(object != null && object instanceof Terminal) {
+				Terminal terminal = (Terminal) object;
+				comboBox.getItems().add(terminal.getTerminalName());
 			}
 		}
 	}
@@ -182,8 +188,9 @@ public class DriverAddController extends Application implements Initializable{
 		driver.setFaxNo(txtFaxNo.getText());
 		driver.setCellular(txtCellular.getText());
 		driver.setPager(txtPager.getText());
+		driver.setPvs(txtProvince.getText());
 		driver.setDivisionId(divisionList.get(ddlDivision.getSelectionModel().getSelectedIndex()).getDivisionId());
-		//driver.setTerminalId(terminalList.get(ddlTerminal.getSelectionModel().getSelectedIndex()).getTerminalId());
+		driver.setTerminalId(terminalList.get(ddlTerminal.getSelectionModel().getSelectedIndex()).getTerminalId());
 		driver.setCategoryId(categoryList.get(ddlCategory.getSelectionModel().getSelectedIndex()).getCategoryId());
 		driver.setRoleId(roleList.get(ddlRole.getSelectionModel().getSelectedIndex()).getTypeId());
 		driver.setStatusId(statusList.get(ddlStatus.getSelectionModel().getSelectedIndex()).getId());

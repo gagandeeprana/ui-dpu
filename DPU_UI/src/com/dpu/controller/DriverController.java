@@ -30,6 +30,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -46,13 +47,11 @@ public class DriverController extends Application implements Initializable {
 	faxNo, cellular, pager, email, driverClass;
 	
 	@FXML
-	public void btnAddDriverAction() {
-		openAddDriverScreen();
-	}
+	TextField txtSearchDriver;
 	
 	@FXML
-	public void btnGoDriverAction() {
-		
+	public void btnAddDriverAction() {
+		openAddDriverScreen();
 	}
 	
 	ObjectMapper mapper = new ObjectMapper();
@@ -76,6 +75,42 @@ public class DriverController extends Application implements Initializable {
             tblDriver.setVisible(true);
 		} catch (Exception e) {
 			System.out.println("DriverController: fillDriver(): "+ e.getMessage());
+		}
+	}
+	
+	@FXML
+	private void btnGoDriverAction() {
+		String searchDriver = txtSearchDriver.getText();
+		if(searchDriver != null && searchDriver.length() > 0) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_DRIVER_API + "/" + searchDriver + "/search", null);
+						fillDriver(response);
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					}
+				}
+			});
+			
+		}
+		
+		if(searchDriver != null && searchDriver.length() == 0) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_DRIVER_API, null);
+						fillDriver(response);
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					}
+				}
+			});
+			
 		}
 	}
 
@@ -165,14 +200,14 @@ public class DriverController extends Application implements Initializable {
 					try {
 						ObjectMapper mapper = new ObjectMapper();
 						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_DRIVER_API + "/" + driver.getDriverId(), null);
-						if(response != null && response.contains("message")) {
+						MainScreen.driverController.fillDriver(response);
+						/*if(response != null && response.contains("message")) {
 							Success success = mapper.readValue(response, Success.class);
 							JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
 						} else {
 							Failed failed = mapper.readValue(response, Failed.class);
 							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-						}
-						fetchDrivers();
+						}*/
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
 					}

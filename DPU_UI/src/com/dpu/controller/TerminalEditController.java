@@ -26,7 +26,7 @@ public class TerminalEditController extends Application implements Initializable
 	@FXML
 	Button btnUpdateTerminal;
 
-	int terminalId = 0;
+	Long terminalId = 0l;
 
 	@FXML
 	TextField txtTerminalName, txtLocation;

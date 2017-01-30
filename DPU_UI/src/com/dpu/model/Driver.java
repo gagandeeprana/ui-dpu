@@ -14,60 +14,55 @@ public class Driver implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private Long driverId;
-
 	private String driverCode;
-
 	private String firstName;
-
 	private String lastName;
-
 	private String address;
-
 	private String unit;
-	 
 	private String city;
-
 	private String pvs;
-	 
 	private String postalCode;
-
 	private String email;
-
 	private String home;
-	 
 	private String faxNo;
-
 	private String cellular;
-	 
 	private String pager;
-	 
 	private String divisionName;
 	private Long divisionId;
 	private List<Division> divisionList;
-
 	private String terminalName;
 	private Long terminalId;
 	private List<Terminal> terminalList;
-
-	private String catogoryName;
+	private String categoryName;
 	private Long categoryId;
 	private List<Category> categoryList;
-	 
 	private String roleName;
 	private Long roleId;
 	private List<Type> roleList;
-	 
 	private String statusName;
 	private Long statusId;
 	private List<Status> statusList;
-	 
 	private String driverClassName;
 	private Long driverClassId;
 	private List<Type> driverClassList;
-
 	private String createdBy;
-	
 	private Date createdOn;
+	
+	public List<Division> getDivisionList() {
+		return divisionList;
+	}
+
+	public void setDivisionList(List<Division> divisionList) {
+		this.divisionList = divisionList;
+	}
+
+	public List<Terminal> getTerminalList() {
+		return terminalList;
+	}
+
+	public void setTerminalList(List<Terminal> terminalList) {
+		this.terminalList = terminalList;
+	}
 
 	public List<Category> getCategoryList() {
 		return categoryList;
@@ -85,31 +80,6 @@ public class Driver implements Serializable{
 		this.roleList = roleList;
 	}
 
-	public List<Type> getDriverClassList() {
-		return driverClassList;
-	}
-
-	public void setDriverClassList(List<Type> driverClassList) {
-		this.driverClassList = driverClassList;
-	}
-
-	public List<Division> getDivisionList() {
-		return divisionList;
-	}
-
-	public void setDivisionList(List<Division> divisionList) {
-		this.divisionList = divisionList;
-	}
-
-	public List<Terminal> getTerminalList() {
-		return terminalList;
-	}
-
-	public void setTerminalList(List<Terminal> terminalList) {
-		this.terminalList = terminalList;
-	}
-
-
 	public List<Status> getStatusList() {
 		return statusList;
 	}
@@ -118,7 +88,14 @@ public class Driver implements Serializable{
 		this.statusList = statusList;
 	}
 
-	
+	public List<Type> getDriverClassList() {
+		return driverClassList;
+	}
+
+	public void setDriverClassList(List<Type> driverClassList) {
+		this.driverClassList = driverClassList;
+	}
+
 	public Long getDriverId() {
 		return driverId;
 	}
@@ -263,12 +240,12 @@ public class Driver implements Serializable{
 		this.terminalId = terminalId;
 	}
 
-	public String getCatogoryName() {
-		return catogoryName;
+	public String getCategoryName() {
+		return categoryName;
 	}
 
-	public void setCatogoryName(String catogoryName) {
-		this.catogoryName = catogoryName;
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 
 	public Long getCategoryId() {

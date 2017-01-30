@@ -20,7 +20,7 @@ public class Iconstants {
 	public static final String XML_DRIVER_SCREEN = "DriverMainPage.fxml";
 	public static final String XML_DRIVER_ADD_SCREEN = "AddDriverScreen2.fxml";
 	public static final String URL_DRIVER_API = "driver";
-	public static final String XML_DRIVER_EDIT_SCREEN = "EditDriverScreen.fxml";
+	public static final String XML_DRIVER_EDIT_SCREEN = "EditDriverScreen1.fxml";
 
 	public static final String COMPANY_BASE_PACKAGE = "com/dpu/company/xml/";
 	public static final String XML_COMPANY_SCREEN = "CompanyPanel.fxml";
@@ -53,7 +53,7 @@ public class Iconstants {
 	public static final String XML_SERVICE_EDIT_SCREEN = "Edit Service.fxml";
 
 	public static final String DIVISION_BASE_PACKAGE = "com/dpu/division/xml/";
-	public static final String XML_DIVISION_SCREEN = "ListDivision.fxml";
+	public static final String XML_DIVISION_SCREEN = "ListDivision1.fxml";
 	public static final String URL_DIVISION_API = "division";
 	public static final String XML_DIVISION_ADD_SCREEN = "AddDivision.fxml";
 	public static final String XML_DIVISION_EDIT_SCREEN = "EditDivision.fxml";

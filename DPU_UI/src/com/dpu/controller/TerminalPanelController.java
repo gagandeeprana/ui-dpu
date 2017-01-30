@@ -12,6 +12,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.model.Driver;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
 import com.dpu.model.Terminal;
@@ -30,6 +31,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -46,8 +48,72 @@ public class TerminalPanelController extends Application implements Initializabl
 	
 	@FXML
 	private void btnAddTerminalAction() {
-		System.out.println("fuddu");
 		openAddTerminalScreen();
+	}
+	
+	@FXML
+	TextField txtSearchTerminal;
+	
+	@FXML
+	private void btnGoTerminalAction() {
+		String searchTerminal = txtSearchTerminal.getText();
+		if(searchTerminal != null && searchTerminal.length() > 0) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_TERMINAL_API + "/" + searchTerminal + "/search", null);
+						fillTerminal(response);
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					}
+				}
+			});
+			
+		}
+		
+		if(searchTerminal != null && searchTerminal.length() == 0) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_TERMINAL_API, null);
+						fillTerminal(response);
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					}
+				}
+			});
+			
+		}
+	}
+	
+	List<Terminal> dList = null;
+	
+	ObjectMapper mapper = new ObjectMapper();
+	
+	public void fillTerminal(String response) {
+		
+		try {
+			ObservableList<Terminal> data = null;
+			dList = new ArrayList<Terminal>();
+			setColumnValues();
+			if(response != null && response.length() > 0) {
+				Terminal c[] = mapper.readValue(response, Terminal[].class);
+				for(Terminal ccl : c) {
+					dList.add(ccl);
+				}
+				data = FXCollections.observableArrayList(dList);
+			} else {
+				data = FXCollections.observableArrayList(dList);
+			}
+			tblTerminal.setItems(data);
+            tblTerminal.setVisible(true);
+		} catch (Exception e) {
+			System.out.println("TerminalController: fillTerminal(): "+ e.getMessage());
+		}
 	}
 	
 	@FXML
@@ -83,16 +149,15 @@ public class TerminalPanelController extends Application implements Initializabl
 				@Override
 				public void run() {
 					try {
-						ObjectMapper mapper = new ObjectMapper();
 						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_TERMINAL_API + "/" + terminal.getTerminalId(), null);
-						if(response != null && response.contains("message")) {
+						MainScreen.terminalController.fillTerminal(response);
+						/*if(response != null && response.contains("message")) {
 							Success success = mapper.readValue(response, Success.class);
 							JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
 						} else {
 							Failed failed = mapper.readValue(response, Failed.class);
 							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-						}
-						fetchTerminals();
+						}*/
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
 					}
@@ -149,6 +214,7 @@ public class TerminalPanelController extends Application implements Initializabl
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	private void fetchColumns() {
 		System.out.println("[fetchColumns]: Enter ");
 		terminalName = (TableColumn<Terminal, String>) tblTerminal.getColumns().get(0);

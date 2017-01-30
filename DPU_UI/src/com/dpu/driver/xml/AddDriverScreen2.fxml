@@ -17,7 +17,7 @@
         <Label layoutX="14.0" layoutY="132.0" text="Address" />
         <Label layoutX="14.0" layoutY="171.0" text="Unit" />
         <Label layoutX="14.0" layoutY="210.0" prefWidth="22.999908447265625" text="City" />
-        <Label layoutX="14.0" layoutY="252.0" text="Postal/Zip" />
+        <Label layoutX="14.0" layoutY="243.0" text="Postal/Zip" />
         <Label layoutX="383.0" layoutY="17.0" text="Email" />
         <Label layoutX="383.0" layoutY="47.0" text="Home" />
         <Label layoutX="383.0" layoutY="91.0" text="Cellular" />
@@ -49,7 +49,7 @@
         <TextField fx:id="txtAddress" layoutX="89.0" layoutY="129.0" prefWidth="200.0" />
         <TextField fx:id="txtUnit" layoutX="89.0" layoutY="163.0" prefWidth="200.0" />
         <TextField fx:id="txtCity" layoutX="89.0" layoutY="207.0" prefWidth="200.0" />
-        <TextField fx:id="txtPostal" layoutX="89.0" layoutY="251.0" prefWidth="200.0" />
+        <TextField fx:id="txtPostal" layoutX="89.0" layoutY="242.0" prefWidth="200.0" />
         <TextField fx:id="txtEmail" layoutX="433.0" layoutY="11.0" prefWidth="243.0" />
         <TextField fx:id="txtHome" layoutX="433.0" layoutY="44.0" prefWidth="76.0" />
         <TextField fx:id="txtCellular" layoutX="433.0" layoutY="80.0" prefWidth="76.0" />
@@ -87,6 +87,8 @@
                   <FXCollections fx:factory="observableArrayList" />
                </items>
             </ComboBox>
+            <TextField fx:id="txtProvince" layoutX="89.0" layoutY="273.0" prefWidth="200.0" />
+            <Label layoutX="14.0" layoutY="274.0" text="Province" />
       </children>
     </Pane>
   </children>

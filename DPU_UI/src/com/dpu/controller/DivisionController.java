@@ -13,8 +13,6 @@ import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.Division;
-import com.dpu.model.Failed;
-import com.dpu.model.Success;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -77,6 +75,11 @@ public class DivisionController extends Application implements Initializable {
 	}
 
 	@FXML
+	private void btnGoDivisionAction() {
+		
+	}
+	
+	@FXML
 	private void btnDeleteDivisionAction() {
 		Division division = tblDivision.getSelectionModel().getSelectedItem();
 		if (division != null) {
@@ -85,18 +88,15 @@ public class DivisionController extends Application implements Initializable {
 				@Override
 				public void run() {
 					try {
-						ObjectMapper mapper = new ObjectMapper();
-						String response = DeleteAPIClient.callDeleteAPI(
-								Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API + "/" + division.getDivisionId(),
-								null);
-						if (response != null && response.contains("message")) {
+						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API + "/" + division.getDivisionId(),null);
+						MainScreen.divisionController.fillDivisions(response);
+						/*if (response != null && response.contains("message")) {
 							Success success = mapper.readValue(response, Success.class);
 							JOptionPane.showMessageDialog(null, success.getMessage(), "Info", 1);
 						} else {
 							Failed failed = mapper.readValue(response, Failed.class);
 							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-						}
-						fetchDivisions();
+						}*/
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
 					}
