@@ -12,9 +12,12 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.model.Company;
+import com.dpu.model.AdditionalContact;
+import com.dpu.model.BillingControllerModel;
+import com.dpu.model.Equipment;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
+import com.dpu.request.CompanyModel;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -39,22 +42,29 @@ public class CompanyController extends Application implements Initializable {
 	
 	static CompanyAddController companyAddController;
 	@FXML
-	TableView<Company> tblCompany;
+	TableView<CompanyModel> tblCompany;
 	
-	public List<Company> cList = null;
+	public List<CompanyModel> cList = null;
 	
 	@FXML
-	TableColumn<Company, String> unitNo, name, email, city, ps, phone, home, fax, afterHours;
+	TableColumn<CompanyModel, String> unitNo, name, email, city, ps, phone, home, fax, afterHours;
 	
 	@FXML
 	private void btnAddCompanyAction() {
+		CompanyAddController.listOfBilling = new ArrayList<BillingControllerModel>();
+		CompanyAddController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
+		CompanyAddController.company = new CompanyModel();
 		openAddCompanyScreen();
 		 
 	}
 	
 	@FXML
 	private void btnEditCompanyAction() {
-		Company company = tblCompany.getSelectionModel().getSelectedItem();
+		CompanyModel equipment = cList.get(tblCompany.getSelectionModel().getSelectedIndex());
+		System.out.println("selected Index company Id : "+equipment.getCompanyId());
+		
+		CompanyModel company = tblCompany.getSelectionModel().getSelectedItem();
+		System.out.println("selected company Id : "+company.getCompanyId());
 		System.out.println(company + "   company:: ");
 		if(company != null) {
 			Platform.runLater(new Runnable() {
@@ -65,7 +75,7 @@ public class CompanyController extends Application implements Initializable {
 						ObjectMapper mapper = new ObjectMapper();
 						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + company.getCompanyId(), null);
 						if(response != null && response.length() > 0) {
-							Company c = mapper.readValue(response, Company.class);
+							CompanyModel c = mapper.readValue(response, CompanyModel.class);
 							CompanyEditController companyEditController = (CompanyEditController) openEditCompanyScreen();
 							companyEditController.initData(c);
 						}
@@ -79,7 +89,7 @@ public class CompanyController extends Application implements Initializable {
 	
 	@FXML
 	private void btnDeleteCompanyAction() {
-		Company company = tblCompany.getSelectionModel().getSelectedItem();
+		CompanyModel company = tblCompany.getSelectionModel().getSelectedItem();
 		if(company != null) {
 			Platform.runLater(new Runnable() {
 				
@@ -158,15 +168,15 @@ public class CompanyController extends Application implements Initializable {
 	
 	@SuppressWarnings("unchecked")
 	private void fetchColumns() {
-		unitNo = (TableColumn<Company, String>) tblCompany.getColumns().get(0);
-		name = (TableColumn<Company, String>) tblCompany.getColumns().get(1);
-		email = (TableColumn<Company, String>) tblCompany.getColumns().get(2);
-		city = (TableColumn<Company, String>) tblCompany.getColumns().get(3);
-		ps = (TableColumn<Company, String>) tblCompany.getColumns().get(4);
-		phone = (TableColumn<Company, String>) tblCompany.getColumns().get(5);
-		home = (TableColumn<Company, String>) tblCompany.getColumns().get(6);
-		fax = (TableColumn<Company, String>) tblCompany.getColumns().get(7);
-		afterHours = (TableColumn<Company, String>) tblCompany.getColumns().get(8);
+		unitNo = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(0);
+		name = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(1);
+		email = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(2);
+		city = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(3);
+		ps = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(4);
+		phone = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(5);
+		home = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(6);
+		fax = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(7);
+		afterHours = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(8);
 	}
 
 	public void fetchCompanies() {
@@ -180,12 +190,12 @@ public class CompanyController extends Application implements Initializable {
 					ObjectMapper mapper = new ObjectMapper();
 					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API, null);
 					if(response != null && response.length() > 0) {
-						Company c[] = mapper.readValue(response, Company[].class);
-						cList = new ArrayList<Company>();
-						for(Company ccl : c) {
+						CompanyModel c[] = mapper.readValue(response, CompanyModel[].class);
+						cList = new ArrayList<CompanyModel>();
+						for(CompanyModel ccl : c) {
 							cList.add(ccl);
 						}
-						ObservableList<Company> data = FXCollections.observableArrayList(cList);
+						ObservableList<CompanyModel> data = FXCollections.observableArrayList(cList);
 						
 						setColumnValues();
 						tblCompany.setItems(data);
@@ -201,66 +211,66 @@ public class CompanyController extends Application implements Initializable {
 	
 	private void setColumnValues() {
 		
-		unitNo.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Company,String>, ObservableValue<String>>() {
+		unitNo.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CompanyModel,String>, ObservableValue<String>>() {
 			
 			@Override
-			public ObservableValue<String> call(CellDataFeatures<Company, String> param) {
+			public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
 				return new SimpleStringProperty(param.getValue().getUnitNo() + "");
 			}
 		});
-		name.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Company,String>, ObservableValue<String>>() {
+		name.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CompanyModel,String>, ObservableValue<String>>() {
 			
 			@Override
-			public ObservableValue<String> call(CellDataFeatures<Company, String> param) {
+			public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
 				return new SimpleStringProperty(param.getValue().getName() + "");
 			}
 		});
-		email.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Company,String>, ObservableValue<String>>() {
+		email.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CompanyModel,String>, ObservableValue<String>>() {
 			
 			@Override
-			public ObservableValue<String> call(CellDataFeatures<Company, String> param) {
+			public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
 				return new SimpleStringProperty(param.getValue().getEmail() + "");
 			}
 		});
-		city.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Company,String>, ObservableValue<String>>() {
+		city.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CompanyModel,String>, ObservableValue<String>>() {
 			
 			@Override
-			public ObservableValue<String> call(CellDataFeatures<Company, String> param) {
+			public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
 				return new SimpleStringProperty(param.getValue().getCity() + "");
 			}
 		});
-		ps.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Company,String>, ObservableValue<String>>() {
+		ps.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CompanyModel,String>, ObservableValue<String>>() {
 			
 			@Override
-			public ObservableValue<String> call(CellDataFeatures<Company, String> param) {
+			public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
 				return new SimpleStringProperty(param.getValue().getProvinceState() + "");
 			}
 		});
-		phone.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Company,String>, ObservableValue<String>>() {
+		phone.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CompanyModel,String>, ObservableValue<String>>() {
 			
 			@Override
-			public ObservableValue<String> call(CellDataFeatures<Company, String> param) {
+			public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
 				return new SimpleStringProperty(param.getValue().getPhone() + "");
 			}
 		});
-		home.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Company,String>, ObservableValue<String>>() {
+		home.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CompanyModel,String>, ObservableValue<String>>() {
 			
 			@Override
-			public ObservableValue<String> call(CellDataFeatures<Company, String> param) {
+			public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
 				return new SimpleStringProperty(param.getValue().getCellular() + "");
 			}
 		});
-		fax.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Company,String>, ObservableValue<String>>() {
+		fax.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CompanyModel,String>, ObservableValue<String>>() {
 			
 			@Override
-			public ObservableValue<String> call(CellDataFeatures<Company, String> param) {
+			public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
 				return new SimpleStringProperty(param.getValue().getFax() + "");
 			}
 		});
-		afterHours.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Company,String>, ObservableValue<String>>() {
+		afterHours.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CompanyModel,String>, ObservableValue<String>>() {
 			
 			@Override
-			public ObservableValue<String> call(CellDataFeatures<Company, String> param) {
+			public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
 				return new SimpleStringProperty(param.getValue().getAfterHours() + "");
 			}
 		});

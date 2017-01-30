@@ -49,7 +49,6 @@ import javafx.util.Callback;
 
 public class CompanyAddController extends Application implements Initializable {
 
-	 
 	@FXML
 	private ResourceBundle resources;
 
@@ -58,42 +57,40 @@ public class CompanyAddController extends Application implements Initializable {
 
 	@FXML
 	private Pane addCompanyPane;
-	
-	//-------------------------
-	 @FXML
-	 private TableColumn<AdditionalContact, String> additionalContact;
-	 
-	 @FXML
-	 private TableColumn<AdditionalContact, String> position;
-	 
-	 @FXML
-	    private TableColumn<AdditionalContact, String> phoneNo;
-	 
-	 @FXML
-	    private TableColumn<AdditionalContact, String> faxNo;
-	
-	 @FXML
-	    private TableColumn<AdditionalContact, String> cellular;
-	 
-	  @FXML
-	    private TableColumn<AdditionalContact, String> email;
-	  
-	  @FXML
-	    private TableColumn<AdditionalContact, String> extension;
-	  
-	  @FXML
-	    private TableColumn<AdditionalContact, String> pager;
-	  
-	  @FXML
-	    private TableColumn<AdditionalContact, String> status;
-	//------------------
 
+	@FXML
+	private TableColumn<AdditionalContact, String> additionalContact;
+
+	@FXML
+	private TableColumn<AdditionalContact, String> position;
+
+	@FXML
+	private TableColumn<AdditionalContact, String> phoneNo;
+
+	@FXML
+	private TableColumn<AdditionalContact, String> faxNo;
+
+	@FXML
+	private TableColumn<AdditionalContact, String> cellular;
+
+	@FXML
+	private TableColumn<AdditionalContact, String> email;
+
+	@FXML
+	private TableColumn<AdditionalContact, String> extension;
+
+	@FXML
+	private TableColumn<AdditionalContact, String> pager;
+
+	@FXML
+	private TableColumn<AdditionalContact, String> status;
+ 
 	@FXML
 	private TableColumn<BillingControllerModel, String> address;
 
 	@FXML
 	private Button btnSaveCompany;
-	
+
 	@FXML
 	private Button btnCancelCompany;
 
@@ -116,7 +113,7 @@ public class CompanyAddController extends Application implements Initializable {
 	private TableView<AdditionalContact> tableAdditionalContact;
 
 	@FXML
-	private TableView<BillingControllerModel> tableBillingLocations;
+	public TableView<BillingControllerModel> tableBillingLocations;
 
 	@FXML
 	public TextField txtAddress;
@@ -177,7 +174,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 	@FXML
 	void handleAddContMouseClick(MouseEvent event) {
-		 
+
 		// Create ContextMenu
 		ContextMenu contextMenu = new ContextMenu();
 
@@ -186,7 +183,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				
+
 				company.setName(txtCompany.getText());
 				company.setAddress(txtAddress.getText());
 				company.setUnitNo(txtUnitNo.getText());
@@ -207,16 +204,15 @@ public class CompanyAddController extends Application implements Initializable {
 				company.setAfterHours(txtAfterHours.getText());
 
 				openAddAdditionalContactScreen();
-				
+
 				try {
-					 closeAddCompanyScreen(btnSaveCompany);
-					   
+					closeAddCompanyScreen(btnSaveCompany);
+
 				} catch (Exception e) {
 					e.printStackTrace();
 					System.exit(0);
 				}
 
-				
 			}
 		});
 		MenuItem item2 = new MenuItem("EDIT");
@@ -224,7 +220,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				 
+
 			}
 		});
 
@@ -233,7 +229,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				 
+
 			}
 		});
 
@@ -293,7 +289,7 @@ public class CompanyAddController extends Application implements Initializable {
 	public void start(Stage primaryStage) throws Exception {
 		System.out.println("Start method called");
 		try {
-			 
+
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
 					.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_ADD_SCREEN));
 			Parent root = (Parent) fxmlLoader.load();
@@ -317,6 +313,7 @@ public class CompanyAddController extends Application implements Initializable {
 	public static ArrayList<BillingControllerModel> listOfBilling = new ArrayList<BillingControllerModel>();
 	public static ArrayList<AdditionalContact> listOfAdditionalContact = new ArrayList<AdditionalContact>();
 	public static CompanyModel company = new CompanyModel();
+
 	// new added
 	public void fetchBillingLocations() {
 		// fetchColumns();
@@ -327,7 +324,7 @@ public class CompanyAddController extends Application implements Initializable {
 			public void run() {
 				try {
 
-					if(listOfBilling != null & !(listOfBilling.isEmpty())){
+					if (listOfBilling != null & !(listOfBilling.isEmpty())) {
 						ObservableList<BillingControllerModel> data = FXCollections.observableArrayList(listOfBilling);
 						setColumnValues();
 						tableBillingLocations.setItems(data);
@@ -401,8 +398,7 @@ public class CompanyAddController extends Application implements Initializable {
 					}
 				});
 	}
-	
-	
+
 	public void fetchAdditionalContacts() {
 		// fetchColumns();
 
@@ -412,8 +408,9 @@ public class CompanyAddController extends Application implements Initializable {
 			public void run() {
 				try {
 
-					if(listOfAdditionalContact != null & !(listOfAdditionalContact.isEmpty())){
-						ObservableList<AdditionalContact> data = FXCollections.observableArrayList(listOfAdditionalContact);
+					if (listOfAdditionalContact != null & !(listOfAdditionalContact.isEmpty())) {
+						ObservableList<AdditionalContact> data = FXCollections
+								.observableArrayList(listOfAdditionalContact);
 						setAdditionalContactColumnValues();
 						tableAdditionalContact.setItems(data);
 						tableAdditionalContact.setVisible(true);
@@ -434,7 +431,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getAdditionalContact()+ "");
+						return new SimpleStringProperty(param.getValue().getAdditionalContact() + "");
 					}
 				});
 		position.setCellValueFactory(
@@ -466,7 +463,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getCellular()+ "");
+						return new SimpleStringProperty(param.getValue().getCellular() + "");
 					}
 				});
 		email.setCellValueFactory(
@@ -503,41 +500,36 @@ public class CompanyAddController extends Application implements Initializable {
 				});
 	}
 
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		 
-		 
-			fetchBillingLocations();
-			fetchAdditionalContacts();
-			
-			
-			txtCompany.setText(company.getName());
-	    	txtAddress.setText( company.getAddress());
-	    	txtUnitNo.setText( company.getUnitNo());
-	    	txtCity.setText( company.getCity());
-	    	txtProvince.setText( company.getProvinceState());
-	    	txtZip.setText( company.getZip());
-	    	txtEmail.setText( company.getEmail());
-	    	txtWebsite.setText( company.getWebsite());
-	    	txtContact.setText( company.getContact());
-	    	txtPosition.setText( company.getPosition());
-	    	txtPhone.setText( company.getPhone());
-	    	txtExt.setText( company.getExt());
-	    	txtFax.setText( company.getFax());
-	    	txtPrefix.setText( company.getCompanyPrefix());
-	    	txtTollFree.setText( company.getTollfree());
-	    	txtCellular.setText( company.getCellular());
-	    	txtPager.setText( company.getPager());
-	    	txtAfterHours.setText( company.getAfterHours());
-			
-		 
+
+		fetchBillingLocations();
+		fetchAdditionalContacts();
+
+		txtCompany.setText(company.getName());
+		txtAddress.setText(company.getAddress());
+		txtUnitNo.setText(company.getUnitNo());
+		txtCity.setText(company.getCity());
+		txtProvince.setText(company.getProvinceState());
+		txtZip.setText(company.getZip());
+		txtEmail.setText(company.getEmail());
+		txtWebsite.setText(company.getWebsite());
+		txtContact.setText(company.getContact());
+		txtPosition.setText(company.getPosition());
+		txtPhone.setText(company.getPhone());
+		txtExt.setText(company.getExt());
+		txtFax.setText(company.getFax());
+		txtPrefix.setText(company.getCompanyPrefix());
+		txtTollFree.setText(company.getTollfree());
+		txtCellular.setText(company.getCellular());
+		txtPager.setText(company.getPager());
+		txtAfterHours.setText(company.getAfterHours());
 
 	}
 
 	@FXML
 	public void handleMouseClick(MouseEvent arg0) {
-		 
+
 		Label label = new Label();
 
 		// Create ContextMenu
@@ -567,18 +559,17 @@ public class CompanyAddController extends Application implements Initializable {
 				company.setCellular(txtCellular.getText());
 				company.setPager(txtPager.getText());
 				company.setAfterHours(txtAfterHours.getText());
-				
+
 				openAddBillingLocationScreen();
-				
+
 				try {
-					 closeAddCompanyScreen(btnSaveCompany);
-					   
+					closeAddCompanyScreen(btnSaveCompany);
+
 				} catch (Exception e) {
 					e.printStackTrace();
 					System.exit(0);
 				}
 
-				
 			}
 		});
 		MenuItem item2 = new MenuItem("EDIT");
@@ -586,7 +577,12 @@ public class CompanyAddController extends Application implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				label.setText("Select Menu Item 2");
+				System.out.println("click on edit in billingLoc Table.");
+				openAddBillingLocationScreen();
+				closeAddCompanyScreen(btnSaveCompany);
+				
+				
+				 
 			}
 		});
 
@@ -635,7 +631,6 @@ public class CompanyAddController extends Application implements Initializable {
 			System.out.println("Exception :" + e);
 		}
 	}
-	
 
 	private void openAddAdditionalContactScreen() {
 		System.out.println("[openAddDBillingLocScreen]  : Enter");
@@ -658,12 +653,12 @@ public class CompanyAddController extends Application implements Initializable {
 
 	@FXML
 	private void btnSaveCompanyAction() {
-		
+
 		addCompany();
 		closeAddCompanyScreen(btnSaveCompany);
 	}
-	
-	//----------=======-----------
+
+	// ----------=======-----------
 	@FXML
 	private void btnCancelCompanyAction() {
 		listOfBilling = new ArrayList<BillingControllerModel>();
@@ -707,12 +702,10 @@ public class CompanyAddController extends Application implements Initializable {
 	}
 
 	private CompanyModel setCompanyValue() {
-		
-		
+
 		List<BillingLocation> billingLocations = new ArrayList<BillingLocation>();
 		List<com.dpu.request.AdditionalContact> additionalContacts = new ArrayList<com.dpu.request.AdditionalContact>();
-		
-		
+
 		company.setName(txtCompany.getText());
 		company.setAddress(txtAddress.getText());
 		company.setUnitNo(txtUnitNo.getText());
@@ -731,18 +724,19 @@ public class CompanyAddController extends Application implements Initializable {
 		company.setCellular(txtCellular.getText());
 		company.setPager(txtPager.getText());
 		company.setAfterHours(txtAfterHours.getText());
-		
+
 		// need to use for loop here
+
 		
-		BillingLocation billingLocation = new BillingLocation();
-		if(listOfBilling != null){
+		if (listOfBilling != null) {
 			int sizeOfBilling = listOfBilling.size();
-			for(int i=0 ; i<sizeOfBilling ;i++){
+			for (int i = 0; i < sizeOfBilling; i++) {
+				BillingLocation billingLocation = new BillingLocation();
 				BillingControllerModel billingModel = listOfBilling.get(i);
 				billingLocation.setName(billingModel.getCompany());
-				billingLocation.setAddress(billingModel.getAddress() );
-				billingLocation.setCity(billingModel.getCity() );
-				billingLocation.setZip(billingModel.getZip() );
+				billingLocation.setAddress(billingModel.getAddress());
+				billingLocation.setCity(billingModel.getCity());
+				billingLocation.setZip(billingModel.getZip());
 				// need to get Status
 				billingLocation.setStatus(1);
 				billingLocation.setContact(billingModel.getContact());
@@ -756,14 +750,14 @@ public class CompanyAddController extends Application implements Initializable {
 				billingLocations.add(billingLocation);
 			}
 		}
-		
+
 		company.setBillingLocations(billingLocations);
-		
+
 		// need to use for loop here
-		if(listOfAdditionalContact != null){
+		if (listOfAdditionalContact != null) {
 			int sizeOfAdditionalContact = listOfAdditionalContact.size();
-			for(int i=0 ; i<sizeOfAdditionalContact ;i++){	
-				
+			for (int i = 0; i < sizeOfAdditionalContact; i++) {
+
 				AdditionalContact additionalContactModel = listOfAdditionalContact.get(i);
 				com.dpu.request.AdditionalContact additionalContact = new com.dpu.request.AdditionalContact();
 				additionalContact.setCustomerName(additionalContactModel.getAdditionalContact());
@@ -777,12 +771,13 @@ public class CompanyAddController extends Application implements Initializable {
 				// need to set Status here
 				additionalContact.setStatus(1);
 				additionalContact.setEmail(additionalContactModel.getEmail());
-				
+
 				additionalContacts.add(additionalContact);
-			}}
+			}
+		}
 		company.setAdditionalContacts(additionalContacts);
 		return company;
-		 
+
 	}
 
 	@SuppressWarnings("unchecked")
@@ -818,28 +813,5 @@ public class CompanyAddController extends Application implements Initializable {
 		}
 		return null;
 	}
-	
-	public   void setValueToCompanyTextField(){
-		 
-		System.out.println("name : "+company.getName());
-		/*txtCompany.setText(company.getName());
-    	txtAddress.setText( company.getAddress());
-    	txtUnitNo.setText( company.getUnitNo());
-    	txtCity.setText( company.getCity());
-    	txtProvince.setText( company.getProvinceState());
-    	txtZip.setText( company.getZip());
-    	txtEmail.setText( company.getEmail());
-    	txtWebsite.setText( company.getWebsite());
-    	txtContact.setText( company.getContact());
-    	txtPosition.setText( company.getPosition());
-    	txtPhone.setText( company.getPhone());
-    	txtExt.setText( company.getExt());
-    	txtFax.setText( company.getFax());
-    	txtPrefix.setText( company.getCompanyPrefix());
-    	txtTollFree.setText( company.getTollfree());
-    	txtCellular.setText( company.getCellular());
-    	txtPager.setText( company.getPager());
-    	txtAfterHours.setText( company.getAfterHours());
-		*/
-	}
+
 }
