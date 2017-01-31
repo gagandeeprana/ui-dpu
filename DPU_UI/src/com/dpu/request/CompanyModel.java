@@ -36,6 +36,8 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 })
 public class CompanyModel {
 
+	@JsonProperty("companyId")
+	private String companyId;
     @JsonProperty("name")
     private String name;
     @JsonProperty("address")
@@ -78,8 +80,20 @@ public class CompanyModel {
     @JsonProperty("additionalContacts")
     private List<AdditionalContact> additionalContacts = null;
     
+    
+    
+    
+    @JsonProperty("companyId")
+    public String getCompanyId() {
+		return companyId;
+	}
 
-    @JsonProperty("name")
+    @JsonProperty("companyId")
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
+	}
+
+	@JsonProperty("name")
     public String getName() {
         return name;
     }

@@ -7,12 +7,12 @@ import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-import com.dpu.client.PostAPIClient;
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.Company;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
+import com.dpu.request.CompanyModel;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -27,7 +27,7 @@ public class CompanyEditController extends Application implements Initializable{
 	@FXML
 	Button btnUpdateCompany;
 	
-	Long companyId = 0l;
+	Integer companyId = 0;
 	
 	@FXML
 	TextField txtCompany, txtContact, txtAddress, txtPosition, txtUnitNo, txtPhone, txtExt, txtCity, txtFax, txtPrefix, 
@@ -87,7 +87,7 @@ public class CompanyEditController extends Application implements Initializable{
 	
 	private Company setCompanyValue() {
 		Company company = new Company();
-		company.setCompanyId(companyId);
+		//company.setCompanyId(companyId);
 		company.setName(txtCompany.getText());
 		company.setContact(txtContact.getText());
 		company.setAddress(txtAddress.getText());
@@ -109,8 +109,8 @@ public class CompanyEditController extends Application implements Initializable{
 		return company;
 	}
 
-	public void initData(Company c) {
-		companyId = c.getCompanyId();
+	public void initData(CompanyModel c) {
+		companyId = Integer.parseInt(c.getCompanyId());
 		txtCompany.setText(c.getName());
 		txtContact.setText(c.getContact());
 		txtAddress.setText(c.getAddress());

@@ -505,6 +505,8 @@ public class CompanyAddController extends Application implements Initializable {
 
 		fetchBillingLocations();
 		fetchAdditionalContacts();
+		String Location = location.toString();
+		System.out.println("Location :"+Location);
 
 		txtCompany.setText(company.getName());
 		txtAddress.setText(company.getAddress());
@@ -527,11 +529,12 @@ public class CompanyAddController extends Application implements Initializable {
 
 	}
 
+	public static  int editIndex = -1;
+	public static int add = 0;
+	public static BillingControllerModel billingControllerModel = new BillingControllerModel();
 	@FXML
 	public void handleMouseClick(MouseEvent arg0) {
-
-		Label label = new Label();
-
+ 
 		// Create ContextMenu
 		ContextMenu contextMenu = new ContextMenu();
 
@@ -541,6 +544,7 @@ public class CompanyAddController extends Application implements Initializable {
 			@Override
 			public void handle(ActionEvent event) {
 
+				add = 1;
 				company.setName(txtCompany.getText());
 				company.setAddress(txtAddress.getText());
 				company.setUnitNo(txtUnitNo.getText());
@@ -577,12 +581,13 @@ public class CompanyAddController extends Application implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
+				add = 0;
 				System.out.println("click on edit in billingLoc Table.");
+				editIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
+				billingControllerModel =  tableBillingLocations.getSelectionModel().getSelectedItem();
 				openAddBillingLocationScreen();
 				closeAddCompanyScreen(btnSaveCompany);
 				
-				
-				 
 			}
 		});
 
@@ -591,9 +596,29 @@ public class CompanyAddController extends Application implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				label.setText("Select Menu Item 1");
+				editIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
+				listOfBilling.remove(editIndex);
+				editIndex = -1;
+				
+				
+				
+				try{
+					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
+						.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_ADD_SCREEN));
+					Parent root = (Parent) fxmlLoader.load();
+					Stage stage = new Stage();
+					stage.initModality(Modality.APPLICATION_MODAL);
+					stage.setTitle("Add Company");
+					stage.setScene(new Scene(root));
+					stage.show();
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+				closeAddCompanyScreen(btnSaveCompany);
 			}
 		});
+		
+		
 
 		// Add MenuItem to ContextMenu
 		contextMenu.getItems().addAll(item1, item2, item3);
@@ -614,13 +639,13 @@ public class CompanyAddController extends Application implements Initializable {
 	}
 
 	private void openAddBillingLocationScreen() {
-		System.out.println("[openAddDBillingLocScreen]  : Enter");
+		
 		try {
-
+			
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
 					.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_ADD_BILLING_LOCATION_SCREEN));
 			Parent root = (Parent) fxmlLoader.load();
-
+			
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.setTitle("Add Billing Location");
@@ -706,6 +731,7 @@ public class CompanyAddController extends Application implements Initializable {
 		List<BillingLocation> billingLocations = new ArrayList<BillingLocation>();
 		List<com.dpu.request.AdditionalContact> additionalContacts = new ArrayList<com.dpu.request.AdditionalContact>();
 
+		
 		company.setName(txtCompany.getText());
 		company.setAddress(txtAddress.getText());
 		company.setUnitNo(txtUnitNo.getText());

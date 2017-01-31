@@ -17,7 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class BillingAddController   implements Initializable {
+public class BillingAddController implements Initializable {
 	@FXML
 	private ResourceBundle resources;
 
@@ -65,7 +65,16 @@ public class BillingAddController   implements Initializable {
 			String zip = txtZip.getText();
 			String fax = txtFax.getText();
 			BillingControllerModel bcm1 = new BillingControllerModel(company, address, city, phone, contact, zip, fax);
-			CompanyAddController.listOfBilling.add(bcm1);
+
+			if (CompanyAddController.editIndex != -1) {
+				System.out.println("now Index : " + CompanyAddController.editIndex);
+				CompanyAddController.listOfBilling.set(CompanyAddController.editIndex, bcm1);
+				CompanyAddController.editIndex = -1;
+
+			} else {
+				System.out.println("else add new record .NOT EDIT INDEX");
+				CompanyAddController.listOfBilling.add(bcm1);
+			}
 
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
 					.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_ADD_SCREEN));
@@ -102,7 +111,20 @@ public class BillingAddController   implements Initializable {
 	}
 
 	public void initialize(URL location, ResourceBundle resources) {
-		 
+		String Location = location.toString();
+		System.out.println("Billing ADD Controller Intiallize Location :" + Location + " billingControllerModel : "
+				+ CompanyAddController.billingControllerModel);
+		if (CompanyAddController.add != 1) {
+			if (CompanyAddController.billingControllerModel != null) {
+				txtCompany.setText(CompanyAddController.billingControllerModel.getCompany());
+				txtAddress.setText(CompanyAddController.billingControllerModel.getAddress());
+				txtCity.setText(CompanyAddController.billingControllerModel.getCity());
+				txtPhone.setText(CompanyAddController.billingControllerModel.getPhone());
+				txtContact.setText(CompanyAddController.billingControllerModel.getPhone());
+				txtZip.setText(CompanyAddController.billingControllerModel.getZip());
+				txtFax.setText(CompanyAddController.billingControllerModel.getFax());
+			}
+		}
 
 	}
 }
