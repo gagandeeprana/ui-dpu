@@ -51,12 +51,7 @@ public class BillingAddController implements Initializable {
 	@FXML
 	void btnSaveBillingLocationAction(ActionEvent event) {
 		try {
-
-			System.out.println("clicked on save Button.");
-
-			// CompanyAddController companyAddController = new
-			// CompanyAddController();
-
+ 
 			String company = txtCompany.getText();
 			String address = txtAddress.getText();
 			String city = txtCity.getText();
@@ -67,12 +62,10 @@ public class BillingAddController implements Initializable {
 			BillingControllerModel bcm1 = new BillingControllerModel(company, address, city, phone, contact, zip, fax);
 
 			if (CompanyAddController.editIndex != -1) {
-				System.out.println("now Index : " + CompanyAddController.editIndex);
 				CompanyAddController.listOfBilling.set(CompanyAddController.editIndex, bcm1);
 				CompanyAddController.editIndex = -1;
 
 			} else {
-				System.out.println("else add new record .NOT EDIT INDEX");
 				CompanyAddController.listOfBilling.add(bcm1);
 			}
 
@@ -111,9 +104,7 @@ public class BillingAddController implements Initializable {
 	}
 
 	public void initialize(URL location, ResourceBundle resources) {
-		String Location = location.toString();
-		System.out.println("Billing ADD Controller Intiallize Location :" + Location + " billingControllerModel : "
-				+ CompanyAddController.billingControllerModel);
+		 
 		if (CompanyAddController.add != 1) {
 			if (CompanyAddController.billingControllerModel != null) {
 				txtCompany.setText(CompanyAddController.billingControllerModel.getCompany());

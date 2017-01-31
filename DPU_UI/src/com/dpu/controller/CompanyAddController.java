@@ -227,7 +227,6 @@ public class CompanyAddController extends Application implements Initializable {
 			@Override
 			public void handle(ActionEvent event) {
 				addAddtionalContact = 0;
-				System.out.println("click on edit in AdditionalContact Table.");
 				editIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
 				 
 				additionalContactModel =  tableAdditionalContact.getSelectionModel().getSelectedItem();
@@ -317,7 +316,6 @@ public class CompanyAddController extends Application implements Initializable {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		System.out.println("Start method called");
 		try {
 
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
@@ -535,8 +533,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 		fetchBillingLocations();
 		fetchAdditionalContacts();
-		String Location = location.toString();
-		System.out.println("Location :"+Location);
+		 
 
 		txtCompany.setText(company.getName());
 		txtAddress.setText(company.getAddress());
@@ -680,12 +677,10 @@ public class CompanyAddController extends Application implements Initializable {
 			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Exception :" + e);
 		}
 	}
 
 	private void openAddAdditionalContactScreen() {
-		System.out.println("[openAddDBillingLocScreen]  : Enter");
 		try {
 
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
@@ -699,7 +694,6 @@ public class CompanyAddController extends Application implements Initializable {
 			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Exception :" + e);
 		}
 	}
 
@@ -861,7 +855,6 @@ public class CompanyAddController extends Application implements Initializable {
 			}
 			return fxmlLoader.getController();
 		} catch (Exception e) {
-			System.out.println(e);
 			e.printStackTrace();
 		}
 		return null;
