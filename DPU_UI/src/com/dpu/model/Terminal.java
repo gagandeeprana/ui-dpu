@@ -20,13 +20,8 @@ public class Terminal {
 	private String status;
 	private Long statusId;
 	private List<Status> statusList;
+	private List<DPUService> serviceList;
 	
-	public List<Status> getStatusList() {
-		return statusList;
-	}
-	public void setStatusList(List<Status> statusList) {
-		this.statusList = statusList;
-	}
 	public Long getTerminalId() {
 		return terminalId;
 	}
@@ -93,4 +88,16 @@ public class Terminal {
 	public void setStatusId(Long statusId) {
 		this.statusId = statusId;
 	}
+	public List<Status> getStatusList() {
+		return statusList;
+	}
+	public void setStatusList(List<Status> statusList) {
+		this.statusList = statusList;
+	}
+	public List<DPUService> getServiceList() {
+		return serviceList;
+	}
+	public void setServiceList(List<DPUService> serviceList) {
+		this.serviceList = serviceList;
+	}	
 }
