@@ -9,17 +9,19 @@ import com.dpu.model.AdditionalContact;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
-public class AdditionalContactAddController extends CompanyAddController {
+public class AdditionalContactAddController implements Initializable {
 
     @FXML
     private ResourceBundle resources;
@@ -113,7 +115,16 @@ public class AdditionalContactAddController extends CompanyAddController {
         	String status = ddlStatus.getSelectionModel().getSelectedItem();
         	String email = txtEmail.getText();
         	AdditionalContact bcm1 = new AdditionalContact(additionalContact,position,phone,fax, cellular, email,extension,pager,status);
-        	CompanyAddController.listOfAdditionalContact.add(bcm1);
+        	 
+        	if (CompanyAddController.editIndex != -1) {
+				System.out.println("now Index : " + CompanyAddController.editIndex);
+				CompanyAddController.listOfAdditionalContact.set(CompanyAddController.editIndex, bcm1);
+				CompanyAddController.editIndex = -1;
+
+			} else {
+				System.out.println("else add new record .NOT EDIT INDEX");
+				CompanyAddController.listOfAdditionalContact.add(bcm1);
+			}
         	
         	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.COMPANY_BASE_PACKAGE+Iconstants.XML_COMPANY_ADD_SCREEN));
             Parent root = (Parent) fxmlLoader.load();
@@ -161,15 +172,28 @@ public class AdditionalContactAddController extends CompanyAddController {
 
     }
     
-    @Override
-	public void start(Stage arg0) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
+   
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		//companyAddController.fetchBillingLocations();
+		///*String Location = location.toString();
+		System.out.println("AdditionalContact ADD Controller Intiallize Location :" + location + " additionalContactModel : "
+				+ CompanyAddController.additionalContactModel);
+	if (CompanyAddController.addAddtionalContact != 1) {
+		if (CompanyAddController.additionalContactModel != null) {
+			
+				txtAdditionalContact.setText(CompanyAddController.additionalContactModel.getAdditionalContact());
+				txtPosition.setText(CompanyAddController.additionalContactModel.getPosition());
+				txtExtension.setText(CompanyAddController.additionalContactModel.getExtension());
+				txtFax.setText(CompanyAddController.additionalContactModel.getFax());
+				txtCellular.setText(CompanyAddController.additionalContactModel.getCellular());
+				txtEmail.setText(CompanyAddController.additionalContactModel.getEmail());
+				txtPager.setText(CompanyAddController.additionalContactModel.getPager());
+				txtPhone.setText(CompanyAddController.additionalContactModel.getPhone());
+				//ddlStatus.getSelectionModel().getSelectedItem();
+				 
+			}
+		}
 		
 		
 	}

@@ -34,7 +34,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
@@ -172,6 +171,12 @@ public class CompanyAddController extends Application implements Initializable {
 	@FXML
 	public TableColumn<BillingControllerModel, String> zip;
 
+	public static  int editIndex = -1;
+	public static int add = 0;
+	public static int addAddtionalContact = 0;
+	public static BillingControllerModel billingControllerModel = new BillingControllerModel();
+	public static AdditionalContact additionalContactModel = new  AdditionalContact();
+	
 	@FXML
 	void handleAddContMouseClick(MouseEvent event) {
 
@@ -184,6 +189,7 @@ public class CompanyAddController extends Application implements Initializable {
 			@Override
 			public void handle(ActionEvent event) {
 
+				addAddtionalContact = 1;
 				company.setName(txtCompany.getText());
 				company.setAddress(txtAddress.getText());
 				company.setUnitNo(txtUnitNo.getText());
@@ -220,6 +226,13 @@ public class CompanyAddController extends Application implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
+				addAddtionalContact = 0;
+				System.out.println("click on edit in AdditionalContact Table.");
+				editIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
+				 
+				additionalContactModel =  tableAdditionalContact.getSelectionModel().getSelectedItem();
+				openAddAdditionalContactScreen();
+				closeAddCompanyScreen(btnSaveCompany);
 
 			}
 		});
@@ -229,6 +242,23 @@ public class CompanyAddController extends Application implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
+				editIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
+				listOfAdditionalContact.remove(editIndex);
+				editIndex = -1;
+				
+				try{
+					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
+						.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_ADD_SCREEN));
+					Parent root = (Parent) fxmlLoader.load();
+					Stage stage = new Stage();
+					stage.initModality(Modality.APPLICATION_MODAL);
+					stage.setTitle("Add Company");
+					stage.setScene(new Scene(root));
+					stage.show();
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+				closeAddCompanyScreen(btnSaveCompany);
 
 			}
 		});
@@ -529,9 +559,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 	}
 
-	public static  int editIndex = -1;
-	public static int add = 0;
-	public static BillingControllerModel billingControllerModel = new BillingControllerModel();
+	
 	@FXML
 	public void handleMouseClick(MouseEvent arg0) {
  
@@ -582,7 +610,6 @@ public class CompanyAddController extends Application implements Initializable {
 			@Override
 			public void handle(ActionEvent event) {
 				add = 0;
-				System.out.println("click on edit in billingLoc Table.");
 				editIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
 				billingControllerModel =  tableBillingLocations.getSelectionModel().getSelectedItem();
 				openAddBillingLocationScreen();
