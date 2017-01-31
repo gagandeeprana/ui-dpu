@@ -15,7 +15,7 @@
                   <Font size="13.0" />
                </font>
             </Text>
-            <TextField layoutX="88.0" layoutY="9.0" />
+            <TextField fx:id="txtSearchDivision" focusTraversable="false" layoutX="88.0" layoutY="9.0" promptText="Enter division name to search..." />
             <CheckBox layoutX="276.0" layoutY="11.0" mnemonicParsing="false" text="Show All" />
             <Button fx:id="btnGoDivision" layoutX="238.0" layoutY="8.0" mnemonicParsing="false" onAction="#btnGoDivisionAction" text="Go" />
             <Button fx:id="btnAddDivision" layoutX="349.0" layoutY="7.0" mnemonicParsing="false" onAction="#btnAddDivisionAction" prefHeight="25.0" prefWidth="55.0" text="Add" />

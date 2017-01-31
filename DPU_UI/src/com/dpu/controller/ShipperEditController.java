@@ -122,7 +122,7 @@ public class ShipperEditController extends Application implements Initializable{
 	}
 	
 	public void initData(Shipper s) {
-		shipperId = s.getShipperId();
+//		shipperId = s.getShipperId();
 
 		txtCompany.setText(s.getCompany());
 		txtContact.setText(s.getContact());

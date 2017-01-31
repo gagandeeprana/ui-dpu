@@ -61,10 +61,10 @@ public class CompanyController extends Application implements Initializable {
 	@FXML
 	private void btnEditCompanyAction() {
 		CompanyModel equipment = cList.get(tblCompany.getSelectionModel().getSelectedIndex());
-		System.out.println("selected Index company Id : "+equipment.getCompanyId());
+//		System.out.println("selected Index company Id : "+equipment.getCompanyId());
 		
 		CompanyModel company = tblCompany.getSelectionModel().getSelectedItem();
-		System.out.println("selected company Id : "+company.getCompanyId());
+//		System.out.println("selected company Id : "+company.getCompanyId());
 		System.out.println(company + "   company:: ");
 		if(company != null) {
 			Platform.runLater(new Runnable() {
@@ -72,13 +72,13 @@ public class CompanyController extends Application implements Initializable {
 				@Override
 				public void run() {
 					try {
-						ObjectMapper mapper = new ObjectMapper();
+						/*ObjectMapper mapper = new ObjectMapper();
 						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + company.getCompanyId(), null);
 						if(response != null && response.length() > 0) {
 							CompanyModel c = mapper.readValue(response, CompanyModel.class);
 							CompanyEditController companyEditController = (CompanyEditController) openEditCompanyScreen();
 							companyEditController.initData(c);
-						}
+						}*/
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Try Again.." + e , "Info", 1);
 					}
@@ -96,7 +96,7 @@ public class CompanyController extends Application implements Initializable {
 				@Override
 				public void run() {
 					try {
-						ObjectMapper mapper = new ObjectMapper();
+						/*ObjectMapper mapper = new ObjectMapper();
 						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + company.getCompanyId(), null);
 						if(response != null && response.contains("message")) {
 							Success success = mapper.readValue(response, Success.class);
@@ -104,7 +104,7 @@ public class CompanyController extends Application implements Initializable {
 						} else {
 							Failed failed = mapper.readValue(response, Failed.class);
 							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-						}
+						}*/
 						fetchCompanies();
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);

@@ -12,6 +12,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.model.Equipment;
 import com.dpu.model.Failed;
 import com.dpu.model.Shipper;
 import com.dpu.model.Success;
@@ -62,7 +63,6 @@ public class ShipperController extends Application implements Initializable {
 	
 	@FXML
 	private void btnEditShipperAction() {
-		System.out.println("121212");
 		Shipper shipper = tblShipper.getSelectionModel().getSelectedItem();
 		System.out.println(shipper);
 		if(shipper != null) {
@@ -189,6 +189,32 @@ public class ShipperController extends Application implements Initializable {
 				}
 			}
 		});
+	}
+	
+	List<Shipper> shippers = null;
+	
+	ObjectMapper mapper = new ObjectMapper();
+	
+	public void fillShippers(String response) {
+		
+		try {
+			ObservableList<Shipper> data = null;
+			shippers = new ArrayList<Shipper>();
+			setColumnValues();
+			if(response != null && response.length() > 0) {
+				Shipper c[] = mapper.readValue(response, Shipper[].class);
+				for(Shipper ccl : c) {
+					shippers.add(ccl);
+				}
+				data = FXCollections.observableArrayList(shippers);
+			} else {
+				data = FXCollections.observableArrayList(shippers);
+			}
+			tblShipper.setItems(data);
+            tblShipper.setVisible(true);
+		} catch (Exception e) {
+			System.out.println("ShipperController: fillShippers(): "+ e.getMessage());
+		}
 	}
 	
 	private void setColumnValues() {

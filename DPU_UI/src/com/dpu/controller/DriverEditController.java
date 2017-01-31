@@ -64,7 +64,7 @@ public class DriverEditController extends Application implements Initializable{
 					ObjectMapper mapper = new ObjectMapper();
 					Driver driver = setDriverValue();
 					String payload = mapper.writeValueAsString(driver);
-
+					System.out.println("PP:: " + payload);
 					String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_DRIVER_API + "/" + driverId, null, payload);
 					MainScreen.driverController.fillDriver(response);
 					
@@ -191,11 +191,5 @@ public class DriverEditController extends Application implements Initializable{
 				ddlStatus.getSelectionModel().select(i);
 			}
 		}
-//		txtDivision.setText(driver.getDivision());
-//		ddlTerminal.setValue(driver.getTerminalId() == 1?"Terminal1":"Terminal2");
-//		ddlCategory.setValue(driver.getCatogoryId() == 1?"Category1":"Category2");
-		ddlRole.setValue(driver.getRoleId() == 1?"Role1":"Role2");
-		ddlStatus.setValue(driver.getStatusId() == 1 ? "Active":"Inactive");
-		ddlDriverClass.setValue(driver.getDriverClassId() == 1?"Class1":"Class2");
 	}
 }

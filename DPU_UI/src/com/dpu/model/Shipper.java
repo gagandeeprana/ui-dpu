@@ -1,16 +1,20 @@
 package com.dpu.model;
 
+import java.util.List;
+
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
 @JsonSerialize(include = Inclusion.NON_NULL)
 public class Shipper {
 
+
 	//@JsonProperty(value = "shipper_id")
-	private int shipperId;
+	private Long shipperId;
 
 	//@JsonProperty(value = "company")
 	private String company;
+	private Long companyId;
 
 	//@JsonProperty(value = "address")
 	private String address;
@@ -29,6 +33,7 @@ public class Shipper {
 
 	//@JsonProperty(value = "status")
 	private String status;
+	private Long statusId;
 
 	//@JsonProperty(value = "zone")
 	private String zone;
@@ -74,21 +79,32 @@ public class Shipper {
 
 	//@JsonProperty(value = "standard_notes")
 	private String standardNotes;
+	
+	private List<Company> companyList;
+	private List<Status> statusList;
 
-	public String getStatus() {
-		return status;
+	public List<Company> getCompanyList() {
+		return companyList;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setCompanyList(List<Company> companyList) {
+		this.companyList = companyList;
 	}
 
-	public int getShipperId() {
+	public Long getShipperId() {
 		return shipperId;
 	}
 
-	public void setShipperId(int shipperId) {
+	public void setShipperId(Long shipperId) {
 		this.shipperId = shipperId;
+	}
+
+	public Long getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(Long companyId) {
+		this.companyId = companyId;
 	}
 
 	public String getCompany() {
@@ -137,6 +153,14 @@ public class Shipper {
 
 	public void setPostalZip(String postalZip) {
 		this.postalZip = postalZip;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public String getZone() {
@@ -257,5 +281,21 @@ public class Shipper {
 
 	public void setStandardNotes(String standardNotes) {
 		this.standardNotes = standardNotes;
+	}
+
+	public Long getStatusId() {
+		return statusId;
+	}
+
+	public void setStatusId(Long statusId) {
+		this.statusId = statusId;
+	}
+
+	public List<Status> getStatusList() {
+		return statusList;
+	}
+
+	public void setStatusList(List<Status> statusList) {
+		this.statusList = statusList;
 	}
 }

@@ -356,7 +356,7 @@ public class DriverController extends Application implements Initializable {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Driver, String> param) {
-				return new SimpleStringProperty(param.getValue().getDriverClassId() + "");
+				return new SimpleStringProperty(param.getValue().getDriverClassName() + "");
 			}
 		});
 	}

@@ -218,35 +218,35 @@ public class TruckController extends Application implements Initializable {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
-				return new SimpleStringProperty(param.getValue().getCategory() + "");
+				return new SimpleStringProperty(param.getValue().getCatogoryName() + "");
 			}
 		});
 		status.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Truck,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
-				return new SimpleStringProperty(param.getValue().getStatus() + "");
+				return new SimpleStringProperty(param.getValue().getStatusName() + "");
 			}
 		});
 		usage.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Truck,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
-				return new SimpleStringProperty(param.getValue().getUsage() + "");
+				return new SimpleStringProperty(param.getValue().getTruchUsage() + "");
 			}
 		});
 		division.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Truck,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
-				return new SimpleStringProperty(param.getValue().getDivision() + "");
+				return new SimpleStringProperty(param.getValue().getDivisionName() + "");
 			}
 		});
 		terminal.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Truck,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
-				return new SimpleStringProperty(param.getValue().getTerminal() + "");
+				return new SimpleStringProperty(param.getValue().getTerminalName() + "");
 			}
 		});
 		truckType.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Truck,String>, ObservableValue<String>>() {

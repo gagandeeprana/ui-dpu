@@ -87,14 +87,14 @@ public class TruckEditController extends Application implements Initializable{
 	private Truck setTruckValue() {
 		Truck truck = new Truck();
 		truck.setUnitNo(Integer.parseInt(txtUnitNo.getText()));
-		truck.setUsage(txtUsage.getText());
-		truck.setOwner(txtOwner.getText());
-		truck.setDivision(txtDivision.getText());
-		truck.setoOName(txtOoName.getText());
-		truck.setTerminal(txtTerminal.getText());
-		truck.setCategory(txtCategory.getText());
-		truck.setTruckType(txtTruckType.getText());
-		truck.setStatus(txtStatus.getText());
+//		truck.setUsage(txtUsage.getText());
+//		truck.setOwner(txtOwner.getText());
+//		truck.setDivision(txtDivision.getText());
+//		truck.setoOName(txtOoName.getText());
+//		truck.setTerminal(txtTerminal.getText());
+//		truck.setCategory(txtCategory.getText());
+//		truck.setTruckType(txtTruckType.getText());
+//		truck.setStatus(txtStatus.getText());
 		truck.setFinance(txtFinance.getText());
 		return truck;
 	}
@@ -102,14 +102,14 @@ public class TruckEditController extends Application implements Initializable{
 	public void initData(Truck t) {
 		truckId = t.getTruckId();
 		txtUnitNo.setText(String.valueOf(t.getUnitNo()));
-		txtUsage.setText(t.getUsage());
-		txtOwner.setText(t.getOwner());
-		txtDivision.setText(t.getDivision());
-		txtOoName.setText(t.getoOName());
-		txtTerminal.setText(t.getTerminal());
-		txtCategory.setText(t.getCategory());
-		txtTruckType.setText(t.getTruckType());
-		txtStatus.setText(t.getStatus());
+//		txtUsage.setText(t.getUsage());
+//		txtOwner.setText(t.getOwner());
+//		txtDivision.setText(t.getDivision());
+//		txtOoName.setText(t.getoOName());
+//		txtTerminal.setText(t.getTerminal());
+//		txtCategory.setText(t.getCategory());
+//		txtTruckType.setText(t.getTruckType());
+//		txtStatus.setText(t.getStatus());
 		txtFinance.setText(t.getFinance());
 	}
 }

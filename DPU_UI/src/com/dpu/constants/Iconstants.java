@@ -2,7 +2,7 @@ package com.dpu.constants;
 
 public class Iconstants {
 
-	public static final String URL_SERVER = "http://localhost:8080/DPUWebProject/";
+	public static final String URL_SERVER = "http://localhost:8082/DPUWebProject/";
 	//public static final String URL_SERVER = "http://35.154.6.180:9090/DPUWebProject/";
 
 	public static final String COMMON_BASE_PACKAGE = "com/dpu/common/xml/";
@@ -56,7 +56,7 @@ public class Iconstants {
 	public static final String XML_DIVISION_SCREEN = "ListDivision1.fxml";
 	public static final String URL_DIVISION_API = "division";
 	public static final String XML_DIVISION_ADD_SCREEN = "AddDivision.fxml";
-	public static final String XML_DIVISION_EDIT_SCREEN = "EditDivision.fxml";
+	public static final String XML_DIVISION_EDIT_SCREEN = "EditDivision1.fxml";
 
 	public static final String CATEGORY_BASE_PACKAGE = "com/dpu/category/xml/";
 	public static final String XML_CATEGORY_SCREEN = "List Categories.fxml";

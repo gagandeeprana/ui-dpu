@@ -28,6 +28,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -57,9 +58,8 @@ public class DivisionController extends Application implements Initializable {
 				public void run() {
 					try {
 						ObjectMapper mapper = new ObjectMapper();
-						String response = GetAPIClient.callGetAPI(
-								Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API + "/" + division.getDivisionId(),
-								null);
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API + "/" + division.getDivisionId(),null);
+						System.out.println("byid response: division: " + response);
 						if (response != null && response.length() > 0) {
 
 							Division division = mapper.readValue(response, Division.class);
@@ -75,8 +75,42 @@ public class DivisionController extends Application implements Initializable {
 	}
 
 	@FXML
+	TextField txtSearchDivision;
+	
+	@FXML
 	private void btnGoDivisionAction() {
+		String search = txtSearchDivision.getText();
+		if(search != null && search.length() > 0) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API + "/" + search + "/search", null);
+						fillDivisions(response);
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					}
+				}
+			});
+			
+		}
 		
+		if(search != null && search.length() == 0) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API, null);
+						fillDivisions(response);
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					}
+				}
+			});
+			
+		}
 	}
 	
 	@FXML

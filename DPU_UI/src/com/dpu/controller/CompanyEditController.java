@@ -27,7 +27,7 @@ public class CompanyEditController extends Application implements Initializable{
 	@FXML
 	Button btnUpdateCompany;
 	
-	int companyId = 0;
+	Long companyId = 0l;
 	
 	@FXML
 	TextField txtCompany, txtContact, txtAddress, txtPosition, txtUnitNo, txtPhone, txtExt, txtCity, txtFax, txtPrefix, 
