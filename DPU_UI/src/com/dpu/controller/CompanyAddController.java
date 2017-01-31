@@ -238,7 +238,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 		MenuItem item3 = new MenuItem("DELETE");
 		item3.setOnAction(new EventHandler<ActionEvent>() {
-
+			
 			@Override
 			public void handle(ActionEvent event) {
 				editIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
@@ -251,7 +251,7 @@ public class CompanyAddController extends Application implements Initializable {
 					Parent root = (Parent) fxmlLoader.load();
 					Stage stage = new Stage();
 					stage.initModality(Modality.APPLICATION_MODAL);
-					stage.setTitle("Add Company");
+					stage.setTitle("Add New Company");
 					stage.setScene(new Scene(root));
 					stage.show();
 				}catch(Exception e){
@@ -324,7 +324,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add Billing Location");
+			stage.setTitle("Add New Company");
 			stage.setScene(new Scene(root));
 			stage.show();
 
@@ -632,7 +632,7 @@ public class CompanyAddController extends Application implements Initializable {
 					Parent root = (Parent) fxmlLoader.load();
 					Stage stage = new Stage();
 					stage.initModality(Modality.APPLICATION_MODAL);
-					stage.setTitle("Add Company");
+					stage.setTitle("Add New Company");
 					stage.setScene(new Scene(root));
 					stage.show();
 				}catch(Exception e){

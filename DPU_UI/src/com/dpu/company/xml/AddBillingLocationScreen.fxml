@@ -27,7 +27,7 @@
         <TextField fx:id="txtZip"   layoutX="433.0" layoutY="44.0" prefWidth="243.0" />
         <TextField fx:id="txtFax"  layoutX="436.0" layoutY="83.0" prefWidth="240.0" />
         <Button id="btnSaveDriver" fx:id="btnSaveBillingLocation" layoutX="528.0" layoutY="174.0" mnemonicParsing="false" onAction="#btnSaveBillingLocationAction" prefWidth="56.0" text="Save" />
-        <Button layoutX="613.0" layoutY="174.0" mnemonicParsing="false" prefWidth="56.0" text="Cancel" />
+        <Button  fx:id="btnCancelBillingLocation" layoutX="613.0" layoutY="174.0" mnemonicParsing="false" prefWidth="56.0" onAction="#btnCancelBillingLocationAction" text="Cancel" />
       </children>
     </Pane>
   </children>

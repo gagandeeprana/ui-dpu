@@ -23,6 +23,10 @@ public class BillingAddController implements Initializable {
 
 	@FXML
 	private URL location;
+	
+
+	@FXML
+	private Button btnCancelBillingLocation;
 
 	@FXML
 	private Button btnSaveBillingLocation;
@@ -61,11 +65,9 @@ public class BillingAddController implements Initializable {
 			String fax = txtFax.getText();
 			BillingControllerModel bcm1 = new BillingControllerModel(company, address, city, phone, contact, zip, fax);
 
-			if (CompanyAddController.editIndex != -1) {
+			if (CompanyAddController.add == 0) {
 				CompanyAddController.listOfBilling.set(CompanyAddController.editIndex, bcm1);
-				CompanyAddController.editIndex = -1;
-
-			} else {
+			} else if(CompanyAddController.add == 1){
 				CompanyAddController.listOfBilling.add(bcm1);
 			}
 
@@ -74,7 +76,7 @@ public class BillingAddController implements Initializable {
 			Parent root = (Parent) fxmlLoader.load();
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add Company");
+			stage.setTitle("Add New Company");
 			stage.setScene(new Scene(root));
 			stage.show();
 
@@ -90,6 +92,26 @@ public class BillingAddController implements Initializable {
 		loginStage.close();
 	}
 
+	
+	
+	@FXML
+	void btnCancelBillingLocationAction(ActionEvent event) {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
+					.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_ADD_SCREEN));
+			Parent root = (Parent) fxmlLoader.load();
+
+			Stage stage = new Stage();
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setTitle("Add New Company");
+			stage.setScene(new Scene(root));
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		closeAddBillingScreen(btnCancelBillingLocation);
+	}
+	
 	@FXML
 	void initialize() {
 		assert btnSaveBillingLocation != null : "fx:id=\"btnSaveBillingLocation\" was not injected: check your FXML file 'AddBillingLocationScreen.fxml'.";

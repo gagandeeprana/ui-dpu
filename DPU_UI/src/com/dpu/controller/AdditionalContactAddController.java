@@ -110,11 +110,9 @@ public class AdditionalContactAddController implements Initializable {
 			AdditionalContact bcm1 = new AdditionalContact(additionalContact, position, phone, fax, cellular, email,
 					extension, pager, status);
 
-			if (CompanyAddController.editIndex != -1) {
+			if (CompanyAddController.addAddtionalContact == 0) {
 				CompanyAddController.listOfAdditionalContact.set(CompanyAddController.editIndex, bcm1);
-				CompanyAddController.editIndex = -1;
-
-			} else {
+			} else if(CompanyAddController.addAddtionalContact == 1){
 				CompanyAddController.listOfAdditionalContact.add(bcm1);
 			}
 
@@ -127,12 +125,7 @@ public class AdditionalContactAddController implements Initializable {
 			stage.setTitle("Add New Company");
 			stage.setScene(new Scene(root));
 			stage.show();
-
-			// set Vlaue to Company text field.
-			/*
-			 * CompanyAddController companyAdd = new CompanyAddController();
-			 * companyAdd.setValueToCompanyTextField();
-			 */
+ 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
