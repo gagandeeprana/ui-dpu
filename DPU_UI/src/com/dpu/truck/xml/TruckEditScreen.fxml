@@ -27,13 +27,13 @@
                 <TextField fx:id="txtUnitNo" layoutX="93.0" layoutY="11.0" prefWidth="183.0" />
                 <TextField fx:id="txtOwner" layoutX="93.0" layoutY="52.0" prefWidth="183.0" />
                 <TextField fx:id="txtOoName" layoutX="93.0" layoutY="91.0" prefWidth="183.0" />
-                <TextField fx:id="txtCategory" layoutX="93.0" layoutY="135.0" prefWidth="183.0" />
-                <TextField fx:id="txtStatus" layoutX="93.0" layoutY="178.0" prefWidth="183.0" />
                 <TextField fx:id="txtUsage" layoutX="356.0" layoutY="11.0" prefWidth="174.0" />
-                <TextField fx:id="txtDivision" layoutX="358.0" layoutY="52.0" prefWidth="174.0" />
-                <TextField fx:id="txtTerminal" layoutX="356.0" layoutY="94.0" prefWidth="174.0" />
-                <TextField fx:id="txtTruckType" layoutX="356.0" layoutY="132.0" prefWidth="172.0" />
                 <TextField fx:id="txtFinance" layoutX="358.0" layoutY="178.0" prefWidth="174.0" />
+                        <ComboBox fx:id="ddlCategory" layoutX="93.0" layoutY="134.0" prefHeight="25.0" prefWidth="183.0" />
+                        <ComboBox fx:id="ddlStatus" layoutX="93.0" layoutY="172.0" prefHeight="25.0" prefWidth="183.0" />
+                        <ComboBox fx:id="ddlDivision" layoutX="358.0" layoutY="52.0" prefHeight="25.0" prefWidth="173.0" />
+                        <ComboBox fx:id="ddlTerminal" layoutX="358.0" layoutY="90.0" prefHeight="25.0" prefWidth="173.0" />
+                        <ComboBox fx:id="ddlTruckType" layoutX="358.0" layoutY="131.0" prefHeight="25.0" prefWidth="173.0" />
               </children>
             </AnchorPane>
           </content>
@@ -45,8 +45,7 @@
         </Tab>
       </tabs>
     </TabPane>
-    <Button fx:id="btnUpdateTruck" layoutX="433.0" layoutY="357.0" mnemonicParsing="false" onAction="#btnUpdateTruckAction" text="Save" />
+    <Button fx:id="btnUpdateTruck" layoutX="433.0" layoutY="357.0" mnemonicParsing="false" onAction="#btnUpdateTruckAction" text="Update" />
     <Button layoutX="492.0" layoutY="357.0" mnemonicParsing="false" text="Cancel" />
-    <Button layoutX="382.0" layoutY="357.0" mnemonicParsing="false" text="Edit" />
   </children>
 </AnchorPane>
