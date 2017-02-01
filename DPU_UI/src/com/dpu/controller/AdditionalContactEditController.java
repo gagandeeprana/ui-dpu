@@ -161,7 +161,7 @@ public class AdditionalContactEditController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		if (CompanyEditController.addAddtionalContact != 1) {
+		//if (CompanyEditController.addAddtionalContact != 1) {
 			if (CompanyEditController.additionalContactModel != null) {
 
 				txtAdditionalContact.setText(CompanyEditController.additionalContactModel.getAdditionalContact());
@@ -174,7 +174,7 @@ public class AdditionalContactEditController implements Initializable {
 				txtPhone.setText(CompanyEditController.additionalContactModel.getPhone());
 				// ddlStatus.getSelectionModel().getSelectedItem();
 
-			}
+			//}
 		}
 
 	}

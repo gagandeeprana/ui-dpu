@@ -346,7 +346,7 @@ public class CompanyEditController extends Application implements Initializable 
 
 			@Override
 			public void handle(ActionEvent event) {
-
+				setValuesToCmpanyTextField();
 				addAddtionalContact = 1;
 				company.setName(txtCompany.getText());
 				company.setAddress(txtAddress.getText());
@@ -384,6 +384,7 @@ public class CompanyEditController extends Application implements Initializable 
 
 			@Override
 			public void handle(ActionEvent event) {
+				setValuesToCmpanyTextField();
 				addAddtionalContact = 0;
 				editIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
 				 
@@ -399,6 +400,7 @@ public class CompanyEditController extends Application implements Initializable 
 			
 			@Override
 			public void handle(ActionEvent event) {
+				setValuesToCmpanyTextField();
 				editIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
 				listOfAdditionalContact.remove(editIndex);
 				editIndex = -1;
