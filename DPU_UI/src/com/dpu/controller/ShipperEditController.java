@@ -1,6 +1,7 @@
 package com.dpu.controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
@@ -9,15 +10,16 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.model.Failed;
+import com.dpu.model.Company;
 import com.dpu.model.Shipper;
-import com.dpu.model.Success;
+import com.dpu.model.Status;
 
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -28,13 +30,16 @@ public class ShipperEditController extends Application implements Initializable{
 	Button btnUpdateShipper;
 	
 	@FXML
-	TextField txtCompany, txtContact, txtAddress, txtPosition, txtUnitNo, txtPhone, txtExt, txtCity, txtFax, txtPrefix, 
-	txtProvince, txtTollFree, txtPlant, txtStatus, txtCellNumber, txtZone, txtEmail, txtLeadTime, txtTimeZone, txtImporter;
+	TextField txtContact, txtAddress, txtPosition, txtUnitNo, txtPhone, txtExt, txtCity, txtFax, txtPrefix, 
+	txtProvince, txtTollFree, txtPlant, txtCellNumber, txtZone, txtEmail, txtLeadTime, txtTimeZone, txtImporter;
 	
 	@FXML
 	TextArea txtInternalNotes, txtStandardNotes;
+	
+	@FXML
+	ComboBox<String> ddlCompany, ddlStatus;
 
-	private int shipperId = 0;
+	private Long shipperId = 0l;
 	
 	@FXML
 	private void btnUpdateShipperAction() {
@@ -53,19 +58,16 @@ public class ShipperEditController extends Application implements Initializable{
 					Shipper shipper = setShipperValue();
 					String payload = mapper.writeValueAsString(shipper);
 
-
-				//	String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_TRAILER_API + "/" + "trailerId", null, payload);
-
 					String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_SHIPPER_API + "/" + shipperId, null, payload);
+					MainScreen.shipperController.fillShippers(response);
 					
-					if(response != null && response.contains("message")) {
+					/*if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
 						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
 					} else {
 						Failed failed = mapper.readValue(response, Failed.class);
 						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-					}
-					MainScreen.shipperController.fetchShippers();
+					}*/
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
 				}
@@ -75,10 +77,9 @@ public class ShipperEditController extends Application implements Initializable{
 	}
 	
 
-	//to update, set these values
 	private Shipper setShipperValue() {
 		Shipper shipper = new Shipper();
-		shipper.setCompany(txtCompany.getText());
+		shipper.setCompanyId(companyList.get(ddlCompany.getSelectionModel().getSelectedIndex()).getCompanyId());
 		shipper.setContact(txtContact.getText());
 		shipper.setAddress(txtAddress.getText());
 		shipper.setPosition(txtPosition.getText());
@@ -91,7 +92,7 @@ public class ShipperEditController extends Application implements Initializable{
 		shipper.setProvinceState(txtProvince.getText());
 		shipper.setTollFree(txtTollFree.getText());
 		shipper.setPlant(txtPlant.getText());
-		shipper.setStatus(txtStatus.getText());
+		shipper.setStatusId(statusList.get(ddlStatus.getSelectionModel().getSelectedIndex()).getId());
 		//cellnumber yet to be done
 		shipper.setZone(txtZone.getText());
 		shipper.setEmail(txtEmail.getText());
@@ -99,8 +100,7 @@ public class ShipperEditController extends Application implements Initializable{
 		shipper.setTimeZone(txtTimeZone.getText());
 		shipper.setImporter(txtImporter.getText());
 		shipper.setInternalNotes(txtInternalNotes.getText());
-		shipper.setStandardNotes(txtStandardNotes.getText());	
-		shipper.setCompany(txtCompany.getText());
+		shipper.setStandardNotes(txtStandardNotes.getText());
 		return shipper;
 	}
 
@@ -121,10 +121,28 @@ public class ShipperEditController extends Application implements Initializable{
 		
 	}
 	
+	List<Company> companyList = null;
+	
+	List<Status> statusList = null;
+	
 	public void initData(Shipper s) {
-//		shipperId = s.getShipperId();
-
-		txtCompany.setText(s.getCompany());
+		shipperId = s.getShipperId();
+		statusList = s.getStatusList();
+		for(int i = 0; i< s.getStatusList().size();i++) {
+			Status status = s.getStatusList().get(i);
+			ddlStatus.getItems().add(status.getStatus());
+			if(status.getId() == s.getStatusId()) {
+				ddlStatus.getSelectionModel().select(i);
+			}
+		}
+		companyList = s.getCompanyList();
+		for(int i = 0; i< s.getCompanyList().size();i++) {
+			Company company = s.getCompanyList().get(i);
+			ddlCompany.getItems().add(s.getCompany());
+			if(company.getCompanyId() == s.getCompanyId()) {
+				ddlCompany.getSelectionModel().select(i);
+			}
+		}
 		txtContact.setText(s.getContact());
 		txtAddress.setText(s.getAddress());
 		txtPosition.setText(s.getPosition());
@@ -137,7 +155,6 @@ public class ShipperEditController extends Application implements Initializable{
 		txtProvince.setText(s.getProvinceState());
 		txtTollFree.setText(s.getTollFree());
 		txtPlant.setText(s.getPlant());
-		txtStatus.setText(s.getStatus());
 		txtCellNumber.setText(s.getPhone());
 		txtZone.setText(s.getZone());
 		txtEmail.setText(s.getEmail());
