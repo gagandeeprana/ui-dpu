@@ -15,7 +15,7 @@ public class Company implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	//@JsonProperty("company_id")
-	private Integer companyId;
+	private Long companyId;
 	
 	//@JsonProperty("name")
 	private String name;
@@ -74,11 +74,11 @@ public class Company implements Serializable{
 	//@JsonProperty("after_hours")
 	private String afterHours;
 
-	public Integer getCompanyId() {
+	public Long getCompanyId() {
 		return companyId;
 	}
 
-	public void setCompanyId(Integer companyId) {
+	public void setCompanyId(Long companyId) {
 		this.companyId = companyId;
 	}
 

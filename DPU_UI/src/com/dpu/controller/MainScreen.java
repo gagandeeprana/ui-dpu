@@ -57,7 +57,12 @@ public class MainScreen extends Application implements Initializable {
 
 	@FXML
 	private void miDivisionAction() {
-		showPanel(Iconstants.DIVISION_BASE_PACKAGE, Iconstants.XML_DIVISION_SCREEN);
+		try {
+			divisionController = (DivisionController) showPanel(Iconstants.DIVISION_BASE_PACKAGE, Iconstants.XML_DIVISION_SCREEN);
+//			System.out.println(divisionController);
+		} catch (Exception e) {
+				e.printStackTrace();
+		}
 	}
 
 	@FXML
@@ -101,8 +106,7 @@ public class MainScreen extends Application implements Initializable {
 
 	@FXML
 	private void lblDivisionHeaderAction() {
-		divisionController = (DivisionController) showPanel(Iconstants.DIVISION_BASE_PACKAGE,
-				Iconstants.XML_DIVISION_SCREEN);
+		
 	}
 
 	@FXML

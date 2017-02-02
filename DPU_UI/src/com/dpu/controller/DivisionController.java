@@ -13,8 +13,6 @@ import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.Division;
-import com.dpu.model.Failed;
-import com.dpu.model.Success;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -30,6 +28,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -59,17 +58,12 @@ public class DivisionController extends Application implements Initializable {
 				public void run() {
 					try {
 						ObjectMapper mapper = new ObjectMapper();
-						String response = GetAPIClient.callGetAPI(
-								Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API + "/" + division.getDivisionId(),
-								null);
-						System.out.println("resp " + response);
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API + "/" + division.getDivisionId(),null);
+						System.out.println("byid response: division: " + response);
 						if (response != null && response.length() > 0) {
 
-							System.out.println("1111111111111");
 							Division division = mapper.readValue(response, Division.class);
-							System.out.println("2222222222   " + division.getDivisionId());
 							DivisionEditController divisionEditController = (DivisionEditController) openEditDivisionScreen();
-							System.out.println("333333333 " + division.getCarrierCode());
 							divisionEditController.initData(division);
 						}
 					} catch (Exception e) {
@@ -81,6 +75,45 @@ public class DivisionController extends Application implements Initializable {
 	}
 
 	@FXML
+	TextField txtSearchDivision;
+	
+	@FXML
+	private void btnGoDivisionAction() {
+		String search = txtSearchDivision.getText();
+		if(search != null && search.length() > 0) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API + "/" + search + "/search", null);
+						fillDivisions(response);
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					}
+				}
+			});
+			
+		}
+		
+		if(search != null && search.length() == 0) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API, null);
+						fillDivisions(response);
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					}
+				}
+			});
+			
+		}
+	}
+	
+	@FXML
 	private void btnDeleteDivisionAction() {
 		Division division = tblDivision.getSelectionModel().getSelectedItem();
 		if (division != null) {
@@ -89,18 +122,15 @@ public class DivisionController extends Application implements Initializable {
 				@Override
 				public void run() {
 					try {
-						ObjectMapper mapper = new ObjectMapper();
-						String response = DeleteAPIClient.callDeleteAPI(
-								Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API + "/" + division.getDivisionId(),
-								null);
-						if (response != null && response.contains("message")) {
+						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API + "/" + division.getDivisionId(),null);
+						MainScreen.divisionController.fillDivisions(response);
+						/*if (response != null && response.contains("message")) {
 							Success success = mapper.readValue(response, Success.class);
 							JOptionPane.showMessageDialog(null, success.getMessage(), "Info", 1);
 						} else {
 							Failed failed = mapper.readValue(response, Failed.class);
 							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-						}
-						fetchDivisions();
+						}*/
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
 					}
@@ -112,16 +142,12 @@ public class DivisionController extends Application implements Initializable {
 	private void openAddDivisionScreen() {
 		System.out.println("openAddDivisionScreen");
 		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-					.getResource(Iconstants.DIVISION_BASE_PACKAGE + Iconstants.XML_DIVISION_ADD_SCREEN));
-			System.out.println("openAddDivisionScreen     aaaaaaaaaaa"+fxmlLoader);
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.DIVISION_BASE_PACKAGE + Iconstants.XML_DIVISION_ADD_SCREEN));
 			Parent root = (Parent) fxmlLoader.load();
-			System.out.println("openAddDivisionScreen     bbbbbbbb");
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.setTitle("Add New Division");
 			stage.setScene(new Scene(root));
-			System.out.println("openAddDivisionScreen     cccccccc");
 			stage.show();
 		} catch (Exception e) {
 			System.out.println(e);
@@ -130,11 +156,8 @@ public class DivisionController extends Application implements Initializable {
 
 	private Object openEditDivisionScreen() {
 		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-					.getResource(Iconstants.DIVISION_BASE_PACKAGE + Iconstants.XML_DIVISION_EDIT_SCREEN));
-
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.DIVISION_BASE_PACKAGE + Iconstants.XML_DIVISION_EDIT_SCREEN));
 			Parent root = (Parent) fxmlLoader.load();
-
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.setTitle("Edit Division");
@@ -145,6 +168,33 @@ public class DivisionController extends Application implements Initializable {
 			System.out.println(e);
 		}
 		return null;
+	}
+	
+	List<Division> divisions = null;
+	
+	ObjectMapper mapper = new ObjectMapper();
+	
+	public void fillDivisions(String response) {
+		System.out.println(response + " ::: in fill Division:");
+		try {
+			divisions = new ArrayList<Division>();
+			setColumnValues();
+			ObservableList<Division> data = null;
+			if(response != null && response.length() > 0) {
+				Division c[] = mapper.readValue(response, Division[].class);
+				for(Division ccl : c) {
+					divisions.add(ccl);
+				}
+				System.out.println("division di list: " + divisions.size());
+				data = FXCollections.observableArrayList(divisions);
+			} else {
+				data = FXCollections.observableArrayList(divisions);
+			}
+			tblDivision.setItems(data);
+            tblDivision.setVisible(true);
+		} catch (Exception e) {
+			System.out.println("DivisionController: fillDivisions(): "+ e.getMessage());
+		}
 	}
 
 	@Override
@@ -177,8 +227,7 @@ public class DivisionController extends Application implements Initializable {
 			public void run() {
 				try {
 					ObjectMapper mapper = new ObjectMapper();
-					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API,
-							null);
+					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API, null);
 					if (response != null && response.length() > 0) {
 						Division d[] = mapper.readValue(response, Division[].class);
 						divisionList = new ArrayList<Division>();

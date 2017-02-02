@@ -1,7 +1,6 @@
 package com.dpu.controller;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -9,13 +8,11 @@ import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-import com.dpu.client.GetAPIClient;
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.Equipment;
-import com.dpu.model.Failed;
-import com.dpu.model.Success;
 import com.dpu.model.Type;
+import com.dpu.util.Validate;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -24,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.stage.Stage;
 
 public class EquipmentEditController extends Application implements Initializable{
@@ -39,10 +37,15 @@ public class EquipmentEditController extends Application implements Initializabl
 	@FXML
 	ComboBox<String> ddlType;
 	
+	Validate validate = new Validate();
+	
 	@FXML
 	private void btnUpdateEquipmentAction() {
-		editEquipment();
-		closeEditEquipmentScreen(btnUpdateEquipment);
+		boolean result = validateEditEquipmentScreen();
+		if(result) {
+			editEquipment();
+			closeEditEquipmentScreen(btnUpdateEquipment);
+		}
 	}
 	
 	private void closeEditEquipmentScreen(Button clickedButton) {
@@ -50,9 +53,30 @@ public class EquipmentEditController extends Application implements Initializabl
         loginStage.close();
 	}
 	
-	List<Type> cList = null;
+	private boolean validateEditEquipmentScreen() {
+		String name = txtName.getText();
+		String type = ddlType.getSelectionModel().getSelectedItem();
+		
+		boolean result = validate.validateEmptyness(name);
+		if(!result) {
+			txtName.setTooltip(new Tooltip("Equipment Name is Mandatory"));
+			txtName.setStyle("-fx-focus-color: red;");
+			txtName.requestFocus();
+			return result;
+		}
+		result = validate.validateEmptyness(type);
+		if(!result) {
+			ddlType.setTooltip(new Tooltip("Type is Mandatory"));
+			ddlType.setStyle("-fx-focus-color: red;");
+			ddlType.requestFocus();
+			return result;
+		}
+		return result;
+	}
 	
-	public void fetchTypes() {
+//	List<Type> cList = null;
+	
+	/*public void fetchTypes() {
 		
 		Platform.runLater(new Runnable() {
 			
@@ -75,7 +99,7 @@ public class EquipmentEditController extends Application implements Initializabl
 				}
 			}
 		});
-	}
+	}*/
 	
 	private void editEquipment() {
 		
@@ -87,17 +111,18 @@ public class EquipmentEditController extends Application implements Initializabl
 					ObjectMapper mapper = new ObjectMapper();
 					Equipment equipment = setEquipmentValue();
 					String payload = mapper.writeValueAsString(equipment);
-
+//					System.out.println("EquipmentEditController: equimentId: " + equipmentId);
 					String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_EQUIPMENT_API + "/" + equipmentId, null, payload);
-					
-					if(response != null && response.contains("message")) {
+//					System.out.println("Update Response: " + response);
+					MainScreen.equipmentController.fillEquipments(response);
+					/*if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
 						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
 					} else {
 						Failed failed = mapper.readValue(response, Failed.class);
 						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-					}
-					MainScreen.equipmentController.fetchEquipments();
+					}*/
+//					MainScreen.equipmentController.fetchEquipments();
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
 				}
@@ -121,18 +146,22 @@ public class EquipmentEditController extends Application implements Initializabl
 	private Equipment setEquipmentValue() {
 		Equipment equipment = new Equipment();
 		equipment.setEquipmentId(equipmentId);
+		equipment.setEquipmentName(txtName.getText());
 		equipment.setDescription(txtDescription.getText());
-		equipment.setEquipmentName(ddlType.getSelectionModel().getSelectedItem());
+		equipment.setTypeId(typeList.get(ddlType.getSelectionModel().getSelectedIndex()).getTypeId());
 		return equipment;
 	}
 
+	List<Type> typeList = null;
+	
 	public void initData(Equipment e) {
-		fetchTypes();
+//		fetchTypes();
 		equipmentId = e.getEquipmentId();
+		typeList = e.getTypeList();
 		txtName.setText(e.getEquipmentName());
-		System.out.println();
-		for(int i = 0; i<cList.size();i++) {
-			Type type = cList.get(i);
+		for(int i = 0; i< e.getTypeList().size();i++) {
+			Type type = e.getTypeList().get(i);
+			ddlType.getItems().add(type.getTypeName());
 			if(type.getTypeId() == e.getTypeId()) {
 				ddlType.getSelectionModel().select(i);
 			}

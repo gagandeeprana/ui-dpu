@@ -4,18 +4,19 @@
 package com.dpu.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.dpu.client.GetAPIClient;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.model.Company;
 import com.dpu.model.Division;
-import com.dpu.model.Failed;
-import com.dpu.model.Success;
+import com.dpu.model.Status;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -34,20 +35,47 @@ import javafx.stage.Stage;
 public class DivisionAddController extends Application implements Initializable {
 
 	@FXML
-	Button btnSave, btnCancel;
+	Button btnSaveDivision, btnCancel;
 
 	@FXML
 	TextField txtDivisionName, txtDivisionCode, txtFedral, txtProvincial, txtSCAC, txtCarrierCode, txtContractPrefix,
 			txtInvoicePrefix;
 	@FXML
 	CheckBox chkIncludeInManagementReporting, chkIncludeInAccountingTransfers;
+	
 	@FXML
-	ComboBox ddlStatus;
+	ComboBox<String> ddlStatus;
 
 	@FXML
-	private void btnSaveCompanyAction() {
+	private void btnSaveDivisionAction() {
 		addDivision();
-		closeAddDivisionScreen(btnSave);
+		closeAddDivisionScreen(btnSaveDivision);
+	}
+	
+	List<Status> cList = null;
+	
+	public void fetchStatus() {
+		
+		Platform.runLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					ObjectMapper mapper = new ObjectMapper();
+					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_STATUS_API, null);
+					if(response != null && response.length() > 0) {
+						Status c[] = mapper.readValue(response, Status[].class);
+						cList = new ArrayList<Status>();
+						for(Status ccl : c) {
+							ddlStatus.getItems().add(ccl.getStatus());
+							cList.add(ccl);
+						}
+					}
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Try Again..  " + e , "Info", 1);
+				}
+			}
+		});
 	}
 
 	private void closeAddDivisionScreen(Button clickedButton) {
@@ -65,19 +93,20 @@ public class DivisionAddController extends Application implements Initializable 
 					ObjectMapper mapper = new ObjectMapper();
 					Division division = setDivisionValue();
 					String payload = mapper.writeValueAsString(division);
+					System.out.println(payload + " pykiad" );
+					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API, null, payload);
+					System.out.println(response);
+					MainScreen.divisionController.fillDivisions(response);
 
-					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API,
-							null, payload);
-
-					if (response != null && response.contains("message")) {
+					/*if (response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
 						JOptionPane.showMessageDialog(null, success.getMessage(), "Info", 1);
 					} else {
 						Failed failed = mapper.readValue(response, Failed.class);
 						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-					}
-					MainScreen.divisionController.fetchDivisions();
+					}*/
 				} catch (Exception e) {
+					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
 				}
 			}
@@ -86,21 +115,21 @@ public class DivisionAddController extends Application implements Initializable 
 
 	private Division setDivisionValue() {
 		Division division = new Division();
-		division.setCarrierCode(txtCarrierCode.getText());
-		division.setContractPrefix(txtContractPrefix.getText());
 		division.setDivisionCode(txtDivisionCode.getText());
 		division.setDivisionName(txtDivisionName.getText());
+		division.setStatusId(cList.get(ddlStatus.getSelectionModel().getSelectedIndex()).getId());
 		division.setFedral(txtFedral.getText());
-		division.setInvoicePrefix(txtInvoicePrefix.getText());
 		division.setProvincial(txtProvincial.getText());
-		division.setSCAC(txtSCAC.getText());
+		division.setScac(txtSCAC.getText());
+		division.setCarrierCode(txtCarrierCode.getText());
+		division.setContractPrefix(txtContractPrefix.getText());
+		division.setInvoicePrefix(txtInvoicePrefix.getText());
 		return division;
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-
+		fetchStatus();
 	}
 
 	@Override

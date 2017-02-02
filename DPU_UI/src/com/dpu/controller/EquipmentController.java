@@ -14,8 +14,6 @@ import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.Equipment;
-import com.dpu.model.Failed;
-import com.dpu.model.Success;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -28,15 +26,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class EquipmentController extends Application implements Initializable {
 
+	ObjectMapper mapper = new ObjectMapper();
+	
+	@FXML
+	TextField txtSearchEquipment;
+	
 	@FXML
 	TableView<Equipment> tblEquipment;
 	
@@ -47,6 +53,7 @@ public class EquipmentController extends Application implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+        final ProgressIndicator progressIndicator = new ProgressIndicator(0);
 		fetchEquipments();
 	}
 
@@ -95,21 +102,56 @@ public class EquipmentController extends Application implements Initializable {
 				@Override
 				public void run() {
 					try {
-						ObjectMapper mapper = new ObjectMapper();
 						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_EQUIPMENT_API + "/" + equipment.getEquipmentId(), null);
-						if(response != null && response.contains("message")) {
+						/*if(response != null && response.contains("message")) {
 							Success success = mapper.readValue(response, Success.class);
 							JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
 						} else {
 							Failed failed = mapper.readValue(response, Failed.class);
 							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-						}
-						fetchEquipments();
+						}*/
+						fillEquipments(response);
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
 					}
 				}
 			});
+		}
+	}
+	
+	@FXML
+	private void btnGoEquipmentAction() {
+		String searchEquipment = txtSearchEquipment.getText();
+		if(searchEquipment != null && searchEquipment.length() > 0) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_EQUIPMENT_API + "/" + searchEquipment + "/search", null);
+						fillEquipments(response);
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					}
+				}
+			});
+			
+		}
+		
+		if(searchEquipment != null && searchEquipment.length() == 0) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_EQUIPMENT_API, null);
+						fillEquipments(response);
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					}
+				}
+			});
+			
 		}
 	}
 	
@@ -132,6 +174,7 @@ public class EquipmentController extends Application implements Initializable {
 							equipmentEditController.initData(e);
 						}
 					} catch (Exception e) {
+						e.printStackTrace();
 						JOptionPane.showMessageDialog(null, "Try Again.." + e , "Info", 1);
 					}
 				}
@@ -157,16 +200,19 @@ public class EquipmentController extends Application implements Initializable {
 		return null;
 	}
 	
+	@FXML
+	AnchorPane equipmentParentAnchorPane;
+	
 	public void fetchEquipments() {
 	
 		fetchColumns();
+		
 		Platform.runLater(new Runnable() {
 			
 			@Override
 			public void run() {
 				try {
 					long startTime = new Date().getTime();
-					ObjectMapper mapper = new ObjectMapper();
 					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_EQUIPMENT_API, null);
 					System.out.println(response);
 					if(response != null && response.length() > 0) {
@@ -180,7 +226,8 @@ public class EquipmentController extends Application implements Initializable {
 						setColumnValues();
 						tblEquipment.setItems(data);
 			
-			            tblEquipment.setVisible(true);
+			            
+			    		tblEquipment.setVisible(true);
 			            System.out.println("Time to fetch equipments: " + (new Date().getTime() - startTime));
 					}
 				} catch (Exception e) {
@@ -188,8 +235,29 @@ public class EquipmentController extends Application implements Initializable {
 				}
 			}
 		});
-		
 
+	}
+	
+	public void fillEquipments(String response) {
+		
+		try {
+			ObservableList<Equipment> data = null;
+			equipments = new ArrayList<Equipment>();
+			setColumnValues();
+			if(response != null && response.length() > 0) {
+				Equipment c[] = mapper.readValue(response, Equipment[].class);
+				for(Equipment ccl : c) {
+					equipments.add(ccl);
+				}
+				data = FXCollections.observableArrayList(equipments);
+			} else {
+				data = FXCollections.observableArrayList(equipments);
+			}
+			tblEquipment.setItems(data);
+            tblEquipment.setVisible(true);
+		} catch (Exception e) {
+			System.out.println("EquipmentController: fillEquipments(): "+ e.getMessage());
+		}
 	}
 	
 	private void setColumnValues() {

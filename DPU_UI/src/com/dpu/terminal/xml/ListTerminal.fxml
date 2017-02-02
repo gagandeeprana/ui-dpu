@@ -14,9 +14,9 @@
                   <Font size="13.0" />
                </font>
             </Text>
-            <TextField fx:id="txtSearch" layoutX="88.0" layoutY="9.0" />
+            <TextField fx:id="txtSearchTerminal" focusTraversable="false" layoutX="88.0" layoutY="9.0" promptText="Enter terminal name to search..." />
             <CheckBox fx:id="hkShowAll" layoutX="276.0" layoutY="16.0" mnemonicParsing="false" text="Show All" />
-            <Button fx:id="btnSearchTerminal" layoutX="238.0" layoutY="8.0" mnemonicParsing="false" text="Go" />
+            <Button fx:id="btnGoTerminal" layoutX="238.0" layoutY="8.0" mnemonicParsing="false" onAction="#btnGoTerminalAction" text="Go" />
             <Button fx:id="btnAddTerminal" layoutX="349.0" layoutY="7.0" mnemonicParsing="false" onAction="#btnAddTerminalAction" prefHeight="25.0" prefWidth="55.0" text="Add" />
             <Button fx:id="btnEditTerminal" layoutX="409.0" layoutY="7.0" mnemonicParsing="false" onAction="#btnEditTerminalAction" prefHeight="25.0" prefWidth="55.0" text="Edit" />
             <Button fx:id="btnDeleteTerminal" layoutX="469.0" layoutY="7.0" mnemonicParsing="false" onAction="#btnDeleteTerminalAction" prefHeight="25.0" prefWidth="55.0" text="Delete" />
