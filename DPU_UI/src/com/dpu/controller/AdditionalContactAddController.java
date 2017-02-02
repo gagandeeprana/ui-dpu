@@ -95,7 +95,6 @@ public class AdditionalContactAddController implements Initializable {
 
 	@FXML
 	void btnSaveAdditionalContactAction(ActionEvent event) {
-
 		try {
  
 			String additionalContact = txtAdditionalContact.getText();
@@ -110,11 +109,13 @@ public class AdditionalContactAddController implements Initializable {
 			AdditionalContact bcm1 = new AdditionalContact(additionalContact, position, phone, fax, cellular, email,
 					extension, pager, status);
 
-			if (CompanyAddController.addAddtionalContact == 0) {
-				CompanyAddController.listOfAdditionalContact.set(CompanyAddController.editIndex, bcm1);
-			} else if(CompanyAddController.addAddtionalContact == 1){
-				CompanyAddController.listOfAdditionalContact.add(bcm1);
-			}
+			//if(CompanyAddController.addEditIndex != -1){
+				if (CompanyAddController.addAddtionalContact == 0) {
+					CompanyAddController.listOfAdditionalContact.set(CompanyAddController.addEditIndex, bcm1);
+				} else if(CompanyAddController.addAddtionalContact == 1){
+					CompanyAddController.listOfAdditionalContact.add(bcm1);
+				}
+			//}
 
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
 					.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_ADD_SCREEN));

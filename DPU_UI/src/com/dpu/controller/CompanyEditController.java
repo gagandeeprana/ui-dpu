@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.PostAPIClient;
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
@@ -183,8 +184,7 @@ public class CompanyEditController extends Application implements Initializable 
 		closeEditCompanyScreen(btnUpdateCompany);
 
 	}
-
-	CompanyModel company1 = new CompanyModel();
+ 
 
 	private void closeEditCompanyScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
@@ -258,7 +258,7 @@ public class CompanyEditController extends Application implements Initializable 
 
 	private CompanyModel setCompanyValue() {
 
-		// company.setCompanyId(companyId);
+		//company.setCompanyId(companyId);
 		company.setName(txtCompany.getText());
 		company.setContact(txtContact.getText());
 		company.setAddress(txtAddress.getText());
@@ -281,7 +281,6 @@ public class CompanyEditController extends Application implements Initializable 
 	}
 
 	public void initData(CompanyModel c) {
-		System.out.println("compani  " + c);
 		// companyId = Integer.parseInt(c.getCompanyId());
 		txtCompany.setText(c.getName());
 		txtContact.setText(c.getContact());
@@ -387,7 +386,6 @@ public class CompanyEditController extends Application implements Initializable 
 				setValuesToCmpanyTextField();
 				addAddtionalContact = 0;
 				editIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
-				 
 				additionalContactModel =  tableAdditionalContact.getSelectionModel().getSelectedItem();
 				openAddAdditionalContactScreen();
 				closeAddCompanyScreen(btnSaveCompany);
@@ -403,6 +401,10 @@ public class CompanyEditController extends Application implements Initializable 
 				setValuesToCmpanyTextField();
 				editIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
 				listOfAdditionalContact.remove(editIndex);
+				
+				// hit api to delete Additional Conatct
+				
+				
 				editIndex = -1;
 				
 				try{
@@ -411,7 +413,7 @@ public class CompanyEditController extends Application implements Initializable 
 					Parent root = (Parent) fxmlLoader.load();
 					Stage stage = new Stage();
 					stage.initModality(Modality.APPLICATION_MODAL);
-					stage.setTitle("Add New Company");
+					stage.setTitle("Update Company");
 					stage.setScene(new Scene(root));
 					stage.show();
 				}catch(Exception e){
@@ -540,6 +542,25 @@ public class CompanyEditController extends Application implements Initializable 
 			public void handle(ActionEvent event) {
 				editIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
 				listOfBilling.remove(editIndex);
+				
+				// hit API to remove record from db.
+				/*try{
+					ObjectMapper mapper = new ObjectMapper();
+					 
+					System.out.println("URL : "+Iconstants.URL_SERVER + Iconstants.URL_DELETE_BILLING_LOCATION_API + "/" + company.getCompanyId()+"/billinglocations/"+company.getBillingLocations().get(0).getBillingLocationId());
+					String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_DELETE_BILLING_LOCATION_API + "/" + company.getCompanyId()+"/billinglocations/"+company.getBillingLocations().get(0).getBillingLocationId(), null);
+					
+					if(response != null && response.contains("message")) {
+						Success success = mapper.readValue(response, Success.class);
+						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
+					} else {
+						Failed failed = mapper.readValue(response, Failed.class);
+						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
+					}
+				}catch(Exception e){
+					e.printStackTrace();
+				}*/
+				
 				editIndex = -1;
 				
 				setValuesToCmpanyTextField();

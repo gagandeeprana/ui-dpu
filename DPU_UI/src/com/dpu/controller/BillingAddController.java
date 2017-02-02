@@ -66,7 +66,7 @@ public class BillingAddController implements Initializable {
 			BillingControllerModel bcm1 = new BillingControllerModel(company, address, city, phone, contact, zip, fax);
 
 			if (CompanyAddController.add == 0) {
-				CompanyAddController.listOfBilling.set(CompanyAddController.editIndex, bcm1);
+				CompanyAddController.listOfBilling.set(CompanyAddController.addEditIndex, bcm1);
 			} else if(CompanyAddController.add == 1){
 				CompanyAddController.listOfBilling.add(bcm1);
 			}
