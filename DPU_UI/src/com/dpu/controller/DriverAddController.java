@@ -1,25 +1,37 @@
 package com.dpu.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.dpu.client.GetAPIClient;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.model.Category;
+import com.dpu.model.Division;
 import com.dpu.model.Driver;
+import com.dpu.model.Equipment;
 import com.dpu.model.Failed;
+import com.dpu.model.Status;
 import com.dpu.model.Success;
+import com.dpu.model.Terminal;
+import com.dpu.model.Type;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.stage.Stage;
 
 public class DriverAddController extends Application implements Initializable{
@@ -29,15 +41,21 @@ public class DriverAddController extends Application implements Initializable{
 	
 	@FXML
 	TextField txtCode, txtFirstName, txtLastName, txtAddress, txtUnit, txtPostal, txtHome, txtCity, txtFaxNo, txtCellular, 
-	txtPager, txtDivision, txtEmail;
+	txtPager, txtDivision, txtEmail, txtProvince;
 	
 	@FXML
-	ComboBox<String> ddlTerminal, ddlCategory, ddlRole, ddlStatus, ddlDriverClass;
+	ComboBox<String> ddlTerminal, ddlCategory, ddlRole, ddlStatus, ddlDriverClass, ddlDivision;
 	
 	@FXML
 	private void btnSaveDriverAction() {
-		addDriver();
-		closeAddDriverScreen(btnSaveDriver);
+		if(txtCode.getText().equals("")) {
+			final Tooltip tooltip = new Tooltip();
+			tooltip.setText("Code reqd.");
+			txtCode.setTooltip(tooltip);
+		} else {
+			addDriver();
+			closeAddDriverScreen(btnSaveDriver);
+		}
 	}
 	
 	private void closeAddDriverScreen(Button clickedButton) {
@@ -57,29 +75,95 @@ public class DriverAddController extends Application implements Initializable{
 					String payload = mapper.writeValueAsString(driver);
 					System.out.println(payload);
 					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_DRIVER_API, null, payload);
+					MainScreen.driverController.fillDriver(response);
 					
-					if(response != null && response.contains("message")) {
+					/*if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
 						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
 					} else {
 						Failed failed = mapper.readValue(response, Failed.class);
 						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-					}
-					MainScreen.driverController.fetchDrivers();
+					}*/
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
 				}
 			}
 		});
 	}
-
+	
+	ObjectMapper mapper = new ObjectMapper();
+	
+	List<Terminal> terminalList = null;
+	
+	List<Category> categoryList = null;
+	
+	List<Type> roleList = null, classList = null;
+	
+	List<Status> statusList = null;
+	
+	List<Division> divisionList = null;
+	
+	private void fetchMasterDataForDropDowns() {
+		
+		Platform.runLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_DRIVER_API + "/openAdd", null);
+					Driver driver = mapper.readValue(response, Driver.class);
+					categoryList = driver.getCategoryList();
+					fillDropDown(ddlCategory, categoryList);
+					roleList = driver.getRoleList();
+					fillDropDown(ddlRole, roleList);
+					statusList = driver.getStatusList();
+					fillDropDown(ddlStatus, statusList);
+					classList = driver.getDriverClassList();
+					fillDropDown(ddlDriverClass, classList);
+					divisionList = driver.getDivisionList();
+					fillDropDown(ddlDivision, divisionList);
+					terminalList = driver.getTerminalList();
+					fillDropDown(ddlTerminal, terminalList);
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+				}
+			}
+		});
+	}
+	
+	private void fillDropDown(ComboBox<String> comboBox, List<?> list) {
+		for(int i=0;i<list.size();i++) {
+			Object object = list.get(i);
+			if(object != null && object instanceof Type) {
+				Type type = (Type) object;
+				comboBox.getItems().add(type.getTypeName());
+			}
+			/*if(object != null && object instanceof Type && comboBox.equals(ddlDriverClass)) {
+				Type highlight = (Type) object;
+				comboBox.getItems().add(highlight.getTypeName());
+			}*/
+			if(object != null && object instanceof Status) {
+				Status status = (Status) object;
+				comboBox.getItems().add(status.getStatus());
+			}
+			if(object != null && object instanceof Category) {
+				Category category = (Category) object;
+				comboBox.getItems().add(category.getName());
+			}
+			if(object != null && object instanceof Division) {
+				Division division = (Division) object;
+				comboBox.getItems().add(division.getDivisionName());
+			}
+			if(object != null && object instanceof Terminal) {
+				Terminal terminal = (Terminal) object;
+				comboBox.getItems().add(terminal.getTerminalName());
+			}
+		}
+	}
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		ddlTerminal.setValue("Terminal1");
-		ddlCategory.setValue("Category1");
-		ddlRole.setValue("Role1");
-		ddlStatus.setValue("Active");
-		ddlDriverClass.setValue("Class1");
+		fetchMasterDataForDropDowns();
 	}
 
 	@Override
@@ -104,12 +188,13 @@ public class DriverAddController extends Application implements Initializable{
 		driver.setFaxNo(txtFaxNo.getText());
 		driver.setCellular(txtCellular.getText());
 		driver.setPager(txtPager.getText());
-		driver.setDivision(txtDivision.getText());
-		driver.setTerminalId(ddlTerminal.getSelectionModel().getSelectedItem().equals("Terminal1")?1:2);
-		driver.setCatogoryId(ddlCategory.getSelectionModel().getSelectedItem().equals("Category1")?1:2);
-		driver.setRoleId(ddlRole.getSelectionModel().getSelectedItem().equals("Role1")?1:2);
-		driver.setStatusId(ddlStatus.getSelectionModel().getSelectedItem().equals("Active")?1:0);
-		driver.setDriverClassId(ddlDriverClass.getSelectionModel().getSelectedItem().equals("Class1")?1:2);
+		driver.setPvs(txtProvince.getText());
+		driver.setDivisionId(divisionList.get(ddlDivision.getSelectionModel().getSelectedIndex()).getDivisionId());
+		driver.setTerminalId(terminalList.get(ddlTerminal.getSelectionModel().getSelectedIndex()).getTerminalId());
+		driver.setCategoryId(categoryList.get(ddlCategory.getSelectionModel().getSelectedIndex()).getCategoryId());
+		driver.setRoleId(roleList.get(ddlRole.getSelectionModel().getSelectedIndex()).getTypeId());
+		driver.setStatusId(statusList.get(ddlStatus.getSelectionModel().getSelectedIndex()).getId());
+		driver.setDriverClassId(classList.get(ddlDriverClass.getSelectionModel().getSelectedIndex()).getTypeId());
 		return driver;
 	}
 }

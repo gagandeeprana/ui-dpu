@@ -12,9 +12,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.model.Company;
 import com.dpu.model.DPUService;
-import com.dpu.model.Driver;
+import com.dpu.model.Equipment;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
 
@@ -32,6 +31,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -43,6 +43,11 @@ public class ServiceController extends Application implements Initializable {
 	
 	@FXML
 	TableColumn<DPUService, String> service, textField, associationWith, status;
+	
+	ObjectMapper mapper = new ObjectMapper();
+	
+	@FXML
+	TextField txtSearchService;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -63,9 +68,72 @@ public class ServiceController extends Application implements Initializable {
 	}
 	
 	@FXML
+	private void btnGoServiceAction() {
+		String searchService = txtSearchService.getText();
+
+		if(searchService != null && searchService.length() > 0) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_SERVICE_API + "/" + searchService + "/search", null);
+							System.out.println(response);
+						fillServices(response);
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					}
+				}
+			});
+			
+		}
+		
+		if(searchService != null && searchService.length() == 0) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_SERVICE_API, null);
+						fillServices(response);
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					}
+				}
+			});
+			
+		}
+	}
+	
+	List<DPUService> services = null;
+	
+	public void fillServices(String response) {
+		
+		try {
+			services = new ArrayList<DPUService>();
+			setColumnValues();
+			ObservableList<DPUService> data = null;
+			if(response != null && response.length() > 0) {
+				DPUService c[] = mapper.readValue(response, DPUService[].class);
+				for(DPUService ccl : c) {
+					services.add(ccl);
+				}
+				data = FXCollections.observableArrayList(services);
+				
+			} else {
+				data = FXCollections.observableArrayList(services);
+			}
+			tblService.setItems(data);
+			
+			tblService.setVisible(true);
+		} catch (Exception e) {
+			System.out.println("ServiceController: fillEquipments(): "+ e.getMessage());
+		}
+	}
+	
+	@FXML
 	private void btnEditServiceAction() {
-		DPUService dpuService = tblService.getSelectionModel().getSelectedItem();
-		System.out.println(dpuService + "   service:: ");
+		DPUService dpuService = services.get(tblService.getSelectionModel().getSelectedIndex());
 		if(dpuService != null) {
 			Platform.runLater(new Runnable() {
 				
@@ -141,11 +209,11 @@ public class ServiceController extends Application implements Initializable {
 					ObjectMapper mapper = new ObjectMapper();
 					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_SERVICE_API, null);
 					DPUService s[] = mapper.readValue(response, DPUService[].class);
-					List<DPUService> cList = new ArrayList<DPUService>();
+					services = new ArrayList<DPUService>();
 					for(DPUService ccl : s) {
-						cList.add(ccl);
+						services.add(ccl);
 					}
-					ObservableList<DPUService> data = FXCollections.observableArrayList(cList);
+					ObservableList<DPUService> data = FXCollections.observableArrayList(services);
 					
 					setColumnValues();
 					tblService.setItems(data);
@@ -167,16 +235,17 @@ public class ServiceController extends Application implements Initializable {
 				@Override
 				public void run() {
 					try {
-						ObjectMapper mapper = new ObjectMapper();
 						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_SERVICE_API + "/" + service.getServiceId(), null);
-						if(response != null && response.contains("message")) {
+						fillServices(response);
+
+						/*if(response != null && response.contains("message")) {
 							Success success = mapper.readValue(response, Success.class);
 							JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
 						} else {
 							Failed failed = mapper.readValue(response, Failed.class);
 							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
 						}
-						fetchServices();
+						fetchServices();*/
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
 					}
@@ -212,7 +281,7 @@ public class ServiceController extends Application implements Initializable {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<DPUService, String> param) {
-				return new SimpleStringProperty(param.getValue().getStatus() == 1 ? "Active":"Inactive");
+				return new SimpleStringProperty(param.getValue().getStatus());
 			}
 		});
 

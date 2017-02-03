@@ -7,44 +7,46 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="506.0" prefWidth="763.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="506.0" prefWidth="763.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.dpu.controller.AdditionalContactEditController">
   <children>
     <Pane layoutX="0.0" layoutY="0.0" prefHeight="499.0" prefWidth="763.0">
       <children>
         <Label layoutX="14.0" layoutY="14.0" text="Additional Contact" />
-        <TextField layoutX="133.0" layoutY="11.0" prefWidth="454.0" />
         <Label layoutX="14.0" layoutY="67.0" text="Position" />
-        <TextField layoutX="133.0" layoutY="64.0" prefWidth="454.0" />
         <Label layoutX="14.0" layoutY="124.0" text="Phone Number" />
+         <Label layoutX="14.0" layoutY="200.0" text="Fax Number" />
+         <Label layoutX="14.0" layoutY="279.0" text="Cellular Number" />
+         <Label layoutX="14.0" layoutY="337.0" text="Email Address" />
         <Label layoutX="309.0" layoutY="126.0" text="Extension No" />
-        <Label layoutX="14.0" layoutY="200.0" text="Fax Number" />
         <Label layoutX="309.0" layoutY="197.0" text="Pager Number" />
-        <Label layoutX="14.0" layoutY="279.0" text="Cellular Number" />
         <Label layoutX="316.0" layoutY="279.0" text="Status" />
-        <Label layoutX="14.0" layoutY="337.0" text="Email Address" />
-        <TextField layoutX="133.0" layoutY="334.0" prefWidth="454.0" />
-        <TextField layoutX="133.0" layoutY="123.0" prefWidth="164.0" />
-        <TextField layoutX="133.0" layoutY="276.0" prefWidth="164.0" />
-        <TextField layoutX="133.0" layoutY="197.0" prefWidth="164.0" />
-        <TextField layoutX="387.0" layoutY="123.0" prefWidth="200.0" />
-        <TextField layoutX="387.0" layoutY="197.0" prefWidth="200.0" />
-        <CheckBox layoutX="133.0" layoutY="365.0" mnemonicParsing="false" text="Send Order confirmation via Email by default." />
-        <CheckBox layoutX="133.0" layoutY="389.0" mnemonicParsing="false" text="send Actual pickup details via Email by default." />
-        <CheckBox layoutX="133.0" layoutY="412.0" mnemonicParsing="false" text="send Actual delivery details via Email by default." />
-        <CheckBox layoutX="133.0" layoutY="439.0" mnemonicParsing="false" text="Send ETA to Pickup details via Email by default." />
-        <CheckBox layoutX="133.0" layoutY="463.0" mnemonicParsing="false" text="Send Eta to Deliver details via Email by default." />
-        <Button layoutX="628.0" layoutY="400.0" mnemonicParsing="false" prefWidth="59.0" text="Save" />
-        <Button layoutX="628.0" layoutY="445.0" mnemonicParsing="false" prefWidth="59.0" text="Cancel" />
-        <ComboBox layoutX="387.0" layoutY="277.0" prefHeight="21.0" prefWidth="200.0">
+        
+        
+        <TextField fx:id="txtAdditionalContact" layoutX="133.0" layoutY="11.0" prefWidth="454.0" />
+        <TextField fx:id="txtPosition" layoutX="133.0" layoutY="64.0" prefWidth="454.0" />
+        <TextField fx:id="txtPhone" layoutX="133.0" layoutY="123.0" prefWidth="164.0" />
+        <TextField fx:id="txtFax" layoutX="133.0" layoutY="197.0" prefWidth="164.0" />
+        <TextField fx:id="txtCellular" layoutX="133.0" layoutY="276.0" prefWidth="164.0" />
+        <TextField fx:id="txtEmail" layoutX="133.0" layoutY="334.0" prefWidth="454.0" />
+        <TextField fx:id="txtExtension" layoutX="387.0" layoutY="123.0" prefWidth="200.0" />
+        <TextField fx:id="txtPager" layoutX="387.0" layoutY="197.0" prefWidth="200.0" />
+        <ComboBox fx:id="ddlStatus" layoutX="387.0" layoutY="277.0" prefHeight="21.0" prefWidth="200.0">
           <items>
             <FXCollections fx:factory="observableArrayList">
-              <String fx:value="Item 1" />
-              <String fx:value="Item 2" />
-              <String fx:value="Item 3" />
+              <String fx:value="Active" />
+              <String fx:value="InActive" />
+               
             </FXCollections>
           </items>
         </ComboBox>
-        <Button layoutX="628.0" layoutY="353.0" mnemonicParsing="false" text="Update" />
+        <CheckBox fx:id="chkOrderConfirmation" layoutX="133.0" layoutY="365.0" mnemonicParsing="false" text="Send Order confirmation via Email by default." />
+        <CheckBox fx:id="chkActualPickupDetails" layoutX="133.0" layoutY="389.0" mnemonicParsing="false" text="send Actual pickup details via Email by default." />
+        <CheckBox fx:id="chkActualDelivery" layoutX="133.0" layoutY="412.0" mnemonicParsing="false" text="send Actual delivery details via Email by default." />
+        <CheckBox fx:id="chkETAPickupDetails" layoutX="133.0" layoutY="439.0" mnemonicParsing="false" text="Send ETA to Pickup details via Email by default." />
+        <CheckBox fx:id="chkETADeliveryDetails" layoutX="133.0" layoutY="463.0" mnemonicParsing="false" text="Send Eta to Deliver details via Email by default." />
+        <Button fx:id="btnSaveAdditionalContact" layoutX="628.0" layoutY="400.0" mnemonicParsing="false" onAction="#btnSaveAdditionalContactAction" prefWidth="56.0" text="Save" />
+        <Button fx:id="btnCancelAdditionalContact" layoutX="628.0" layoutY="445.0" mnemonicParsing="false" onAction="#btnCancelAdditionalContactAction" text="Cancel" />
+        
       </children>
     </Pane>
   </children>

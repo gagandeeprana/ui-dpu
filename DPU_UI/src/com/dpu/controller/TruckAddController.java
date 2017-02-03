@@ -84,14 +84,14 @@ public class TruckAddController extends Application implements Initializable{
 	private Truck setTruckValue() {
 		Truck truck = new Truck();
 		truck.setUnitNo(Integer.parseInt(txtUnitNo.getText()));
-		truck.setUsage(txtUsage.getText());
+		truck.setTruchUsage(txtUsage.getText());
 		truck.setOwner(txtOwner.getText());
-		truck.setDivision(txtDivision.getText());
-		truck.setoOName(txtOoName.getText());
-		truck.setTerminal(txtTerminal.getText());
-		truck.setCategory(txtCategory.getText());
-		truck.setTruckType(txtTruckType.getText());
-		truck.setStatus(txtStatus.getText());
+//		truck.setDivision(txtDivision.getText());
+//		truck.setoOName(txtOoName.getText());
+//		truck.setTerminal(txtTerminal.getText());
+//		truck.setCategory(txtCategory.getText());
+//		truck.setTruckType(txtTruckType.getText());
+//		truck.setStatus(txtStatus.getText());
 		truck.setFinance(txtFinance.getText());
 		return truck;
 	}

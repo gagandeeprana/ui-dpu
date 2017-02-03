@@ -5,13 +5,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane fx:id="addCompanyPane" prefHeight="278.0" prefWidth="705.0" stylesheets="@../search1.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.TrailerEditController">
+<Pane fx:id="addCompanyPane" prefHeight="269.0" prefWidth="705.0" stylesheets="@../search1.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.TrailerEditController">
    <children>
-      <TabPane layoutX="5.0" layoutY="26.0" prefHeight="212.0" prefWidth="696.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="5.0" layoutY="23.0" prefHeight="205.0" prefWidth="694.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="General">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="173.0" prefWidth="696.0" style="-fx-border-color: black;">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="142.0" prefWidth="696.0" style="-fx-border-color: black;">
                      <children>
                         <Text layoutX="11.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Unit No." wrappingWidth="51.904296875">
                            <font>
@@ -81,23 +81,23 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TextArea layoutX="7.0" prefHeight="178.0" prefWidth="594.0" />
+                        <TextArea layoutX="2.0" prefHeight="176.0" prefWidth="600.0" />
                         <Button fx:id="btnSaveCompany1" layoutX="609.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnUpdateTrailerAction" prefHeight="25.0" prefWidth="80.0" text="Date Stamp" />
-                        <Button fx:id="btnSaveCompany11" layoutX="609.0" layoutY="53.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Print" />
+                        <Button fx:id="btnSaveCompany11" layoutX="609.0" layoutY="45.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Print" />
                      </children></AnchorPane>
             </content>
           </Tab>
         </tabs>
       </TabPane>
-      <Button layoutX="617.0" layoutY="246.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Cancel">
+      <Button layoutX="614.0" layoutY="233.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Cancel">
          <font>
-            <Font size="13.0" />
+            <Font size="14.0" />
          </font></Button>
-      <Button fx:id="btnUpdateTrailer" layoutX="530.0" layoutY="246.0" mnemonicParsing="false" onAction="#btnUpdateTrailerAction" prefHeight="25.0" prefWidth="80.0" text="Save">
+      <Button fx:id="btnUpdateTrailer" layoutX="525.0" layoutY="233.0" mnemonicParsing="false" onAction="#btnUpdateTrailerAction" prefHeight="25.0" prefWidth="85.0" text="Save">
          <font>
-            <Font size="13.0" />
+            <Font size="14.0" />
          </font></Button>
-      <Label layoutY="-1.0" prefHeight="27.0" prefWidth="705.0" style="-fx-background-color: lightgrey; -fx-border-color: black;" text=" Edit Trailer">
+      <Label layoutX="-1.0" layoutY="-1.0" prefHeight="27.0" prefWidth="707.0" style="-fx-background-color: lightgrey; -fx-border-color: black;" text="  Edit Trailer">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>

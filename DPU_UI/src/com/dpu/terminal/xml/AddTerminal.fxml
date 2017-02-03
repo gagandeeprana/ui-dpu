@@ -5,40 +5,40 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="210.0" prefWidth="441.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.TerminalAddController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="198.0" prefWidth="432.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.TerminalAddController">
    <children>
-      <BorderPane layoutX="11.0" layoutY="37.0" prefHeight="126.0" prefWidth="411.0" style="-fx-border-color: lightgray;" />
+      <BorderPane layoutX="11.0" layoutY="37.0" prefHeight="118.0" prefWidth="411.0" style="-fx-border-color: lightgray;" />
       <Text layoutX="15.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Terminal Name" wrappingWidth="107.759765625" AnchorPane.bottomAnchor="126.984375" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="361.240234375" AnchorPane.topAnchor="50.734375">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <Text layoutX="15.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Location" wrappingWidth="107.759765625">
+      <Text layoutX="15.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Location" wrappingWidth="107.759765625">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <Text layoutX="15.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available Services" wrappingWidth="131.759765625">
+      <Text layoutX="15.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available Services" wrappingWidth="131.759765625">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
       <TextField fx:id="txtTerminalName" layoutX="138.0" layoutY="50.0" prefHeight="25.0" prefWidth="250.0" />
-      <TextField fx:id="txtLocation" layoutX="138.0" layoutY="87.0" prefHeight="25.0" prefWidth="250.0" />
-      <Button fx:id="btnSaveTerminal" layoutX="232.0" layoutY="172.0" mnemonicParsing="false" onAction="#btnSaveTerminalAction" prefHeight="29.0" prefWidth="95.0" text="Add">
+      <TextField fx:id="txtLocation" layoutX="138.0" layoutY="83.0" prefHeight="25.0" prefWidth="250.0" />
+      <Button fx:id="btnSaveTerminal" layoutX="246.0" layoutY="161.0" mnemonicParsing="false" onAction="#btnSaveTerminalAction" prefHeight="25.0" prefWidth="85.0" text="Add">
          <font>
-            <Font size="13.0" />
+            <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="btnCancelTerminal" layoutX="334.0" layoutY="172.0" mnemonicParsing="false" onAction="#btnCancelTerminalAction" prefHeight="29.0" prefWidth="95.0" text="Cancel">
+      <Button fx:id="btnCancelTerminal" layoutX="336.0" layoutY="161.0" mnemonicParsing="false" onAction="#btnCancelTerminalAction" prefHeight="25.0" prefWidth="85.0" text="Cancel">
          <font>
-            <Font size="13.0" />
+            <Font size="14.0" />
          </font>
       </Button>
-      <ComboBox fx:id="ddlAvailableServices" layoutX="138.0" layoutY="123.0" prefHeight="25.0" prefWidth="250.0" />
-      <Button fx:id="btnAddLocation" layoutX="392.0" layoutY="87.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" text="+" />
-      <Button fx:id="btnAddAvailableServices" layoutX="392.0" layoutY="123.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" text="+" />
-      <Label layoutY="1.0" prefHeight="27.0" prefWidth="441.0" style="-fx-background-color: lightgrey; -fx-border-color: black;" text="   Add New Terminal">
+      <ComboBox fx:id="ddlAvailableServices" layoutX="138.0" layoutY="116.0" prefHeight="25.0" prefWidth="250.0" />
+      <Button fx:id="btnAddLocation" layoutX="392.0" layoutY="83.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="+" />
+      <Button fx:id="btnAddAvailableServices" layoutX="392.0" layoutY="116.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="+" />
+      <Label layoutY="1.0" prefHeight="27.0" prefWidth="432.0" style="-fx-background-color: lightgrey; -fx-border-color: black;" text="   Add New Terminal">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>

@@ -1,17 +1,19 @@
 package com.dpu.controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.dpu.client.GetAPIClient;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.Category;
-import com.dpu.model.Failed;
-import com.dpu.model.Success;
+import com.dpu.model.Status;
+import com.dpu.model.Type;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -32,6 +34,8 @@ public class CategoryAddController extends Application implements Initializable{
 	
 	@FXML
 	ComboBox<String> ddlType, ddlStatus, ddlHighlight;
+	
+	ObjectMapper mapper = new ObjectMapper();
 	
 	@FXML
 	private void btnSaveCategoryAction() {
@@ -56,27 +60,69 @@ public class CategoryAddController extends Application implements Initializable{
 					String payload = mapper.writeValueAsString(category);
 
 					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_CATEGORY_API, null, payload);
+					MainScreen.categoryController.fillCategories(response);
 					
-					if(response != null && response.contains("message")) {
+					/*if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
 						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
 					} else {
 						Failed failed = mapper.readValue(response, Failed.class);
 						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-					}
-					MainScreen.categoryController.fetchCategories();
+					}*/
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
 				}
 			}
 		});
 	}
+	
+	List<Type> typeList, highlightList;
+	
+	List<Status> statusList;
+	
+	private void fetchMasterDataForDropDowns() {
+		
+		Platform.runLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_CATEGORY_API + "/openAdd", null);
+					Category category = mapper.readValue(response, Category.class);
+					typeList = category.getTypeList();
+					fillDropDown(ddlType, typeList);
+					statusList = category.getStatusList();
+					fillDropDown(ddlStatus, statusList);
+					highlightList = category.getHighlightList();
+					fillDropDown(ddlHighlight, highlightList);
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+				}
+			}
+		});
+	}
+	
+	private void fillDropDown(ComboBox<String> comboBox, List<?> list) {
+		for(int i=0;i<list.size();i++) {
+			Object object = list.get(i);
+			if(object != null && object instanceof Type && comboBox.equals(ddlType)) {
+				Type type = (Type) object;
+				comboBox.getItems().add(type.getTypeName());
+			}
+			if(object != null && object instanceof Type && comboBox.equals(ddlHighlight)) {
+				Type highlight = (Type) object;
+				comboBox.getItems().add(highlight.getTypeName());
+			}
+			if(object != null && object instanceof Status) {
+				Status status = (Status) object;
+				comboBox.getItems().add(status.getStatus());
+			}
+		}
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		ddlType.setValue("Customers");
-		ddlStatus.setValue("Active");
-		ddlHighlight.setValue("High1");
+		fetchMasterDataForDropDowns();
 	}
 
 	@Override
@@ -89,10 +135,10 @@ public class CategoryAddController extends Application implements Initializable{
 	
 	private Category setCategoryValue() {
 		Category category = new Category();
-		category.setTypeId(ddlType.getSelectionModel().getSelectedItem().equals("Customers")?3:0);
+		category.setTypeId(typeList.get(ddlType.getSelectionModel().getSelectedIndex()).getTypeId());
 		category.setName(txtCategory.getText());
-		category.setStatus(ddlStatus.getSelectionModel().getSelectedItem().equals("Active")?1:0);
-		category.setHighlight(ddlHighlight.getSelectionModel().getSelectedItem());
+		category.setStatusId(statusList.get(ddlStatus.getSelectionModel().getSelectedIndex()).getId());
+		category.setHighlightId(highlightList.get(ddlHighlight.getSelectionModel().getSelectedIndex()).getTypeId());
 		return category;
 	}
 }

@@ -9,8 +9,8 @@
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="552.0" prefWidth="757.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.ShipperController">
   <children>
     <Label layoutX="14.0" layoutY="14.0" text="Quick Filter" />
-    <TextField layoutX="81.0" layoutY="14.0" prefWidth="200.0" />
-    <Button layoutX="297.0" layoutY="14.0" mnemonicParsing="false" text="GO" />
+    <TextField fx:id="txtSearchShipper" focusTraversable="false" layoutX="81.0" layoutY="14.0" prefWidth="200.0" promptText="Enter company name to search..." />
+    <Button fx:id="btnGoShipper" layoutX="297.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnGoShipperAction" text="Go" />
     <Button fx:id="btnAddShipper" layoutX="358.0" layoutY="12.0" mnemonicParsing="false" onAction="#btnAddShipperAction" text="Add" />
     <Button fx:id="btnEditShipper" layoutX="418.0" layoutY="12.0" mnemonicParsing="false" onAction="#btnEditShipperAction" text="Edit" />
     <Button fx:id="btnDeleteShipper" layoutX="482.0" layoutY="12.0" mnemonicParsing="false" onAction="#btnDeleteShipperAction" text="Delete" />

@@ -4,6 +4,7 @@
 package com.dpu.controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
@@ -12,10 +13,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.model.Company;
 import com.dpu.model.Division;
-import com.dpu.model.Failed;
-import com.dpu.model.Success;
+import com.dpu.model.Status;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -36,7 +35,7 @@ public class DivisionEditController extends Application implements Initializable
 	@FXML
 	Button btnUpdateDivision, btnCancel;
 
-	int divisionId = 0;
+	Long divisionId = 0l;
 
 	@FXML
 	TextField txtDivisionName, txtDivisionCode, txtFedral, txtProvincial, txtSCAC, txtCarrierCode, txtContractPrefix,
@@ -46,7 +45,7 @@ public class DivisionEditController extends Application implements Initializable
 	CheckBox chkIncludeInManagementReporting, chkIncludeInAccountingTransfers;
 
 	@FXML
-	ComboBox ddlStatus;
+	ComboBox<String> ddlStatus;
 
 	@FXML
 	private void btnUpdateDivisionAction() {
@@ -72,10 +71,18 @@ public class DivisionEditController extends Application implements Initializable
 					System.out.println("editDivision()::::::: " + division.getDivisionCode() + "  "
 							+ division.getDivisionName() + "  " + division.getFedral() + "  " + division.getSCAC());
 					String payload = mapper.writeValueAsString(division);
+<<<<<<< HEAD
 					String response = PutAPIClient.callPutAPI(
 							Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API + "/" + divisionId, null, payload);
 					System.out.println("res:: " + response);
 					if (response != null && response.contains("message")) {
+=======
+					System.out.println("update payload: " + payload);
+					String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API + "/" + divisionId, null, payload);
+					MainScreen.divisionController.fillDivisions(response);
+
+					/*if (response != null && response.contains("message")) {
+>>>>>>> de161973cf2dd6940475f2799d7f67299d76fcb4
 						Success success = mapper.readValue(response, Success.class);
 						JOptionPane.showMessageDialog(null, success.getMessage(), "Info", 1);
 						System.out.println("editDivision()::::::: 1111111111 " + success);
@@ -84,11 +91,15 @@ public class DivisionEditController extends Application implements Initializable
 
 						Failed failed = mapper.readValue(response, Failed.class);
 						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
+<<<<<<< HEAD
 					}
 
 					MainScreen.divisionController.fetchDivisions();
 					// new DivisionController().fetchDivisions();
 
+=======
+					}*/
+>>>>>>> de161973cf2dd6940475f2799d7f67299d76fcb4
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
 					e.printStackTrace();
@@ -111,30 +122,45 @@ public class DivisionEditController extends Application implements Initializable
 
 	private Division setDivisionValue() {
 		Division division = new Division();
-		division.setDivisionId(divisionId);
-		division.setCarrierCode(txtCarrierCode.getText());
-		division.setContractPrefix(txtContractPrefix.getText());
 		division.setDivisionCode(txtDivisionCode.getText());
 		division.setDivisionName(txtDivisionName.getText());
+		division.setStatusId(statusList.get(ddlStatus.getSelectionModel().getSelectedIndex()).getId());
 		division.setFedral(txtFedral.getText());
-		division.setInvoicePrefix(txtInvoicePrefix.getText());
 		division.setProvincial(txtProvincial.getText());
-		division.setSCAC(txtSCAC.getText());
+		division.setScac(txtSCAC.getText());
+		division.setCarrierCode(txtCarrierCode.getText());
+		division.setContractPrefix(txtContractPrefix.getText());
+		division.setInvoicePrefix(txtInvoicePrefix.getText());
 		return division;
 	}
 
+	List<Status> statusList = null;
+	
 	public void initData(Division d) {
+<<<<<<< HEAD
 		System.out.print("dId::: " + d.getDivisionId());
 		divisionId = d.getDivisionId();
 		txtCarrierCode.setText(d.getCarrierCode());
 		txtContractPrefix.setText(d.getContractPrefix());
+=======
+		divisionId = d.getDivisionId();
+>>>>>>> de161973cf2dd6940475f2799d7f67299d76fcb4
 		txtDivisionCode.setText(d.getDivisionCode());
 		txtDivisionName.setText(d.getDivisionName());
+		statusList = d.getStatusList();
+		for(int i = 0; i< d.getStatusList().size();i++) {
+			Status status = d.getStatusList().get(i);
+			ddlStatus.getItems().add(status.getStatus());
+			if(status.getId() == d.getStatusId()) {
+				ddlStatus.getSelectionModel().select(i);
+			}
+		}
 		txtFedral.setText(d.getFedral());
-		txtInvoicePrefix.setText(d.getInvoicePrefix());
 		txtProvincial.setText(d.getProvincial());
-		txtSCAC.setText(d.getSCAC());
-
+		txtSCAC.setText(d.getScac());
+		txtCarrierCode.setText(d.getCarrierCode());
+		txtContractPrefix.setText(d.getContractPrefix());
+		txtInvoicePrefix.setText(d.getInvoicePrefix());
 	}
 
 }

@@ -26,7 +26,7 @@ public class TerminalEditController extends Application implements Initializable
 	@FXML
 	Button btnUpdateTerminal;
 
-	int terminalId = 0;
+	Long terminalId = 0l;
 
 	@FXML
 	TextField txtTerminalName, txtLocation;
@@ -77,9 +77,6 @@ public class TerminalEditController extends Application implements Initializable
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		ddlAvailableServices.setValue("Service1");
-		ddlAvailableServices.setValue("Service2");
-		ddlAvailableServices.setValue("Service3");
 	}
 
 	@Override

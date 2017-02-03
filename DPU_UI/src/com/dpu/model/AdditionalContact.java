@@ -2,80 +2,133 @@ package com.dpu.model;
 
 import java.io.Serializable;
 
-public class AdditionalContact implements Serializable{
-	
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonPropertyOrder;
+
+import javafx.beans.property.SimpleStringProperty;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonPropertyOrder({
+
+		"additionalContact", "position", "phone", "fax", "cellular", "email", "extension", "pager", "status"
+
+})
+//@JsonInclude(JsonInclude.Include.NON_NULL)
+public class AdditionalContact implements Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String additionalContact;
-	private String positionn;
-	private String phoneNumber;
-	private String ExtensionNumber;
-	private String faxNumber;
-	private String pagerNumber;
-	private String cellularNumber;
-	private String statuss;
-	private String emaill;
+	private Long additionalContactId ;
+	private SimpleStringProperty additionalContact = new SimpleStringProperty();
+	private SimpleStringProperty position = new SimpleStringProperty();
+	private SimpleStringProperty phone = new SimpleStringProperty();
+	private SimpleStringProperty fax = new SimpleStringProperty();
+	private SimpleStringProperty cellular = new SimpleStringProperty();
+	private SimpleStringProperty email = new SimpleStringProperty();
+	private SimpleStringProperty extension = new SimpleStringProperty();
+	private SimpleStringProperty pager = new SimpleStringProperty();
+	private SimpleStringProperty status = new SimpleStringProperty();
+
+	public AdditionalContact() {
+		// 0-param constructor
+	}
+
+	public AdditionalContact(String additionalContact, String position, String phone, String fax, String cellular,
+			String email, String extension, String pager, String status) {
+		this.additionalContact = new SimpleStringProperty(additionalContact);
+		this.position = new SimpleStringProperty(position);
+		this.phone = new SimpleStringProperty(phone);
+		this.fax = new SimpleStringProperty(fax);
+		this.cellular = new SimpleStringProperty(cellular);
+		this.email = new SimpleStringProperty(email);
+		this.extension = new SimpleStringProperty(extension);
+		this.pager = new SimpleStringProperty(pager);
+		this.status = new SimpleStringProperty(status);
+
+	}
+
 	
 	
-	public String getAdditionalContact() {
-		return additionalContact;
+	public Long getAdditionalContactId() {
+		return additionalContactId;
 	}
-	public void setAdditionalContact(String additionalContact) {
-		this.additionalContact = additionalContact;
+
+	public void setAdditionalContactId(Long additionalContactId) {
+		this.additionalContactId = additionalContactId;
 	}
-	 
-	public String getPhoneNumber() {
-		return phoneNumber;
+
+	public  String  getAdditionalContact() {
+		return additionalContact.get();
 	}
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
+
+	public void setAdditionalContact( String  additionalContac ) {
+		additionalContact.set(additionalContac);
 	}
-	public String getExtensionNumber() {
-		return ExtensionNumber;
+
+	public  String  getPosition() {
+		return position.get();
 	}
-	public void setExtensionNumber(String extensionNumber) {
-		ExtensionNumber = extensionNumber;
+
+	public void setPosition( String  positionn) {
+		 position.set(positionn); 
 	}
-	public String getFaxNumber() {
-		return faxNumber;
+
+	public  String  getPhone() {
+		return phone.get();
 	}
-	public void setFaxNumber(String faxNumber) {
-		this.faxNumber = faxNumber;
+
+	public void setPhone( String  phonee) {
+		 phone.set(phonee); 
 	}
-	public String getPagerNumber() {
-		return pagerNumber;
+
+	public  String  getFax() {
+		return fax.get();
 	}
-	public void setPagerNumber(String pagerNumber) {
-		this.pagerNumber = pagerNumber;
+
+	public void setFax( String  faxx) {
+		 fax.set(faxx);
 	}
-	public String getCellularNumber() {
-		return cellularNumber;
+
+	public  String  getCellular() {
+		return cellular.get();
 	}
-	public void setCellularNumber(String cellularNumber) {
-		this.cellularNumber = cellularNumber;
+
+	public void setCellular( String  cellularr) {
+		 cellular.set(cellularr);
 	}
-	public String getPositionn() {
-		return positionn;
+
+	public  String getEmail() {
+		return email.get();
 	}
-	public void setPositionn(String positionn) {
-		this.positionn = positionn;
+
+	public void setEmail( String  emaill) {
+		email.set(emaill);
 	}
-	public String getStatuss() {
-		return statuss;
+
+	public  String  getExtension() {
+		return extension.get();
 	}
-	public void setStatuss(String statuss) {
-		this.statuss = statuss;
+
+	public void setExtension( String  extensionn) {
+		 extension.set(extensionn);
 	}
-	public String getEmaill() {
-		return emaill;
+
+	public  String  getPager() {
+		return pager.get();
 	}
-	public void setEmaill(String emaill) {
-		this.emaill = emaill;
+
+	public void setPager( String pagerr) {
+		 pager.set(pagerr);
 	}
-	 
-	
-	
+
+	public  String   getStatus() {
+		return status.get();
+	}
+
+	public void setStatus( String  statuss) {
+		 status.set(statuss);
+	}
 
 }

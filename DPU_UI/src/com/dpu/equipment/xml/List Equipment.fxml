@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="969.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.EquipmentController">
+<AnchorPane fx:id="equipmentParentAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="969.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.EquipmentController">
    <children>
       <AnchorPane prefHeight="49.0" prefWidth="969.0" style="-fx-background-color: lightgrey;">
          <children>
@@ -14,13 +14,12 @@
                   <Font size="13.0" />
                </font>
             </Text>
-            <TextField layoutX="88.0" layoutY="9.0" />
-            <CheckBox layoutX="276.0" layoutY="11.0" mnemonicParsing="false" text="Show All" />
-            <Button layoutX="238.0" layoutY="8.0" mnemonicParsing="false" text="Go" />
-            <Button fx:id="btnAddEquipment" layoutX="349.0" layoutY="7.0" mnemonicParsing="false" onAction="#btnAddEquipmentAction" prefHeight="25.0" prefWidth="55.0" text="Add" />
-            <Button fx:id="btnEditEquipment" layoutX="409.0" layoutY="7.0" mnemonicParsing="false" onAction="#btnEditEquipmentAction" prefHeight="25.0" prefWidth="55.0" text="Edit" />
-            <Button fx:id="btnDeleteEquipment" layoutX="469.0" layoutY="7.0" mnemonicParsing="false" onAction="#btnDeleteEquipmentAction" prefHeight="25.0" prefWidth="55.0" text="Delete" />
-            <Button layoutX="529.0" layoutY="7.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="E-Mail" />
+            <TextField fx:id="txtSearchEquipment" focusTraversable="false" layoutX="88.0" layoutY="9.0" prefHeight="25.0" prefWidth="207.0" promptText="Enter Equipment Name to Search..." />
+            <CheckBox layoutX="340.0" layoutY="14.0" mnemonicParsing="false" text="Show All" />
+            <Button fx:id="btnGoEquipment" layoutX="302.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnGoEquipmentAction" text="Go" />
+            <Button fx:id="btnAddEquipment" layoutX="413.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnAddEquipmentAction" prefHeight="25.0" prefWidth="55.0" text="Add" />
+            <Button fx:id="btnEditEquipment" layoutX="473.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnEditEquipmentAction" prefHeight="25.0" prefWidth="55.0" text="Edit" />
+            <Button fx:id="btnDeleteEquipment" layoutX="533.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnDeleteEquipmentAction" prefHeight="25.0" prefWidth="55.0" text="Delete" />
          </children>
       </AnchorPane>
       <TableView fx:id="tblEquipment" layoutY="42.0" prefHeight="758.0" prefWidth="969.0">

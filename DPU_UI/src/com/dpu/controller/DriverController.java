@@ -12,7 +12,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.model.Company;
 import com.dpu.model.Driver;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
@@ -31,6 +30,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -47,8 +47,71 @@ public class DriverController extends Application implements Initializable {
 	faxNo, cellular, pager, email, driverClass;
 	
 	@FXML
+	TextField txtSearchDriver;
+	
+	@FXML
 	public void btnAddDriverAction() {
 		openAddDriverScreen();
+	}
+	
+	ObjectMapper mapper = new ObjectMapper();
+	
+	public void fillDriver(String response) {
+		
+		try {
+			ObservableList<Driver> data = null;
+			dList = new ArrayList<Driver>();
+			setColumnValues();
+			if(response != null && response.length() > 0) {
+				Driver c[] = mapper.readValue(response, Driver[].class);
+				for(Driver ccl : c) {
+					dList.add(ccl);
+				}
+				data = FXCollections.observableArrayList(dList);
+			} else {
+				data = FXCollections.observableArrayList(dList);
+			}
+			tblDriver.setItems(data);
+            tblDriver.setVisible(true);
+		} catch (Exception e) {
+			System.out.println("DriverController: fillDriver(): "+ e.getMessage());
+		}
+	}
+	
+	@FXML
+	private void btnGoDriverAction() {
+		String searchDriver = txtSearchDriver.getText();
+		if(searchDriver != null && searchDriver.length() > 0) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_DRIVER_API + "/" + searchDriver + "/search", null);
+						fillDriver(response);
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					}
+				}
+			});
+			
+		}
+		
+		if(searchDriver != null && searchDriver.length() == 0) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_DRIVER_API, null);
+						fillDriver(response);
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					}
+				}
+			});
+			
+		}
 	}
 
 	private void openAddDriverScreen() {
@@ -137,14 +200,14 @@ public class DriverController extends Application implements Initializable {
 					try {
 						ObjectMapper mapper = new ObjectMapper();
 						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_DRIVER_API + "/" + driver.getDriverId(), null);
-						if(response != null && response.contains("message")) {
+						MainScreen.driverController.fillDriver(response);
+						/*if(response != null && response.contains("message")) {
 							Success success = mapper.readValue(response, Success.class);
 							JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
 						} else {
 							Failed failed = mapper.readValue(response, Failed.class);
 							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-						}
-						fetchDrivers();
+						}*/
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
 					}
@@ -293,7 +356,7 @@ public class DriverController extends Application implements Initializable {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Driver, String> param) {
-				return new SimpleStringProperty(param.getValue().getDriverClassId() + "");
+				return new SimpleStringProperty(param.getValue().getDriverClassName() + "");
 			}
 		});
 	}

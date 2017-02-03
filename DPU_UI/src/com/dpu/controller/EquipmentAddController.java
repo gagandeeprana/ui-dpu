@@ -13,19 +13,17 @@ import com.dpu.client.GetAPIClient;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.Equipment;
-import com.dpu.model.Failed;
-import com.dpu.model.Success;
 import com.dpu.model.Type;
+import com.dpu.util.Validate;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.stage.Stage;
 
 public class EquipmentAddController extends Application implements Initializable{
@@ -34,21 +32,59 @@ public class EquipmentAddController extends Application implements Initializable
 	Button btnSaveEquipment;
 	
 	@FXML
-	TextField txtDescription;
+	TextField txtName, txtDescription;
 	
 	@FXML
 	ComboBox<String> ddlType;
 	
+	Validate validate = new Validate();
+
+	@FXML
+	private void txtNameKeyTyped() {
+		txtName.setStyle("-fx-focus-color: #87CEEB;");
+	}
+	
+	@FXML
+	private void ddlTypeAction() {
+		ddlType.setStyle("-fx-focus-color: #87CEEB;");
+	}
+	
+	private boolean validateAddEquipmentScreen() {
+		String name = txtName.getText();
+		String type = ddlType.getSelectionModel().getSelectedItem();
+		
+		boolean result = validate.validateEmptyness(name);
+		if(!result) {
+			txtName.setTooltip(new Tooltip("Equipment Name is Mandatory"));
+			txtName.setStyle("-fx-focus-color: red;");
+			txtName.requestFocus();
+			return result;
+		}
+		result = validate.validateEmptyness(type);
+		if(!result) {
+			ddlType.setTooltip(new Tooltip("Type is Mandatory"));
+			ddlType.setStyle("-fx-focus-color: red;");
+			ddlType.requestFocus();
+			return result;
+		}
+		return result;
+	}
+	
 	@FXML
 	private void btnSaveEquipmentAction() {
-		addEquipment();
-		closeAddEquipmentScreen(btnSaveEquipment);
+		boolean result = validateAddEquipmentScreen();
+		if(result) {
+			addEquipment();
+			closeAddEquipmentScreen(btnSaveEquipment);
+		}
 	}
 	
 	private void closeAddEquipmentScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
         loginStage.close();
 	}
+	
+	List<Type> cList = null;
 	
 	public void fetchTypes() {
 		
@@ -62,16 +98,11 @@ public class EquipmentAddController extends Application implements Initializable
 					System.out.println(response);
 					if(response != null && response.length() > 0) {
 						Type c[] = mapper.readValue(response, Type[].class);
-						List<Type> cList = new ArrayList<Type>();
+						cList = new ArrayList<Type>();
 						for(Type ccl : c) {
 							ddlType.getItems().add(ccl.getTypeName());
 							cList.add(ccl);
 						}
-//						ObservableList<Equipment> data = FXCollections.observableArrayList(cList);
-//						
-//						tblEquipment.setItems(data);
-//			
-//			            tblEquipment.setVisible(true);
 					}
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Try Again..  " + e , "Info", 1);
@@ -90,17 +121,18 @@ public class EquipmentAddController extends Application implements Initializable
 					ObjectMapper mapper = new ObjectMapper();
 					Equipment equipment = setEquipmentValue();
 					String payload = mapper.writeValueAsString(equipment);
-					System.out.println(payload);
+					System.out.println("Add Payload: " + payload);
 					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_EQUIPMENT_API, null, payload);
-					
-					if(response != null && response.contains("message")) {
+					System.out.println(response);
+					MainScreen.equipmentController.fillEquipments(response);
+
+/*					if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
 						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
 					} else {
 						Failed failed = mapper.readValue(response, Failed.class);
 						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-					}
-					MainScreen.equipmentController.fetchEquipments();
+					}*/
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
 				}
@@ -123,8 +155,9 @@ public class EquipmentAddController extends Application implements Initializable
 	
 	private Equipment setEquipmentValue() {
 		Equipment equipment = new Equipment();
-		equipment.setEquipmentName(ddlType.getSelectionModel().getSelectedItem());
+		equipment.setEquipmentName(txtName.getText());
 		equipment.setDescription(txtDescription.getText());
+		equipment.setTypeId(cList.get(ddlType.getSelectionModel().getSelectedIndex()).getTypeId());
 		return equipment;
 	}
 }
