@@ -22,33 +22,33 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class CompanyEditController extends Application implements Initializable{
+public class CompanyEditController extends Application implements Initializable {
 
 	@FXML
 	Button btnUpdateCompany;
-	
+
 	int companyId = 0;
-	
+
 	@FXML
-	TextField txtCompany, txtContact, txtAddress, txtPosition, txtUnitNo, txtPhone, txtExt, txtCity, txtFax, txtPrefix, 
-	txtProvince, txtZip, txtAfterHours, txtEmail, txtTollFree, txtWebsite, txtCellular, txtPager;
-	
+	TextField txtCompany, txtContact, txtAddress, txtPosition, txtUnitNo, txtPhone, txtExt, txtCity, txtFax, txtPrefix,
+			txtProvince, txtZip, txtAfterHours, txtEmail, txtTollFree, txtWebsite, txtCellular, txtPager;
+
 	@FXML
 	private void btnUpdateCompanyAction() {
 		editCompany();
 		closeEditCompanyScreen(btnUpdateCompany);
-		
+
 	}
-	
+
 	private void closeEditCompanyScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
-        loginStage.close();
+		loginStage.close();
 	}
-	
+
 	private void editCompany() {
-		
+
 		Platform.runLater(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				try {
@@ -56,11 +56,12 @@ public class CompanyEditController extends Application implements Initializable{
 					Company company = setCompanyValue();
 					String payload = mapper.writeValueAsString(company);
 
-					String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + companyId, null, payload);
-					
-					if(response != null && response.contains("message")) {
+					String response = PutAPIClient.callPutAPI(
+							Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + companyId, null, payload);
+
+					if (response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
-						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
+						JOptionPane.showMessageDialog(null, success.getMessage(), "Info", 1);
 					} else {
 						Failed failed = mapper.readValue(response, Failed.class);
 						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
@@ -84,7 +85,7 @@ public class CompanyEditController extends Application implements Initializable{
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
+
 	private Company setCompanyValue() {
 		Company company = new Company();
 		company.setCompanyId(companyId);

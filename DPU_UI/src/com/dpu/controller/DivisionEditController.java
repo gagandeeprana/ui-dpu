@@ -61,7 +61,7 @@ public class DivisionEditController extends Application implements Initializable
 	}
 
 	private void editDivision() {
-
+		System.out.println("dId:: " + divisionId);
 		Platform.runLater(new Runnable() {
 
 			@Override
@@ -69,21 +69,29 @@ public class DivisionEditController extends Application implements Initializable
 				try {
 					ObjectMapper mapper = new ObjectMapper();
 					Division division = setDivisionValue();
+					System.out.println("editDivision()::::::: " + division.getDivisionCode() + "  "
+							+ division.getDivisionName() + "  " + division.getFedral() + "  " + division.getSCAC());
 					String payload = mapper.writeValueAsString(division);
-
 					String response = PutAPIClient.callPutAPI(
-							Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + divisionId, null, payload);
-
+							Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API + "/" + divisionId, null, payload);
+					System.out.println("res:: " + response);
 					if (response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
 						JOptionPane.showMessageDialog(null, success.getMessage(), "Info", 1);
+						System.out.println("editDivision()::::::: 1111111111 " + success);
 					} else {
+						System.out.println("editDivision()::::::: 2222222222");
+
 						Failed failed = mapper.readValue(response, Failed.class);
 						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
 					}
-					MainScreen.companyController.fetchCompanies();
+
+					MainScreen.divisionController.fetchDivisions();
+					// new DivisionController().fetchDivisions();
+
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
+					e.printStackTrace();
 				}
 			}
 		});
@@ -116,12 +124,11 @@ public class DivisionEditController extends Application implements Initializable
 	}
 
 	public void initData(Division d) {
-		System.out.println("pppppppppppp");
-		System.out.println(d.getDivisionId() + " " + d.getCarrierCode() + " " + d.getDivisionCode());
+		System.out.print("dId::: " + d.getDivisionId());
 		divisionId = d.getDivisionId();
 		txtCarrierCode.setText(d.getCarrierCode());
 		txtContractPrefix.setText(d.getContractPrefix());
-		txtDivisionCode.setText(d.getDivisionName());
+		txtDivisionCode.setText(d.getDivisionCode());
 		txtDivisionName.setText(d.getDivisionName());
 		txtFedral.setText(d.getFedral());
 		txtInvoicePrefix.setText(d.getInvoicePrefix());
