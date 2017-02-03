@@ -16,6 +16,7 @@ import javafx.beans.property.SimpleStringProperty;
 public class BillingControllerModel {
 
 	private Long billingLocationId;
+	private Long companyId;
 	private SimpleStringProperty company = new SimpleStringProperty();
 	private SimpleStringProperty address = new SimpleStringProperty();
 	private SimpleStringProperty city = new SimpleStringProperty();
@@ -39,8 +40,14 @@ public class BillingControllerModel {
 
 	}
 	
-	 
+	  
+	public Long getCompanyId() {
+		return companyId;
+	}
 
+	public void setCompanyId(Long companyId) {
+		this.companyId = companyId;
+	}
 
 	public Long getBillingLocationId() {
 		return billingLocationId;

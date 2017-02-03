@@ -21,6 +21,7 @@ public class AdditionalContact implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Long additionalContactId ;
+	private Long companyId;
 	private SimpleStringProperty additionalContact = new SimpleStringProperty();
 	private SimpleStringProperty position = new SimpleStringProperty();
 	private SimpleStringProperty phone = new SimpleStringProperty();
@@ -48,9 +49,15 @@ public class AdditionalContact implements Serializable {
 		this.status = new SimpleStringProperty(status);
 
 	}
+ 
+	public Long getCompanyId() {
+		return companyId;
+	}
 
-	
-	
+	public void setCompanyId(Long companyId) {
+		this.companyId = companyId;
+	}
+
 	public Long getAdditionalContactId() {
 		return additionalContactId;
 	}

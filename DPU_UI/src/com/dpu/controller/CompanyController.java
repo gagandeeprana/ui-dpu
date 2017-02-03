@@ -86,6 +86,7 @@ public class CompanyController extends Application implements Initializable {
 								for(int i=0 ;i<billingSize;i++){
 						
 									BillingControllerModel bcm = new BillingControllerModel();
+									bcm.setCompanyId(Long.parseLong(c.getCompanyId()));
 									bcm.setBillingLocationId(c.getBillingLocations().get(i).getBillingLocationId());
 									bcm.setAddress(c.getBillingLocations().get(i).getAddress());
 									bcm.setCity(c.getBillingLocations().get(i).getCity());
@@ -102,6 +103,8 @@ public class CompanyController extends Application implements Initializable {
 							int addtionalContactSize = c.getAdditionalContacts().size();
 								for(int j=0;j<addtionalContactSize;j++){
 									AdditionalContact additionalContact = new AdditionalContact();
+									 
+									additionalContact.setCompanyId(Long.parseLong(c.getCompanyId()));
 									additionalContact.setAdditionalContactId(c.getAdditionalContacts().get(j).getAdditionalContactId());
 									additionalContact.setAdditionalContact(c.getAdditionalContacts().get(j).getCustomerName());
 									additionalContact.setCellular(c.getAdditionalContacts().get(j).getCellular());
