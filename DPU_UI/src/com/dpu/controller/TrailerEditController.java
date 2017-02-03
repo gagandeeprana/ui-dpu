@@ -27,7 +27,7 @@ public class TrailerEditController extends Application implements Initializable{
 	@FXML
 	Button btnUpdateTrailer;
 	
-	Integer trailerId = 0;
+	Long trailerId = 0l;
 	
 	@FXML
 	TextField txtUnitNo, txtUsage, txtOwner, txtDivision, txtOoName, txtTerminal, txtCategory, txtTrailerType;
@@ -73,17 +73,17 @@ public class TrailerEditController extends Application implements Initializable{
 	private Trailer setTrailerValue() {
 		Trailer trailer = new Trailer();
 		
-		trailer.setTrailerId(trailerId);
-		trailer.setUnitNo(Integer.parseInt(txtUnitNo.getText()));
-		trailer.setUsage(txtUsage.getText());
-		trailer.setOwner(txtOwner.getText());
-		trailer.setDivision(txtDivision.getText());
-		trailer.setoOName(txtOoName.getText());
-		trailer.setTerminal(txtTerminal.getText());
-		trailer.setCategory(txtCategory.getText());
-		trailer.setTrailerType(txtTrailerType.getText());
-		trailer.setStatus(ddlStatus.getSelectionModel().getSelectedItem().toString());
-		trailer.setFinance(ddlFinance.getSelectionModel().getSelectedItem().toString());
+//		trailer.setTrailerId(trailerId);
+//		trailer.setUnitNo(Integer.parseInt(txtUnitNo.getText()));
+//		trailer.setUsage(txtUsage.getText());
+//		trailer.setOwner(txtOwner.getText());
+//		trailer.setDivision(txtDivision.getText());
+//		trailer.setoOName(txtOoName.getText());
+//		trailer.setTerminal(txtTerminal.getText());
+//		trailer.setCategory(txtCategory.getText());
+//		trailer.setTrailerType(txtTrailerType.getText());
+//		trailer.setStatus(ddlStatus.getSelectionModel().getSelectedItem().toString());
+//		trailer.setFinance(ddlFinance.getSelectionModel().getSelectedItem().toString());
 		return trailer;
 	}
 

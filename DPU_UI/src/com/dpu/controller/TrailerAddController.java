@@ -1,17 +1,25 @@
 package com.dpu.controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.dpu.client.GetAPIClient;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.model.Category;
+import com.dpu.model.DPUService;
+import com.dpu.model.Division;
 import com.dpu.model.Failed;
+import com.dpu.model.Status;
 import com.dpu.model.Success;
+import com.dpu.model.Terminal;
 import com.dpu.model.Trailer;
+import com.dpu.model.Type;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -28,10 +36,10 @@ public class TrailerAddController extends Application implements Initializable{
 	Button btnSaveTrailer;
 	
 	@FXML
-	TextField txtUnitNo, txtUsage, txtOwner, txtDivision, txtOoName, txtTerminal, txtCategory, txtTrailerType;
+	TextField txtUnitNo, txtUsage, txtOwner, txtOoName, txtFinance;
 	
 	@FXML
-	ComboBox<Object> ddlStatus, ddlFinance;
+	ComboBox<String> ddlStatus, ddlCategory, ddlDivision, ddlTerminal, ddlTrailerType;
 	
 	@FXML
 	private void btnSaveTrailerAction() {
@@ -49,17 +57,15 @@ public class TrailerAddController extends Application implements Initializable{
 					ObjectMapper mapper = new ObjectMapper();
 					Trailer trailer = setTrailerValue();
 					String payload = mapper.writeValueAsString(trailer);
-					System.out.println(payload);
 					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_TRAILER_API, null, payload);
-					
-					if(response != null && response.contains("message")) {
+					MainScreen.trailerController.fillTrailer(response);
+					/*if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
 						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
 					} else {
 						Failed failed = mapper.readValue(response, Failed.class);
 						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-					}
-					MainScreen.trailerController.fetchTrailers();
+					}*/
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
 				}
@@ -68,18 +74,82 @@ public class TrailerAddController extends Application implements Initializable{
 		
 	}
 	
+	private void fillDropDown(ComboBox<String> comboBox, List<?> list) {
+		for(int i=0;i<list.size();i++) {
+			Object object = list.get(i);
+			if(object != null && object instanceof Type) {
+				Type trailerType = (Type) object;
+				comboBox.getItems().add(trailerType.getTypeName());
+			}
+			if(object != null && object instanceof Status) {
+				Status status = (Status) object;
+				comboBox.getItems().add(status.getStatus());
+			}
+			if(object != null && object instanceof Category) {
+				Category category = (Category) object;
+				comboBox.getItems().add(category.getName());
+			}
+			if(object != null && object instanceof Division) {
+				Division division = (Division) object;
+				comboBox.getItems().add(division.getDivisionName());
+			}
+			if(object != null && object instanceof Terminal) {
+				Terminal terminal = (Terminal) object;
+				comboBox.getItems().add(terminal.getTerminalName());
+			}
+		}
+	}
+	
+	ObjectMapper mapper = new ObjectMapper();
+	
+	List<Category> categoryList = null;
+	
+	List<Status> statusList = null;
+
+	List<Division> divisionList = null;
+
+	List<Terminal> terminalList = null;
+
+	List<Type> trailerTypeList = null;
+
+	private void fetchMasterDataForDropDowns() {
+		
+		Platform.runLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_TRAILER_API + "/openAdd", null);
+					Trailer trailer = mapper.readValue(response, Trailer.class);
+					categoryList = trailer.getCategoryList();
+					fillDropDown(ddlCategory, categoryList);
+					statusList = trailer.getStatusList();
+					fillDropDown(ddlStatus, statusList);
+					divisionList = trailer.getDivisionList();
+					fillDropDown(ddlDivision, divisionList);
+					terminalList = trailer.getTerminalList();
+					fillDropDown(ddlTerminal, terminalList);
+					trailerTypeList = trailer.getTrailerTypeList();
+					fillDropDown(ddlTrailerType, trailerTypeList);
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+				}
+			}
+		});
+	}
+	
 	private Trailer setTrailerValue() {
 		Trailer trailer = new Trailer();
-		trailer.setUnitNo(Integer.parseInt(txtUnitNo.getText()));
-		trailer.setUsage(txtUsage.getText());
+		trailer.setUnitNo(Long.parseLong(txtUnitNo.getText()));
 		trailer.setOwner(txtOwner.getText());
-		trailer.setDivision(txtDivision.getText());
 		trailer.setoOName(txtOoName.getText());
-		trailer.setTerminal(txtTerminal.getText());
-		trailer.setCategory(txtCategory.getText());
-		trailer.setTrailerType(txtTrailerType.getText());
-		trailer.setStatus(ddlStatus.getSelectionModel().getSelectedItem().toString());
-		trailer.setFinance(ddlFinance.getSelectionModel().getSelectedItem().toString());
+		trailer.setCategoryId(categoryList.get(ddlCategory.getSelectionModel().getSelectedIndex()).getCategoryId());
+		trailer.setStatusId(statusList.get(ddlStatus.getSelectionModel().getSelectedIndex()).getId());
+		trailer.setUsage(txtUsage.getText());
+		trailer.setDivisionId(divisionList.get(ddlDivision.getSelectionModel().getSelectedIndex()).getDivisionId());
+		trailer.setTerminalId(terminalList.get(ddlTerminal.getSelectionModel().getSelectedIndex()).getTerminalId());
+		trailer.setTrailerTypeId(trailerTypeList.get(ddlTrailerType.getSelectionModel().getSelectedIndex()).getTypeId());
+		trailer.setFinance(txtFinance.getText());
 		return trailer;
 	}
 
@@ -91,10 +161,7 @@ public class TrailerAddController extends Application implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		ddlStatus.setValue("Active");
-		ddlStatus.setValue("Inactive");
-		ddlFinance.setValue("Fin 1");
-		ddlFinance.setValue("Fin 2");
+		fetchMasterDataForDropDowns();
 	}
 
 	@Override

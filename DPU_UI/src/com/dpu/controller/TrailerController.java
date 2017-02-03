@@ -12,6 +12,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.model.Driver;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
 import com.dpu.model.Trailer;
@@ -103,16 +104,15 @@ public class TrailerController extends Application implements Initializable {
 				@Override
 				public void run() {
 					try {
-						ObjectMapper mapper = new ObjectMapper();
 						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_TRAILER_API + "/" + trailer.getTrailerId(), null);
-						if(response != null && response.contains("message")) {
+						MainScreen.trailerController.fillTrailer(response);
+						/*if(response != null && response.contains("message")) {
 							Success success = mapper.readValue(response, Success.class);
 							JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
 						} else {
 							Failed failed = mapper.readValue(response, Failed.class);
 							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-						}
-						fetchTrailers();
+						}*/
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
 					}
@@ -133,7 +133,34 @@ public class TrailerController extends Application implements Initializable {
 	        stage.setScene(new Scene(root)); 
 	        stage.show();
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println(e);
+		}
+	}
+	
+	List<Trailer> trailerList = null;
+	
+	ObjectMapper mapper = new ObjectMapper();
+	
+	public void fillTrailer(String response) {
+		
+		try {
+			ObservableList<Trailer> data = null;
+			trailerList = new ArrayList<Trailer>();
+			setColumnValues();
+			if(response != null && response.length() > 0) {
+				Trailer c[] = mapper.readValue(response, Trailer[].class);
+				for(Trailer ccl : c) {
+					trailerList.add(ccl);
+				}
+				data = FXCollections.observableArrayList(trailerList);
+			} else {
+				data = FXCollections.observableArrayList(trailerList);
+			}
+			tblTrailer.setItems(data);
+            tblTrailer.setVisible(true);
+		} catch (Exception e) {
+			System.out.println("DriverController: fillDriver(): "+ e.getMessage());
 		}
 	}
 
