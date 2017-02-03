@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="564.0" prefWidth="383.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="564.0" prefWidth="383.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.DivisionAddController">
    <children>
       <TextField fx:id="txtDivisionName" layoutX="158.0" layoutY="81.0" prefHeight="25.0" prefWidth="203.0" />
       <Text layoutX="25.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Division Name">
@@ -68,7 +68,7 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <Button fx:id="btnSave" fx:id="btnSaveDivision" layoutX="160.0" layoutY="485.0" mnemonicParsing="false" onAction="#btnSaveDivisionAction" prefHeight="25.0" prefWidth="52.0" text="Save" />
+      <Button fx:id="btnSaveDivision" layoutX="160.0" layoutY="485.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="Save" />
       <Button fx:id="btnCancel" layoutX="226.0" layoutY="485.0" mnemonicParsing="false" text="Cancel" />
    </children>
 </AnchorPane>
