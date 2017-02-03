@@ -178,6 +178,8 @@ public class CompanyAddController extends Application implements Initializable {
 	public static BillingControllerModel billingControllerModel = new BillingControllerModel();
 	public static AdditionalContact additionalContactModel = new  AdditionalContact();
 	
+	
+	int additionalContactCountMenu =0;
 	@FXML
 	void handleAddContMouseClick(MouseEvent event) {
 
@@ -265,8 +267,9 @@ public class CompanyAddController extends Application implements Initializable {
 
 		// Add MenuItem to ContextMenu
 		contextMenu.getItems().addAll(item1, item2, item3);
-		int count = 0;
-		if (count == 0) {
+		
+		if (additionalContactCountMenu == 0) {
+			additionalContactCountMenu++;
 			// When user right-click on Table
 			tableAdditionalContact.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
 				@Override
@@ -276,7 +279,7 @@ public class CompanyAddController extends Application implements Initializable {
 				}
 
 			});
-			count = 1;
+			 
 		}
 
 	}
@@ -557,7 +560,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 	}
 
-	
+	int billingLocationCountMenu = 0;
 	@FXML
 	public void handleMouseClick(MouseEvent arg0) {
  
@@ -646,8 +649,8 @@ public class CompanyAddController extends Application implements Initializable {
 
 		// Add MenuItem to ContextMenu
 		contextMenu.getItems().addAll(item1, item2, item3);
-		int count = 0;
-		if (count == 0) {
+		if (billingLocationCountMenu == 0) {
+			billingLocationCountMenu++;
 			// When user right-click on Table
 			tableBillingLocations.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
 				@Override
@@ -657,7 +660,7 @@ public class CompanyAddController extends Application implements Initializable {
 				}
 
 			});
-			count = 1;
+			 
 		}
 
 	}
