@@ -110,7 +110,11 @@ public class ServiceAddController<T> extends Application implements Initializabl
 					System.out.println(payload);
 					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_SERVICE_API, null, payload);
 					System.out.println(response);
-					MainScreen.serviceController.fillServices(response);
+					if(MainScreen.serviceController != null) {
+						MainScreen.serviceController.fillServices(response);
+					} else if(MainScreen.terminalController != null) {
+						MainScreen.terminalController.openAddTerminalScreen();
+					}
 					/*if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
 						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
@@ -165,6 +169,7 @@ public class ServiceAddController<T> extends Application implements Initializabl
 					statusList = service.getStatusList();
 					fillDropDown(ddlStatus, statusList);
 				} catch (Exception e) {
+					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
 				}
 			}

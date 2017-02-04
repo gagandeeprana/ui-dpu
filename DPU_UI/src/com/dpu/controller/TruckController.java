@@ -12,9 +12,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.model.Company;
-import com.dpu.model.Failed;
-import com.dpu.model.Success;
 import com.dpu.model.Truck;
 
 import javafx.application.Application;
@@ -53,6 +50,32 @@ public class TruckController extends Application implements Initializable {
 		openAddTruckScreen();
 	}
 	
+	List<Truck> truckList = null;
+	
+	ObjectMapper mapper = new ObjectMapper();
+	
+	public void fillTruck(String response) {
+		
+		try {
+			ObservableList<Truck> data = null;
+			truckList = new ArrayList<Truck>();
+			setColumnValues();
+			if(response != null && response.length() > 0) {
+				Truck c[] = mapper.readValue(response, Truck[].class);
+				for(Truck ccl : c) {
+					truckList.add(ccl);
+				}
+				data = FXCollections.observableArrayList(truckList);
+			} else {
+				data = FXCollections.observableArrayList(truckList);
+			}
+			tblTruck.setItems(data);
+            tblTruck.setVisible(true);
+		} catch (Exception e) {
+			System.out.println("TruckController: fillTruck(): "+ e.getMessage());
+		}
+	}
+	
 	@FXML
 	private void btnEditTruckAction() {
 		Truck truck = tblTruck.getSelectionModel().getSelectedItem();
@@ -89,17 +112,18 @@ public class TruckController extends Application implements Initializable {
 				@Override
 				public void run() {
 					try {
-						ObjectMapper mapper = new ObjectMapper();
 						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_TRUCK_API + "/" + truck.getTruckId(), null);
-						if(response != null && response.contains("message")) {
+						System.out.println(response);
+						fillTruck(response);
+						/*if(response != null && response.contains("message")) {
 							Success success = mapper.readValue(response, Success.class);
 							JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
 						} else {
 							Failed failed = mapper.readValue(response, Failed.class);
 							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-						}
-						fetchTrucks();
+						}*/
 					} catch (Exception e) {
+						e.printStackTrace();
 						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
 					}
 				}

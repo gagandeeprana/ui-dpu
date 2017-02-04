@@ -67,8 +67,11 @@ public class ShipperAddController extends Application implements Initializable{
 					String payload = mapper.writeValueAsString(shipper);
 					System.out.println(payload);
 					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_SHIPPER_API, null, payload);
-					MainScreen.shipperController.fillShippers(response);
-					
+					if(MainScreen.shipperController != null) {
+						MainScreen.shipperController.fillShippers(response);
+					} else if(MainScreen.terminalController != null) {
+						MainScreen.terminalController.openAddTerminalScreen();
+					}
 					/*if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
 						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);

@@ -138,7 +138,7 @@ public class ShipperEditController extends Application implements Initializable{
 		companyList = s.getCompanyList();
 		for(int i = 0; i< s.getCompanyList().size();i++) {
 			Company company = s.getCompanyList().get(i);
-			ddlCompany.getItems().add(s.getCompany());
+			ddlCompany.getItems().add(company.getName());
 			if(company.getCompanyId() == s.getCompanyId()) {
 				ddlCompany.getSelectionModel().select(i);
 			}
