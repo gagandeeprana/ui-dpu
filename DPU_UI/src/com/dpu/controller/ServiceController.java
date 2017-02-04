@@ -173,9 +173,9 @@ public class ServiceController extends Application implements Initializable {
 		return null;
 	}
 	
-	private void openAddServiceScreen() {
+	public static void openAddServiceScreen() {
 		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.SERVICE_BASE_PACKAGE + Iconstants.XML_SERVICE_ADD_SCREEN));
+			FXMLLoader fxmlLoader = new FXMLLoader(ServiceController.class.getClassLoader().getResource(Iconstants.SERVICE_BASE_PACKAGE + Iconstants.XML_SERVICE_ADD_SCREEN));
 			
 	        Parent root = (Parent) fxmlLoader.load();
 	        

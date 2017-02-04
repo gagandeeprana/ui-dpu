@@ -11,13 +11,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.GetAPIClient;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.model.Category;
 import com.dpu.model.DPUService;
-import com.dpu.model.Failed;
-import com.dpu.model.Status;
-import com.dpu.model.Success;
 import com.dpu.model.Terminal;
-import com.dpu.model.Type;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -29,11 +24,12 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class TerminalAddController extends Application implements Initializable{
+
 	@FXML
 	Button btnSaveTerminal;
 	
 	@FXML
-	Button btnCancelTerminal;
+	Button btnCancelTerminal, btnAddAvailableServices, btnAddNewLocation;
 	
 	@FXML
 	TextField txtTerminalName, txtLocation;
@@ -86,6 +82,18 @@ public class TerminalAddController extends Application implements Initializable{
 			}
 		});
 	}
+	
+	@FXML
+	private void btnAddNewLocationAction() {
+		closeAddTerminalScreen(btnAddNewLocation);
+		ShipperController.openAddShipperScreen();
+	}
+	
+	@FXML
+	private void btnAddAvailableServicesAction() {
+		closeAddTerminalScreen(btnAddAvailableServices);
+		ServiceController.openAddServiceScreen();
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -108,6 +116,7 @@ public class TerminalAddController extends Application implements Initializable{
 					serviceList = terminal.getServiceList();
 					fillDropDown(ddlAvailableServices, serviceList);
 				} catch (Exception e) {
+					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
 				}
 			}
@@ -115,11 +124,14 @@ public class TerminalAddController extends Application implements Initializable{
 	}
 	
 	private void fillDropDown(ComboBox<String> comboBox, List<?> list) {
-		for(int i=0;i<list.size();i++) {
-			Object object = list.get(i);
-			if(object != null && object instanceof DPUService) {
-				DPUService dpuService = (DPUService) object;
-				comboBox.getItems().add(dpuService.getServiceName());
+		if(comboBox != null) {
+			comboBox.getItems().clear();
+			for(int i=0;i<list.size();i++) {
+				Object object = list.get(i);
+				if(object != null && object instanceof DPUService) {
+					DPUService dpuService = (DPUService) object;
+					comboBox.getItems().add(dpuService.getServiceName());
+				}
 			}
 		}
 	}
@@ -136,8 +148,7 @@ public class TerminalAddController extends Application implements Initializable{
 		Terminal terminal = new Terminal();
 		terminal.setTerminalName(txtTerminalName.getText());
 		terminal.setLocation(txtLocation.getText());
-		//to-do
-//		terminal.set(serviceList.get(ddlAvailableServices.getSelectionModel().getSelectedIndex()).get.toString());		
+//		terminal.setS(serviceList.get(ddlAvailableServices.getSelectionModel().getSelectedIndex()).get.toString());		
 		return terminal;
 	}
 }

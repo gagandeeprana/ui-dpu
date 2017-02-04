@@ -36,8 +36,8 @@
          </font>
       </Button>
       <ComboBox fx:id="ddlAvailableServices" layoutX="138.0" layoutY="116.0" prefHeight="25.0" prefWidth="250.0" />
-      <Button fx:id="btnAddLocation" layoutX="392.0" layoutY="83.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="+" />
-      <Button fx:id="btnAddAvailableServices" layoutX="392.0" layoutY="116.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="+" />
+      <Button fx:id="btnAddNewLocation" layoutX="392.0" layoutY="83.0" mnemonicParsing="false" onAction="#btnAddNewLocationAction" prefHeight="25.0" prefWidth="27.0" text="+" />
+      <Button fx:id="btnAddAvailableServices" layoutX="392.0" layoutY="116.0" mnemonicParsing="false" onAction="#btnAddAvailableServicesAction" prefHeight="25.0" prefWidth="27.0" text="+" />
       <Label layoutY="1.0" prefHeight="27.0" prefWidth="432.0" style="-fx-background-color: lightgrey; -fx-border-color: black;" text="   Add New Terminal">
          <font>
             <Font name="System Bold" size="16.0" />

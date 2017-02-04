@@ -35,6 +35,24 @@ public class Truck implements Serializable{
 	private String statusName;
 	private Long statusId;
 	private List<Status> statusList;
+	private Long truckTypeId;
+	private List<Type> truckTypeList;
+	
+	public Long getTruckTypeId() {
+		return truckTypeId;
+	}
+
+	public void setTruckTypeId(Long truckTypeId) {
+		this.truckTypeId = truckTypeId;
+	}
+
+	public List<Type> getTruckTypeList() {
+		return truckTypeList;
+	}
+
+	public void setTruckTypeList(List<Type> truckTypeList) {
+		this.truckTypeList = truckTypeList;
+	}
 
 	public List<Division> getDivisionList() {
 		return divisionList;

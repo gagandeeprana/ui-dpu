@@ -166,7 +166,7 @@ public class TerminalPanelController extends Application implements Initializabl
 		}
 	}
 	
-	private void openAddTerminalScreen() {
+	public void openAddTerminalScreen() {
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.TERMINAL_BASE_PACKAGE + Iconstants.XML_TERMINAL_ADD_SCREEN));
 			

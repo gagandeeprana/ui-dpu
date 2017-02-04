@@ -131,9 +131,9 @@ public class ShipperController extends Application implements Initializable {
 		}
 	}
 	
-	private void openAddShipperScreen() {
+	public static void openAddShipperScreen() {
 		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.SHIPPER_BASE_PACKAGE + Iconstants.XML_SHIPPER_ADD_SCREEN));
+			FXMLLoader fxmlLoader = new FXMLLoader(ShipperController.class.getClassLoader().getResource(Iconstants.SHIPPER_BASE_PACKAGE + Iconstants.XML_SHIPPER_ADD_SCREEN));
 			
 	        Parent root = (Parent) fxmlLoader.load();
 	        
