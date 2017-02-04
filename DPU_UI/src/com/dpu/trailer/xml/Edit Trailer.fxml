@@ -38,16 +38,16 @@
                               <Font size="14.0" />
                            </font>
                         </Text>
-                        <TextField fx:id="txtUnitNo" layoutX="92.0" layoutY="11.0" prefHeight="25.0" prefWidth="247.0" />
-                        <TextField fx:id="txtOwner" layoutX="92.0" layoutY="44.0" prefHeight="25.0" prefWidth="247.0" />
-                        <TextField fx:id="txtTrailerType" layoutX="442.0" layoutY="109.0" prefHeight="25.0" prefWidth="247.0" />
-                        <TextField fx:id="txtTerminal" layoutX="442.0" layoutY="76.0" prefHeight="25.0" prefWidth="247.0" />
-                        <TextField fx:id="txtDivision" layoutX="442.0" layoutY="44.0" prefHeight="25.0" prefWidth="247.0" />
-                        <TextField fx:id="txtUsage" layoutX="442.0" layoutY="11.0" prefHeight="25.0" prefWidth="247.0" />
-                        <TextField fx:id="txtOoName" layoutX="92.0" layoutY="76.0" prefHeight="25.0" prefWidth="247.0" />
-                        <TextField fx:id="txtCategory" layoutX="92.0" layoutY="109.0" prefHeight="25.0" prefWidth="247.0" />
-                        <ComboBox fx:id="ddlStatus" layoutX="92.0" layoutY="141.0" prefHeight="25.0" prefWidth="247.0" />
-                        <ComboBox fx:id="ddlFinance" layoutX="442.0" layoutY="141.0" prefHeight="25.0" prefWidth="247.0" />
+                        <TextField fx:id="txtUnitNo" layoutX="92.0" layoutY="11.0" prefHeight="25.0" prefWidth="240.0" />
+                        <TextField fx:id="txtOwner" layoutX="92.0" layoutY="44.0" prefHeight="25.0" prefWidth="240.0" />
+                        <TextField fx:id="txtTrailerType" layoutX="442.0" layoutY="109.0" prefHeight="25.0" prefWidth="240.0" />
+                        <TextField fx:id="txtTerminal" layoutX="442.0" layoutY="76.0" prefHeight="25.0" prefWidth="240.0" />
+                        <TextField fx:id="txtDivision" layoutX="442.0" layoutY="44.0" prefHeight="25.0" prefWidth="240.0" />
+                        <TextField fx:id="txtUsage" layoutX="442.0" layoutY="11.0" prefHeight="25.0" prefWidth="240.0" />
+                        <TextField fx:id="txtOoName" layoutX="92.0" layoutY="76.0" prefHeight="25.0" prefWidth="240.0" />
+                        <TextField fx:id="txtCategory" layoutX="92.0" layoutY="109.0" prefHeight="25.0" prefWidth="240.0" />
+                        <ComboBox fx:id="ddlStatus" layoutX="92.0" layoutY="141.0" prefHeight="25.0" prefWidth="240.0" />
+                        <ComboBox fx:id="ddlFinance" layoutX="442.0" layoutY="141.0" prefHeight="25.0" prefWidth="240.0" />
                         <Text layoutX="365.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usage" wrappingWidth="51.904296875">
                            <font>
                               <Font size="14.0" />

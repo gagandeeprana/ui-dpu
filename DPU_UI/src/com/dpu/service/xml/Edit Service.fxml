@@ -5,9 +5,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220.0" prefWidth="432.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.ServiceEditController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220.0" prefWidth="416.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.ServiceEditController">
    <children>
-      <BorderPane layoutX="9.0" layoutY="34.0" prefHeight="143.0" prefWidth="411.0" style="-fx-border-color: lightgray;" />
+      <BorderPane layoutX="9.0" layoutY="34.0" prefHeight="143.0" prefWidth="396.0" style="-fx-border-color: lightgray;" />
       <Text layoutX="14.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Service" wrappingWidth="107.759765625" AnchorPane.bottomAnchor="205.984375" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="441.240234375" AnchorPane.topAnchor="41.734375">
          <font>
             <Font size="14.0" />
@@ -23,26 +23,26 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <TextField fx:id="txtService" layoutX="160.0" layoutY="43.0" prefHeight="25.0" prefWidth="250.0" />
-      <Button fx:id="btnUpdateService" layoutX="246.0" layoutY="183.0" mnemonicParsing="false" onAction="#btnUpdateServiceAction" prefHeight="25.0" prefWidth="85.0" text="Update">
+      <TextField fx:id="txtService" layoutX="160.0" layoutY="43.0" prefHeight="25.0" prefWidth="240.0" />
+      <Button fx:id="btnUpdateService" layoutX="230.0" layoutY="183.0" mnemonicParsing="false" onAction="#btnUpdateServiceAction" prefHeight="25.0" prefWidth="85.0" text="Update">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <ComboBox fx:id="ddlAssociationWith" layoutX="160.0" layoutY="109.0" prefHeight="25.0" prefWidth="250.0" />
-      <ComboBox fx:id="ddlTextField" layoutX="160.0" layoutY="76.0" prefHeight="25.0" prefWidth="250.0" />
-      <ComboBox fx:id="ddlStatus" layoutX="161.0" layoutY="142.0" prefHeight="25.0" prefWidth="250.0" />
+      <ComboBox fx:id="ddlAssociationWith" layoutX="160.0" layoutY="109.0" prefHeight="25.0" prefWidth="240.0" />
+      <ComboBox fx:id="ddlTextField" layoutX="160.0" layoutY="76.0" prefHeight="25.0" prefWidth="240.0" />
+      <ComboBox fx:id="ddlStatus" layoutX="161.0" layoutY="142.0" prefHeight="25.0" prefWidth="240.0" />
       <Text layoutX="15.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status" wrappingWidth="131.759765625">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <Button layoutX="336.0" layoutY="183.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Cancel">
+      <Button layoutX="320.0" layoutY="183.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Cancel">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Label layoutY="1.0" prefHeight="27.0" prefWidth="432.0" style="-fx-background-color: lightgrey; -fx-border-color: black;" text="   Edit Service">
+      <Label layoutY="1.0" prefHeight="27.0" prefWidth="416.0" style="-fx-background-color: lightgrey; -fx-border-color: black;" text="   Edit Service">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
