@@ -29,7 +29,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 public class BillingLocation {
 
     @JsonProperty("billingLocationId")
-    private Integer billingLocationId;
+    private Long billingLocationId;
     @JsonProperty("name")
     private String name;
     @JsonProperty("address")
@@ -59,12 +59,12 @@ public class BillingLocation {
     
 
     @JsonProperty("billingLocationId")
-    public Integer getBillingLocationId() {
+    public Long getBillingLocationId() {
         return billingLocationId;
     }
 
     @JsonProperty("billingLocationId")
-    public void setBillingLocationId(Integer billingLocationId) {
+    public void setBillingLocationId(Long billingLocationId) {
         this.billingLocationId = billingLocationId;
     }
 

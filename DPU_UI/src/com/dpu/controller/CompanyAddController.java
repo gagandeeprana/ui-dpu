@@ -171,7 +171,8 @@ public class CompanyAddController extends Application implements Initializable {
 	@FXML
 	public TableColumn<BillingControllerModel, String> zip;
 
-	public static  int editIndex = -1;
+	public static  int addEditIndex = -1;
+	//public static  int editIndex = -1;
 	public static int add = 0;
 	public static int addAddtionalContact = 0;
 	public static BillingControllerModel billingControllerModel = new BillingControllerModel();
@@ -227,11 +228,11 @@ public class CompanyAddController extends Application implements Initializable {
 			@Override
 			public void handle(ActionEvent event) {
 				addAddtionalContact = 0;
-				editIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
-				 
+				addEditIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
 				additionalContactModel =  tableAdditionalContact.getSelectionModel().getSelectedItem();
 				openAddAdditionalContactScreen();
 				closeAddCompanyScreen(btnSaveCompany);
+				
 
 			}
 		});
@@ -241,9 +242,9 @@ public class CompanyAddController extends Application implements Initializable {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				editIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
-				listOfAdditionalContact.remove(editIndex);
-				editIndex = -1;
+				addEditIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
+				listOfAdditionalContact.remove(addEditIndex);
+				addEditIndex = -1;
 				
 				try{
 					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
@@ -607,7 +608,7 @@ public class CompanyAddController extends Application implements Initializable {
 			@Override
 			public void handle(ActionEvent event) {
 				add = 0;
-				editIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
+				addEditIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
 				billingControllerModel =  tableBillingLocations.getSelectionModel().getSelectedItem();
 				openAddBillingLocationScreen();
 				closeAddCompanyScreen(btnSaveCompany);
@@ -620,10 +621,9 @@ public class CompanyAddController extends Application implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				editIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
-				listOfBilling.remove(editIndex);
-				editIndex = -1;
-				
+				addEditIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
+ 				listOfBilling.remove(addEditIndex);
+				addEditIndex = -1;
 				
 				
 				try{

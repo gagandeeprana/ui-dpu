@@ -15,6 +15,8 @@ import javafx.beans.property.SimpleStringProperty;
 })
 public class BillingControllerModel {
 
+	private Long billingLocationId;
+	private Long companyId;
 	private SimpleStringProperty company = new SimpleStringProperty();
 	private SimpleStringProperty address = new SimpleStringProperty();
 	private SimpleStringProperty city = new SimpleStringProperty();
@@ -36,6 +38,23 @@ public class BillingControllerModel {
 		this.zip = new SimpleStringProperty(zp);
 		this.fax = new SimpleStringProperty(fx);
 
+	}
+	
+	  
+	public Long getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(Long companyId) {
+		this.companyId = companyId;
+	}
+
+	public Long getBillingLocationId() {
+		return billingLocationId;
+	}
+
+	public void setBillingLocationId(Long billingLocationId) {
+		this.billingLocationId = billingLocationId;
 	}
 
 	public String getCompany() {

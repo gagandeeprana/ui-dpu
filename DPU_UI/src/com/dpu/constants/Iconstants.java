@@ -74,16 +74,16 @@ public class Iconstants {
 	public static final String URL_TYPE_API = "masterData/type";
 	
 	public static final String XML_ADD_BILLING_LOCATION_SCREEN = "AddBillingLocationScreen.fxml";
-	public static final String URL_BILLING_LOCATION_API= "company/108/billinglocations";
-	public static final String URL_ADD_COMPANY_BILLING_LOCATION_API="company/108/billinglocations";
+	public static final String URL_DELETE_BILLING_LOCATION_API= "company";
+	 
 	public static int val = 0;
 	
 	public static final String XML_ADD_ADDITIONAL_CONTACT_SCREEN ="AdditionalContactAddScreen.fxml";
 
 	public static final String URL_STATUS_API = "status";
 	
-	public static final String XML_EDIT_ADDITIONAL_CONTACT_SCREEN ="AdditionalContactAddScreen.fxml";
+	public static final String XML_EDIT_ADDITIONAL_CONTACT_SCREEN ="AdditionalContactEditScreen.fxml";
 	public static final String XML_EDIT_BILLING_LOCATION_SCREEN = "EditBillingLocationScreen.fxml";
-	public static final String XML_COMPANY_EDIT_SCREEN = "EdittCompany.fxml";
+	public static final String XML_COMPANY_EDIT_SCREEN = "EditCompany.fxml";
 
 }

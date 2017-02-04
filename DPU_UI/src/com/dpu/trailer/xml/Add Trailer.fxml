@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane fx:id="addCompanyPane" prefHeight="269.0" prefWidth="705.0" stylesheets="@../search1.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.TrailerAddController">
+<Pane prefHeight="269.0" prefWidth="705.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.TrailerAddController">
    <children>
       <TabPane layoutX="5.0" layoutY="23.0" prefHeight="205.0" prefWidth="694.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -38,6 +38,7 @@
                               <Font size="14.0" />
                            </font>
                         </Text>
+
                         <TextField fx:id="txtUnitNo" layoutX="92.0" layoutY="11.0" prefHeight="25.0" prefWidth="240.0" />
                         <TextField fx:id="txtOwner" layoutX="92.0" layoutY="44.0" prefHeight="25.0" prefWidth="240.0" />
                         <TextField fx:id="txtTrailerType" layoutX="442.0" layoutY="109.0" prefHeight="25.0" prefWidth="240.0" />
@@ -48,6 +49,13 @@
                         <TextField fx:id="txtCategory" layoutX="92.0" layoutY="109.0" prefHeight="25.0" prefWidth="240.0" />
                         <ComboBox fx:id="ddlStatus" layoutX="92.0" layoutY="141.0" prefHeight="25.0" prefWidth="240.0" />
                         <ComboBox fx:id="ddlFinance" layoutX="442.0" layoutY="141.0" prefHeight="25.0" prefWidth="240.0" />
+
+                        <TextField fx:id="txtUnitNo" layoutX="92.0" layoutY="11.0" prefHeight="25.0" prefWidth="247.0" />
+                        <TextField fx:id="txtOwner" layoutX="92.0" layoutY="44.0" prefHeight="25.0" prefWidth="247.0" />
+                        <TextField fx:id="txtUsage" layoutX="442.0" layoutY="11.0" prefHeight="25.0" prefWidth="247.0" />
+                        <TextField fx:id="txtOoName" layoutX="92.0" layoutY="76.0" prefHeight="25.0" prefWidth="247.0" />
+                        <ComboBox fx:id="ddlStatus" layoutX="92.0" layoutY="141.0" prefHeight="25.0" prefWidth="247.0" />
+
                         <Text layoutX="365.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usage" wrappingWidth="51.904296875">
                            <font>
                               <Font size="14.0" />
@@ -73,6 +81,11 @@
                               <Font size="14.0" />
                            </font>
                         </Text>
+                        <ComboBox fx:id="ddlCategory" layoutX="92.0" layoutY="108.0" prefHeight="25.0" prefWidth="247.0" />
+                        <ComboBox fx:id="ddlDivision" layoutX="442.0" layoutY="43.0" prefHeight="25.0" prefWidth="247.0" />
+                        <ComboBox fx:id="ddlTerminal" layoutX="442.0" layoutY="75.0" prefHeight="25.0" prefWidth="247.0" />
+                        <ComboBox fx:id="ddlTrailerType" layoutX="442.0" layoutY="108.0" prefHeight="25.0" prefWidth="247.0" />
+                        <TextField fx:id="txtFinance" layoutX="442.0" layoutY="141.0" prefHeight="25.0" prefWidth="247.0" />
                      </children>
                   </AnchorPane>
             </content>

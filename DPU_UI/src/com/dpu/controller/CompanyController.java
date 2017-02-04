@@ -9,10 +9,13 @@ import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.AdditionalContact;
 import com.dpu.model.BillingControllerModel;
+import com.dpu.model.Failed;
+import com.dpu.model.Success;
 import com.dpu.request.CompanyModel;
 
 import javafx.application.Application;
@@ -56,13 +59,13 @@ public class CompanyController extends Application implements Initializable {
 	
 	@FXML
 	private void btnEditCompanyAction() {
-		CompanyModel companyy = cList.get(tblCompany.getSelectionModel().getSelectedIndex());
-		System.out.println(companyy);
-		System.out.println("selected Index company Id : "+companyy.getCompanyId());
+		CompanyEditController.listOfBilling = new ArrayList<BillingControllerModel>();
+		CompanyEditController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
+		CompanyEditController.company = new CompanyModel();
+		
+		//CompanyModel companyy = cList.get(tblCompany.getSelectionModel().getSelectedIndex());
 		
 		CompanyModel company = tblCompany.getSelectionModel().getSelectedItem();
-//		System.out.println("selected company Id : "+company.getCompanyId());
-		System.out.println(company + "   company:: ");
 		if(company != null) {
 			Platform.runLater(new Runnable() {
 				
@@ -78,34 +81,43 @@ public class CompanyController extends Application implements Initializable {
 				 
 							//----------------------------------------------
 							
-							int billingSize = c.getBillingLocations().size();
-							for(int i=0 ;i<billingSize;i++){
+							if(c.getBillingLocations() != null){
+								int billingSize = c.getBillingLocations().size();
+								for(int i=0 ;i<billingSize;i++){
 						
-								BillingControllerModel bcm = new BillingControllerModel();
-								bcm.setAddress(c.getBillingLocations().get(i).getAddress());
-								bcm.setCity(c.getBillingLocations().get(i).getCity());
-								bcm.setCompany(c.getBillingLocations().get(i).getName());
-								bcm.setContact(c.getBillingLocations().get(i).getContact());
-								bcm.setFax(c.getBillingLocations().get(i).getFax());
-								bcm.setPhone(c.getBillingLocations().get(i).getPhone());
-								bcm.setZip(c.getBillingLocations().get(i).getZip());
-								CompanyEditController.listOfBilling.add(bcm);
+									BillingControllerModel bcm = new BillingControllerModel();
+									bcm.setCompanyId(Long.parseLong(c.getCompanyId()));
+									bcm.setBillingLocationId(c.getBillingLocations().get(i).getBillingLocationId());
+									bcm.setAddress(c.getBillingLocations().get(i).getAddress());
+									bcm.setCity(c.getBillingLocations().get(i).getCity());
+									bcm.setCompany(c.getBillingLocations().get(i).getName());
+									bcm.setContact(c.getBillingLocations().get(i).getContact());
+									bcm.setFax(c.getBillingLocations().get(i).getFax());
+									bcm.setPhone(c.getBillingLocations().get(i).getPhone());
+									bcm.setZip(c.getBillingLocations().get(i).getZip());
+									CompanyEditController.listOfBilling.add(bcm);
+								}
 							}
 							
+							if(c.getAdditionalContacts() != null){
 							int addtionalContactSize = c.getAdditionalContacts().size();
-							for(int j=0;j<addtionalContactSize;j++){
-								AdditionalContact additionalContact = new AdditionalContact();
-								additionalContact.setAdditionalContact(c.getAdditionalContacts().get(j).getCustomerName());
-								additionalContact.setCellular(c.getAdditionalContacts().get(j).getCellular());
-								additionalContact.setEmail(c.getAdditionalContacts().get(j).getEmail());
-								additionalContact.setExtension(c.getAdditionalContacts().get(j).getExt());
-								additionalContact.setFax(c.getAdditionalContacts().get(j).getFax());
-								additionalContact.setPager(c.getAdditionalContacts().get(j).getCellular());
-								additionalContact.setPhone(c.getAdditionalContacts().get(j).getPhone());
-								additionalContact.setPosition(c.getAdditionalContacts().get(j).getPosition());
-								additionalContact.setStatus(c.getAdditionalContacts().get(j).getStatus()+"");
+								for(int j=0;j<addtionalContactSize;j++){
+									AdditionalContact additionalContact = new AdditionalContact();
+									 
+									additionalContact.setCompanyId(Long.parseLong(c.getCompanyId()));
+									additionalContact.setAdditionalContactId(c.getAdditionalContacts().get(j).getAdditionalContactId());
+									additionalContact.setAdditionalContact(c.getAdditionalContacts().get(j).getCustomerName());
+									additionalContact.setCellular(c.getAdditionalContacts().get(j).getCellular());
+									additionalContact.setEmail(c.getAdditionalContacts().get(j).getEmail());
+									additionalContact.setExtension(c.getAdditionalContacts().get(j).getExt());
+									additionalContact.setFax(c.getAdditionalContacts().get(j).getFax());
+									additionalContact.setPager(c.getAdditionalContacts().get(j).getCellular());
+									additionalContact.setPhone(c.getAdditionalContacts().get(j).getPhone());
+									additionalContact.setPosition(c.getAdditionalContacts().get(j).getPosition());
+									additionalContact.setStatus(c.getAdditionalContacts().get(j).getStatus()+"");
 								
-								CompanyEditController.listOfAdditionalContact.add(additionalContact);
+									CompanyEditController.listOfAdditionalContact.add(additionalContact);
+								}
 							}
 							
 							//-----------------------------------------------------
@@ -123,23 +135,17 @@ public class CompanyController extends Application implements Initializable {
 	
 	@FXML
 	private void btnDeleteCompanyAction() {
-		CompanyModel company = tblCompany.getSelectionModel().getSelectedItem();
+		//CompanyModel company = tblCompany.getSelectionModel().getSelectedItem();
+		CompanyModel company = cList.get(tblCompany.getSelectionModel().getSelectedIndex());
 		if(company != null) {
 			Platform.runLater(new Runnable() {
 				
 				@Override
 				public void run() {
 					try {
-						/*ObjectMapper mapper = new ObjectMapper();
 						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + company.getCompanyId(), null);
-						if(response != null && response.contains("message")) {
-							Success success = mapper.readValue(response, Success.class);
-							JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
-						} else {
-							Failed failed = mapper.readValue(response, Failed.class);
-							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-						}*/
-						fetchCompanies();
+						fetchCompanies(response);
+						JOptionPane.showMessageDialog(null, "Company Deleted Successfully", "Info", 1);
 					} catch (Exception e) {
 						e.printStackTrace();
 						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
@@ -175,7 +181,7 @@ public class CompanyController extends Application implements Initializable {
 	        
 	        Stage stage = new Stage();
 	        stage.initModality(Modality.APPLICATION_MODAL);
-	        stage.setTitle("Edit Company");
+	        stage.setTitle("Update Company");
 	        stage.setScene(new Scene(root)); 
 	        stage.show();
 	        return fxmlLoader.getController();
@@ -196,7 +202,6 @@ public class CompanyController extends Application implements Initializable {
 	}
 
 	public static void main(String[] args) {
-		System.out.println("[Company Controller]: Enter main method start.");
 		 launch(args);
 	}
 	
@@ -223,6 +228,37 @@ public class CompanyController extends Application implements Initializable {
 				try {
 					ObjectMapper mapper = new ObjectMapper();
 					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API, null);
+					if(response != null && response.length() > 0) {
+						CompanyModel c[] = mapper.readValue(response, CompanyModel[].class);
+						cList = new ArrayList<CompanyModel>();
+						for(CompanyModel ccl : c) {
+							cList.add(ccl);
+						}
+						ObservableList<CompanyModel> data = FXCollections.observableArrayList(cList);
+						
+						setColumnValues();
+						tblCompany.setItems(data);
+			
+			            tblCompany.setVisible(true);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+				}
+			}
+		});
+	}
+	
+	private void fetchCompanies(String response) {
+		
+		fetchColumns();
+		Platform.runLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					ObjectMapper mapper = new ObjectMapper();
+					//String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API, null);
 					if(response != null && response.length() > 0) {
 						CompanyModel c[] = mapper.readValue(response, CompanyModel[].class);
 						cList = new ArrayList<CompanyModel>();
