@@ -69,13 +69,13 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <Button fx:id="btnUpdateDivision" layoutX="231.0" layoutY="402.0" mnemonicParsing="false" onAction="#btnUpdateDivisionAction" prefHeight="25.0" prefWidth="85.0" text="Update">
+      <Button fx:id="btnUpdateDivision" layoutX="272.0" layoutY="402.0" mnemonicParsing="false" onAction="#btnUpdateDivisionAction" prefHeight="25.0" prefWidth="65.0" text="Update">
          <font>
-            <Font size="14.0" />
+            <Font size="13.0" />
          </font></Button>
-      <Button fx:id="btnCancel" layoutX="321.0" layoutY="402.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Cancel">
+      <Button fx:id="btnCancel" layoutX="342.0" layoutY="402.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Cancel">
          <font>
-            <Font size="14.0" />
+            <Font size="13.0" />
          </font></Button>
    </children>
 </AnchorPane>

@@ -24,9 +24,9 @@
          </font>
       </Text>
       <TextField fx:id="txtService" layoutX="160.0" layoutY="43.0" prefHeight="25.0" prefWidth="240.0" />
-      <Button fx:id="btnUpdateService" layoutX="230.0" layoutY="183.0" mnemonicParsing="false" onAction="#btnUpdateServiceAction" prefHeight="25.0" prefWidth="85.0" text="Update">
+      <Button fx:id="btnUpdateService" layoutX="271.0" layoutY="183.0" mnemonicParsing="false" onAction="#btnUpdateServiceAction" prefHeight="25.0" prefWidth="65.0" text="Update">
          <font>
-            <Font size="14.0" />
+            <Font size="13.0" />
          </font>
       </Button>
       <ComboBox fx:id="ddlAssociationWith" layoutX="160.0" layoutY="109.0" prefHeight="25.0" prefWidth="240.0" />
@@ -37,9 +37,9 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <Button layoutX="320.0" layoutY="183.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Cancel">
+      <Button layoutX="340.0" layoutY="183.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Cancel">
          <font>
-            <Font size="14.0" />
+            <Font size="13.0" />
          </font>
       </Button>
       <Label layoutY="1.0" prefHeight="27.0" prefWidth="416.0" style="-fx-background-color: lightgrey; -fx-border-color: black;" text="   Edit Service">
