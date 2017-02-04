@@ -38,53 +38,56 @@ import javafx.util.Callback;
 
 public class CompanyController extends Application implements Initializable {
 
-	
 	static CompanyAddController companyAddController;
 	@FXML
 	TableView<CompanyModel> tblCompany;
-	
+
 	public List<CompanyModel> cList = null;
-	
+
 	@FXML
 	TableColumn<CompanyModel, String> unitNo, name, email, city, ps, phone, home, fax, afterHours;
-	
+
 	@FXML
 	private void btnAddCompanyAction() {
 		CompanyAddController.listOfBilling = new ArrayList<BillingControllerModel>();
 		CompanyAddController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
 		CompanyAddController.company = new CompanyModel();
 		openAddCompanyScreen();
-		 
+
 	}
-	
+
+	public static Long companyId = 0l;
+
 	@FXML
 	private void btnEditCompanyAction() {
 		CompanyEditController.listOfBilling = new ArrayList<BillingControllerModel>();
 		CompanyEditController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
 		CompanyEditController.company = new CompanyModel();
-		
-		//CompanyModel companyy = cList.get(tblCompany.getSelectionModel().getSelectedIndex());
-		
+
+		CompanyModel companyy = cList.get(tblCompany.getSelectionModel().getSelectedIndex());
+		companyId = Long.parseLong(companyy.getCompanyId());
+
 		CompanyModel company = tblCompany.getSelectionModel().getSelectedItem();
-		if(company != null) {
+		if (company != null) {
 			Platform.runLater(new Runnable() {
-				
+
 				@Override
 				public void run() {
 					try {
 						ObjectMapper mapper = new ObjectMapper();
-						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + company.getCompanyId(), null);
-						
-						if(response != null && response.length() > 0) {
+						String response = GetAPIClient.callGetAPI(
+								Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + company.getCompanyId(),
+								null);
+
+						if (response != null && response.length() > 0) {
 							CompanyModel c = mapper.readValue(response, CompanyModel.class);
-							
-				 
-							//----------------------------------------------
-							
-							if(c.getBillingLocations() != null){
+
+							// ----------------------------------------------
+
+							if (c.getBillingLocations() != null) {
 								int billingSize = c.getBillingLocations().size();
-								for(int i=0 ;i<billingSize;i++){
-						
+								for (int i = 0; i < billingSize; i++) {
+
 									BillingControllerModel bcm = new BillingControllerModel();
 									bcm.setCompanyId(Long.parseLong(c.getCompanyId()));
 									bcm.setBillingLocationId(c.getBillingLocations().get(i).getBillingLocationId());
@@ -98,15 +101,17 @@ public class CompanyController extends Application implements Initializable {
 									CompanyEditController.listOfBilling.add(bcm);
 								}
 							}
-							
-							if(c.getAdditionalContacts() != null){
-							int addtionalContactSize = c.getAdditionalContacts().size();
-								for(int j=0;j<addtionalContactSize;j++){
+
+							if (c.getAdditionalContacts() != null) {
+								int addtionalContactSize = c.getAdditionalContacts().size();
+								for (int j = 0; j < addtionalContactSize; j++) {
 									AdditionalContact additionalContact = new AdditionalContact();
-									 
+
 									additionalContact.setCompanyId(Long.parseLong(c.getCompanyId()));
-									additionalContact.setAdditionalContactId(c.getAdditionalContacts().get(j).getAdditionalContactId());
-									additionalContact.setAdditionalContact(c.getAdditionalContacts().get(j).getCustomerName());
+									additionalContact.setAdditionalContactId(
+											c.getAdditionalContacts().get(j).getAdditionalContactId());
+									additionalContact
+											.setAdditionalContact(c.getAdditionalContacts().get(j).getCustomerName());
 									additionalContact.setCellular(c.getAdditionalContacts().get(j).getCellular());
 									additionalContact.setEmail(c.getAdditionalContacts().get(j).getEmail());
 									additionalContact.setExtension(c.getAdditionalContacts().get(j).getExt());
@@ -114,97 +119,101 @@ public class CompanyController extends Application implements Initializable {
 									additionalContact.setPager(c.getAdditionalContacts().get(j).getCellular());
 									additionalContact.setPhone(c.getAdditionalContacts().get(j).getPhone());
 									additionalContact.setPosition(c.getAdditionalContacts().get(j).getPosition());
-									additionalContact.setStatus(c.getAdditionalContacts().get(j).getStatus()+"");
-								
+									additionalContact.setStatus(c.getAdditionalContacts().get(j).getStatus() + "");
+
 									CompanyEditController.listOfAdditionalContact.add(additionalContact);
 								}
 							}
-							
-							//-----------------------------------------------------
+
+							// -----------------------------------------------------
 							CompanyEditController companyEditController = (CompanyEditController) openEditCompanyScreen();
 							companyEditController.initData(c);
-						} 
+						}
 					} catch (Exception e) {
 						e.printStackTrace();
-						JOptionPane.showMessageDialog(null, "Try Again.." + e , "Info", 1);
+						JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
 					}
 				}
 			});
 		}
 	}
-	
+
 	@FXML
 	private void btnDeleteCompanyAction() {
-		//CompanyModel company = tblCompany.getSelectionModel().getSelectedItem();
+		// CompanyModel company =
+		// tblCompany.getSelectionModel().getSelectedItem();
 		CompanyModel company = cList.get(tblCompany.getSelectionModel().getSelectedIndex());
-		if(company != null) {
+		if (company != null) {
 			Platform.runLater(new Runnable() {
-				
+
 				@Override
 				public void run() {
 					try {
-						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + company.getCompanyId(), null);
+						String response = DeleteAPIClient.callDeleteAPI(
+								Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + company.getCompanyId(),
+								null);
 						fetchCompanies(response);
 						JOptionPane.showMessageDialog(null, "Company Deleted Successfully", "Info", 1);
 					} catch (Exception e) {
 						e.printStackTrace();
-						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+						JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
 					}
 				}
 			});
 		}
 	}
-	
+
 	private void openAddCompanyScreen() {
 		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_ADD_SCREEN));
-			
-	        Parent root = (Parent) fxmlLoader.load();
-	        
-	        Stage stage = new Stage();
-	        stage.initModality(Modality.APPLICATION_MODAL);
-	        stage.setTitle("Add New Company");
-	        stage.setScene(new Scene(root)); 
-	        stage.show();
-	        
-	       
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
+					.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_ADD_SCREEN));
+
+			Parent root = (Parent) fxmlLoader.load();
+
+			Stage stage = new Stage();
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setTitle("Add New Company");
+			stage.setScene(new Scene(root));
+			stage.show();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private Object openEditCompanyScreen() {
 		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_EDIT_SCREEN));
-			
-	        Parent root = (Parent) fxmlLoader.load();
-	        
-	        Stage stage = new Stage();
-	        stage.initModality(Modality.APPLICATION_MODAL);
-	        stage.setTitle("Update Company");
-	        stage.setScene(new Scene(root)); 
-	        stage.show();
-	        return fxmlLoader.getController();
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
+					.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_EDIT_SCREEN));
+
+			Parent root = (Parent) fxmlLoader.load();
+
+			Stage stage = new Stage();
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setTitle("Update Company");
+			stage.setScene(new Scene(root));
+			stage.show();
+			return fxmlLoader.getController();
 		} catch (Exception e) {
-			e.printStackTrace();		}
+			e.printStackTrace();
+		}
 		return null;
 	}
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		fetchCompanies();
 	}
 
-	 
 	@Override
 	public void start(Stage stage) {
-		
+
 	}
 
 	public static void main(String[] args) {
-		 launch(args);
+		launch(args);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private void fetchColumns() {
 		unitNo = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(0);
@@ -219,27 +228,27 @@ public class CompanyController extends Application implements Initializable {
 	}
 
 	public void fetchCompanies() {
-	
+
 		fetchColumns();
 		Platform.runLater(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				try {
 					ObjectMapper mapper = new ObjectMapper();
 					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API, null);
-					if(response != null && response.length() > 0) {
+					if (response != null && response.length() > 0) {
 						CompanyModel c[] = mapper.readValue(response, CompanyModel[].class);
 						cList = new ArrayList<CompanyModel>();
-						for(CompanyModel ccl : c) {
+						for (CompanyModel ccl : c) {
 							cList.add(ccl);
 						}
 						ObservableList<CompanyModel> data = FXCollections.observableArrayList(cList);
-						
+
 						setColumnValues();
 						tblCompany.setItems(data);
-			
-			            tblCompany.setVisible(true);
+
+						tblCompany.setVisible(true);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -248,29 +257,31 @@ public class CompanyController extends Application implements Initializable {
 			}
 		});
 	}
-	
+
 	private void fetchCompanies(String response) {
-		
+
 		fetchColumns();
 		Platform.runLater(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				try {
 					ObjectMapper mapper = new ObjectMapper();
-					//String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API, null);
-					if(response != null && response.length() > 0) {
+					// String response =
+					// GetAPIClient.callGetAPI(Iconstants.URL_SERVER +
+					// Iconstants.URL_COMPANY_API, null);
+					if (response != null && response.length() > 0) {
 						CompanyModel c[] = mapper.readValue(response, CompanyModel[].class);
 						cList = new ArrayList<CompanyModel>();
-						for(CompanyModel ccl : c) {
+						for (CompanyModel ccl : c) {
 							cList.add(ccl);
 						}
 						ObservableList<CompanyModel> data = FXCollections.observableArrayList(cList);
-						
+
 						setColumnValues();
 						tblCompany.setItems(data);
-			
-			            tblCompany.setVisible(true);
+
+						tblCompany.setVisible(true);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -279,71 +290,80 @@ public class CompanyController extends Application implements Initializable {
 			}
 		});
 	}
-	
+
 	private void setColumnValues() {
-		
-		unitNo.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CompanyModel,String>, ObservableValue<String>>() {
-			
-			@Override
-			public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
-				return new SimpleStringProperty(param.getValue().getUnitNo() + "");
-			}
-		});
-		name.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CompanyModel,String>, ObservableValue<String>>() {
-			
-			@Override
-			public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
-				return new SimpleStringProperty(param.getValue().getName() + "");
-			}
-		});
-		email.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CompanyModel,String>, ObservableValue<String>>() {
-			
-			@Override
-			public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
-				return new SimpleStringProperty(param.getValue().getEmail() + "");
-			}
-		});
-		city.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CompanyModel,String>, ObservableValue<String>>() {
-			
-			@Override
-			public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
-				return new SimpleStringProperty(param.getValue().getCity() + "");
-			}
-		});
-		ps.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CompanyModel,String>, ObservableValue<String>>() {
-			
-			@Override
-			public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
-				return new SimpleStringProperty(param.getValue().getProvinceState() + "");
-			}
-		});
-		phone.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CompanyModel,String>, ObservableValue<String>>() {
-			
-			@Override
-			public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
-				return new SimpleStringProperty(param.getValue().getPhone() + "");
-			}
-		});
-		home.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CompanyModel,String>, ObservableValue<String>>() {
-			
-			@Override
-			public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
-				return new SimpleStringProperty(param.getValue().getCellular() + "");
-			}
-		});
-		fax.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CompanyModel,String>, ObservableValue<String>>() {
-			
-			@Override
-			public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
-				return new SimpleStringProperty(param.getValue().getFax() + "");
-			}
-		});
-		afterHours.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CompanyModel,String>, ObservableValue<String>>() {
-			
-			@Override
-			public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
-				return new SimpleStringProperty(param.getValue().getAfterHours() + "");
-			}
-		});
+
+		unitNo.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<CompanyModel, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
+						return new SimpleStringProperty(param.getValue().getUnitNo() + "");
+					}
+				});
+		name.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<CompanyModel, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
+						return new SimpleStringProperty(param.getValue().getName() + "");
+					}
+				});
+		email.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<CompanyModel, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
+						return new SimpleStringProperty(param.getValue().getEmail() + "");
+					}
+				});
+		city.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<CompanyModel, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
+						return new SimpleStringProperty(param.getValue().getCity() + "");
+					}
+				});
+		ps.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<CompanyModel, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
+						return new SimpleStringProperty(param.getValue().getProvinceState() + "");
+					}
+				});
+		phone.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<CompanyModel, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
+						return new SimpleStringProperty(param.getValue().getPhone() + "");
+					}
+				});
+		home.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<CompanyModel, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
+						return new SimpleStringProperty(param.getValue().getCellular() + "");
+					}
+				});
+		fax.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<CompanyModel, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
+						return new SimpleStringProperty(param.getValue().getFax() + "");
+					}
+				});
+		afterHours.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<CompanyModel, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
+						return new SimpleStringProperty(param.getValue().getAfterHours() + "");
+					}
+				});
 	}
 }

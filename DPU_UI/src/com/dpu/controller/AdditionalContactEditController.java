@@ -96,7 +96,7 @@ public class AdditionalContactEditController implements Initializable {
 	@FXML
 	void btnSaveAdditionalContactAction(ActionEvent event) {
 		try {
- 
+
 			String additionalContact = txtAdditionalContact.getText();
 			String position = txtPosition.getText();
 			String phone = txtPhone.getText();
@@ -109,13 +109,17 @@ public class AdditionalContactEditController implements Initializable {
 			AdditionalContact bcm1 = new AdditionalContact(additionalContact, position, phone, fax, cellular, email,
 					extension, pager, status);
 
-			//if(CompanyEditController.editIndex != -1){
-				if (CompanyEditController.addAddtionalContact == 0) {
-					CompanyEditController.listOfAdditionalContact.set(CompanyEditController.editIndex, bcm1);
-				} else if(CompanyEditController.addAddtionalContact == 1){
-					CompanyEditController.listOfAdditionalContact.add(bcm1);
-				}
-			//}
+			// if(CompanyEditController.editIndex != -1){
+			if (CompanyEditController.addAddtionalContact == 0) {
+				if (CompanyEditController.additionalContactIdPri != 0l
+						|| CompanyEditController.additionalContactIdPri != null)
+					bcm1.setAdditionalContactId(CompanyEditController.additionalContactIdPri);
+				CompanyEditController.listOfAdditionalContact.set(CompanyEditController.editIndex, bcm1);
+				CompanyEditController.additionalContactIdPri = 0l;
+			} else if (CompanyEditController.addAddtionalContact == 1) {
+				CompanyEditController.listOfAdditionalContact.add(bcm1);
+			}
+			// }
 
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
 					.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_EDIT_SCREEN));
@@ -126,7 +130,7 @@ public class AdditionalContactEditController implements Initializable {
 			stage.setTitle("Update Company");
 			stage.setScene(new Scene(root));
 			stage.show();
- 
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

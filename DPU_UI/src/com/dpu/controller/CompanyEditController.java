@@ -2,6 +2,7 @@ package com.dpu.controller;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
@@ -9,13 +10,13 @@ import javax.swing.JOptionPane;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.dpu.client.DeleteAPIClient;
-import com.dpu.client.PostAPIClient;
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.AdditionalContact;
 import com.dpu.model.BillingControllerModel;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
+import com.dpu.request.BillingLocation;
 import com.dpu.request.CompanyModel;
 
 import javafx.application.Application;
@@ -35,9 +36,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -173,7 +174,7 @@ public class CompanyEditController extends Application implements Initializable 
 	@FXML
 	Button btnUpdateCompany;
 
-	Integer companyId = 0;
+	Long companyId = 0l;
 
 	@FXML
 	private void btnUpdateCompanyAction() {
@@ -253,30 +254,89 @@ public class CompanyEditController extends Application implements Initializable 
 
 	private CompanyModel setCompanyValue() {
 
-		// company.setCompanyId(companyId);
+		List<BillingLocation> billingLocations = new ArrayList<BillingLocation>();
+		List<com.dpu.request.AdditionalContact> additionalContacts = new ArrayList<com.dpu.request.AdditionalContact>();
+
+		// company.setCompanyId(companyId.toString());
 		company.setName(txtCompany.getText());
-		company.setContact(txtContact.getText());
 		company.setAddress(txtAddress.getText());
-		company.setPosition(txtPosition.getText());
 		company.setUnitNo(txtUnitNo.getText());
-		company.setPhone(txtPhone.getText());
-		company.setExt(txtExt.getText());
 		company.setCity(txtCity.getText());
-		company.setFax(txtFax.getText());
-		company.setCompanyPrefix(txtPrefix.getText());
 		company.setProvinceState(txtProvince.getText());
 		company.setZip(txtZip.getText());
-		company.setAfterHours(txtAfterHours.getText());
 		company.setEmail(txtEmail.getText());
-		company.setTollfree(txtTollFree.getText());
 		company.setWebsite(txtWebsite.getText());
+		company.setContact(txtContact.getText());
+		company.setPosition(txtPosition.getText());
+		company.setPhone(txtPhone.getText());
+		company.setExt(txtExt.getText());
+		company.setFax(txtFax.getText());
+		company.setCompanyPrefix(txtPrefix.getText());
+		company.setTollfree(txtTollFree.getText());
 		company.setCellular(txtCellular.getText());
 		company.setPager(txtPager.getText());
+		company.setAfterHours(txtAfterHours.getText());
+
+		// need to use for loop here
+
+		if (listOfBilling != null) {
+			int sizeOfBilling = listOfBilling.size();
+			for (int i = 0; i < sizeOfBilling; i++) {
+				BillingLocation billingLocation = new BillingLocation();
+				BillingControllerModel billingModel = listOfBilling.get(i);
+				if (billingModel.getBillingLocationId() != null)
+					billingLocation.setBillingLocationId(billingModel.getBillingLocationId());
+				billingLocation.setName(billingModel.getCompany());
+				billingLocation.setAddress(billingModel.getAddress());
+				billingLocation.setCity(billingModel.getCity());
+				billingLocation.setZip(billingModel.getZip());
+				// need to get Status
+				billingLocation.setStatus(1);
+				billingLocation.setContact(billingModel.getContact());
+				billingLocation.setPosition(txtPosition.getText());
+				billingLocation.setEmail(txtEmail.getText());
+				billingLocation.setCellular(txtCellular.getText());
+				billingLocation.setPhone(billingModel.getPhone());
+				billingLocation.setExt(txtExt.getText());
+				billingLocation.setFax(billingModel.getFax());
+				billingLocation.setTollfree(billingModel.getCompany());
+				billingLocations.add(billingLocation);
+			}
+		}
+
+		company.setBillingLocations(billingLocations);
+
+		// need to use for loop here
+		if (listOfAdditionalContact != null) {
+			int sizeOfAdditionalContact = listOfAdditionalContact.size();
+			for (int i = 0; i < sizeOfAdditionalContact; i++) {
+
+				AdditionalContact additionalContactModel = listOfAdditionalContact.get(i);
+				com.dpu.request.AdditionalContact additionalContact = new com.dpu.request.AdditionalContact();
+
+				if (additionalContactModel.getAdditionalContactId() != null)
+					additionalContact.setAdditionalContactId(additionalContactModel.getAdditionalContactId());
+				additionalContact.setCustomerName(additionalContactModel.getAdditionalContact());
+				additionalContact.setPosition(additionalContactModel.getPosition());
+				additionalContact.setPhone(additionalContactModel.getPhone());
+				additionalContact.setExt(additionalContactModel.getExtension());
+				additionalContact.setFax(additionalContactModel.getFax());
+				// set Pager in prefix.. chnage it
+				additionalContact.setPrefix(additionalContactModel.getPager());
+				additionalContact.setCellular(additionalContactModel.getCellular());
+				// need to set Status here
+				additionalContact.setStatus(1);
+				additionalContact.setEmail(additionalContactModel.getEmail());
+				additionalContacts.add(additionalContact);
+			}
+		}
+		company.setAdditionalContacts(additionalContacts);
+
 		return company;
 	}
 
 	public void initData(CompanyModel c) {
-		// companyId = Integer.parseInt(c.getCompanyId());
+		companyId = Long.parseLong(c.getCompanyId());
 		txtCompany.setText(c.getName());
 		txtContact.setText(c.getContact());
 		txtAddress.setText(c.getAddress());
@@ -320,11 +380,42 @@ public class CompanyEditController extends Application implements Initializable 
 	@FXML
 	private void btnSaveCompanyAction() {
 
+		companyId = CompanyController.companyId;
+		// remove from listOfBilling if available in db
+
+		/*
+		 * if(listOfBilling != null && !(listOfBilling.isEmpty())){ int index =
+		 * 0 ; int billingSize = listOfBilling.size(); for(int
+		 * i=0;i<billingSize;i++){
+		 * 
+		 * if(listOfBilling.get(index).getBillingLocationId() != null){
+		 * BillingControllerModel bcm = listOfBilling.get(index);
+		 * listOfBilling.remove(bcm); }else{ index++; } } }
+		 */
+		// remove from listOfAdditionalContact if available in db
+
+		/*
+		 * if(listOfAdditionalContact != null &&
+		 * !(listOfAdditionalContact.isEmpty())){ int index = 0 ; int
+		 * additionalContactSize = listOfAdditionalContact.size(); for(int
+		 * i=0;i<additionalContactSize;i++){
+		 * 
+		 * if(listOfAdditionalContact.get(index).getAdditionalContactId() !=
+		 * null){ AdditionalContact additionalContact =
+		 * listOfAdditionalContact.get(index);
+		 * listOfAdditionalContact.remove(additionalContact);
+		 * 
+		 * }else{ index++; } } }
+		 */
+
+		// listOfBilling = new ArrayList<BillingControllerModel>();
+		// listOfAdditionalContact = new ArrayList<AdditionalContact>();
 		addCompany();
 		closeAddCompanyScreen(btnSaveCompany);
 	}
 
 	int additionalContactMenuCount = 0;
+
 	@FXML
 	void handleAddContMouseClick(MouseEvent event) {
 
@@ -378,6 +469,9 @@ public class CompanyEditController extends Application implements Initializable 
 				addAddtionalContact = 0;
 				editIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
 				additionalContactModel = tableAdditionalContact.getSelectionModel().getSelectedItem();
+
+				if (additionalContactModel.getAdditionalContactId() != null)
+					additionalContactIdPri = additionalContactModel.getAdditionalContactId();
 				openAddAdditionalContactScreen();
 				closeAddCompanyScreen(btnSaveCompany);
 
@@ -478,28 +572,34 @@ public class CompanyEditController extends Application implements Initializable 
 	}
 
 	private void addCompany() {
-
 		Platform.runLater(new Runnable() {
 
 			@Override
 			public void run() {
 				try {
+
 					ObjectMapper mapper = new ObjectMapper();
 					CompanyModel company = setCompanyValue();
 					String payload = mapper.writeValueAsString(company);
+					// companyId = Long.parseLong(company.getCompanyId());
 
-					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API,
-							null, payload);
+					String response = PutAPIClient.callPutAPI(
+							Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + companyId, null, payload);
 
-					if (response != null && response.contains("message")) {
-						Success success = mapper.readValue(response, Success.class);
-						JOptionPane.showMessageDialog(null, success.getMessage(), "Info", 1);
+					if (response != null) {
+						// Success success = mapper.readValue(response,
+						// Success.class);
+						JOptionPane.showMessageDialog(null, "Company Updated Successfully.", "Info", 1);
 					} else {
-						Failed failed = mapper.readValue(response, Failed.class);
-						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
+						// Failed failed = mapper.readValue(response,
+						// Failed.class);
+						JOptionPane.showMessageDialog(null, "Failed to Updated Company.", "Info", 1);
 					}
+
+					closeEditCompanyScreen(btnSaveCompany);
 					MainScreen.companyController.fetchCompanies();
 				} catch (Exception e) {
+					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
 				}
 			}
@@ -507,6 +607,8 @@ public class CompanyEditController extends Application implements Initializable 
 	}
 
 	int billingLocationCountMenu = 0;
+	public static Long billingLocationIdPri = 0l;
+	public static Long additionalContactIdPri = 0l;
 
 	@FXML
 	public void handleMouseClick(MouseEvent arg0) {
@@ -543,6 +645,10 @@ public class CompanyEditController extends Application implements Initializable 
 				add = 0;
 				editIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
 				billingControllerModel = tableBillingLocations.getSelectionModel().getSelectedItem();
+
+				if (billingControllerModel.getBillingLocationId() != null)
+					billingLocationIdPri = billingControllerModel.getBillingLocationId();
+
 				openAddBillingLocationScreen();
 				closeAddCompanyScreen(btnSaveCompany);
 
