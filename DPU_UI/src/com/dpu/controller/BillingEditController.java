@@ -23,7 +23,6 @@ public class BillingEditController implements Initializable {
 
 	@FXML
 	private URL location;
-	
 
 	@FXML
 	private Button btnCancelBillingLocation;
@@ -55,7 +54,7 @@ public class BillingEditController implements Initializable {
 	@FXML
 	void btnSaveBillingLocationAction(ActionEvent event) {
 		try {
- 
+
 			String company = txtCompany.getText();
 			String address = txtAddress.getText();
 			String city = txtCity.getText();
@@ -66,8 +65,13 @@ public class BillingEditController implements Initializable {
 			BillingControllerModel bcm1 = new BillingControllerModel(company, address, city, phone, contact, zip, fax);
 
 			if (CompanyEditController.add == 0) {
+				if (CompanyEditController.billingLocationIdPri != 0l
+						|| CompanyEditController.billingLocationIdPri != null)
+					bcm1.setBillingLocationId(CompanyEditController.billingLocationIdPri);
 				CompanyEditController.listOfBilling.set(CompanyEditController.editIndex, bcm1);
-			} else if(CompanyEditController.add == 1){
+				CompanyEditController.billingLocationIdPri = 0l;
+
+			} else if (CompanyEditController.add == 1) {
 				CompanyEditController.listOfBilling.add(bcm1);
 			}
 
@@ -92,8 +96,6 @@ public class BillingEditController implements Initializable {
 		loginStage.close();
 	}
 
-	
-	
 	@FXML
 	void btnCancelBillingLocationAction(ActionEvent event) {
 		try {
@@ -111,7 +113,7 @@ public class BillingEditController implements Initializable {
 		}
 		closeAddBillingScreen(btnCancelBillingLocation);
 	}
-	
+
 	@FXML
 	void initialize() {
 		assert btnSaveBillingLocation != null : "fx:id=\"btnSaveBillingLocation\" was not injected: check your FXML file 'AddBillingLocationScreen.fxml'.";
@@ -126,7 +128,7 @@ public class BillingEditController implements Initializable {
 	}
 
 	public void initialize(URL location, ResourceBundle resources) {
-		 
+
 		if (CompanyEditController.add != 1) {
 			if (CompanyEditController.billingControllerModel != null) {
 				txtCompany.setText(CompanyEditController.billingControllerModel.getCompany());
