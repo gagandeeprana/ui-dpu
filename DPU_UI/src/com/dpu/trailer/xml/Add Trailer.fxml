@@ -44,11 +44,11 @@
                         <TextField fx:id="txtUsage" layoutX="442.0" layoutY="11.0" prefHeight="25.0" prefWidth="240.0" />
                         <TextField fx:id="txtOoName" layoutX="92.0" layoutY="76.0" prefHeight="25.0" prefWidth="240.0" />
                         <ComboBox fx:id="ddlStatus" layoutX="92.0" layoutY="141.0" prefHeight="25.0" prefWidth="240.0" />
-                        <TextField fx:id="txtUnitNo" layoutX="92.0" layoutY="11.0" prefHeight="25.0" prefWidth="247.0" />
-                        <TextField fx:id="txtOwner" layoutX="92.0" layoutY="44.0" prefHeight="25.0" prefWidth="247.0" />
-                        <TextField fx:id="txtUsage" layoutX="442.0" layoutY="11.0" prefHeight="25.0" prefWidth="247.0" />
-                        <TextField fx:id="txtOoName" layoutX="92.0" layoutY="76.0" prefHeight="25.0" prefWidth="247.0" />
-                        <ComboBox fx:id="ddlStatus" layoutX="92.0" layoutY="141.0" prefHeight="25.0" prefWidth="247.0" />
+                        <TextField fx:id="txtUnitNo" layoutX="92.0" layoutY="11.0" prefHeight="25.0" prefWidth="240.0" />
+                        <TextField fx:id="txtOwner" layoutX="92.0" layoutY="44.0" prefHeight="25.0" prefWidth="240.0" />
+                        <TextField fx:id="txtUsage" layoutX="442.0" layoutY="11.0" prefHeight="25.0" prefWidth="240.0" />
+                        <TextField fx:id="txtOoName" layoutX="92.0" layoutY="76.0" prefHeight="25.0" prefWidth="240.0" />
+                        <ComboBox fx:id="ddlStatus" layoutX="92.0" layoutY="141.0" prefHeight="25.0" prefWidth="240.0" />
 
                         <Text layoutX="365.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usage" wrappingWidth="51.904296875">
                            <font>
@@ -75,11 +75,11 @@
                               <Font size="14.0" />
                            </font>
                         </Text>
-                        <ComboBox fx:id="ddlCategory" layoutX="92.0" layoutY="108.0" prefHeight="25.0" prefWidth="247.0" />
-                        <ComboBox fx:id="ddlDivision" layoutX="442.0" layoutY="43.0" prefHeight="25.0" prefWidth="247.0" />
-                        <ComboBox fx:id="ddlTerminal" layoutX="442.0" layoutY="75.0" prefHeight="25.0" prefWidth="247.0" />
-                        <ComboBox fx:id="ddlTrailerType" layoutX="442.0" layoutY="108.0" prefHeight="25.0" prefWidth="247.0" />
-                        <TextField fx:id="txtFinance" layoutX="442.0" layoutY="141.0" prefHeight="25.0" prefWidth="247.0" />
+                        <ComboBox fx:id="ddlCategory" layoutX="92.0" layoutY="108.0" prefHeight="25.0" prefWidth="240.0" />
+                        <ComboBox fx:id="ddlDivision" layoutX="442.0" layoutY="43.0" prefHeight="25.0" prefWidth="240.0" />
+                        <ComboBox fx:id="ddlTerminal" layoutX="442.0" layoutY="75.0" prefHeight="25.0" prefWidth="240.0" />
+                        <ComboBox fx:id="ddlTrailerType" layoutX="442.0" layoutY="108.0" prefHeight="25.0" prefWidth="240.0" />
+                        <TextField fx:id="txtFinance" layoutX="442.0" layoutY="141.0" prefHeight="25.0" prefWidth="240.0" />
                      </children>
                   </AnchorPane>
             </content>
