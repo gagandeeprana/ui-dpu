@@ -12,9 +12,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.model.Driver;
-import com.dpu.model.Failed;
-import com.dpu.model.Success;
 import com.dpu.model.Trailer;
 
 import javafx.application.Application;
@@ -85,7 +82,7 @@ public class TrailerController extends Application implements Initializable {
 	        
 	        Stage stage = new Stage();
 	        stage.initModality(Modality.APPLICATION_MODAL);
-	        stage.setTitle("Edit Company");
+	        stage.setTitle("Edit Trailer");
 	        stage.setScene(new Scene(root)); 
 	        stage.show();
 	        return fxmlLoader.getController();

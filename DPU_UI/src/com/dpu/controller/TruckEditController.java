@@ -1,6 +1,7 @@
 package com.dpu.controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
@@ -9,15 +10,19 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.model.Failed;
-import com.dpu.model.Success;
+import com.dpu.model.Category;
+import com.dpu.model.Division;
+import com.dpu.model.Status;
+import com.dpu.model.Terminal;
 import com.dpu.model.Truck;
+import com.dpu.model.Type;
 
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -29,8 +34,10 @@ public class TruckEditController extends Application implements Initializable{
 	Long truckId = 0l;
 	
 	@FXML
-	TextField txtUnitNo, txtUsage, txtOwner, txtDivision, txtOoName, txtTerminal, 
-	txtCategory, txtTruckType, txtStatus, txtFinance;
+	TextField txtUnitNo, txtUsage, txtOwner, txtOoName, txtFinance;
+	
+	@FXML
+	ComboBox<String> ddlStatus, ddlCategory, ddlDivision, ddlTerminal, ddlTruckType;
 	
 	@FXML
 	private void btnUpdateTruckAction() {
@@ -56,15 +63,15 @@ public class TruckEditController extends Application implements Initializable{
 					String payload = mapper.writeValueAsString(truck);
 
 					String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_TRUCK_API + "/" + truckId, null, payload);
+					MainScreen.truckController.fillTruck(response);
 					
-					if(response != null && response.contains("message")) {
+					/*if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
 						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
 					} else {
 						Failed failed = mapper.readValue(response, Failed.class);
 						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-					}
-					MainScreen.truckController.fetchTrucks();
+					}*/
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
 				}
@@ -87,29 +94,76 @@ public class TruckEditController extends Application implements Initializable{
 	private Truck setTruckValue() {
 		Truck truck = new Truck();
 		truck.setUnitNo(Integer.parseInt(txtUnitNo.getText()));
-//		truck.setUsage(txtUsage.getText());
-//		truck.setOwner(txtOwner.getText());
-//		truck.setDivision(txtDivision.getText());
-//		truck.setoOName(txtOoName.getText());
-//		truck.setTerminal(txtTerminal.getText());
-//		truck.setCategory(txtCategory.getText());
-//		truck.setTruckType(txtTruckType.getText());
-//		truck.setStatus(txtStatus.getText());
+		truck.setOwner(txtOwner.getText());
+		truck.setoOName(txtOoName.getText());
+		truck.setTruchUsage(txtUsage.getText());
 		truck.setFinance(txtFinance.getText());
+		truck.setCategoryId(categoryList.get(ddlCategory.getSelectionModel().getSelectedIndex()).getCategoryId());
+		truck.setStatusId(statusList.get(ddlStatus.getSelectionModel().getSelectedIndex()).getId());
+		truck.setDivisionId(divisionList.get(ddlDivision.getSelectionModel().getSelectedIndex()).getDivisionId());
+		truck.setTerminalId(terminalList.get(ddlTerminal.getSelectionModel().getSelectedIndex()).getTerminalId());
+		truck.setTruckTypeId(truckTypeList.get(ddlTruckType.getSelectionModel().getSelectedIndex()).getTypeId());
 		return truck;
 	}
 
+	ObjectMapper mapper = new ObjectMapper();
+	
+	List<Category> categoryList = null;
+	
+	List<Status> statusList = null;
+
+	List<Division> divisionList = null;
+
+	List<Terminal> terminalList = null;
+
+	List<Type> truckTypeList = null;
+	
 	public void initData(Truck t) {
 		truckId = t.getTruckId();
 		txtUnitNo.setText(String.valueOf(t.getUnitNo()));
-//		txtUsage.setText(t.getUsage());
-//		txtOwner.setText(t.getOwner());
-//		txtDivision.setText(t.getDivision());
-//		txtOoName.setText(t.getoOName());
-//		txtTerminal.setText(t.getTerminal());
-//		txtCategory.setText(t.getCategory());
-//		txtTruckType.setText(t.getTruckType());
-//		txtStatus.setText(t.getStatus());
+		txtOwner.setText(t.getOwner());
+		txtOoName.setText(t.getoOName());
+		txtUsage.setText(t.getTruchUsage());
 		txtFinance.setText(t.getFinance());
+		categoryList = t.getCategoryList();
+		for(int i = 0; i< t.getCategoryList().size();i++) {
+			Category category = t.getCategoryList().get(i);
+			ddlCategory.getItems().add(category.getName());
+			if(category.getCategoryId() == t.getCategoryId()) {
+				ddlCategory.getSelectionModel().select(i);
+			}
+		}
+		statusList = t.getStatusList();
+		for(int i = 0; i< t.getStatusList().size();i++) {
+			Status status = t.getStatusList().get(i);
+			ddlStatus.getItems().add(status.getStatus());
+			if(status.getId() == t.getStatusId()) {
+				ddlStatus.getSelectionModel().select(i);
+			}
+		}
+		divisionList = t.getDivisionList();
+		for(int i = 0; i< t.getDivisionList().size();i++) {
+			Division division = t.getDivisionList().get(i);
+			ddlDivision.getItems().add(division.getDivisionName());
+			if(division.getDivisionId() == t.getDivisionId()) {
+				ddlDivision.getSelectionModel().select(i);
+			}
+		}
+		terminalList = t.getTerminalList();
+		for(int i = 0; i< t.getTerminalList().size();i++) {
+			Terminal terminal = t.getTerminalList().get(i);
+			ddlTerminal.getItems().add(terminal.getTerminalName());
+			if(terminal.getTerminalId() == t.getTerminalId()) {
+				ddlTerminal.getSelectionModel().select(i);
+			}
+		}
+		truckTypeList = t.getTruckTypeList();
+		for(int i = 0; i< t.getTruckTypeList().size();i++) {
+			Type truck = t.getTruckTypeList().get(i);
+			ddlTruckType.getItems().add(truck.getTypeName());
+			if(truck.getTypeId() == t.getTruckTypeId()) {
+				ddlTruckType.getSelectionModel().select(i);
+			}
+		}
 	}
 }
