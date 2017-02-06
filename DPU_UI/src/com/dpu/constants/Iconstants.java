@@ -84,6 +84,10 @@ public class Iconstants {
 	
 	public static final String XML_EDIT_ADDITIONAL_CONTACT_SCREEN ="AdditionalContactEditScreen.fxml";
 	public static final String XML_EDIT_BILLING_LOCATION_SCREEN = "EditBillingLocationScreen.fxml";
-	public static final String XML_COMPANY_EDIT_SCREEN = "EditCompany.fxml";
+	public static final String XML_COMPANY_EDIT_SCREEN = "EditCompanyOld.fxml";
 
+	// status 
+	public static final String STATUS_ACTIVE = "Active";
+	public static final String STATUS_INACTIVE = "InActive";
+	
 }

@@ -321,10 +321,8 @@ public class CompanyEditController extends Application implements Initializable 
 				additionalContact.setPhone(additionalContactModel.getPhone());
 				additionalContact.setExt(additionalContactModel.getExtension());
 				additionalContact.setFax(additionalContactModel.getFax());
-				// set Pager in prefix.. chnage it
 				additionalContact.setPrefix(additionalContactModel.getPager());
 				additionalContact.setCellular(additionalContactModel.getCellular());
-				// need to set Status here
 				additionalContact.setStatus(1);
 				additionalContact.setEmail(additionalContactModel.getEmail());
 				additionalContacts.add(additionalContact);
