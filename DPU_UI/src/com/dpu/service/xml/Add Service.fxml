@@ -23,15 +23,15 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <TextField fx:id="txtService" layoutX="160.0" layoutY="43.0" prefHeight="25.0" prefWidth="240.0" />
+      <TextField fx:id="txtService" layoutX="155.0" layoutY="43.0" prefHeight="25.0" prefWidth="240.0" />
       <Button fx:id="btnSaveService" layoutX="274.0" layoutY="183.0" mnemonicParsing="false" onAction="#btnSaveServiceAction" prefHeight="25.0" prefWidth="65.0" text="Add">
          <font>
             <Font size="13.0" />
          </font>
       </Button>
-      <ComboBox fx:id="ddlAssociationWith" layoutX="160.0" layoutY="109.0" prefHeight="25.0" prefWidth="240.0" />
-      <ComboBox fx:id="ddlTextField" layoutX="160.0" layoutY="76.0" prefHeight="25.0" prefWidth="240.0" />
-      <ComboBox fx:id="ddlStatus" layoutX="160.0" layoutY="142.0" prefHeight="25.0" prefWidth="240.0" />
+      <ComboBox fx:id="ddlAssociationWith" layoutX="155.0" layoutY="109.0" prefHeight="25.0" prefWidth="240.0" />
+      <ComboBox fx:id="ddlTextField" layoutX="155.0" layoutY="76.0" prefHeight="25.0" prefWidth="240.0" />
+      <ComboBox fx:id="ddlStatus" layoutX="155.0" layoutY="142.0" prefHeight="25.0" prefWidth="240.0" />
       <Text layoutX="15.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status" wrappingWidth="131.759765625">
          <font>
             <Font size="14.0" />
