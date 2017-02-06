@@ -5,25 +5,25 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="969.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.CategoryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1015.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.CategoryController">
    <children>
-      <AnchorPane prefHeight="49.0" prefWidth="969.0" style="-fx-background-color: lightgrey;">
+      <AnchorPane prefHeight="49.0" prefWidth="1015.0" style="-fx-background-color: lightgrey;">
          <children>
             <Text layoutX="14.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quick Filter">
                <font>
                   <Font size="13.0" />
                </font>
             </Text>
-            <TextField fx:id="txtSearchCategory" focusTraversable="false" layoutX="88.0" layoutY="9.0" prefHeight="25.0" prefWidth="202.0" promptText="Enter category to search..." />
-            <CheckBox layoutX="337.0" layoutY="12.0" mnemonicParsing="false" text="Show All" />
-            <Button fx:id="btnGoCategory" layoutX="299.0" layoutY="8.0" mnemonicParsing="false" onAction="#btnGoCategoryAction" text="Go" />
-            <Button fx:id="btnAddCategory" layoutX="410.0" layoutY="8.0" mnemonicParsing="false" onAction="#btnAddCategoryAction" prefHeight="25.0" prefWidth="55.0" text="Add" />
-            <Button fx:id="btnEditCategory" layoutX="470.0" layoutY="8.0" mnemonicParsing="false" onAction="#btnEditCategoryAction" prefHeight="25.0" prefWidth="55.0" text="Edit" />
-            <Button fx:id="btnDeleteCategory" layoutX="530.0" layoutY="8.0" mnemonicParsing="false" onAction="#btnDeleteCategoryAction" prefHeight="25.0" prefWidth="55.0" text="Delete" />
-            <Button layoutX="590.0" layoutY="8.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="E-Mail" />
+            <TextField fx:id="txtSearchCategory" focusTraversable="false" layoutX="88.0" layoutY="9.0" prefHeight="25.0" prefWidth="200.0" promptText="Enter category to search..." />
+            <CheckBox layoutX="332.0" layoutY="13.0" mnemonicParsing="false" text="Show All" />
+            <Button fx:id="btnGoCategory" layoutX="294.0" layoutY="9.0" mnemonicParsing="false" onAction="#btnGoCategoryAction" text="Go" />
+            <Button fx:id="btnAddCategory" layoutX="405.0" layoutY="9.0" mnemonicParsing="false" onAction="#btnAddCategoryAction" prefHeight="25.0" prefWidth="55.0" text="Add" />
+            <Button fx:id="btnEditCategory" layoutX="465.0" layoutY="9.0" mnemonicParsing="false" onAction="#btnEditCategoryAction" prefHeight="25.0" prefWidth="55.0" text="Edit" />
+            <Button fx:id="btnDeleteCategory" layoutX="525.0" layoutY="9.0" mnemonicParsing="false" onAction="#btnDeleteCategoryAction" prefHeight="25.0" prefWidth="55.0" text="Delete" />
+            <Button layoutX="585.0" layoutY="9.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="E-Mail" />
          </children>
       </AnchorPane>
-      <TableView fx:id="tblCategory" layoutY="42.0" prefHeight="758.0" prefWidth="969.0">
+      <TableView fx:id="tblCategory" layoutY="42.0" prefHeight="584.0" prefWidth="1015.0">
         <columns>
           <TableColumn fx:id="type" prefWidth="321.0" text="Type" />
           <TableColumn fx:id="category" prefWidth="343.0" text="Category" />
