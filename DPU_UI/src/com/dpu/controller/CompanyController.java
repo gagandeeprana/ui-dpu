@@ -436,11 +436,20 @@ public class CompanyController extends Application implements Initializable {
 
 			}
 		});
+		
+		MenuItem item7 = new MenuItem("CANCEL");
+		item3.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+
+			}
+		});
 
 
 
 		// Add MenuItem to ContextMenu
-		contextMenu.getItems().addAll(item1, item2, item3, item4, item5, item6);
+		contextMenu.getItems().addAll(item1, item2, item3, item4, item5, item6, item7);
 		if (tblCompanyMenuCount == 0) {
 			tblCompanyMenuCount++;
 			// When user right-click on Table
