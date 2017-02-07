@@ -1,39 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.TruckEditController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="269.0" prefWidth="705.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.TruckEditController">
   <children>
-    <TabPane layoutX="14.0" layoutY="14.0" prefHeight="322.0" prefWidth="572.0" tabClosingPolicy="UNAVAILABLE">
+    <TabPane layoutX="7.0" layoutY="26.0" prefHeight="205.0" prefWidth="694.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
         <Tab text="General">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="280.0" prefWidth="572.0">
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="280.0" prefWidth="572.0" style="-fx-border-color: black;">
               <children>
-                <Label layoutX="14.0" layoutY="14.0" text="Unit No." />
-                <Label layoutX="14.0" layoutY="52.0" text="Owner" />
-                <Label layoutX="16.0" layoutY="94.0" text="O/O's Name" />
-                <Label layoutX="14.0" layoutY="138.0" text="Category" />
-                <Label layoutX="14.0" layoutY="176.0" text="Status" />
-                <Label layoutX="298.0" layoutY="14.0" text="Usage" />
-                <Label layoutX="298.0" layoutY="55.0" text="Division" />
-                <Label layoutX="293.0" layoutY="94.0" text="Terminal" />
-                <Label layoutX="293.0" layoutY="135.0" text="Truck Type" />
-                <Label layoutX="293.0" layoutY="181.0" text="Finance" />
-                <TextField fx:id="txtUnitNo" layoutX="93.0" layoutY="11.0" prefWidth="183.0" />
-                <TextField fx:id="txtOwner" layoutX="93.0" layoutY="52.0" prefWidth="183.0" />
-                <TextField fx:id="txtOoName" layoutX="93.0" layoutY="91.0" prefWidth="183.0" />
-                <TextField fx:id="txtUsage" layoutX="356.0" layoutY="11.0" prefWidth="174.0" />
-                <TextField fx:id="txtFinance" layoutX="358.0" layoutY="178.0" prefWidth="174.0" />
-                        <ComboBox fx:id="ddlCategory" layoutX="93.0" layoutY="134.0" prefHeight="25.0" prefWidth="183.0" />
-                        <ComboBox fx:id="ddlStatus" layoutX="93.0" layoutY="172.0" prefHeight="25.0" prefWidth="183.0" />
-                        <ComboBox fx:id="ddlDivision" layoutX="358.0" layoutY="52.0" prefHeight="25.0" prefWidth="173.0" />
-                        <ComboBox fx:id="ddlTerminal" layoutX="358.0" layoutY="90.0" prefHeight="25.0" prefWidth="173.0" />
-                        <ComboBox fx:id="ddlTruckType" layoutX="358.0" layoutY="131.0" prefHeight="25.0" prefWidth="173.0" />
+                <Label layoutX="11.0" layoutY="12.0" text="Unit No.">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
+                <Label layoutX="11.0" layoutY="43.0" text="Owner">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
+                <Label layoutX="11.0" layoutY="78.0" text="O/O's Name">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
+                <Label layoutX="11.0" layoutY="110.0" text="Category">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
+                <Label layoutX="11.0" layoutY="143.0" text="Status">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
+                <Label layoutX="364.0" layoutY="13.0" text="Usage">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
+                <Label layoutX="364.0" layoutY="45.0" text="Division">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
+                <Label layoutX="364.0" layoutY="77.0" text="Terminal">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
+                <Label layoutX="364.0" layoutY="110.0" text="Truck Type">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
+                <Label layoutX="364.0" layoutY="146.0" text="Finance">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
+                <TextField fx:id="txtUnitNo" layoutX="93.0" layoutY="9.0" prefHeight="25.0" prefWidth="240.0" />
+                <TextField fx:id="txtOwner" layoutX="93.0" layoutY="42.0" prefHeight="25.0" prefWidth="240.0" />
+                <TextField fx:id="txtOoName" layoutX="93.0" layoutY="75.0" prefHeight="25.0" prefWidth="240.0" />
+                <TextField fx:id="txtUsage" layoutX="442.0" layoutY="10.0" prefHeight="25.0" prefWidth="240.0" />
+                <TextField fx:id="txtFinance" layoutX="443.0" layoutY="143.0" prefHeight="25.0" prefWidth="240.0" />
+                        <ComboBox fx:id="ddlCategory" layoutX="93.0" layoutY="108.0" prefHeight="25.0" prefWidth="240.0" />
+                        <ComboBox fx:id="ddlStatus" layoutX="93.0" layoutY="141.0" prefHeight="25.0" prefWidth="240.0" />
+                        <ComboBox fx:id="ddlDivision" layoutX="443.0" layoutY="43.0" prefHeight="25.0" prefWidth="240.0" />
+                        <ComboBox fx:id="ddlTerminal" layoutX="443.0" layoutY="75.0" prefHeight="25.0" prefWidth="240.0" />
+                        <ComboBox fx:id="ddlTruckType" layoutX="443.0" layoutY="108.0" prefHeight="25.0" prefWidth="240.0" />
               </children>
             </AnchorPane>
           </content>
@@ -45,7 +76,18 @@
         </Tab>
       </tabs>
     </TabPane>
-    <Button fx:id="btnUpdateTruck" layoutX="433.0" layoutY="357.0" mnemonicParsing="false" onAction="#btnUpdateTruckAction" text="Update" />
-    <Button layoutX="492.0" layoutY="357.0" mnemonicParsing="false" text="Cancel" />
+    <Button fx:id="btnUpdateTruck" layoutX="566.0" layoutY="235.0" mnemonicParsing="false" onAction="#btnUpdateTruckAction" prefHeight="25.0" prefWidth="65.0" text="Update">
+         <font>
+            <Font size="13.0" />
+         </font></Button>
+    <Button layoutX="636.0" layoutY="235.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Cancel">
+         <font>
+            <Font size="13.0" />
+         </font></Button>
+      <Label layoutX="-1.0" layoutY="-1.0" prefHeight="27.0" prefWidth="707.0" style="-fx-background-color: lightgrey; -fx-border-color: black;" text="  Edit Truck">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
   </children>
 </AnchorPane>
