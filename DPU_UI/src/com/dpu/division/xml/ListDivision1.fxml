@@ -24,7 +24,7 @@
             <Button layoutX="578.0" layoutY="11.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="E-Mail" />
          </children>
       </AnchorPane>
-      <TableView fx:id="tblDivision" layoutY="43.0" prefHeight="584.0" prefWidth="1015.0">
+      <TableView fx:id="tblDivision" onMouseClicked="#handleAddContMouseClick" layoutY="43.0" prefHeight="584.0" prefWidth="1015.0">
          <columns>
             <TableColumn fx:id="code" prefWidth="96.0" text="Code" />
             <TableColumn fx:id="name" prefWidth="139.0" text="Name" />

@@ -355,7 +355,7 @@ public class CompanyEditController extends Application implements Initializable 
 		txtPager.setText(c.getPager());
 	}
 
-	// -------------------------------------------------------------------------------------
+	 
 	public static int editIndex = -1;
 	public static int add = 0;
 	public static int addAddtionalContact = 0;

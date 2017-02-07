@@ -19,7 +19,7 @@
     <Button fx:id="btnAddShipper" layoutX="331.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnAddShipperAction" prefHeight="25.0" prefWidth="55.0" text="Add" />
     <Button fx:id="btnEditShipper" layoutX="391.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnEditShipperAction" prefHeight="25.0" prefWidth="55.0" text="Edit" />
     <Button fx:id="btnDeleteShipper" layoutX="452.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnDeleteShipperAction" prefHeight="25.0" prefWidth="55.0" text="Delete" />
-    <TableView fx:id="tblShipper" layoutY="42.0" prefHeight="584.0" prefWidth="1015.0">
+    <TableView fx:id="tblShipper" onMouseClicked="#handleAddContMouseClick" layoutY="42.0" prefHeight="584.0" prefWidth="1015.0">
       <columns>
         <TableColumn fx:id="company" maxWidth="5000.0" minWidth="0.0" prefWidth="84.0" text="Company" />
         <TableColumn fx:id="address" maxWidth="5000.0" minWidth="0.0" prefWidth="84.0" text="Address" />

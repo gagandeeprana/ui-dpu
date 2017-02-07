@@ -20,7 +20,7 @@
         <Button fx:id="btnAddTrailer" layoutX="401.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnAddTrailerAction" prefHeight="25.0" prefWidth="55.0" text="Add" />
         <Button fx:id="btnEditTrailer" layoutX="461.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnEditTrailerAction" prefHeight="25.0" prefWidth="55.0" text="Edit" />
         <Button fx:id="btnDeleteTrailer" layoutX="521.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnDeleteTrailerAction" prefHeight="25.0" prefWidth="55.0" text="Delete" />
-        <TableView fx:id="tblTrailer" layoutY="43.0" prefHeight="581.0" prefWidth="1015.0">
+        <TableView fx:id="tblTrailer" onMouseClicked="#handleAddContMouseClick" layoutY="43.0" prefHeight="581.0" prefWidth="1015.0">
           <columns>
             <TableColumn fx:id="unitNo" maxWidth="5000.0" prefWidth="100.0" text="Unit No." />
             <TableColumn fx:id="owner" maxWidth="5000.0" prefWidth="100.0" text="Owner" />

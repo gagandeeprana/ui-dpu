@@ -20,13 +20,19 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TableView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -288,4 +294,85 @@ public class TruckController extends Application implements Initializable {
 			}
 		});
 	}
+	
+
+	// ADD MENU
+
+		public int tblTruckMenuCount = 0;
+
+		@FXML
+		public void handleAddContMouseClick(MouseEvent event) {
+
+			// Create ContextMenu
+			ContextMenu contextMenu = new ContextMenu();
+
+			MenuItem item1 = new MenuItem("ADD");
+			item1.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+				}
+
+			});
+			MenuItem item2 = new MenuItem("EDIT");
+			item2.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+
+				}
+			});
+
+			MenuItem item3 = new MenuItem("DELETE");
+			item3.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+
+				}
+			});
+			
+			MenuItem item4 = new MenuItem("PERSONALIZE");
+			item1.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+				}
+
+			});
+			MenuItem item5 = new MenuItem("DUPLICATE");
+			item2.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+
+				}
+			});
+
+			MenuItem item6 = new MenuItem("FILTER BY");
+			item3.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+
+				}
+			});
+ 
+			// Add MenuItem to ContextMenu
+			contextMenu.getItems().addAll(item1, item2, item3, item4, item5, item6);
+			if (tblTruckMenuCount == 0) {
+				tblTruckMenuCount++;
+				// When user right-click on Table
+				tblTruck.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+					@Override
+					public void handle(ContextMenuEvent event) {
+						contextMenu.show(tblTruck, event.getScreenX(), event.getScreenY());
+
+					}
+
+				});
+
+			}
+
+		}
 }

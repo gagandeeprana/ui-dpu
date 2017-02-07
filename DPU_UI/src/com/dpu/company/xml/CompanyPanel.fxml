@@ -9,7 +9,7 @@
 <Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1015.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.CompanyController">
    <children>
       <Pane prefHeight="49.0" prefWidth="1015.0" style="-fx-background-color: lightgrey;" />
-      <TableView fx:id="tblCompany" layoutY="42.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="584.0" prefWidth="1015.0">
+      <TableView fx:id="tblCompany" onMouseClicked="#handleAddContMouseClick" layoutY="42.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="584.0" prefWidth="1015.0">
         <columns>
           <TableColumn fx:id="unitNo" prefWidth="112.0" text="UnitNo" />
           <TableColumn fx:id="name" prefWidth="112.0" text="Name" />

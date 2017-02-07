@@ -17,7 +17,7 @@
             <Button fx:id="btnDeleteDriver" layoutX="455.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnDeleteDriverAction" prefHeight="25.0" prefWidth="55.0" text="DELETE" />
          </children>
       </AnchorPane>
-    <TableView fx:id="tblDriver" layoutY="41.0" prefHeight="584.0" prefWidth="1015.0">
+    <TableView fx:id="tblDriver" onMouseClicked="#handleAddContMouseClick" layoutY="41.0" prefHeight="584.0" prefWidth="1015.0">
       <columns>
         <TableColumn fx:id="driverCode" maxWidth="5000.0" minWidth="10.0" prefWidth="72.0" text="Driver Code" />
         <TableColumn fx:id="firstName" maxWidth="5000.0" minWidth="10.0" prefWidth="72.0" text="First Name" />
