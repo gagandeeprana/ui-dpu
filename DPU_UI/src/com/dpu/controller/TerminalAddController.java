@@ -32,10 +32,10 @@ public class TerminalAddController extends Application implements Initializable{
 	Button btnCancelTerminal, btnAddAvailableServices, btnAddNewLocation;
 	
 	@FXML
-	TextField txtTerminalName, txtLocation;
+	TextField txtTerminalName;
 	
 	@FXML
-	ComboBox<String> ddlAvailableServices;
+	ComboBox<String> ddlAvailableServices, ddlLocation;
 	
 	@FXML
 	private void btnSaveTerminalAction() {
@@ -147,7 +147,7 @@ public class TerminalAddController extends Application implements Initializable{
 	private Terminal setTerminalValue() {
 		Terminal terminal = new Terminal();
 		terminal.setTerminalName(txtTerminalName.getText());
-		terminal.setLocation(txtLocation.getText());
+//		terminal.setLocation(txtLocation.getText());
 //		terminal.setS(serviceList.get(ddlAvailableServices.getSelectionModel().getSelectedIndex()).get.toString());		
 		return terminal;
 	}

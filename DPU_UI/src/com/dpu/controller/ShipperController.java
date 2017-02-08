@@ -268,7 +268,7 @@ public class ShipperController extends Application implements Initializable {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Shipper, String> param) {
-				return new SimpleStringProperty(param.getValue().getCompany() + "");
+				return new SimpleStringProperty(param.getValue().getLocationName() + "");
 			}
 		});
 		address.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Shipper,String>, ObservableValue<String>>() {
