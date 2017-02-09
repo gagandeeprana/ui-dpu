@@ -191,7 +191,7 @@ public class ShipperController extends Application implements Initializable {
 		
 		            tblShipper.setVisible(true);
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					JOptionPane.showMessageDialog(null, "Try Again.. " + e, "Info", 1);
 				}
 			}
 		});

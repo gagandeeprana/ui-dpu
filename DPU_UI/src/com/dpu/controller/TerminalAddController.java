@@ -1,6 +1,7 @@
 package com.dpu.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -12,6 +13,7 @@ import com.dpu.client.GetAPIClient;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.DPUService;
+import com.dpu.model.Shipper;
 import com.dpu.model.Terminal;
 
 import javafx.application.Application;
@@ -104,6 +106,8 @@ public class TerminalAddController extends Application implements Initializable{
 	
 	List<DPUService> serviceList = null;
 	
+	List<Shipper> shipperList = null;
+	
 	private void fetchMasterDataForDropDowns() {
 		
 		Platform.runLater(new Runnable() {
@@ -115,6 +119,8 @@ public class TerminalAddController extends Application implements Initializable{
 					Terminal terminal = mapper.readValue(response, Terminal.class);
 					serviceList = terminal.getServiceList();
 					fillDropDown(ddlAvailableServices, serviceList);
+					shipperList = terminal.getShipperList();
+					fillDropDown(ddlLocation, shipperList);
 				} catch (Exception e) {
 					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
@@ -132,6 +138,10 @@ public class TerminalAddController extends Application implements Initializable{
 					DPUService dpuService = (DPUService) object;
 					comboBox.getItems().add(dpuService.getServiceName());
 				}
+				if(object != null && object instanceof Shipper) {
+					Shipper shipper = (Shipper) object;
+					comboBox.getItems().add(shipper.getLocationName());
+				}
 			}
 		}
 	}
@@ -147,8 +157,12 @@ public class TerminalAddController extends Application implements Initializable{
 	private Terminal setTerminalValue() {
 		Terminal terminal = new Terminal();
 		terminal.setTerminalName(txtTerminalName.getText());
-//		terminal.setLocation(txtLocation.getText());
-//		terminal.setS(serviceList.get(ddlAvailableServices.getSelectionModel().getSelectedIndex()).get.toString());		
+		terminal.setShipperId(shipperList.get(ddlLocation.getSelectionModel().getSelectedIndex()).getShipperId());
+		List<Long> serviceIds = new ArrayList<>();
+		Long serviceId = serviceList.get(ddlAvailableServices.getSelectionModel().getSelectedIndex()).getServiceId();
+		terminal.setStatusId(0l);
+		serviceIds.add(serviceId);
+		terminal.setServiceIds(serviceIds);
 		return terminal;
 	}
 }

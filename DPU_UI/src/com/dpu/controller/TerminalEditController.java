@@ -1,6 +1,7 @@
 package com.dpu.controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
@@ -9,7 +10,9 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.model.DPUService;
 import com.dpu.model.Failed;
+import com.dpu.model.Shipper;
 import com.dpu.model.Success;
 import com.dpu.model.Terminal;
 
@@ -32,7 +35,7 @@ public class TerminalEditController extends Application implements Initializable
 	TextField txtTerminalName, txtLocation;
 
 	@FXML
-	ComboBox<Object> ddlAvailableServices;
+	ComboBox<Object> ddlAvailableServices, ddlLocation;
 
 	@FXML
 	private void btnUpdateTerminalAction() {
@@ -89,17 +92,37 @@ public class TerminalEditController extends Application implements Initializable
 
 	private Terminal setTerminalValue() {
 		Terminal terminal = new Terminal();
-		terminal.setTerminalId(terminalId);
-		terminal.setTerminalName(txtTerminalName.getText());
-		terminal.setLocation(txtLocation.getText());
-		terminal.setAvailableServices(ddlAvailableServices.getSelectionModel().getSelectedItem().toString());
+//		terminal.setTerminalId(terminalId);
+//		terminal.setTerminalName(txtTerminalName.getText());
+//		terminal.setLocation(txtLocation.getText());
+//		terminal.setAvailableServices(ddlAvailableServices.getSelectionModel().getSelectedItem().toString());
 		return terminal;
 	}
 
+	List<Shipper> shipperList = null;
+	
+	List<DPUService> serviceList = null;
+	
 	public void initData(Terminal t) {
 		terminalId = t.getTerminalId();
 		txtTerminalName.setText(t.getTerminalName());
-		txtLocation.setText(t.getLocation());
-		ddlAvailableServices.setValue(t.getAvailableServices());
+		shipperList = t.getShipperList();
+		for(int i=0;i<t.getShipperList().size();i++) {
+			Shipper shipper = t.getShipperList().get(i);
+			ddlLocation.getItems().add(shipper.getLocationName());
+			if(shipper.getShipperId() == t.getShipperId()) {
+				ddlLocation.getSelectionModel().select(i);
+			}
+		}
+		serviceList = t.getServiceList();
+		for(int i=0;i<t.getServiceList().size();i++) {
+			DPUService service = t.getServiceList().get(i);
+			ddlAvailableServices.getItems().add(service.getServiceName());
+			for(int j=0;j<t.getServiceIds().size();j++) {
+				if(service.getServiceId() == t.getServiceIds().get(j)) {
+					ddlLocation.getSelectionModel().select(i);
+				}
+			}
+		}
 	}
 }

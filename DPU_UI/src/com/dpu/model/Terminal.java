@@ -10,8 +10,6 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 public class Terminal {
 	private Long terminalId;
 	private String terminalName;
-	private String facility;
-	private String location;
 	private String availableServices;
 	private String createdBy;
 	private Date createdOn;
@@ -20,56 +18,76 @@ public class Terminal {
 	private String status;
 	private Long statusId;
 	private List<Status> statusList;
+	private List<Long> serviceIds;
 	private List<DPUService> serviceList;
+	private Long shipperId;
+	private String shipperName;
+	
+	public List<DPUService> getServiceList() {
+		return serviceList;
+	}
+
+	public void setServiceList(List<DPUService> serviceList) {
+		this.serviceList = serviceList;
+	}
+
+	public List<Long> getServiceIds() {
+		return serviceIds;
+	}
+
+	public void setServiceIds(List<Long> serviceIds) {
+		this.serviceIds = serviceIds;
+	}
+	private List<Shipper> shipperList;
 	
 	public Long getTerminalId() {
 		return terminalId;
 	}
+	
 	public void setTerminalId(Long terminalId) {
 		this.terminalId = terminalId;
 	}
+	
 	public String getTerminalName() {
 		return terminalName;
 	}
+	
 	public void setTerminalName(String terminalName) {
 		this.terminalName = terminalName;
 	}
-	public String getFacility() {
-		return facility;
-	}
-	public void setFacility(String facility) {
-		this.facility = facility;
-	}
-	public String getLocation() {
-		return location;
-	}
-	public void setLocation(String location) {
-		this.location = location;
-	}
+	
 	public String getAvailableServices() {
 		return availableServices;
 	}
+	
 	public void setAvailableServices(String availableServices) {
 		this.availableServices = availableServices;
 	}
+	
 	public String getCreatedBy() {
 		return createdBy;
 	}
+	
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
+	
 	public Date getCreatedOn() {
 		return createdOn;
 	}
+	
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
+	
 	public String getModifiedBy() {
 		return modifiedBy;
 	}
+	
 	public void setModifiedBy(String modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
+	
 	public Date getModifiedOn() {
 		return modifiedOn;
 	}
@@ -94,10 +112,25 @@ public class Terminal {
 	public void setStatusList(List<Status> statusList) {
 		this.statusList = statusList;
 	}
-	public List<DPUService> getServiceList() {
-		return serviceList;
+	
+	public Long getShipperId() {
+		return shipperId;
 	}
-	public void setServiceList(List<DPUService> serviceList) {
-		this.serviceList = serviceList;
-	}	
+	public void setShipperId(Long shipperId) {
+		this.shipperId = shipperId;
+	}
+	public String getShipperName() {
+		return shipperName;
+	}
+	public void setShipperName(String shipperName) {
+		this.shipperName = shipperName;
+	}
+
+	public List<Shipper> getShipperList() {
+		return shipperList;
+	}
+
+	public void setShipperList(List<Shipper> shipperList) {
+		this.shipperList = shipperList;
+	}
 }
