@@ -321,10 +321,8 @@ public class CompanyEditController extends Application implements Initializable 
 				additionalContact.setPhone(additionalContactModel.getPhone());
 				additionalContact.setExt(additionalContactModel.getExtension());
 				additionalContact.setFax(additionalContactModel.getFax());
-				// set Pager in prefix.. chnage it
 				additionalContact.setPrefix(additionalContactModel.getPager());
 				additionalContact.setCellular(additionalContactModel.getCellular());
-				// need to set Status here
 				additionalContact.setStatus(1);
 				additionalContact.setEmail(additionalContactModel.getEmail());
 				additionalContacts.add(additionalContact);
@@ -357,7 +355,7 @@ public class CompanyEditController extends Application implements Initializable 
 		txtPager.setText(c.getPager());
 	}
 
-	// -------------------------------------------------------------------------------------
+	 
 	public static int editIndex = -1;
 	public static int add = 0;
 	public static int addAddtionalContact = 0;

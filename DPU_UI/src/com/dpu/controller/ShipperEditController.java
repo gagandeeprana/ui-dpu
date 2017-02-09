@@ -30,14 +30,14 @@ public class ShipperEditController extends Application implements Initializable{
 	Button btnUpdateShipper;
 	
 	@FXML
-	TextField txtContact, txtAddress, txtPosition, txtUnitNo, txtPhone, txtExt, txtCity, txtFax, txtPrefix, 
+	TextField txtLocationName, txtContact, txtAddress, txtPosition, txtUnitNo, txtPhone, txtExt, txtCity, txtFax, txtPrefix, 
 	txtProvince, txtTollFree, txtPlant, txtCellNumber, txtZone, txtEmail, txtLeadTime, txtTimeZone, txtImporter;
 	
 	@FXML
 	TextArea txtInternalNotes, txtStandardNotes;
 	
 	@FXML
-	ComboBox<String> ddlCompany, ddlStatus;
+	ComboBox<String> ddlStatus;
 
 	private Long shipperId = 0l;
 	
@@ -79,7 +79,7 @@ public class ShipperEditController extends Application implements Initializable{
 
 	private Shipper setShipperValue() {
 		Shipper shipper = new Shipper();
-		shipper.setCompanyId(companyList.get(ddlCompany.getSelectionModel().getSelectedIndex()).getCompanyId());
+		shipper.setLocationName(txtLocationName.getText());
 		shipper.setContact(txtContact.getText());
 		shipper.setAddress(txtAddress.getText());
 		shipper.setPosition(txtPosition.getText());
@@ -135,14 +135,15 @@ public class ShipperEditController extends Application implements Initializable{
 				ddlStatus.getSelectionModel().select(i);
 			}
 		}
-		companyList = s.getCompanyList();
+		/*companyList = s.getCompanyList();
 		for(int i = 0; i< s.getCompanyList().size();i++) {
 			Company company = s.getCompanyList().get(i);
 			ddlCompany.getItems().add(company.getName());
 			if(company.getCompanyId() == s.getCompanyId()) {
 				ddlCompany.getSelectionModel().select(i);
 			}
-		}
+		}*/
+		txtLocationName.setText(s.getLocationName());
 		txtContact.setText(s.getContact());
 		txtAddress.setText(s.getAddress());
 		txtPosition.setText(s.getPosition());

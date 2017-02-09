@@ -16,7 +16,7 @@
         <Button fx:id="btnAddTruck" layoutX="423.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnAddTruckAction" prefHeight="25.0" prefWidth="38.0" text="Add" />
         <Button fx:id="btnEditTruck" layoutX="472.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnEditTruckAction" prefHeight="25.0" prefWidth="38.0" text="Edit" />
         <Button fx:id="btnDeleteTruck" layoutX="518.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnDeleteTruckAction" text="Delete" />
-        <TableView fx:id="tblTruck" layoutX="0.0" layoutY="43.0" prefHeight="438.0" prefWidth="666.0">
+        <TableView fx:id="tblTruck" onMouseClicked="#handleAddContMouseClick" layoutX="0.0" layoutY="43.0" prefHeight="438.0" prefWidth="666.0">
           <columns>
             <TableColumn fx:id="unitNo" maxWidth="5000.0" minWidth="10.0" prefWidth="57.0" text="Unit No." />
             <TableColumn fx:id="owner" maxWidth="5000.0" minWidth="10.0" prefWidth="55.0" text="Owner" />
