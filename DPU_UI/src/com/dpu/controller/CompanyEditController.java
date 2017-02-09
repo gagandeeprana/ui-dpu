@@ -35,6 +35,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
@@ -56,6 +57,9 @@ public class CompanyEditController extends Application implements Initializable 
 
 	@FXML
 	private Pane addCompanyPane;
+
+	@FXML
+	private TabPane tabPane;
 
 	@FXML
 	private TableColumn<AdditionalContact, String> additionalContact;
@@ -176,6 +180,8 @@ public class CompanyEditController extends Application implements Initializable 
 
 	Long companyId = 0l;
 
+	public static int selectedTabValue = 0;
+
 	@FXML
 	private void btnUpdateCompanyAction() {
 		editCompany();
@@ -240,6 +246,7 @@ public class CompanyEditController extends Application implements Initializable 
 		txtCellular.setText(company.getCellular());
 		txtPager.setText(company.getPager());
 		txtAfterHours.setText(company.getAfterHours());
+		tabPane.getSelectionModel().select(selectedTabValue);
 
 	}
 
@@ -355,7 +362,6 @@ public class CompanyEditController extends Application implements Initializable 
 		txtPager.setText(c.getPager());
 	}
 
-	 
 	public static int editIndex = -1;
 	public static int add = 0;
 	public static int addAddtionalContact = 0;
@@ -481,35 +487,43 @@ public class CompanyEditController extends Application implements Initializable 
 
 			@Override
 			public void handle(ActionEvent event) {
+				selectedTabValue = 1;
 				setValuesToCmpanyTextField();
 				editIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
 
+				System.out.println(listOfAdditionalContact.get(editIndex).getAdditionalContactId());
 				if (listOfAdditionalContact.get(editIndex).getAdditionalContactId() != 0l
 						|| listOfAdditionalContact.get(editIndex).getAdditionalContactId() != null) {
 					Long additionalontactId = listOfAdditionalContact.get(editIndex).getAdditionalContactId();
 					Long companyId = listOfAdditionalContact.get(editIndex).getCompanyId();
 
-					// hit api to delete Additional Conatct
-					try {
-						String response = DeleteAPIClient
-								.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_DELETE_BILLING_LOCATION_API + "/"
-										+ companyId + "/additionalcontacts/" + additionalontactId, null);
+					if (additionalontactId == 0) {
 						listOfAdditionalContact.remove(editIndex);
+						JOptionPane.showMessageDialog(null, "Additional Contact Deleted SuccessFully.", "Info", 1);
+						
+					} else {
 
-						ObjectMapper mapper = new ObjectMapper();
+						// hit api to delete Additional Conatct
+						try {
+							String response = DeleteAPIClient
+									.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_DELETE_BILLING_LOCATION_API
+											+ "/" + companyId + "/additionalcontacts/" + additionalontactId, null);
+							listOfAdditionalContact.remove(editIndex);
 
-						if (response != null && response.contains("message")) {
-							Success success = mapper.readValue(response, Success.class);
-							JOptionPane.showMessageDialog(null, success.getMessage(), "Info", 1);
-						} else {
-							Failed failed = mapper.readValue(response, Failed.class);
-							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
+							ObjectMapper mapper = new ObjectMapper();
+
+							if (response != null && response.contains("message")) {
+								Success success = mapper.readValue(response, Success.class);
+								JOptionPane.showMessageDialog(null, success.getMessage(), "Info", 1);
+							} else {
+								Failed failed = mapper.readValue(response, Failed.class);
+								JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
+							}
+
+						} catch (Exception e) {
+							e.printStackTrace();
 						}
-
-					} catch (Exception e) {
-						e.printStackTrace();
 					}
-
 					editIndex = -1;
 
 					try {
@@ -658,6 +672,7 @@ public class CompanyEditController extends Application implements Initializable 
 
 			@Override
 			public void handle(ActionEvent event) {
+				selectedTabValue = 0;
 				editIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
 
 				// hit API to remove record from db.
@@ -666,24 +681,30 @@ public class CompanyEditController extends Application implements Initializable 
 					Long billingId = listOfBilling.get(editIndex).getBillingLocationId();
 					Long companyId = listOfBilling.get(editIndex).getCompanyId();
 
-					try {
-						String response = DeleteAPIClient
-								.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_DELETE_BILLING_LOCATION_API + "/"
-										+ companyId + "/billinglocations/" + billingId, null);
+					if (billingId == 0) {
+						JOptionPane.showMessageDialog(null, "Billing Location Deleted SuccessFully.", "Info", 1);
 						listOfBilling.remove(editIndex);
+					} else {
 
-						ObjectMapper mapper = new ObjectMapper();
+						try {
+							String response = DeleteAPIClient
+									.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_DELETE_BILLING_LOCATION_API
+											+ "/" + companyId + "/billinglocations/" + billingId, null);
+							listOfBilling.remove(editIndex);
 
-						if (response != null && response.contains("message")) {
-							Success success = mapper.readValue(response, Success.class);
-							JOptionPane.showMessageDialog(null, success.getMessage(), "Info", 1);
-						} else {
-							Failed failed = mapper.readValue(response, Failed.class);
-							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
+							ObjectMapper mapper = new ObjectMapper();
+
+							if (response != null && response.contains("message")) {
+								Success success = mapper.readValue(response, Success.class);
+								JOptionPane.showMessageDialog(null, success.getMessage(), "Info", 1);
+							} else {
+								Failed failed = mapper.readValue(response, Failed.class);
+								JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
+							}
+
+						} catch (Exception e) {
+							e.printStackTrace();
 						}
-
-					} catch (Exception e) {
-						e.printStackTrace();
 					}
 				}
 				editIndex = -1;

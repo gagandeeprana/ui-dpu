@@ -78,6 +78,7 @@ public class AdditionalContactEditController implements Initializable {
 	@FXML
 	void btnCancelAdditionalContactAction(ActionEvent event) {
 		try {
+			CompanyEditController.selectedTabValue = 1;
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
 					.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_EDIT_SCREEN));
 			Parent root = (Parent) fxmlLoader.load();
@@ -90,13 +91,14 @@ public class AdditionalContactEditController implements Initializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		CompanyEditController.selectedTabValue = 0;
 		closeAddAdditionalContactScreen(btnCancelAdditionalContact);
 	}
 
 	@FXML
 	void btnSaveAdditionalContactAction(ActionEvent event) {
 		try {
-
+			CompanyEditController.selectedTabValue = 1;
 			String additionalContact = txtAdditionalContact.getText();
 			String position = txtPosition.getText();
 			String phone = txtPhone.getText();
@@ -109,6 +111,7 @@ public class AdditionalContactEditController implements Initializable {
 			AdditionalContact bcm1 = new AdditionalContact(additionalContact, position, phone, fax, cellular, email,
 					extension, pager, status);
 
+			
 			// if(CompanyEditController.editIndex != -1){
 			if (CompanyEditController.addAddtionalContact == 0) {
 				if (CompanyEditController.additionalContactIdPri != 0l
@@ -134,6 +137,7 @@ public class AdditionalContactEditController implements Initializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		CompanyEditController.selectedTabValue = 0;
 		closeAddAdditionalContactScreen(btnSaveAdditionalContact);
 	}
 

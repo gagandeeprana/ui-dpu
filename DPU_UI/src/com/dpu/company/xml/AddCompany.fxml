@@ -119,9 +119,9 @@
          <font>
             <Font size="13.0" />
          </font></CheckBox>
-    <TabPane layoutX="6.0" layoutY="296.0" prefHeight="313.0" prefWidth="955.0" tabClosingPolicy="UNAVAILABLE">
+    <TabPane layoutX="6.0" fx:id="tabPane" layoutY="296.0" prefHeight="313.0" prefWidth="955.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
-        <Tab text="Billing Locations">
+        <Tab text="Billing Locations" fx:id="billingLocation">
           <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="301.0">
               <children>
@@ -140,7 +140,7 @@
             </AnchorPane>
           </content>
         </Tab>
-        <Tab text="Additional Contacts">
+        <Tab text="Additional Contacts" fx:id="additionalContacts">
           <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>
