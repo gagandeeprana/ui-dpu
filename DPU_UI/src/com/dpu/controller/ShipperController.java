@@ -191,7 +191,7 @@ public class ShipperController extends Application implements Initializable {
 		
 		            tblShipper.setVisible(true);
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					JOptionPane.showMessageDialog(null, "Try Again.. " + e, "Info", 1);
 				}
 			}
 		});
@@ -268,7 +268,7 @@ public class ShipperController extends Application implements Initializable {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Shipper, String> param) {
-				return new SimpleStringProperty(param.getValue().getCompany() + "");
+				return new SimpleStringProperty(param.getValue().getLocationName() + "");
 			}
 		});
 		address.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Shipper,String>, ObservableValue<String>>() {

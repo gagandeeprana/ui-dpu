@@ -10,10 +10,13 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -57,12 +60,7 @@ public class MainScreen extends Application implements Initializable {
 
 	@FXML
 	private void miDivisionAction() {
-		try {
-			divisionController = (DivisionController) showPanel(Iconstants.DIVISION_BASE_PACKAGE, Iconstants.XML_DIVISION_SCREEN);
-//			System.out.println(divisionController);
-		} catch (Exception e) {
-				e.printStackTrace();
-		}
+		divisionController = (DivisionController) showPanel(Iconstants.DIVISION_BASE_PACKAGE, Iconstants.XML_DIVISION_SCREEN);
 	}
 
 	@FXML
@@ -77,24 +75,21 @@ public class MainScreen extends Application implements Initializable {
 
 	@FXML
 	private void miServiceAction() {
-		serviceController = (ServiceController) showPanel(Iconstants.SERVICE_BASE_PACKAGE,
-				Iconstants.XML_SERVICE_SCREEN);
+		serviceController = (ServiceController) showPanel(Iconstants.SERVICE_BASE_PACKAGE, Iconstants.XML_SERVICE_SCREEN);
 	}
 
 	@FXML
-	private void lblTrailerHeaderAction() {
-		trailerController = (TrailerController) showPanel(Iconstants.TRAILER_BASE_PACKAGE,
-				Iconstants.XML_TRAILER_SCREEN);
+	private void miTrailersAction() {
+		trailerController = (TrailerController) showPanel(Iconstants.TRAILER_BASE_PACKAGE, Iconstants.XML_TRAILER_SCREEN);
 	}
 
 	@FXML
-	private void miShipperAction() {
-		shipperController = (ShipperController) showPanel(Iconstants.SHIPPER_BASE_PACKAGE,
-				Iconstants.XML_SHIPPER_SCREEN);
+	private void lblLocationsHeaderAction() {
+		shipperController = (ShipperController) showPanel(Iconstants.SHIPPER_BASE_PACKAGE, Iconstants.XML_SHIPPER_SCREEN);
 	}
 
 	@FXML
-	private void lblTruckHeaderAction() {
+	private void miTrucksAction() {
 		truckController = (TruckController) showPanel(Iconstants.TRUCK_BASE_PACKAGE, Iconstants.XML_TRUCK_SCREEN);
 	}
 
@@ -102,11 +97,6 @@ public class MainScreen extends Application implements Initializable {
 	private void lblCompanyHeaderAction() {
 		companyController = (CompanyController) showPanel(Iconstants.COMPANY_BASE_PACKAGE,
 				Iconstants.XML_COMPANY_SCREEN);
-	}
-
-	@FXML
-	private void lblDivisionHeaderAction() {
-		
 	}
 
 	@FXML
@@ -133,14 +123,30 @@ public class MainScreen extends Application implements Initializable {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(basePackage + screenName));
 			Parent root = (Parent) fxmlLoader.load();
 			Pane pane = (Pane) root;
+			StackPane stackPane = new StackPane();
+			stackPane.setAlignment(Pos.TOP_LEFT);
+			stackPane.getChildren().add(pane);
 
 			ObservableList<Node> nodes = mainScreenVBox.getChildren();
 
 			if (nodes != null && nodes.size() >= 4 && nodes.get(3) != null) {
+//				ProgressIndicator pi = new ProgressIndicator();
+//				VBox box = new VBox(pi);
+//				box.setAlignment(Pos.CENTER);
+//				// Grey Background
+//				pane.setDisable(true);
+//				stackPane.getChildren().add(box);
 				nodes.remove(3);
-				nodes.add(3, pane);
+				nodes.add(3, stackPane);
+				
 			} else {
-				nodes.add(pane);
+//				ProgressIndicator pi = new ProgressIndicator();
+//				VBox box = new VBox(pi);
+//				box.setAlignment(Pos.CENTER);
+//				// Grey Background
+//				pane.setDisable(true);
+//				stackPane.getChildren().add(box);
+				nodes.add(stackPane);
 			}
 			return fxmlLoader.getController();
 		} catch (Exception e) {

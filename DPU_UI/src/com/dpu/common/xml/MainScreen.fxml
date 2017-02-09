@@ -31,18 +31,14 @@
             </Menu>
             <Menu mnemonicParsing="false">
                <graphic>
-                  <Label fx:id="lblTruckHeader" onMouseClicked="#lblTruckHeaderAction" text="Truck" />
-               </graphic>
-            </Menu>
-            <Menu mnemonicParsing="false">
-               <graphic>
-                  <Label fx:id="lblTrailerHeader" onMouseClicked="#lblTrailerHeaderAction" text="Trailer" />
+                  <Label fx:id="lblLocationsHeader" onMouseClicked="#lblLocationsHeaderAction" text="Locations" />
                </graphic>
             </Menu>
           <Menu mnemonicParsing="false" text="Resources">
             <items>
-                  <MenuItem fx:id="miShipper" mnemonicParsing="false" onAction="#miShipperAction" text="Shipper/ Consignee" />
               <MenuItem fx:id="miDriver" mnemonicParsing="false" onAction="#miDriverAction" text="Drivers" />
+                  <MenuItem fx:id="miTrailers" mnemonicParsing="false" onAction="#miTrailersAction" text="Trailers" />
+                  <MenuItem fx:id="miTrucks" mnemonicParsing="false" onAction="#miTrucksAction" text="Trucks" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Lists">
