@@ -13,6 +13,7 @@ import com.dpu.client.GetAPIClient;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.Category;
+import com.dpu.model.DPUService;
 import com.dpu.model.Division;
 import com.dpu.model.Driver;
 import com.dpu.model.Equipment;
@@ -67,15 +68,24 @@ public class DriverAddController extends Application implements Initializable{
 		
 		Platform.runLater(new Runnable() {
 			
+			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
 				try {
 					ObjectMapper mapper = new ObjectMapper();
 					Driver driver = setDriverValue();
 					String payload = mapper.writeValueAsString(driver);
-					System.out.println(payload);
 					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_DRIVER_API, null, payload);
-					MainScreen.driverController.fillDriver(response);
+					try {
+						Success success = mapper.readValue(response, Success.class);
+						List<Driver> driverList = (List<Driver>) success.getResultList();
+						String res = mapper.writeValueAsString(driverList);
+						JOptionPane.showMessageDialog(null, success.getMessage());
+						MainScreen.driverController.fillDriver(res);
+					} catch (Exception e) {
+						Failed failed = mapper.readValue(response, Failed.class);
+						JOptionPane.showMessageDialog(null, failed.getMessage());
+					}
 					
 					/*if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
