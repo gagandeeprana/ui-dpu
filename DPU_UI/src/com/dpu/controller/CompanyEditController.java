@@ -433,6 +433,7 @@ public class CompanyEditController extends Application implements Initializable 
 			public void handle(ActionEvent event) {
 				setValuesToCmpanyTextField();
 				addAddtionalContact = 1;
+				selectedTabValue = 1;
 				company.setName(txtCompany.getText());
 				company.setAddress(txtAddress.getText());
 				company.setUnitNo(txtUnitNo.getText());
@@ -470,6 +471,7 @@ public class CompanyEditController extends Application implements Initializable 
 			@Override
 			public void handle(ActionEvent event) {
 				setValuesToCmpanyTextField();
+				selectedTabValue = 1;
 				addAddtionalContact = 0;
 				editIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
 				additionalContactModel = tableAdditionalContact.getSelectionModel().getSelectedItem();
@@ -492,54 +494,61 @@ public class CompanyEditController extends Application implements Initializable 
 				editIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
 
 				System.out.println(listOfAdditionalContact.get(editIndex).getAdditionalContactId());
-				if (listOfAdditionalContact.get(editIndex).getAdditionalContactId() != 0l
-						|| listOfAdditionalContact.get(editIndex).getAdditionalContactId() != null) {
-					Long additionalontactId = listOfAdditionalContact.get(editIndex).getAdditionalContactId();
-					Long companyId = listOfAdditionalContact.get(editIndex).getCompanyId();
 
-					if (additionalontactId == 0) {
-						listOfAdditionalContact.remove(editIndex);
-						JOptionPane.showMessageDialog(null, "Additional Contact Deleted SuccessFully.", "Info", 1);
-						
-					} else {
+				// if
+				// (listOfAdditionalContact.get(editIndex).getAdditionalContactId()
+				// != null
+				// ||
+				// listOfAdditionalContact.get(editIndex).getAdditionalContactId()
+				// != 0l) {
 
-						// hit api to delete Additional Conatct
-						try {
-							String response = DeleteAPIClient
-									.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_DELETE_BILLING_LOCATION_API
-											+ "/" + companyId + "/additionalcontacts/" + additionalontactId, null);
-							listOfAdditionalContact.remove(editIndex);
+				Long additionalontactId = listOfAdditionalContact.get(editIndex).getAdditionalContactId();
+				Long companyId = listOfAdditionalContact.get(editIndex).getCompanyId();
 
-							ObjectMapper mapper = new ObjectMapper();
+				if (additionalontactId == null) {
+					listOfAdditionalContact.remove(editIndex);
+					JOptionPane.showMessageDialog(null, "Additional Contact Deleted SuccessFully.", "Info", 1);
 
-							if (response != null && response.contains("message")) {
-								Success success = mapper.readValue(response, Success.class);
-								JOptionPane.showMessageDialog(null, success.getMessage(), "Info", 1);
-							} else {
-								Failed failed = mapper.readValue(response, Failed.class);
-								JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-							}
+				} else {
 
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-					editIndex = -1;
-
+					// hit api to delete Additional Conatct
 					try {
-						FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-								.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_EDIT_SCREEN));
-						Parent root = (Parent) fxmlLoader.load();
-						Stage stage = new Stage();
-						stage.initModality(Modality.APPLICATION_MODAL);
-						stage.setTitle("Update Company");
-						stage.setScene(new Scene(root));
-						stage.show();
+						String response = DeleteAPIClient
+								.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_DELETE_BILLING_LOCATION_API + "/"
+										+ companyId + "/additionalcontacts/" + additionalontactId, null);
+						listOfAdditionalContact.remove(editIndex);
+
+						ObjectMapper mapper = new ObjectMapper();
+
+						if (response != null && response.contains("message")) {
+							Success success = mapper.readValue(response, Success.class);
+							JOptionPane.showMessageDialog(null, success.getMessage(), "Info", 1);
+						} else {
+							Failed failed = mapper.readValue(response, Failed.class);
+							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
+						}
+
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-					closeAddCompanyScreen(btnSaveCompany);
 				}
+				// }
+				editIndex = -1;
+
+				try {
+					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
+							.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_EDIT_SCREEN));
+					Parent root = (Parent) fxmlLoader.load();
+					Stage stage = new Stage();
+					stage.initModality(Modality.APPLICATION_MODAL);
+					stage.setTitle("Update Company");
+					stage.setScene(new Scene(root));
+					stage.show();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				closeAddCompanyScreen(btnSaveCompany);
+
 			}
 		});
 
@@ -633,7 +642,7 @@ public class CompanyEditController extends Application implements Initializable 
 
 			@Override
 			public void handle(ActionEvent event) {
-
+				selectedTabValue = 0;
 				add = 1;
 				setValuesToCmpanyTextField();
 				openAddBillingLocationScreen();
@@ -653,6 +662,7 @@ public class CompanyEditController extends Application implements Initializable 
 
 			@Override
 			public void handle(ActionEvent event) {
+				selectedTabValue = 0;
 				setValuesToCmpanyTextField();
 				add = 0;
 				editIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
@@ -673,40 +683,43 @@ public class CompanyEditController extends Application implements Initializable 
 			@Override
 			public void handle(ActionEvent event) {
 				selectedTabValue = 0;
+				
 				editIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
 
 				// hit API to remove record from db.
-				if (listOfBilling.get(editIndex).getBillingLocationId() != 0l
-						|| listOfBilling.get(editIndex).getBillingLocationId() != null) {
-					Long billingId = listOfBilling.get(editIndex).getBillingLocationId();
-					Long companyId = listOfBilling.get(editIndex).getCompanyId();
+				// if (listOfBilling.get(editIndex).getBillingLocationId() ==
+				// null
+				// || listOfBilling.get(editIndex).getBillingLocationId() != 0l)
+				// {
+				Long billingId = listOfBilling.get(editIndex).getBillingLocationId();
+				Long companyId = listOfBilling.get(editIndex).getCompanyId();
 
-					if (billingId == 0) {
-						JOptionPane.showMessageDialog(null, "Billing Location Deleted SuccessFully.", "Info", 1);
+				if (billingId == null) {
+					JOptionPane.showMessageDialog(null, "Billing Location Deleted SuccessFully.", "Info", 1);
+					listOfBilling.remove(editIndex);
+				} else {
+
+					try {
+						String response = DeleteAPIClient
+								.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_DELETE_BILLING_LOCATION_API + "/"
+										+ companyId + "/billinglocations/" + billingId, null);
 						listOfBilling.remove(editIndex);
-					} else {
 
-						try {
-							String response = DeleteAPIClient
-									.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_DELETE_BILLING_LOCATION_API
-											+ "/" + companyId + "/billinglocations/" + billingId, null);
-							listOfBilling.remove(editIndex);
+						ObjectMapper mapper = new ObjectMapper();
 
-							ObjectMapper mapper = new ObjectMapper();
-
-							if (response != null && response.contains("message")) {
-								Success success = mapper.readValue(response, Success.class);
-								JOptionPane.showMessageDialog(null, success.getMessage(), "Info", 1);
-							} else {
-								Failed failed = mapper.readValue(response, Failed.class);
-								JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-							}
-
-						} catch (Exception e) {
-							e.printStackTrace();
+						if (response != null && response.contains("message")) {
+							Success success = mapper.readValue(response, Success.class);
+							JOptionPane.showMessageDialog(null, success.getMessage(), "Info", 1);
+						} else {
+							Failed failed = mapper.readValue(response, Failed.class);
+							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
 						}
+
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
 				}
+				// }
 				editIndex = -1;
 
 				setValuesToCmpanyTextField();

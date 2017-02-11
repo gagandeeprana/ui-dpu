@@ -195,7 +195,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-
+				selectedTabValue = 1;
 				addAddtionalContact = 1;
 				company.setName(txtCompany.getText());
 				company.setAddress(txtAddress.getText());
@@ -233,6 +233,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
+				selectedTabValue = 1;
 				addAddtionalContact = 0;
 				addEditIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
 				additionalContactModel =  tableAdditionalContact.getSelectionModel().getSelectedItem();
@@ -582,6 +583,7 @@ public class CompanyAddController extends Application implements Initializable {
 			public void handle(ActionEvent event) {
 
 				add = 1;
+				selectedTabValue = 0 ;
 				company.setName(txtCompany.getText());
 				company.setAddress(txtAddress.getText());
 				company.setUnitNo(txtUnitNo.getText());
@@ -618,6 +620,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
+				selectedTabValue = 0 ;
 				add = 0;
 				addEditIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
 				billingControllerModel =  tableBillingLocations.getSelectionModel().getSelectedItem();
