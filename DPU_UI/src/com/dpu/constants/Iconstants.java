@@ -2,7 +2,7 @@ package com.dpu.constants;
 
 public class Iconstants {
 
-	public static final String URL_SERVER = "http://localhost:8082/DPUWebProject/";
+	public static final String URL_SERVER = "http://localhost:9090/DPUWebProject/";
 	//public static final String URL_SERVER = "http://35.154.6.180:9090/DPUWebProject/";
 
 	public static final String COMMON_BASE_PACKAGE = "com/dpu/common/xml/";
@@ -26,6 +26,7 @@ public class Iconstants {
 	public static final String XML_COMPANY_SCREEN = "CompanyPanel.fxml";
 	public static final String URL_COMPANY_API = "company";
 	public static final String XML_COMPANY_ADD_SCREEN = "AddCompany.fxml";
+	public static final String XML_COMPANY_PERSONALIZE_SCREEN = "companyPersonlize.fxml";
 	//public static final String XML_COMPANY_EDIT_SCREEN = "EditCompany.fxml";
 
 	public static final String TRUCK_BASE_PACKAGE = "com/dpu/truck/xml/";

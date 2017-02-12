@@ -383,7 +383,7 @@ public class CompanyController extends Application implements Initializable {
 	public int tblCompanyMenuCount = 0;
 
 	@FXML
-	public void handleAddContMouseClick(MouseEvent event) {
+	public void handleAddContMouseClick(MouseEvent arg0) {
 
 		// Create ContextMenu
 		ContextMenu contextMenu = new ContextMenu();
@@ -393,15 +393,102 @@ public class CompanyController extends Application implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-			}
+				 
+				System.out.println("Clicked on Add Button.");
+				CompanyEditController.selectedTabValue = 0 ;
+				CompanyAddController.listOfBilling = new ArrayList<BillingControllerModel>();
+				CompanyAddController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
+				CompanyAddController.company = new CompanyModel();
+				openAddCompanyScreen();
+				 
 
+			}
 		});
 		MenuItem item2 = new MenuItem("EDIT");
 		item2.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
+				 
+				System.out.println("Clicked on EDIT Button.");
+				CompanyEditController.listOfBilling = new ArrayList<BillingControllerModel>();
+				CompanyEditController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
+				CompanyEditController.company = new CompanyModel();
+				
+				CompanyEditController.selectedTabValue = 0 ;
 
+				CompanyModel companyy = cList.get(tblCompany.getSelectionModel().getSelectedIndex());
+				companyId = Long.parseLong(companyy.getCompanyId());
+
+				CompanyModel company = tblCompany.getSelectionModel().getSelectedItem();
+				if (company != null) {
+					Platform.runLater(new Runnable() {
+
+						@Override
+						public void run() {
+							try {
+								ObjectMapper mapper = new ObjectMapper();
+								String response = GetAPIClient.callGetAPI(
+										Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + company.getCompanyId(),
+										null);
+
+								if (response != null && response.length() > 0) {
+									CompanyModel c = mapper.readValue(response, CompanyModel.class);
+
+									// ----------------------------------------------
+
+									if (c.getBillingLocations() != null) {
+										int billingSize = c.getBillingLocations().size();
+										for (int i = 0; i < billingSize; i++) {
+
+											BillingControllerModel bcm = new BillingControllerModel();
+											bcm.setCompanyId(Long.parseLong(c.getCompanyId()));
+											bcm.setBillingLocationId(c.getBillingLocations().get(i).getBillingLocationId());
+											bcm.setAddress(c.getBillingLocations().get(i).getAddress());
+											bcm.setCity(c.getBillingLocations().get(i).getCity());
+											bcm.setCompany(c.getBillingLocations().get(i).getName());
+											bcm.setContact(c.getBillingLocations().get(i).getContact());
+											bcm.setFax(c.getBillingLocations().get(i).getFax());
+											bcm.setPhone(c.getBillingLocations().get(i).getPhone());
+											bcm.setZip(c.getBillingLocations().get(i).getZip());
+											CompanyEditController.listOfBilling.add(bcm);
+										}
+									}
+
+									if (c.getAdditionalContacts() != null) {
+										int addtionalContactSize = c.getAdditionalContacts().size();
+										for (int j = 0; j < addtionalContactSize; j++) {
+											AdditionalContact additionalContact = new AdditionalContact();
+
+											additionalContact.setCompanyId(Long.parseLong(c.getCompanyId()));
+											additionalContact.setAdditionalContactId(
+													c.getAdditionalContacts().get(j).getAdditionalContactId());
+											additionalContact
+													.setAdditionalContact(c.getAdditionalContacts().get(j).getCustomerName());
+											additionalContact.setCellular(c.getAdditionalContacts().get(j).getCellular());
+											additionalContact.setEmail(c.getAdditionalContacts().get(j).getEmail());
+											additionalContact.setExtension(c.getAdditionalContacts().get(j).getExt());
+											additionalContact.setFax(c.getAdditionalContacts().get(j).getFax());
+											additionalContact.setPager(c.getAdditionalContacts().get(j).getCellular());
+											additionalContact.setPhone(c.getAdditionalContacts().get(j).getPhone());
+											additionalContact.setPosition(c.getAdditionalContacts().get(j).getPosition());
+											additionalContact.setStatus(c.getAdditionalContacts().get(j).getStatus() + "");
+
+											CompanyEditController.listOfAdditionalContact.add(additionalContact);
+										}
+									}
+
+									// -----------------------------------------------------
+									CompanyEditController companyEditController = (CompanyEditController) openEditCompanyScreen();
+									companyEditController.initData(c);
+								}
+							} catch (Exception e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+							}
+						}
+					});
+				}
 			}
 		});
 
@@ -410,49 +497,74 @@ public class CompanyController extends Application implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
+				System.out.println("Clicked on DELETE Button.");
+				CompanyModel company = cList.get(tblCompany.getSelectionModel().getSelectedIndex());
+				if (company != null) {
+					Platform.runLater(new Runnable() {
 
+						@Override
+						public void run() {
+							try {
+								String response = DeleteAPIClient.callDeleteAPI(
+										Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + company.getCompanyId(),
+										null);
+								fetchCompanies(response);
+								JOptionPane.showMessageDialog(null, "Company Deleted Successfully", "Info", 1);
+							} catch (Exception e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
+							}
+						}
+					});
+				}
 			}
 		});
 		
-		MenuItem item4 = new MenuItem("PERSONALIZE");
-		item1.setOnAction(new EventHandler<ActionEvent>() {
+		MenuItem item4 = new MenuItem("DUPLICATE");
+		item4.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
+				System.out.println("Clicked on DUPLICATE Button.");
 			}
-
 		});
-		MenuItem item5 = new MenuItem("DUPLICATE");
-		item2.setOnAction(new EventHandler<ActionEvent>() {
+		
+		MenuItem item5 = new MenuItem("PERSONALIZE");
+		item5.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
+				System.out.println("Clicked on PERSONALIZE Button.");
+				try {
+					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
+							.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_PERSONALIZE_SCREEN));
 
+					Parent root = (Parent) fxmlLoader.load();
+
+					Stage stage = new Stage();
+					stage.initModality(Modality.APPLICATION_MODAL);
+					stage.setTitle("PERSONALIZE");
+					stage.setScene(new Scene(root));
+					stage.show();
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
-
+		
 		MenuItem item6 = new MenuItem("FILTER BY");
-		item3.setOnAction(new EventHandler<ActionEvent>() {
+		item6.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-
+				System.out.println("Clicked on FILTER BY Button.");
 			}
 		});
-		
-		MenuItem item7 = new MenuItem("CANCEL");
-		item3.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-
-			}
-		});
-
-
 
 		// Add MenuItem to ContextMenu
-		contextMenu.getItems().addAll(item1, item2, item3, item4, item5, item6, item7);
+		contextMenu.getItems().addAll(item1, item2, item3, item4, item5 , item6);
+
 		if (tblCompanyMenuCount == 0) {
 			tblCompanyMenuCount++;
 			// When user right-click on Table
@@ -464,10 +576,7 @@ public class CompanyController extends Application implements Initializable {
 				}
 
 			});
-
 		}
-
 	}
-
 
 }
