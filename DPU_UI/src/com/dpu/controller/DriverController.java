@@ -62,6 +62,20 @@ public class DriverController extends Application implements Initializable {
 	
 	ObjectMapper mapper = new ObjectMapper();
 	
+	public void fillDriver(List<Driver> driver) {
+		
+		try {
+			ObservableList<Driver> data = null;
+			dList = new ArrayList<Driver>();
+			setColumnValues();
+			data = FXCollections.observableArrayList(driver);
+			tblDriver.setItems(data);
+            tblDriver.setVisible(true);
+		} catch (Exception e) {
+			System.out.println("DriverController: fillDriver(): "+ e.getMessage());
+		}
+	}
+	
 	public void fillDriver(String response) {
 		
 		try {

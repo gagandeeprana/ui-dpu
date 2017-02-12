@@ -15,7 +15,7 @@ import javafx.beans.property.SimpleStringProperty;
 })
 public class BillingControllerModel {
 
-	private Long billingLocationId;
+	private Long billingLocationId = null;
 	private Long companyId;
 	private SimpleStringProperty company = new SimpleStringProperty();
 	private SimpleStringProperty address = new SimpleStringProperty();

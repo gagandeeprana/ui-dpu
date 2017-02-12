@@ -12,7 +12,9 @@ import com.dpu.client.GetAPIClient;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.DPUService;
+import com.dpu.model.Failed;
 import com.dpu.model.Status;
+import com.dpu.model.Success;
 import com.dpu.model.Type;
 import com.dpu.util.Validate;
 
@@ -102,16 +104,24 @@ public class ServiceAddController<T> extends Application implements Initializabl
 		Platform.runLater(new Runnable() {
 			
 			@Override
+			@SuppressWarnings("unchecked")
 			public void run() {
 				try {
 					ObjectMapper mapper = new ObjectMapper();
 					DPUService service = setServiceValue();
 					String payload = mapper.writeValueAsString(service);
-					System.out.println(payload);
 					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_SERVICE_API, null, payload);
-					System.out.println(response);
 					if(MainScreen.serviceController != null) {
-						MainScreen.serviceController.fillServices(response);
+						try {
+							Success success = mapper.readValue(response, Success.class);
+							List<DPUService> serviceList = (List<DPUService>) success.getResultList();
+							String res = mapper.writeValueAsString(serviceList);
+							JOptionPane.showMessageDialog(null, success.getMessage());
+							MainScreen.serviceController.fillServices(res);
+						} catch (Exception e) {
+							Failed failed = mapper.readValue(response, Failed.class);
+							JOptionPane.showMessageDialog(null, failed.getMessage());
+						}
 					} else if(MainScreen.terminalController != null) {
 						MainScreen.terminalController.openAddTerminalScreen();
 					}

@@ -89,5 +89,6 @@ public class Iconstants {
 	// status 
 	public static final String STATUS_ACTIVE = "Active";
 	public static final String STATUS_INACTIVE = "InActive";
+	public static final String COMPANY_ADDED_SUCCESS_MSG = "Company Deleted Successfully";
 	
 }

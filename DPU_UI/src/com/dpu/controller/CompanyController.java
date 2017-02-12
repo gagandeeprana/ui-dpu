@@ -55,6 +55,7 @@ public class CompanyController extends Application implements Initializable {
 
 	@FXML
 	private void btnAddCompanyAction() {
+		CompanyEditController.selectedTabValue = 0 ;
 		CompanyAddController.listOfBilling = new ArrayList<BillingControllerModel>();
 		CompanyAddController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
 		CompanyAddController.company = new CompanyModel();
@@ -69,6 +70,8 @@ public class CompanyController extends Application implements Initializable {
 		CompanyEditController.listOfBilling = new ArrayList<BillingControllerModel>();
 		CompanyEditController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
 		CompanyEditController.company = new CompanyModel();
+		
+		CompanyEditController.selectedTabValue = 0 ;
 
 		CompanyModel companyy = cList.get(tblCompany.getSelectionModel().getSelectedIndex());
 		companyId = Long.parseLong(companyy.getCompanyId());
@@ -436,11 +439,20 @@ public class CompanyController extends Application implements Initializable {
 
 			}
 		});
+		
+		MenuItem item7 = new MenuItem("CANCEL");
+		item3.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+
+			}
+		});
 
 
 
 		// Add MenuItem to ContextMenu
-		contextMenu.getItems().addAll(item1, item2, item3, item4, item5, item6);
+		contextMenu.getItems().addAll(item1, item2, item3, item4, item5, item6, item7);
 		if (tblCompanyMenuCount == 0) {
 			tblCompanyMenuCount++;
 			// When user right-click on Table
