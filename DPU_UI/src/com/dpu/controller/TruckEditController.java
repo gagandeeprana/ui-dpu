@@ -12,7 +12,9 @@ import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.Category;
 import com.dpu.model.Division;
+import com.dpu.model.Failed;
 import com.dpu.model.Status;
+import com.dpu.model.Success;
 import com.dpu.model.Terminal;
 import com.dpu.model.Truck;
 import com.dpu.model.Type;
@@ -63,8 +65,17 @@ public class TruckEditController extends Application implements Initializable{
 					String payload = mapper.writeValueAsString(truck);
 
 					String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_TRUCK_API + "/" + truckId, null, payload);
-					MainScreen.truckController.fillTruck(response);
-					
+//					MainScreen.truckController.fillTruck(response);
+					try {
+						Success success = mapper.readValue(response, Success.class);
+						List<Truck> truckList = (List<Truck>) success.getResultList();
+						String res = mapper.writeValueAsString(truckList);
+						JOptionPane.showMessageDialog(null, success.getMessage());
+						MainScreen.truckController.fillTruck(res);
+					} catch (Exception e) {
+						Failed failed = mapper.readValue(response, Failed.class);
+						JOptionPane.showMessageDialog(null, failed.getMessage());
+					}
 					/*if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
 						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);

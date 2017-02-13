@@ -13,7 +13,10 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.model.Driver;
 import com.dpu.model.Equipment;
+import com.dpu.model.Failed;
+import com.dpu.model.Success;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -116,7 +119,16 @@ public class EquipmentController extends Application implements Initializable {
 							Failed failed = mapper.readValue(response, Failed.class);
 							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
 						}*/
-						fillEquipments(response);
+						try {
+							Success success = mapper.readValue(response, Success.class);
+							List<Equipment> equipmentList = (List<Equipment>) success.getResultList();
+							String res = mapper.writeValueAsString(equipmentList);
+							JOptionPane.showMessageDialog(null, success.getMessage());
+							fillEquipments(res);
+						} catch (Exception e) {
+							Failed failed = mapper.readValue(response, Failed.class);
+							JOptionPane.showMessageDialog(null, failed.getMessage());
+						}
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
 					}

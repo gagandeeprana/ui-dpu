@@ -16,7 +16,9 @@ import com.dpu.client.GetAPIClient;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.Division;
+import com.dpu.model.Failed;
 import com.dpu.model.Status;
+import com.dpu.model.Success;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -96,7 +98,17 @@ public class DivisionAddController extends Application implements Initializable 
 					System.out.println(payload + " pykiad" );
 					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API, null, payload);
 					System.out.println(response);
-					MainScreen.divisionController.fillDivisions(response);
+//					MainScreen.divisionController.fillDivisions(response);
+					try {
+						Success success = mapper.readValue(response, Success.class);
+						List<Division> divisionList = (List<Division>) success.getResultList();
+						String res = mapper.writeValueAsString(divisionList);
+						JOptionPane.showMessageDialog(null, success.getMessage());
+						MainScreen.divisionController.fillDivisions(res);
+					} catch (Exception e) {
+						Failed failed = mapper.readValue(response, Failed.class);
+						JOptionPane.showMessageDialog(null, failed.getMessage());
+					}
 
 					/*if (response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);

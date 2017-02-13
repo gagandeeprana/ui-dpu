@@ -13,6 +13,8 @@ import com.dpu.client.GetAPIClient;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.Equipment;
+import com.dpu.model.Failed;
+import com.dpu.model.Success;
 import com.dpu.model.Type;
 import com.dpu.util.Validate;
 
@@ -115,6 +117,7 @@ public class EquipmentAddController extends Application implements Initializable
 		
 		Platform.runLater(new Runnable() {
 			
+			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
 				try {
@@ -124,7 +127,16 @@ public class EquipmentAddController extends Application implements Initializable
 					System.out.println("Add Payload: " + payload);
 					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_EQUIPMENT_API, null, payload);
 					System.out.println(response);
-					MainScreen.equipmentController.fillEquipments(response);
+					try {
+						Success success = mapper.readValue(response, Success.class);
+						List<Equipment> equipmentList = (List<Equipment>) success.getResultList();
+						String res = mapper.writeValueAsString(equipmentList);
+						JOptionPane.showMessageDialog(null, success.getMessage());
+						MainScreen.equipmentController.fillEquipments(res);
+					} catch (Exception e) {
+						Failed failed = mapper.readValue(response, Failed.class);
+						JOptionPane.showMessageDialog(null, failed.getMessage());
+					}
 
 /*					if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
