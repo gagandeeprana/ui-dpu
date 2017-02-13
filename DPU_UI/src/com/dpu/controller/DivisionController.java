@@ -13,6 +13,9 @@ import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.Division;
+import com.dpu.model.Equipment;
+import com.dpu.model.Failed;
+import com.dpu.model.Success;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -125,11 +128,22 @@ public class DivisionController extends Application implements Initializable {
 		if (division != null) {
 			Platform.runLater(new Runnable() {
 
+				@SuppressWarnings("unchecked")
 				@Override
 				public void run() {
 					try {
 						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API + "/" + division.getDivisionId(),null);
-						MainScreen.divisionController.fillDivisions(response);
+						
+						try {
+							Success success = mapper.readValue(response, Success.class);
+							List<Division> divisionList = (List<Division>) success.getResultList();
+							String res = mapper.writeValueAsString(divisionList);
+							JOptionPane.showMessageDialog(null, success.getMessage());
+							fillDivisions(res);
+						} catch (Exception e) {
+							Failed failed = mapper.readValue(response, Failed.class);
+							JOptionPane.showMessageDialog(null, failed.getMessage());
+						}
 						/*if (response != null && response.contains("message")) {
 							Success success = mapper.readValue(response, Success.class);
 							JOptionPane.showMessageDialog(null, success.getMessage(), "Info", 1);
