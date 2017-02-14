@@ -1,7 +1,6 @@
 package com.dpu.controller;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -15,7 +14,6 @@ import com.dpu.constants.Iconstants;
 import com.dpu.model.Category;
 import com.dpu.model.Division;
 import com.dpu.model.Driver;
-import com.dpu.model.Equipment;
 import com.dpu.model.Failed;
 import com.dpu.model.Status;
 import com.dpu.model.Success;
@@ -24,8 +22,6 @@ import com.dpu.model.Type;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -67,15 +63,24 @@ public class DriverAddController extends Application implements Initializable{
 		
 		Platform.runLater(new Runnable() {
 			
+			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
 				try {
 					ObjectMapper mapper = new ObjectMapper();
 					Driver driver = setDriverValue();
 					String payload = mapper.writeValueAsString(driver);
-					System.out.println(payload);
 					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_DRIVER_API, null, payload);
-					MainScreen.driverController.fillDriver(response);
+					try {
+						Success success = mapper.readValue(response, Success.class);
+						List<Driver> driverList = (List<Driver>) success.getResultList();
+						String res = mapper.writeValueAsString(driverList);
+						JOptionPane.showMessageDialog(null, success.getMessage());
+						MainScreen.driverController.fillDriver(res);
+					} catch (Exception e) {
+						Failed failed = mapper.readValue(response, Failed.class);
+						JOptionPane.showMessageDialog(null, failed.getMessage());
+					}
 					
 					/*if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);

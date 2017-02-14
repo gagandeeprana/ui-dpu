@@ -35,6 +35,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
@@ -56,6 +57,9 @@ public class CompanyEditController extends Application implements Initializable 
 
 	@FXML
 	private Pane addCompanyPane;
+
+	@FXML
+	private TabPane tabPane;
 
 	@FXML
 	private TableColumn<AdditionalContact, String> additionalContact;
@@ -176,6 +180,8 @@ public class CompanyEditController extends Application implements Initializable 
 
 	Long companyId = 0l;
 
+	public static int selectedTabValue = 0;
+
 	@FXML
 	private void btnUpdateCompanyAction() {
 		editCompany();
@@ -240,6 +246,7 @@ public class CompanyEditController extends Application implements Initializable 
 		txtCellular.setText(company.getCellular());
 		txtPager.setText(company.getPager());
 		txtAfterHours.setText(company.getAfterHours());
+		tabPane.getSelectionModel().select(selectedTabValue);
 
 	}
 
@@ -355,7 +362,6 @@ public class CompanyEditController extends Application implements Initializable 
 		txtPager.setText(c.getPager());
 	}
 
-	 
 	public static int editIndex = -1;
 	public static int add = 0;
 	public static int addAddtionalContact = 0;
@@ -427,6 +433,7 @@ public class CompanyEditController extends Application implements Initializable 
 			public void handle(ActionEvent event) {
 				setValuesToCmpanyTextField();
 				addAddtionalContact = 1;
+				selectedTabValue = 1;
 				company.setName(txtCompany.getText());
 				company.setAddress(txtAddress.getText());
 				company.setUnitNo(txtUnitNo.getText());
@@ -464,6 +471,7 @@ public class CompanyEditController extends Application implements Initializable 
 			@Override
 			public void handle(ActionEvent event) {
 				setValuesToCmpanyTextField();
+				selectedTabValue = 1;
 				addAddtionalContact = 0;
 				editIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
 				additionalContactModel = tableAdditionalContact.getSelectionModel().getSelectedItem();
@@ -481,13 +489,27 @@ public class CompanyEditController extends Application implements Initializable 
 
 			@Override
 			public void handle(ActionEvent event) {
+				selectedTabValue = 1;
 				setValuesToCmpanyTextField();
 				editIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
 
-				if (listOfAdditionalContact.get(editIndex).getAdditionalContactId() != 0l
-						|| listOfAdditionalContact.get(editIndex).getAdditionalContactId() != null) {
-					Long additionalontactId = listOfAdditionalContact.get(editIndex).getAdditionalContactId();
-					Long companyId = listOfAdditionalContact.get(editIndex).getCompanyId();
+				System.out.println(listOfAdditionalContact.get(editIndex).getAdditionalContactId());
+
+				// if
+				// (listOfAdditionalContact.get(editIndex).getAdditionalContactId()
+				// != null
+				// ||
+				// listOfAdditionalContact.get(editIndex).getAdditionalContactId()
+				// != 0l) {
+
+				Long additionalontactId = listOfAdditionalContact.get(editIndex).getAdditionalContactId();
+				Long companyId = listOfAdditionalContact.get(editIndex).getCompanyId();
+
+				if (additionalontactId == null) {
+					listOfAdditionalContact.remove(editIndex);
+					JOptionPane.showMessageDialog(null, "Additional Contact Deleted SuccessFully.", "Info", 1);
+
+				} else {
 
 					// hit api to delete Additional Conatct
 					try {
@@ -509,23 +531,24 @@ public class CompanyEditController extends Application implements Initializable 
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-
-					editIndex = -1;
-
-					try {
-						FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-								.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_EDIT_SCREEN));
-						Parent root = (Parent) fxmlLoader.load();
-						Stage stage = new Stage();
-						stage.initModality(Modality.APPLICATION_MODAL);
-						stage.setTitle("Update Company");
-						stage.setScene(new Scene(root));
-						stage.show();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					closeAddCompanyScreen(btnSaveCompany);
 				}
+				// }
+				editIndex = -1;
+
+				try {
+					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
+							.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_EDIT_SCREEN));
+					Parent root = (Parent) fxmlLoader.load();
+					Stage stage = new Stage();
+					stage.initModality(Modality.APPLICATION_MODAL);
+					stage.setTitle("Update Company");
+					stage.setScene(new Scene(root));
+					stage.show();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				closeAddCompanyScreen(btnSaveCompany);
+
 			}
 		});
 
@@ -619,7 +642,7 @@ public class CompanyEditController extends Application implements Initializable 
 
 			@Override
 			public void handle(ActionEvent event) {
-
+				selectedTabValue = 0;
 				add = 1;
 				setValuesToCmpanyTextField();
 				openAddBillingLocationScreen();
@@ -639,6 +662,7 @@ public class CompanyEditController extends Application implements Initializable 
 
 			@Override
 			public void handle(ActionEvent event) {
+				selectedTabValue = 0;
 				setValuesToCmpanyTextField();
 				add = 0;
 				editIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
@@ -658,13 +682,22 @@ public class CompanyEditController extends Application implements Initializable 
 
 			@Override
 			public void handle(ActionEvent event) {
+				selectedTabValue = 0;
+				
 				editIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
 
 				// hit API to remove record from db.
-				if (listOfBilling.get(editIndex).getBillingLocationId() != 0l
-						|| listOfBilling.get(editIndex).getBillingLocationId() != null) {
-					Long billingId = listOfBilling.get(editIndex).getBillingLocationId();
-					Long companyId = listOfBilling.get(editIndex).getCompanyId();
+				// if (listOfBilling.get(editIndex).getBillingLocationId() ==
+				// null
+				// || listOfBilling.get(editIndex).getBillingLocationId() != 0l)
+				// {
+				Long billingId = listOfBilling.get(editIndex).getBillingLocationId();
+				Long companyId = listOfBilling.get(editIndex).getCompanyId();
+
+				if (billingId == null) {
+					JOptionPane.showMessageDialog(null, "Billing Location Deleted SuccessFully.", "Info", 1);
+					listOfBilling.remove(editIndex);
+				} else {
 
 					try {
 						String response = DeleteAPIClient
@@ -686,6 +719,7 @@ public class CompanyEditController extends Application implements Initializable 
 						e.printStackTrace();
 					}
 				}
+				// }
 				editIndex = -1;
 
 				setValuesToCmpanyTextField();

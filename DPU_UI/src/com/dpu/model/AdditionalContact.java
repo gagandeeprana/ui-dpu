@@ -20,7 +20,7 @@ public class AdditionalContact implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Long additionalContactId ;
+	private Long additionalContactId = null ;
 	private Long companyId;
 	private SimpleStringProperty additionalContact = new SimpleStringProperty();
 	private SimpleStringProperty position = new SimpleStringProperty();

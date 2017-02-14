@@ -54,6 +54,7 @@ public class CategoryEditController extends Application implements Initializable
 		
 		Platform.runLater(new Runnable() {
 			
+			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
 				try {
@@ -63,7 +64,17 @@ public class CategoryEditController extends Application implements Initializable
 
 					String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_CATEGORY_API + "/" + categoryId, null, payload);
 					
-					MainScreen.categoryController.fillCategories(response);
+//					MainScreen.categoryController.fillCategories(response);
+					try {
+						Success success = mapper.readValue(response, Success.class);
+						List<Category> categoryList = (List<Category>) success.getResultList();
+						String res = mapper.writeValueAsString(categoryList);
+						JOptionPane.showMessageDialog(null, success.getMessage());
+						MainScreen.categoryController.fillCategories(res);
+					} catch (Exception e) {
+						Failed failed = mapper.readValue(response, Failed.class);
+						JOptionPane.showMessageDialog(null, failed.getMessage());
+					}
 					/*if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
 						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);

@@ -35,6 +35,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
@@ -167,6 +168,9 @@ public class CompanyAddController extends Application implements Initializable {
 
 	@FXML
 	public TextField txtZip;
+	
+	@FXML
+	private TabPane tabPane;
 
 	@FXML
 	public TableColumn<BillingControllerModel, String> zip;
@@ -191,7 +195,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-
+				selectedTabValue = 1;
 				addAddtionalContact = 1;
 				company.setName(txtCompany.getText());
 				company.setAddress(txtAddress.getText());
@@ -229,6 +233,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
+				selectedTabValue = 1;
 				addAddtionalContact = 0;
 				addEditIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
 				additionalContactModel =  tableAdditionalContact.getSelectionModel().getSelectedItem();
@@ -244,6 +249,7 @@ public class CompanyAddController extends Application implements Initializable {
 			
 			@Override
 			public void handle(ActionEvent event) {
+				selectedTabValue = 1 ;
 				addEditIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
 				listOfAdditionalContact.remove(addEditIndex);
 				addEditIndex = -1;
@@ -532,6 +538,8 @@ public class CompanyAddController extends Application implements Initializable {
 				});
 	}
 
+	public static int selectedTabValue = 0 ;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -557,6 +565,7 @@ public class CompanyAddController extends Application implements Initializable {
 		txtCellular.setText(company.getCellular());
 		txtPager.setText(company.getPager());
 		txtAfterHours.setText(company.getAfterHours());
+		tabPane.getSelectionModel().select(selectedTabValue);
 
 	}
 
@@ -574,6 +583,7 @@ public class CompanyAddController extends Application implements Initializable {
 			public void handle(ActionEvent event) {
 
 				add = 1;
+				selectedTabValue = 0 ;
 				company.setName(txtCompany.getText());
 				company.setAddress(txtAddress.getText());
 				company.setUnitNo(txtUnitNo.getText());
@@ -610,6 +620,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
+				selectedTabValue = 0 ;
 				add = 0;
 				addEditIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
 				billingControllerModel =  tableBillingLocations.getSelectionModel().getSelectedItem();
@@ -624,6 +635,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
+				selectedTabValue = 0 ;
 				addEditIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
  				listOfBilling.remove(addEditIndex);
 				addEditIndex = -1;

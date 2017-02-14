@@ -26,6 +26,7 @@ public class Iconstants {
 	public static final String XML_COMPANY_SCREEN = "CompanyPanel.fxml";
 	public static final String URL_COMPANY_API = "company";
 	public static final String XML_COMPANY_ADD_SCREEN = "AddCompany.fxml";
+	public static final String XML_COMPANY_PERSONALIZE_SCREEN = "companyPersonlize.fxml";
 	//public static final String XML_COMPANY_EDIT_SCREEN = "EditCompany.fxml";
 
 	public static final String TRUCK_BASE_PACKAGE = "com/dpu/truck/xml/";
@@ -89,5 +90,6 @@ public class Iconstants {
 	// status 
 	public static final String STATUS_ACTIVE = "Active";
 	public static final String STATUS_INACTIVE = "InActive";
+	public static final String COMPANY_ADDED_SUCCESS_MSG = "Company Deleted Successfully";
 	
 }

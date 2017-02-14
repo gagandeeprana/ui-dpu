@@ -49,7 +49,7 @@
     <CheckBox layoutX="552.0" layoutY="172.0" mnemonicParsing="false" text="PickUp ETA" />
     <CheckBox layoutX="552.0" layoutY="193.0" mnemonicParsing="false" text="Deliver ETA" />
     <CheckBox layoutX="487.0" layoutY="193.0" mnemonicParsing="false" text="PickUp" />
-    <TabPane layoutX="6.0" layoutY="269.0" prefHeight="313.0" prefWidth="694.0" tabClosingPolicy="UNAVAILABLE">
+    <TabPane layoutX="6.0" fx:id="tabPane" layoutY="269.0" prefHeight="313.0" prefWidth="694.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
         <Tab text="Billing Locations">
           <content>

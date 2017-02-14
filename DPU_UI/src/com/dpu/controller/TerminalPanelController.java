@@ -12,10 +12,10 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.model.Driver;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
 import com.dpu.model.Terminal;
+import com.dpu.model.Trailer;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -34,10 +34,10 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -50,7 +50,7 @@ public class TerminalPanelController extends Application implements Initializabl
 	public List<Terminal> tList = null;
 
 	@FXML
-	TableColumn<Terminal, String> terminalName, facility, location;
+	TableColumn<Terminal, String> terminalName, location;
 
 	@FXML
 	private void btnAddTerminalAction() {
@@ -157,13 +157,23 @@ public class TerminalPanelController extends Application implements Initializabl
 		if (terminal != null) {
 			Platform.runLater(new Runnable() {
 
+				@SuppressWarnings("unchecked")
 				@Override
 				public void run() {
 					try {
 						String response = DeleteAPIClient.callDeleteAPI(
 								Iconstants.URL_SERVER + Iconstants.URL_TERMINAL_API + "/" + terminal.getTerminalId(),
 								null);
-						MainScreen.terminalController.fillTerminal(response);
+						try {
+							Success success = mapper.readValue(response, Success.class);
+							List<Terminal> terminalList = (List<Terminal>) success.getResultList();
+							String res = mapper.writeValueAsString(terminalList);
+							JOptionPane.showMessageDialog(null, success.getMessage());
+							fillTerminal(res);
+						} catch (Exception e) {
+							Failed failed = mapper.readValue(response, Failed.class);
+							JOptionPane.showMessageDialog(null, failed.getMessage());
+						}
 						/*
 						 * if(response != null && response.contains("message"))
 						 * { Success success = mapper.readValue(response,
@@ -234,8 +244,7 @@ public class TerminalPanelController extends Application implements Initializabl
 	private void fetchColumns() {
 		System.out.println("[fetchColumns]: Enter ");
 		terminalName = (TableColumn<Terminal, String>) tblTerminal.getColumns().get(0);
-		facility = (TableColumn<Terminal, String>) tblTerminal.getColumns().get(1);
-		location = (TableColumn<Terminal, String>) tblTerminal.getColumns().get(2);
+		location = (TableColumn<Terminal, String>) tblTerminal.getColumns().get(1);
 		System.out.println("[fetchColumns]: Exit ");
 	}
 
@@ -264,6 +273,7 @@ public class TerminalPanelController extends Application implements Initializabl
 						tblTerminal.setVisible(true);
 					}
 				} catch (Exception e) {
+					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
 				}
 			}
@@ -280,20 +290,12 @@ public class TerminalPanelController extends Application implements Initializabl
 						return new SimpleStringProperty(param.getValue().getTerminalName() + "");
 					}
 				});
-		facility.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<Terminal, String>, ObservableValue<String>>() {
-
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<Terminal, String> param) {
-						return new SimpleStringProperty(param.getValue().getFacility() + "");
-					}
-				});
 		location.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<Terminal, String>, ObservableValue<String>>() {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<Terminal, String> param) {
-						return new SimpleStringProperty(param.getValue().getLocation() + "");
+						return new SimpleStringProperty(param.getValue().getShipperName() + "");
 					}
 				});
 	}

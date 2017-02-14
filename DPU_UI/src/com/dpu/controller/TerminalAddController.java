@@ -1,6 +1,7 @@
 package com.dpu.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -12,6 +13,9 @@ import com.dpu.client.GetAPIClient;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.DPUService;
+import com.dpu.model.Failed;
+import com.dpu.model.Shipper;
+import com.dpu.model.Success;
 import com.dpu.model.Terminal;
 
 import javafx.application.Application;
@@ -32,10 +36,10 @@ public class TerminalAddController extends Application implements Initializable{
 	Button btnCancelTerminal, btnAddAvailableServices, btnAddNewLocation;
 	
 	@FXML
-	TextField txtTerminalName, txtLocation;
+	TextField txtTerminalName;
 	
 	@FXML
-	ComboBox<String> ddlAvailableServices;
+	ComboBox<String> ddlAvailableServices, ddlLocation;
 	
 	@FXML
 	private void btnSaveTerminalAction() {
@@ -57,6 +61,7 @@ public class TerminalAddController extends Application implements Initializable{
 		
 		Platform.runLater(new Runnable() {
 			
+			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
 				try {
@@ -65,8 +70,17 @@ public class TerminalAddController extends Application implements Initializable{
 					String payload = mapper.writeValueAsString(terminal);
 					System.out.println("terminal add payload: " + payload);
 					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_TERMINAL_API, null, payload);
-					MainScreen.terminalController.fillTerminal(response);
-					
+//					MainScreen.terminalController.fillTerminal(response);
+					try {
+						Success success = mapper.readValue(response, Success.class);
+						List<Terminal> terminalList = (List<Terminal>) success.getResultList();
+						String res = mapper.writeValueAsString(terminalList);
+						JOptionPane.showMessageDialog(null, success.getMessage());
+						MainScreen.terminalController.fillTerminal(res);
+					} catch (Exception e) {
+						Failed failed = mapper.readValue(response, Failed.class);
+						JOptionPane.showMessageDialog(null, failed.getMessage());
+					}
 					/*if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
 						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
@@ -104,6 +118,8 @@ public class TerminalAddController extends Application implements Initializable{
 	
 	List<DPUService> serviceList = null;
 	
+	List<Shipper> shipperList = null;
+	
 	private void fetchMasterDataForDropDowns() {
 		
 		Platform.runLater(new Runnable() {
@@ -115,6 +131,8 @@ public class TerminalAddController extends Application implements Initializable{
 					Terminal terminal = mapper.readValue(response, Terminal.class);
 					serviceList = terminal.getServiceList();
 					fillDropDown(ddlAvailableServices, serviceList);
+					shipperList = terminal.getShipperList();
+					fillDropDown(ddlLocation, shipperList);
 				} catch (Exception e) {
 					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
@@ -132,6 +150,10 @@ public class TerminalAddController extends Application implements Initializable{
 					DPUService dpuService = (DPUService) object;
 					comboBox.getItems().add(dpuService.getServiceName());
 				}
+				if(object != null && object instanceof Shipper) {
+					Shipper shipper = (Shipper) object;
+					comboBox.getItems().add(shipper.getLocationName());
+				}
 			}
 		}
 	}
@@ -147,8 +169,12 @@ public class TerminalAddController extends Application implements Initializable{
 	private Terminal setTerminalValue() {
 		Terminal terminal = new Terminal();
 		terminal.setTerminalName(txtTerminalName.getText());
-		terminal.setLocation(txtLocation.getText());
-//		terminal.setS(serviceList.get(ddlAvailableServices.getSelectionModel().getSelectedIndex()).get.toString());		
+		terminal.setShipperId(shipperList.get(ddlLocation.getSelectionModel().getSelectedIndex()).getShipperId());
+		List<Long> serviceIds = new ArrayList<>();
+		Long serviceId = serviceList.get(ddlAvailableServices.getSelectionModel().getSelectedIndex()).getServiceId();
+		terminal.setStatusId(0l);
+		serviceIds.add(serviceId);
+		terminal.setServiceIds(serviceIds);
 		return terminal;
 	}
 }
