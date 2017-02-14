@@ -22,12 +22,15 @@ import com.dpu.model.Type;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 public class DriverAddController extends Application implements Initializable{
@@ -51,6 +54,22 @@ public class DriverAddController extends Application implements Initializable{
 		} else {
 			addDriver();
 			closeAddDriverScreen(btnSaveDriver);
+		}
+	}
+	
+	private void showProvinces() {
+		try {
+			txtProvince.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+		        @Override
+		        public void handle(KeyEvent event) {
+		            if (event.getCode() == KeyCode.TAB) {
+		            	ProvinceStateController.launch();
+		            }
+		        }
+		    });
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("showProvinces(): Exception: " + e.getMessage());
 		}
 	}
 	
@@ -169,6 +188,7 @@ public class DriverAddController extends Application implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		fetchMasterDataForDropDowns();
+		showProvinces();
 	}
 
 	@Override
