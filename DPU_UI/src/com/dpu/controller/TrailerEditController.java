@@ -51,6 +51,7 @@ public class TrailerEditController extends Application implements Initializable{
 		
 		Platform.runLater(new Runnable() {
 			
+			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
 				try {
@@ -59,7 +60,17 @@ public class TrailerEditController extends Application implements Initializable{
 					String payload = mapper.writeValueAsString(trailer);
 
 					String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_TRAILER_API + "/" + trailerId, null, payload);
-					MainScreen.trailerController.fillTrailer(response);				
+//					MainScreen.trailerController.fillTrailer(response);
+					try {
+						Success success = mapper.readValue(response, Success.class);
+						List<Trailer> trailerList = (List<Trailer>) success.getResultList();
+						String res = mapper.writeValueAsString(trailerList);
+						JOptionPane.showMessageDialog(null, success.getMessage());
+						MainScreen.trailerController.fillTrailer(res);
+					} catch (Exception e) {
+						Failed failed = mapper.readValue(response, Failed.class);
+						JOptionPane.showMessageDialog(null, failed.getMessage());
+					}
 					/*if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
 						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);

@@ -11,8 +11,10 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.Company;
+import com.dpu.model.Failed;
 import com.dpu.model.Shipper;
 import com.dpu.model.Status;
+import com.dpu.model.Success;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -51,6 +53,7 @@ public class ShipperEditController extends Application implements Initializable{
 		
 		Platform.runLater(new Runnable() {
 			
+			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
 				try {
@@ -59,7 +62,16 @@ public class ShipperEditController extends Application implements Initializable{
 					String payload = mapper.writeValueAsString(shipper);
 
 					String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_SHIPPER_API + "/" + shipperId, null, payload);
-					MainScreen.shipperController.fillShippers(response);
+					try {
+						Success success = mapper.readValue(response, Success.class);
+						List<Shipper> shipperList = (List<Shipper>) success.getResultList();
+						String res = mapper.writeValueAsString(shipperList);
+						JOptionPane.showMessageDialog(null, success.getMessage());
+						MainScreen.shipperController.fillShippers(res);
+					} catch (Exception e) {
+						Failed failed = mapper.readValue(response, Failed.class);
+						JOptionPane.showMessageDialog(null, failed.getMessage());
+					}
 					
 					/*if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);

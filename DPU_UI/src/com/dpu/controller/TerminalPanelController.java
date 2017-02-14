@@ -12,7 +12,10 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.model.Failed;
+import com.dpu.model.Success;
 import com.dpu.model.Terminal;
+import com.dpu.model.Trailer;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -154,13 +157,23 @@ public class TerminalPanelController extends Application implements Initializabl
 		if (terminal != null) {
 			Platform.runLater(new Runnable() {
 
+				@SuppressWarnings("unchecked")
 				@Override
 				public void run() {
 					try {
 						String response = DeleteAPIClient.callDeleteAPI(
 								Iconstants.URL_SERVER + Iconstants.URL_TERMINAL_API + "/" + terminal.getTerminalId(),
 								null);
-						MainScreen.terminalController.fillTerminal(response);
+						try {
+							Success success = mapper.readValue(response, Success.class);
+							List<Terminal> terminalList = (List<Terminal>) success.getResultList();
+							String res = mapper.writeValueAsString(terminalList);
+							JOptionPane.showMessageDialog(null, success.getMessage());
+							fillTerminal(res);
+						} catch (Exception e) {
+							Failed failed = mapper.readValue(response, Failed.class);
+							JOptionPane.showMessageDialog(null, failed.getMessage());
+						}
 						/*
 						 * if(response != null && response.contains("message"))
 						 * { Success success = mapper.readValue(response,

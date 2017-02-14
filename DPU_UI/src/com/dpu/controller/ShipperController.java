@@ -12,7 +12,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.model.Equipment;
 import com.dpu.model.Failed;
 import com.dpu.model.Shipper;
 import com.dpu.model.Success;
@@ -34,10 +33,10 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -117,11 +116,21 @@ public class ShipperController extends Application implements Initializable {
 		if(shipper != null) {
 			Platform.runLater(new Runnable() {
 				
+				@SuppressWarnings("unchecked")
 				@Override
 				public void run() {
 					try {
 						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_SHIPPER_API + "/" + shipper.getShipperId(), null);
-						MainScreen.shipperController.fillShippers(response);
+						try {
+							Success success = mapper.readValue(response, Success.class);
+							List<Shipper> shipperList = (List<Shipper>) success.getResultList();
+							String res = mapper.writeValueAsString(shipperList);
+							JOptionPane.showMessageDialog(null, success.getMessage());
+							fillShippers(res);
+						} catch (Exception e) {
+							Failed failed = mapper.readValue(response, Failed.class);
+							JOptionPane.showMessageDialog(null, failed.getMessage());
+						}
 						/*if(response != null && response.contains("message")) {
 							Success success = mapper.readValue(response, Success.class);
 							JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);

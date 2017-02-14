@@ -59,6 +59,7 @@ public class ShipperAddController extends Application implements Initializable{
 		
 		Platform.runLater(new Runnable() {
 			
+			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
 				try {
@@ -68,7 +69,16 @@ public class ShipperAddController extends Application implements Initializable{
 					System.out.println(payload);
 					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_SHIPPER_API, null, payload);
 					if(MainScreen.shipperController != null) {
-						MainScreen.shipperController.fillShippers(response);
+						try {
+							Success success = mapper.readValue(response, Success.class);
+							List<Shipper> shipperList = (List<Shipper>) success.getResultList();
+							String res = mapper.writeValueAsString(shipperList);
+							JOptionPane.showMessageDialog(null, success.getMessage());
+							MainScreen.shipperController.fillShippers(res);
+						} catch (Exception e) {
+							Failed failed = mapper.readValue(response, Failed.class);
+							JOptionPane.showMessageDialog(null, failed.getMessage());
+						}
 					} else if(MainScreen.terminalController != null) {
 						MainScreen.terminalController.openAddTerminalScreen();
 					}
