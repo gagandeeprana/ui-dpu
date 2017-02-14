@@ -36,6 +36,8 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -56,6 +58,7 @@ public class ServiceController extends Application implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+//		newMethod();
 		fetchServices();
 	}
 
@@ -106,11 +109,21 @@ public class ServiceController extends Application implements Initializable {
 					}
 				}
 			});
-			
 		}
 	}
 	
 	List<DPUService> services = null;
+	
+	/*public void newMethod() {
+		txtSearchService.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+	        @Override
+	        public void handle(KeyEvent event) {
+	            if (event.getCode() == KeyCode.TAB) {
+	            	
+	            }
+	        }
+	    });
+	}*/
 	
 	public void fillServices(String response) {
 		
