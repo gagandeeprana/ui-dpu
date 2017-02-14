@@ -55,7 +55,7 @@ public class TrailerAddController extends Application implements Initializable{
 					Trailer trailer = setTrailerValue();
 					String payload = mapper.writeValueAsString(trailer);
 					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_TRAILER_API, null, payload);
-					MainScreen.trailerController.fillTrailer(response);
+//					MainScreen.trailerController.fillTrailer(response);
 					/*if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
 						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
