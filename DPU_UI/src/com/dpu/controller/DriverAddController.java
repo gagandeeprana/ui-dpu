@@ -1,7 +1,6 @@
 package com.dpu.controller;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -13,10 +12,8 @@ import com.dpu.client.GetAPIClient;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.Category;
-import com.dpu.model.DPUService;
 import com.dpu.model.Division;
 import com.dpu.model.Driver;
-import com.dpu.model.Equipment;
 import com.dpu.model.Failed;
 import com.dpu.model.Status;
 import com.dpu.model.Success;
@@ -25,8 +22,6 @@ import com.dpu.model.Type;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
