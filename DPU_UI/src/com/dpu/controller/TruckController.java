@@ -12,6 +12,9 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.model.Division;
+import com.dpu.model.Failed;
+import com.dpu.model.Success;
 import com.dpu.model.Truck;
 
 import javafx.application.Application;
@@ -115,12 +118,23 @@ public class TruckController extends Application implements Initializable {
 		if(truck != null) {
 			Platform.runLater(new Runnable() {
 				
+				@SuppressWarnings("unchecked")
 				@Override
 				public void run() {
 					try {
 						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_TRUCK_API + "/" + truck.getTruckId(), null);
 						System.out.println(response);
-						fillTruck(response);
+//						fillTruck(response);
+						try {
+							Success success = mapper.readValue(response, Success.class);
+							List<Truck> truckList = (List<Truck>) success.getResultList();
+							String res = mapper.writeValueAsString(truckList);
+							JOptionPane.showMessageDialog(null, success.getMessage());
+							fillTruck(res);
+						} catch (Exception e) {
+							Failed failed = mapper.readValue(response, Failed.class);
+							JOptionPane.showMessageDialog(null, failed.getMessage());
+						}
 						/*if(response != null && response.contains("message")) {
 							Success success = mapper.readValue(response, Success.class);
 							JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);

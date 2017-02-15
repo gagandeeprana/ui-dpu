@@ -12,6 +12,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.model.Failed;
+import com.dpu.model.Success;
 import com.dpu.model.Trailer;
 
 import javafx.application.Application;
@@ -31,9 +33,9 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableView;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.control.TableView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -104,11 +106,22 @@ public class TrailerController extends Application implements Initializable {
 		if(trailer != null) {
 			Platform.runLater(new Runnable() {
 				
+				@SuppressWarnings("unchecked")
 				@Override
 				public void run() {
 					try {
 						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_TRAILER_API + "/" + trailer.getTrailerId(), null);
-						MainScreen.trailerController.fillTrailer(response);
+//						MainScreen.trailerController.fillTrailer(response);
+						try {
+							Success success = mapper.readValue(response, Success.class);
+							List<Trailer> trailerList = (List<Trailer>) success.getResultList();
+							String res = mapper.writeValueAsString(trailerList);
+							JOptionPane.showMessageDialog(null, success.getMessage());
+							fillTrailer(res);
+						} catch (Exception e) {
+							Failed failed = mapper.readValue(response, Failed.class);
+							JOptionPane.showMessageDialog(null, failed.getMessage());
+						}
 						/*if(response != null && response.contains("message")) {
 							Success success = mapper.readValue(response, Success.class);
 							JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);

@@ -33,10 +33,10 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -215,12 +215,23 @@ public class DriverController extends Application implements Initializable {
 		if(driver != null) {
 			Platform.runLater(new Runnable() {
 				
+				@SuppressWarnings("unchecked")
 				@Override
 				public void run() {
 					try {
 						ObjectMapper mapper = new ObjectMapper();
 						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_DRIVER_API + "/" + driver.getDriverId(), null);
-						MainScreen.driverController.fillDriver(response);
+//						MainScreen.driverController.fillDriver(response);
+						try {
+							Success success = mapper.readValue(response, Success.class);
+							List<Driver> driverList = (List<Driver>) success.getResultList();
+							String res = mapper.writeValueAsString(driverList);
+							JOptionPane.showMessageDialog(null, success.getMessage());
+							fillDriver(res);
+						} catch (Exception e) {
+							Failed failed = mapper.readValue(response, Failed.class);
+							JOptionPane.showMessageDialog(null, failed.getMessage());
+						}
 						/*if(response != null && response.contains("message")) {
 							Success success = mapper.readValue(response, Success.class);
 							JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);

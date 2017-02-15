@@ -13,7 +13,6 @@ import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.DPUService;
-import com.dpu.model.Equipment;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
 
@@ -34,10 +33,12 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -57,6 +58,7 @@ public class ServiceController extends Application implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+//		newMethod();
 		fetchServices();
 	}
 
@@ -107,11 +109,21 @@ public class ServiceController extends Application implements Initializable {
 					}
 				}
 			});
-			
 		}
 	}
 	
 	List<DPUService> services = null;
+	
+	/*public void newMethod() {
+		txtSearchService.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+	        @Override
+	        public void handle(KeyEvent event) {
+	            if (event.getCode() == KeyCode.TAB) {
+	            	
+	            }
+	        }
+	    });
+	}*/
 	
 	public void fillServices(String response) {
 		
@@ -238,11 +250,22 @@ public class ServiceController extends Application implements Initializable {
 		if(service != null) {
 			Platform.runLater(new Runnable() {
 				
+				@SuppressWarnings("unchecked")
 				@Override
 				public void run() {
 					try {
 						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_SERVICE_API + "/" + service.getServiceId(), null);
-						fillServices(response);
+//						fillServices(response);
+						try {
+							Success success = mapper.readValue(response, Success.class);
+							List<DPUService> serviceList = (List<DPUService>) success.getResultList();
+							String res = mapper.writeValueAsString(serviceList);
+							JOptionPane.showMessageDialog(null, success.getMessage());
+							fillServices(res);
+						} catch (Exception e) {
+							Failed failed = mapper.readValue(response, Failed.class);
+							JOptionPane.showMessageDialog(null, failed.getMessage());
+						}
 
 						/*if(response != null && response.contains("message")) {
 							Success success = mapper.readValue(response, Success.class);

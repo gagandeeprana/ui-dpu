@@ -13,7 +13,9 @@ import com.dpu.client.GetAPIClient;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.DPUService;
+import com.dpu.model.Failed;
 import com.dpu.model.Shipper;
+import com.dpu.model.Success;
 import com.dpu.model.Terminal;
 
 import javafx.application.Application;
@@ -59,6 +61,7 @@ public class TerminalAddController extends Application implements Initializable{
 		
 		Platform.runLater(new Runnable() {
 			
+			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
 				try {
@@ -67,8 +70,17 @@ public class TerminalAddController extends Application implements Initializable{
 					String payload = mapper.writeValueAsString(terminal);
 					System.out.println("terminal add payload: " + payload);
 					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_TERMINAL_API, null, payload);
-					MainScreen.terminalController.fillTerminal(response);
-					
+//					MainScreen.terminalController.fillTerminal(response);
+					try {
+						Success success = mapper.readValue(response, Success.class);
+						List<Terminal> terminalList = (List<Terminal>) success.getResultList();
+						String res = mapper.writeValueAsString(terminalList);
+						JOptionPane.showMessageDialog(null, success.getMessage());
+						MainScreen.terminalController.fillTerminal(res);
+					} catch (Exception e) {
+						Failed failed = mapper.readValue(response, Failed.class);
+						JOptionPane.showMessageDialog(null, failed.getMessage());
+					}
 					/*if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
 						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);

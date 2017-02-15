@@ -13,7 +13,9 @@ import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.Category;
 import com.dpu.model.Division;
+import com.dpu.model.Failed;
 import com.dpu.model.Status;
+import com.dpu.model.Success;
 import com.dpu.model.Terminal;
 import com.dpu.model.Truck;
 import com.dpu.model.Type;
@@ -53,6 +55,7 @@ public class TruckAddController extends Application implements Initializable{
 		
 		Platform.runLater(new Runnable() {
 			
+			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
 				try {
@@ -61,7 +64,17 @@ public class TruckAddController extends Application implements Initializable{
 					String payload = mapper.writeValueAsString(truck);
 					System.out.println("truck payload: " + payload);
 					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_TRUCK_API, null, payload);
-					MainScreen.truckController.fillTruck(response);
+//					MainScreen.truckController.fillTruck(response);
+					try {
+						Success success = mapper.readValue(response, Success.class);
+						List<Truck> truckList = (List<Truck>) success.getResultList();
+						String res = mapper.writeValueAsString(truckList);
+						JOptionPane.showMessageDialog(null, success.getMessage());
+						MainScreen.truckController.fillTruck(res);
+					} catch (Exception e) {
+						Failed failed = mapper.readValue(response, Failed.class);
+						JOptionPane.showMessageDialog(null, failed.getMessage());
+					}
 					
 					/*if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
