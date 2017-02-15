@@ -2,7 +2,7 @@ package com.dpu.constants;
 
 public class Iconstants {
 
-	public static final String URL_SERVER = "http://localhost:9090/DPUWebProject/";
+	public static final String URL_SERVER = "http://localhost:8082/DPUWebProject/";
 	//public static final String URL_SERVER = "http://35.154.6.180:9090/DPUWebProject/";
 
 	public static final String COMMON_BASE_PACKAGE = "com/dpu/common/xml/";
@@ -91,5 +91,7 @@ public class Iconstants {
 	public static final String STATUS_ACTIVE = "Active";
 	public static final String STATUS_INACTIVE = "InActive";
 	public static final String COMPANY_ADDED_SUCCESS_MSG = "Company Deleted Successfully";
+	
+	public static final String URL_PROVINCE_API = "province";
 	
 }
