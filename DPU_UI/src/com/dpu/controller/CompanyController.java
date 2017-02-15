@@ -37,6 +37,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -209,9 +210,29 @@ public class CompanyController extends Application implements Initializable {
 		return null;
 	}
 
+	static boolean  unitNumber = true;
+	static boolean namee = true;
+	static boolean emaill = true;
+	static boolean  cityy = true;
+	static boolean pss = true;
+	static boolean phoneNumber = true;
+	static boolean  homeNumber = true;
+	static boolean faxNumber = true;
+	static boolean afterHourss = true;
+	
+			
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		fetchCompanies();
+		unitNo.setVisible(unitNumber);
+		name.setVisible(namee);
+		email.setVisible(emaill);
+		city.setVisible(cityy);
+		ps.setVisible(pss);
+		phone.setVisible(phoneNumber);
+		home.setVisible(homeNumber);
+		fax.setVisible(faxNumber);
+		afterHours.setVisible(afterHourss);
 	}
 
 	@Override
@@ -564,19 +585,40 @@ public class CompanyController extends Application implements Initializable {
 
 		// Add MenuItem to ContextMenu
 		contextMenu.getItems().addAll(item1, item2, item3, item4, item5 , item6);
-
+		
 		if (tblCompanyMenuCount == 0) {
 			tblCompanyMenuCount++;
 			// When user right-click on Table
-			tblCompany.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
-				@Override
-				public void handle(ContextMenuEvent event) {
-					contextMenu.show(tblCompany, event.getScreenX(), event.getScreenY());
+			tblCompany.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				 
+				
 
+				@Override
+				public void handle(MouseEvent mouseEvent) {
+					
+					if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
+						int count =0;
+			            if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.SECONDARY) && count == 0){
+			            	contextMenu.show(tblCompany, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+							//System.out.println("X: " + mouseEvent.getX() + " Y: " + mouseEvent.getY());
+							count =1;
+							}
+						//contextMenu.hide();
+			           // else if (((MouseEvent) mouseEvent).getClickCount() == 2)
+			            else{
+			            	contextMenu.hide();
+			            	count = 0;
+			            }
+			        }
 				}
 
 			});
+			
+			// when user left-Click on Table
+			 
 		}
+		
+		
 	}
 
 }
