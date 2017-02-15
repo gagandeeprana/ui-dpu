@@ -1,86 +1,105 @@
 package com.dpu.controller;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.dpu.client.GetAPIClient;
-import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.model.Driver;
-import com.dpu.model.Failed;
 import com.dpu.model.ProvinceStateResponse;
-import com.dpu.model.Success;
 
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.scene.Group;
-import javafx.scene.Scene;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-public class ProvinceStateController {
+public class ProvinceStateController extends Application implements Initializable{
  
-	private String title;
-	private List<?> list;
-	private TableView<ProvinceStateResponse> table = new TableView<ProvinceStateResponse>();
+	@FXML
+	TableView<ProvinceStateResponse> tblProvinceState;
+
+	@FXML
+	TableColumn<ProvinceStateResponse, String> code, name;
 	
-	public ProvinceStateController(String title, List<?> list) {
-		this.title = title;
-		this.list = list;
+	@FXML
+	private void btnSaveProvinceStateAction() {
+		ProvinceStateResponse provinceStateResponse = tblProvinceState.getSelectionModel().getSelectedItem();
+		if(provinceStateResponse != null) {
+			DriverAddController driverAddController = new DriverAddController();
+			driverAddController.txtProvince.setText(provinceStateResponse.getStateName());
+		}
 	}
- 
+	
+    @SuppressWarnings("unchecked")
+	private void fetchColumns() {
+		code = (TableColumn<ProvinceStateResponse, String>) tblProvinceState.getColumns().get(0);
+		name = (TableColumn<ProvinceStateResponse, String>) tblProvinceState.getColumns().get(1);
+	}
     
-    public void openWindow() {
-    	Stage stage = new Stage();
-        Scene scene = new Scene(new Group());
-        stage.setTitle(title);
-        stage.setWidth(300);
-        stage.setHeight(500);
-        table.setEditable(false);
-        
-        TableColumn<ProvinceStateResponse, String> firstNameCol = new TableColumn<ProvinceStateResponse, String>("Code");
-        TableColumn<ProvinceStateResponse, String> lastNameCol = new TableColumn<ProvinceStateResponse, String>("Name");
-        
-        firstNameCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ProvinceStateResponse,String>, ObservableValue<String>>() {
+    public void fillProvinces(String response) {
+		
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			List<ProvinceStateResponse> provinces = new ArrayList<>();
+			if(response != null && response.length() > 0) {
+				ProvinceStateResponse d[] = mapper.readValue(response, ProvinceStateResponse[].class);
+				for(ProvinceStateResponse ddl : d) {
+					provinces.add(ddl);
+				}
+			}
+			ObservableList<ProvinceStateResponse> data = FXCollections.observableArrayList(provinces);
+			setColumnValues();
+			tblProvinceState.setItems(data);
+            tblProvinceState.setVisible(true);
+		} catch (Exception e) {
+			System.out.println("ProvinceStateController: fillProvinces(): "+ e.getMessage());
+		}
+	}
+
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+	}   
+	
+	private void setColumnValues() {
+		code.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ProvinceStateResponse,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<ProvinceStateResponse, String> param) {
 				return new SimpleStringProperty(param.getValue().getStateCode() + "");
 			}
 		});
-		lastNameCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ProvinceStateResponse,String>, ObservableValue<String>>() {
+		name.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ProvinceStateResponse,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<ProvinceStateResponse, String> param) {
 				return new SimpleStringProperty(param.getValue().getStateName() + "");
 			}
 		});
-        table.getColumns().addAll(firstNameCol, lastNameCol);
-        callProvinceAPI(null);
-        final VBox vbox = new VBox();
-        vbox.setPrefWidth(300);
-        vbox.setPrefHeight(500);
-        vbox.getChildren().addAll(table);
-        ((Group) scene.getRoot()).getChildren().addAll(vbox);
-        stage.setScene(scene);
-        stage.show();
-    }
-    
-    public void callProvinceAPI(String provinceName) {
-    	
-    	Platform.runLater(new Runnable() {
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		fetchProvinces(null);
+	}
+	
+	public void fetchProvinces(String provinceName) {
+		
+		fetchColumns();
+		Platform.runLater(new Runnable() {
 			
 			@Override
 			public void run() {
@@ -97,26 +116,5 @@ public class ProvinceStateController {
 				}
 			}
 		});
-    }
-    
-    public void fillProvinces(String response) {
-		
-		try {
-			ObjectMapper mapper = new ObjectMapper();
-
-			List<ProvinceStateResponse> provinces = new ArrayList<>();
-			if(response != null && response.length() > 0) {
-				ProvinceStateResponse d[] = mapper.readValue(response, ProvinceStateResponse[].class);
-				for(ProvinceStateResponse ddl : d) {
-					provinces.add(ddl);
-				}
-			}
-			ObservableList<ProvinceStateResponse> data = FXCollections.observableArrayList(provinces);
-			table.setItems(data);
-            table.setVisible(true);
-		} catch (Exception e) {
-			System.out.println("ProvinceStateController: fillProvinces(): "+ e.getMessage());
-		}
 	}
-    
 }

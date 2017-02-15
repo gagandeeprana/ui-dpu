@@ -1,7 +1,6 @@
 package com.dpu.controller;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -68,14 +67,28 @@ public class DriverAddController extends Application implements Initializable{
 		        @Override
 		        public void handle(KeyEvent event) {
 		            if (event.getCode() == KeyCode.TAB) {
-		            	ProvinceStateController provinceStateController = new ProvinceStateController("Province/ State", new ArrayList<>());
-		            	provinceStateController.openWindow();
+		            	openProvinceScreen();
 		            }
 		        }
 		    });
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("showProvinces(): Exception: " + e.getMessage());
+		}
+	}
+	
+	private void openProvinceScreen() {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.COMMON_BASE_PACKAGE + Iconstants.XML_PROVINCE_STATE));
+	        Parent root = (Parent) fxmlLoader.load();
+	        Stage stage = new Stage();
+	        stage.initModality(Modality.APPLICATION_MODAL);
+	        stage.setTitle("Province/ State");
+	        stage.setScene(new Scene(root)); 
+	        stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
 		}
 	}
 	
