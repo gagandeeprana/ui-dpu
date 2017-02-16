@@ -48,7 +48,7 @@ import javafx.util.Callback;
 public class CompanyEditController extends Application implements Initializable {
 
 	@FXML
-<<<<<<< HEAD
+
 	Button btnUpdateCompany;
 
 	int companyId = 0;
@@ -57,7 +57,7 @@ public class CompanyEditController extends Application implements Initializable 
 	TextField txtCompany, txtContact, txtAddress, txtPosition, txtUnitNo, txtPhone, txtExt, txtCity, txtFax, txtPrefix,
 			txtProvince, txtZip, txtAfterHours, txtEmail, txtTollFree, txtWebsite, txtCellular, txtPager;
 
-=======
+
 	private ResourceBundle resources;
 
 	@FXML
@@ -182,7 +182,7 @@ public class CompanyEditController extends Application implements Initializable 
 
 
 	
->>>>>>> de161973cf2dd6940475f2799d7f67299d76fcb4
+
 	@FXML
 	Button btnUpdateCompany;
 
@@ -195,10 +195,7 @@ public class CompanyEditController extends Application implements Initializable 
 		closeEditCompanyScreen(btnUpdateCompany);
 
 	}
-<<<<<<< HEAD
-=======
- 
->>>>>>> de161973cf2dd6940475f2799d7f67299d76fcb4
+
 
 	private void closeEditCompanyScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
@@ -270,15 +267,15 @@ public class CompanyEditController extends Application implements Initializable 
 		launch(args);
 	}
 
-<<<<<<< HEAD
+
 	private Company setCompanyValue() {
 		Company company = new Company();
 		company.setCompanyId(companyId);
-=======
+
 	private CompanyModel setCompanyValue() {
 
 		//company.setCompanyId(companyId);
->>>>>>> de161973cf2dd6940475f2799d7f67299d76fcb4
+
 		company.setName(txtCompany.getText());
 		company.setContact(txtContact.getText());
 		company.setAddress(txtAddress.getText());

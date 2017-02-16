@@ -2,14 +2,14 @@ package com.dpu.constants;
 
 public class Iconstants {
 
-<<<<<<< HEAD
+
 
 	public static final String URL_SERVER = "http://localhost:8080/DPUWebProject/";
 
 //	public static final String URL_SERVER = "http://localhost:9090/DPUWebProject/";
-=======
-	public static final String URL_SERVER = "http://localhost:8080/DPUWebProject/";
->>>>>>> 3b8a86fecf7cf6256a540a47255406e468fc2a30
+
+//	public static final String URL_SERVER = "http://localhost:8080/DPUWebProject/";
+
 	//public static final String URL_SERVER = "http://35.154.6.180:9090/DPUWebProject/";
 
 
@@ -66,6 +66,12 @@ public class Iconstants {
 	public static final String URL_DIVISION_API = "division";
 	public static final String XML_DIVISION_ADD_SCREEN = "AddDivision.fxml";
 	public static final String XML_DIVISION_EDIT_SCREEN = "EditDivision1.fxml";
+	
+	public static final String CUSTOM_BROKER_BASE_PACKAGE = "com/dpu/custombroker/xml/";
+	public static final String XML_CUSTOM_BROKER_SCREEN = "ListCustomBroker.fxml";
+	public static final String URL_CUSTOM_BROKER_API = "custombroker";
+	public static final String XML_CUSTOM_BROKER_ADD_SCREEN = "";
+	public static final String XML_CUSTOM_BROKER_EDIT_SCREEN = "";
 
 	public static final String CATEGORY_BASE_PACKAGE = "com/dpu/category/xml/";
 	public static final String XML_CATEGORY_SCREEN = "List Categories.fxml";
