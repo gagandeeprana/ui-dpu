@@ -35,7 +35,10 @@ public class Truck implements Serializable{
 	private String statusName;
 	private Long statusId;
 	private List<Status> statusList;
-
+	private Long truckTypeId;
+	private String typeName;
+	private List<Type> truckTypeList;
+	
 	public List<Division> getDivisionList() {
 		return divisionList;
 	}
@@ -58,6 +61,30 @@ public class Truck implements Serializable{
 
 	public void setCategoryList(List<Category> categoryList) {
 		this.categoryList = categoryList;
+	}
+
+	public List<Type> getTruckTypeList() {
+		return truckTypeList;
+	}
+
+	public void setTruckTypeList(List<Type> truckTypeList) {
+		this.truckTypeList = truckTypeList;
+	}
+
+	public String getTypeName() {
+		return typeName;
+	}
+
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+
+	public Long getTruckTypeId() {
+		return truckTypeId;
+	}
+
+	public void setTruckTypeId(Long truckTypeId) {
+		this.truckTypeId = truckTypeId;
 	}
 
 	public String getDivisionName() {

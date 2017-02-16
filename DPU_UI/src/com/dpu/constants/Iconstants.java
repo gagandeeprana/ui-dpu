@@ -2,10 +2,14 @@ package com.dpu.constants;
 
 public class Iconstants {
 
+<<<<<<< HEAD
 
 	public static final String URL_SERVER = "http://localhost:8080/DPUWebProject/";
 
 //	public static final String URL_SERVER = "http://localhost:9090/DPUWebProject/";
+=======
+	public static final String URL_SERVER = "http://localhost:8080/DPUWebProject/";
+>>>>>>> 3b8a86fecf7cf6256a540a47255406e468fc2a30
 	//public static final String URL_SERVER = "http://35.154.6.180:9090/DPUWebProject/";
 
 
@@ -30,6 +34,7 @@ public class Iconstants {
 	public static final String XML_COMPANY_SCREEN = "CompanyPanel.fxml";
 	public static final String URL_COMPANY_API = "company";
 	public static final String XML_COMPANY_ADD_SCREEN = "AddCompany.fxml";
+	public static final String XML_COMPANY_PERSONALIZE_SCREEN = "companyPersonlize.fxml";
 	//public static final String XML_COMPANY_EDIT_SCREEN = "EditCompany.fxml";
 
 	public static final String TRUCK_BASE_PACKAGE = "com/dpu/truck/xml/";
@@ -88,6 +93,14 @@ public class Iconstants {
 	
 	public static final String XML_EDIT_ADDITIONAL_CONTACT_SCREEN ="AdditionalContactEditScreen.fxml";
 	public static final String XML_EDIT_BILLING_LOCATION_SCREEN = "EditBillingLocationScreen.fxml";
-	public static final String XML_COMPANY_EDIT_SCREEN = "EditCompany.fxml";
+	public static final String XML_COMPANY_EDIT_SCREEN = "EditCompanyOld.fxml";
+
+	// status 
+	public static final String STATUS_ACTIVE = "Active";
+	public static final String STATUS_INACTIVE = "InActive";
+	public static final String COMPANY_ADDED_SUCCESS_MSG = "Company Deleted Successfully";
+	
+	public static final String URL_PROVINCE_API = "province";
+	public static final String XML_PROVINCE_STATE = "province_state.fxml";
 
 }

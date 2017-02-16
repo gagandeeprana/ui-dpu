@@ -1,6 +1,7 @@
 package com.dpu.controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
@@ -9,9 +10,14 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.model.Category;
+import com.dpu.model.Division;
 import com.dpu.model.Failed;
+import com.dpu.model.Status;
 import com.dpu.model.Success;
+import com.dpu.model.Terminal;
 import com.dpu.model.Trailer;
+import com.dpu.model.Type;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -27,13 +33,13 @@ public class TrailerEditController extends Application implements Initializable{
 	@FXML
 	Button btnUpdateTrailer;
 	
-	Integer trailerId = 0;
+	Long trailerId = 0l;
 	
 	@FXML
-	TextField txtUnitNo, txtUsage, txtOwner, txtDivision, txtOoName, txtTerminal, txtCategory, txtTrailerType;
+	TextField txtUnitNo, txtUsage, txtOwner, txtOoName, txtFinance;
 	
 	@FXML
-	ComboBox<Object> ddlStatus, ddlFinance;
+	ComboBox<String> ddlStatus, ddlCategory, ddlDivision, ddlTerminal, ddlTrailerType;
 	
 	@FXML
 	private void btnUpdateTrailerAction() {
@@ -45,6 +51,7 @@ public class TrailerEditController extends Application implements Initializable{
 		
 		Platform.runLater(new Runnable() {
 			
+			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
 				try {
@@ -53,15 +60,24 @@ public class TrailerEditController extends Application implements Initializable{
 					String payload = mapper.writeValueAsString(trailer);
 
 					String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_TRAILER_API + "/" + trailerId, null, payload);
-					
-					if(response != null && response.contains("message")) {
+//					MainScreen.trailerController.fillTrailer(response);
+					try {
+						Success success = mapper.readValue(response, Success.class);
+						List<Trailer> trailerList = (List<Trailer>) success.getResultList();
+						String res = mapper.writeValueAsString(trailerList);
+						JOptionPane.showMessageDialog(null, success.getMessage());
+						MainScreen.trailerController.fillTrailer(res);
+					} catch (Exception e) {
+						Failed failed = mapper.readValue(response, Failed.class);
+						JOptionPane.showMessageDialog(null, failed.getMessage());
+					}
+					/*if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
 						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
 					} else {
 						Failed failed = mapper.readValue(response, Failed.class);
 						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-					}
-					MainScreen.trailerController.fetchTrailers();
+					}*/
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
 				}
@@ -72,18 +88,16 @@ public class TrailerEditController extends Application implements Initializable{
 	
 	private Trailer setTrailerValue() {
 		Trailer trailer = new Trailer();
-		
-		trailer.setTrailerId(trailerId);
-		trailer.setUnitNo(Integer.parseInt(txtUnitNo.getText()));
-		trailer.setUsage(txtUsage.getText());
+		trailer.setUnitNo(Long.parseLong(txtUnitNo.getText()));
 		trailer.setOwner(txtOwner.getText());
-		trailer.setDivision(txtDivision.getText());
 		trailer.setoOName(txtOoName.getText());
-		trailer.setTerminal(txtTerminal.getText());
-		trailer.setCategory(txtCategory.getText());
-		trailer.setTrailerType(txtTrailerType.getText());
-		trailer.setStatus(ddlStatus.getSelectionModel().getSelectedItem().toString());
-		trailer.setFinance(ddlFinance.getSelectionModel().getSelectedItem().toString());
+		trailer.setCategoryId(categoryList.get(ddlCategory.getSelectionModel().getSelectedIndex()).getCategoryId());
+		trailer.setStatusId(statusList.get(ddlStatus.getSelectionModel().getSelectedIndex()).getId());
+		trailer.setUsage(txtUsage.getText());
+		trailer.setDivisionId(divisionList.get(ddlDivision.getSelectionModel().getSelectedIndex()).getDivisionId());
+		trailer.setTerminalId(terminalList.get(ddlTerminal.getSelectionModel().getSelectedIndex()).getTerminalId());
+		trailer.setTrailerTypeId(trailerTypeList.get(ddlTrailerType.getSelectionModel().getSelectedIndex()).getTypeId());
+		trailer.setFinance(txtFinance.getText());
 		return trailer;
 	}
 
@@ -95,10 +109,6 @@ public class TrailerEditController extends Application implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		ddlStatus.setValue("Active");
-		ddlStatus.setValue("Inactive");
-		ddlFinance.setValue("Fin 1");
-		ddlFinance.setValue("Fin 2");
 	}
 
 	@Override
@@ -107,19 +117,64 @@ public class TrailerEditController extends Application implements Initializable{
 		
 	}
 	
+	ObjectMapper mapper = new ObjectMapper();
+	
+	List<Category> categoryList = null;
+	
+	List<Status> statusList = null;
+
+	List<Division> divisionList = null;
+
+	List<Terminal> terminalList = null;
+
+	List<Type> trailerTypeList = null;
+	
 	public void initData(Trailer t) {
 		trailerId = t.getTrailerId();
 		txtUnitNo.setText(String.valueOf(t.getUnitNo()));
-		txtUsage.setText(t.getUsage());
-		txtOwner.setText(t.getUsage());
-		txtDivision.setText(t.getUsage());
+		txtOwner.setText(t.getOwner());
 		txtOoName.setText(t.getUsage());
-		txtTerminal.setText(t.getUsage());
-		txtCategory.setText(t.getUsage());
-		txtTrailerType.setText(t.getUsage());
-		ddlStatus.setValue(t.getStatus());
-		ddlFinance.setValue(t.getFinance());
-
+		txtUsage.setText(t.getUsage());
+		txtFinance.setText(t.getFinance());
+		categoryList = t.getCategoryList();
+		for(int i = 0; i< t.getCategoryList().size();i++) {
+			Category category = t.getCategoryList().get(i);
+			ddlCategory.getItems().add(category.getName());
+			if(category.getCategoryId() == t.getCategoryId()) {
+				ddlCategory.getSelectionModel().select(i);
+			}
+		}
+		statusList = t.getStatusList();
+		for(int i = 0; i< t.getStatusList().size();i++) {
+			Status status = t.getStatusList().get(i);
+			ddlStatus.getItems().add(status.getStatus());
+			if(status.getId() == t.getStatusId()) {
+				ddlStatus.getSelectionModel().select(i);
+			}
+		}
+		divisionList = t.getDivisionList();
+		for(int i = 0; i< t.getDivisionList().size();i++) {
+			Division division = t.getDivisionList().get(i);
+			ddlDivision.getItems().add(division.getDivisionName());
+			if(division.getDivisionId() == t.getDivisionId()) {
+				ddlDivision.getSelectionModel().select(i);
+			}
+		}
+		terminalList = t.getTerminalList();
+		for(int i = 0; i< t.getTerminalList().size();i++) {
+			Terminal terminal = t.getTerminalList().get(i);
+			ddlTerminal.getItems().add(terminal.getTerminalName());
+			if(terminal.getTerminalId() == t.getTerminalId()) {
+				ddlTerminal.getSelectionModel().select(i);
+			}
+		}
+		trailerTypeList = t.getTrailerTypeList();
+		for(int i = 0; i< t.getTrailerTypeList().size();i++) {
+			Type trailer = t.getTrailerTypeList().get(i);
+			ddlTrailerType.getItems().add(trailer.getTypeName());
+			if(trailer.getTypeId() == t.getTrailerTypeId()) {
+				ddlTrailerType.getSelectionModel().select(i);
+			}
+		}
 	}
-	
 }

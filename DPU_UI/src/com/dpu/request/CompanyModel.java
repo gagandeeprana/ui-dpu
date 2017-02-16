@@ -13,6 +13,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonSerialize(include= Inclusion.NON_NULL)
 @JsonPropertyOrder({
+	"companyId",
     "name",
     "address",
     "unitNo",

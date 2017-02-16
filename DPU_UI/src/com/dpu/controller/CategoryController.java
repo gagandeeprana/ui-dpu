@@ -13,7 +13,6 @@ import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.Category;
-import com.dpu.model.DPUService;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
 
@@ -23,15 +22,21 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -198,11 +203,22 @@ public class CategoryController extends Application implements Initializable {
 		if(category != null) {
 			Platform.runLater(new Runnable() {
 				
+				@SuppressWarnings("unchecked")
 				@Override
 				public void run() {
 					try {
 						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_CATEGORY_API + "/" + category.getCategoryId(), null);
-						fillCategories(response);
+//						fillCategories(response);
+						try {
+							Success success = mapper.readValue(response, Success.class);
+							List<Category> categoryList = (List<Category>) success.getResultList();
+							String res = mapper.writeValueAsString(categoryList);
+							JOptionPane.showMessageDialog(null, success.getMessage());
+							fillCategories(res);
+						} catch (Exception e) {
+							Failed failed = mapper.readValue(response, Failed.class);
+							JOptionPane.showMessageDialog(null, failed.getMessage());
+						}
 						/*if(response != null && response.contains("message")) {
 							Success success = mapper.readValue(response, Success.class);
 							JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
@@ -266,4 +282,86 @@ public class CategoryController extends Application implements Initializable {
 		});
 
 	}
+	
+	// ADD MENU
+
+				public int tblCategoryMenuCount = 0;
+
+				@FXML
+				public void handleAddContMouseClick(MouseEvent event) {
+
+					// Create ContextMenu
+					ContextMenu contextMenu = new ContextMenu();
+
+					MenuItem item1 = new MenuItem("ADD");
+					item1.setOnAction(new EventHandler<ActionEvent>() {
+
+						@Override
+						public void handle(ActionEvent event) {
+						}
+
+					});
+					MenuItem item2 = new MenuItem("EDIT");
+					item2.setOnAction(new EventHandler<ActionEvent>() {
+
+						@Override
+						public void handle(ActionEvent event) {
+
+						}
+					});
+
+					MenuItem item3 = new MenuItem("DELETE");
+					item3.setOnAction(new EventHandler<ActionEvent>() {
+
+						@Override
+						public void handle(ActionEvent event) {
+
+						}
+					});
+					
+					MenuItem item4 = new MenuItem("PERSONALIZE");
+					item1.setOnAction(new EventHandler<ActionEvent>() {
+
+						@Override
+						public void handle(ActionEvent event) {
+						}
+
+					});
+					MenuItem item5 = new MenuItem("DUPLICATE");
+					item2.setOnAction(new EventHandler<ActionEvent>() {
+
+						@Override
+						public void handle(ActionEvent event) {
+
+						}
+					});
+
+					MenuItem item6 = new MenuItem("FILTER BY");
+					item3.setOnAction(new EventHandler<ActionEvent>() {
+
+						@Override
+						public void handle(ActionEvent event) {
+
+						}
+					});
+
+
+
+					// Add MenuItem to ContextMenu
+					contextMenu.getItems().addAll(item1, item2, item3, item4, item5, item6);
+					if (tblCategoryMenuCount == 0) {
+						tblCategoryMenuCount++;
+						// When user right-click on Table
+						tblCategory.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+							@Override
+							public void handle(ContextMenuEvent event) {
+								contextMenu.show(tblCategory, event.getScreenX(), event.getScreenY());
+
+							}
+
+						});
+
+					}
+
+				}
 }

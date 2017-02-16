@@ -1,6 +1,7 @@
 package com.dpu.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -11,13 +12,11 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.GetAPIClient;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.model.Category;
 import com.dpu.model.DPUService;
 import com.dpu.model.Failed;
-import com.dpu.model.Status;
+import com.dpu.model.Shipper;
 import com.dpu.model.Success;
 import com.dpu.model.Terminal;
-import com.dpu.model.Type;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -29,17 +28,18 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class TerminalAddController extends Application implements Initializable{
+
 	@FXML
 	Button btnSaveTerminal;
 	
 	@FXML
-	Button btnCancelTerminal;
+	Button btnCancelTerminal, btnAddAvailableServices, btnAddNewLocation;
 	
 	@FXML
-	TextField txtTerminalName, txtLocation;
+	TextField txtTerminalName;
 	
 	@FXML
-	ComboBox<String> ddlAvailableServices;
+	ComboBox<String> ddlAvailableServices, ddlLocation;
 	
 	@FXML
 	private void btnSaveTerminalAction() {
@@ -61,6 +61,7 @@ public class TerminalAddController extends Application implements Initializable{
 		
 		Platform.runLater(new Runnable() {
 			
+			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
 				try {
@@ -69,8 +70,17 @@ public class TerminalAddController extends Application implements Initializable{
 					String payload = mapper.writeValueAsString(terminal);
 					System.out.println("terminal add payload: " + payload);
 					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_TERMINAL_API, null, payload);
-					MainScreen.terminalController.fillTerminal(response);
-					
+//					MainScreen.terminalController.fillTerminal(response);
+					try {
+						Success success = mapper.readValue(response, Success.class);
+						List<Terminal> terminalList = (List<Terminal>) success.getResultList();
+						String res = mapper.writeValueAsString(terminalList);
+						JOptionPane.showMessageDialog(null, success.getMessage());
+						MainScreen.terminalController.fillTerminal(res);
+					} catch (Exception e) {
+						Failed failed = mapper.readValue(response, Failed.class);
+						JOptionPane.showMessageDialog(null, failed.getMessage());
+					}
 					/*if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
 						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
@@ -86,6 +96,18 @@ public class TerminalAddController extends Application implements Initializable{
 			}
 		});
 	}
+	
+	@FXML
+	private void btnAddNewLocationAction() {
+		closeAddTerminalScreen(btnAddNewLocation);
+		ShipperController.openAddShipperScreen();
+	}
+	
+	@FXML
+	private void btnAddAvailableServicesAction() {
+		closeAddTerminalScreen(btnAddAvailableServices);
+		ServiceController.openAddServiceScreen();
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -95,6 +117,8 @@ public class TerminalAddController extends Application implements Initializable{
 	ObjectMapper mapper = new ObjectMapper();
 	
 	List<DPUService> serviceList = null;
+	
+	List<Shipper> shipperList = null;
 	
 	private void fetchMasterDataForDropDowns() {
 		
@@ -107,7 +131,10 @@ public class TerminalAddController extends Application implements Initializable{
 					Terminal terminal = mapper.readValue(response, Terminal.class);
 					serviceList = terminal.getServiceList();
 					fillDropDown(ddlAvailableServices, serviceList);
+					shipperList = terminal.getShipperList();
+					fillDropDown(ddlLocation, shipperList);
 				} catch (Exception e) {
+					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
 				}
 			}
@@ -115,11 +142,18 @@ public class TerminalAddController extends Application implements Initializable{
 	}
 	
 	private void fillDropDown(ComboBox<String> comboBox, List<?> list) {
-		for(int i=0;i<list.size();i++) {
-			Object object = list.get(i);
-			if(object != null && object instanceof DPUService) {
-				DPUService dpuService = (DPUService) object;
-				comboBox.getItems().add(dpuService.getServiceName());
+		if(comboBox != null) {
+			comboBox.getItems().clear();
+			for(int i=0;i<list.size();i++) {
+				Object object = list.get(i);
+				if(object != null && object instanceof DPUService) {
+					DPUService dpuService = (DPUService) object;
+					comboBox.getItems().add(dpuService.getServiceName());
+				}
+				if(object != null && object instanceof Shipper) {
+					Shipper shipper = (Shipper) object;
+					comboBox.getItems().add(shipper.getLocationName());
+				}
 			}
 		}
 	}
@@ -135,9 +169,12 @@ public class TerminalAddController extends Application implements Initializable{
 	private Terminal setTerminalValue() {
 		Terminal terminal = new Terminal();
 		terminal.setTerminalName(txtTerminalName.getText());
-		terminal.setLocation(txtLocation.getText());
-		//to-do
-//		terminal.set(serviceList.get(ddlAvailableServices.getSelectionModel().getSelectedIndex()).get.toString());		
+		terminal.setShipperId(shipperList.get(ddlLocation.getSelectionModel().getSelectedIndex()).getShipperId());
+		List<Long> serviceIds = new ArrayList<>();
+		Long serviceId = serviceList.get(ddlAvailableServices.getSelectionModel().getSelectedIndex()).getServiceId();
+		terminal.setStatusId(0l);
+		serviceIds.add(serviceId);
+		terminal.setServiceIds(serviceIds);
 		return terminal;
 	}
 }

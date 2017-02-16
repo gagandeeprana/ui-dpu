@@ -5,10 +5,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="382.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.DivisionEditController">
+<AnchorPane focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="414.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.DivisionEditController">
    <children>
-      <BorderPane layoutX="10.0" layoutY="37.0" prefHeight="358.0" prefWidth="363.0" style="-fx-border-color: lightgray;" />
-      <TextField fx:id="txtDivisionName" layoutX="158.0" layoutY="80.0" prefHeight="25.0" prefWidth="203.0" />
+      <BorderPane layoutX="10.0" layoutY="37.0" prefHeight="358.0" prefWidth="396.0" style="-fx-border-color: lightgray;" />
+      <TextField fx:id="txtDivisionName" layoutX="158.0" layoutY="80.0" prefHeight="25.0" prefWidth="240.0" />
       <Text layoutX="25.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Division Name">
          <font>
             <Font size="14.0" />
@@ -19,21 +19,21 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <Label layoutX="-1.0" layoutY="-2.0" prefHeight="27.0" prefWidth="384.0" style="-fx-background-color: lightgrey; -fx-border-color: black;" text="  Edit Division">
+      <Label layoutX="-1.0" layoutY="-2.0" prefHeight="27.0" prefWidth="416.0" style="-fx-background-color: lightgrey; -fx-border-color: black;" text="  Edit Division">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <ComboBox fx:id="ddlStatus" layoutX="158.0" layoutY="112.0" prefHeight="25.0" prefWidth="136.0" />
+      <ComboBox fx:id="ddlStatus" layoutX="158.0" layoutY="112.0" prefHeight="25.0" prefWidth="240.0" />
       <Text layoutX="25.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <TextField fx:id="txtDivisionCode" layoutX="158.0" layoutY="48.0" prefHeight="25.0" prefWidth="136.0" />
+      <TextField fx:id="txtDivisionCode" layoutX="158.0" layoutY="48.0" prefHeight="25.0" prefWidth="240.0" />
       <CheckBox fx:id="chkIncludeInManagementReporting" layoutX="158.0" layoutY="147.0" mnemonicParsing="false" text="Include In Management Reporting" />
       <CheckBox fx:id="chkIncludeInAccountingTransfers" layoutX="158.0" layoutY="173.0" mnemonicParsing="false" text="Include In Accounting Transfers" />
-      <TextField fx:id="txtFedral" layoutX="160.0" layoutY="199.0" prefHeight="25.0" prefWidth="203.0" />
+      <TextField fx:id="txtFedral" layoutX="159.0" layoutY="199.0" prefHeight="25.0" prefWidth="240.0" />
       <Text layoutX="25.0" layoutY="217.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fedral">
          <font>
             <Font size="14.0" />
@@ -44,38 +44,38 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <TextField fx:id="txtProvincial" layoutX="160.0" layoutY="231.0" prefHeight="25.0" prefWidth="203.0" />
+      <TextField fx:id="txtProvincial" layoutX="159.0" layoutY="231.0" prefHeight="25.0" prefWidth="240.0" />
       <Text layoutX="25.0" layoutY="281.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SCAC">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <TextField fx:id="txtSCAC" layoutX="160.0" layoutY="263.0" prefHeight="25.0" prefWidth="136.0" />
+      <TextField fx:id="txtSCAC" layoutX="159.0" layoutY="263.0" prefHeight="25.0" prefWidth="240.0" />
       <Text layoutX="26.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Carrier Code">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <TextField fx:id="txtCarrierCode" layoutX="160.0" layoutY="295.0" prefHeight="25.0" prefWidth="136.0" />
+      <TextField fx:id="txtCarrierCode" layoutX="159.0" layoutY="295.0" prefHeight="25.0" prefWidth="240.0" />
       <Text layoutX="26.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contract Prefix">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <TextField fx:id="txtContractPrefix" layoutX="160.0" layoutY="327.0" prefHeight="25.0" prefWidth="203.0" />
-      <TextField fx:id="txtInvoicePrefix" layoutX="160.0" layoutY="359.0" prefHeight="25.0" prefWidth="203.0" />
+      <TextField fx:id="txtContractPrefix" layoutX="159.0" layoutY="327.0" prefHeight="25.0" prefWidth="240.0" />
+      <TextField fx:id="txtInvoicePrefix" layoutX="159.0" layoutY="359.0" prefHeight="25.0" prefWidth="240.0" />
       <Text layoutX="26.0" layoutY="377.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Invoice Prefix">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <Button fx:id="btnUpdateDivision" layoutX="198.0" layoutY="402.0" mnemonicParsing="false" onAction="#btnUpdateDivisionAction" prefHeight="25.0" prefWidth="85.0" text="Update">
+      <Button fx:id="btnUpdateDivision" layoutX="272.0" layoutY="402.0" mnemonicParsing="false" onAction="#btnUpdateDivisionAction" prefHeight="25.0" prefWidth="65.0" text="Update">
          <font>
-            <Font size="14.0" />
+            <Font size="13.0" />
          </font></Button>
-      <Button fx:id="btnCancel" layoutX="288.0" layoutY="402.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Cancel">
+      <Button fx:id="btnCancel" layoutX="342.0" layoutY="402.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Cancel">
          <font>
-            <Font size="14.0" />
+            <Font size="13.0" />
          </font></Button>
    </children>
 </AnchorPane>

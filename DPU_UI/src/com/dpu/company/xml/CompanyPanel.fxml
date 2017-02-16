@@ -1,31 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.FlowPane?>
 
-<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.CompanyController">
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1015.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.CompanyController">
    <children>
-      <TableView fx:id="tblCompany" layoutX="5.0" layoutY="40.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0">
+      <Pane prefHeight="49.0" prefWidth="1015.0" style="-fx-background-color: lightgrey;" />
+      <TableView fx:id="tblCompany" onMouseClicked="#handleAddContMouseClick" layoutY="42.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="584.0" prefWidth="1015.0">
         <columns>
-          <TableColumn fx:id="unitNo" prefWidth="75.0" text="UnitNo" />
-          <TableColumn fx:id="name" prefWidth="75.0" text="Name" />
-            <TableColumn fx:id="email" prefWidth="75.0" text="Email" />
-            <TableColumn fx:id="city" prefWidth="75.0" text="City" />
-            <TableColumn fx:id="ps" prefWidth="75.0" text="P/S" />
-            <TableColumn fx:id="phone" prefWidth="75.0" text="Phone" />
-            <TableColumn fx:id="home" prefWidth="75.0" text="Home" />
-            <TableColumn fx:id="fax" prefWidth="75.0" text="Fax" />
-            <TableColumn fx:id="afterHours" prefWidth="75.0" text="After Hours" />
+          <TableColumn fx:id="unitNo" prefWidth="112.0" text="UnitNo" />
+          <TableColumn fx:id="name" prefWidth="112.0" text="Name" />
+            <TableColumn fx:id="email" prefWidth="112.0" text="Email" />
+            <TableColumn fx:id="city" prefWidth="112.0" text="City" />
+            <TableColumn fx:id="ps" prefWidth="112.0" text="P/S" />
+            <TableColumn fx:id="phone" prefWidth="112.0" text="Phone" />
+            <TableColumn fx:id="home" prefWidth="112.0" text="Home" />
+            <TableColumn fx:id="fax" prefWidth="112.0" text="Fax" />
+            <TableColumn fx:id="afterHours" prefWidth="112.0" text="After Hours" />
         </columns>
       </TableView>
-      <Button fx:id="btnAddCompany" layoutX="405.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnAddCompanyAction" text="Add" />
-      <TextField layoutX="72.0" layoutY="14.0" prefHeight="25.0" prefWidth="202.0" />
-      <Button layoutX="366.0" layoutY="14.0" mnemonicParsing="false" text="Go" />
-      <Button fx:id="btnEditCompany" layoutX="450.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnEditCompanyAction" text="  Edit  " />
-      <Button fx:id="btnDeleteCompany" layoutX="507.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnDeleteCompanyAction" text="Delete" />
-      <Label layoutX="5.0" layoutY="18.0" text="Quick Filter" />
-      <CheckBox layoutX="287.0" layoutY="18.0" mnemonicParsing="false" text="Show All" />
+      <Label layoutX="15.0" layoutY="15.0" text="Quick Filter">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnDeleteCompany" layoutX="523.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnDeleteCompanyAction" prefHeight="25.0" prefWidth="55.0" text="Delete" />
+      <Button fx:id="btnEditCompany" layoutX="463.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnEditCompanyAction" prefHeight="25.0" prefWidth="55.0" text="  Edit  " />
+      <Button layoutX="287.0" layoutY="11.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="32.0" text="Go" />
+      <TextField layoutX="82.0" layoutY="11.0" prefHeight="25.0" prefWidth="200.0" />
+      <Button fx:id="btnAddCompany" layoutX="402.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnAddCompanyAction" prefHeight="25.0" prefWidth="55.0" text="Add" />
+      <CheckBox layoutX="327.0" layoutY="15.0" mnemonicParsing="false" text="Show All" />
    </children>
 </Pane>

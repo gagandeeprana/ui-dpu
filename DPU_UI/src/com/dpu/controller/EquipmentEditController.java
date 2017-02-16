@@ -11,6 +11,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.Equipment;
+import com.dpu.model.Failed;
+import com.dpu.model.Success;
 import com.dpu.model.Type;
 import com.dpu.util.Validate;
 
@@ -105,6 +107,7 @@ public class EquipmentEditController extends Application implements Initializabl
 		
 		Platform.runLater(new Runnable() {
 			
+			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
 				try {
@@ -114,7 +117,17 @@ public class EquipmentEditController extends Application implements Initializabl
 //					System.out.println("EquipmentEditController: equimentId: " + equipmentId);
 					String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_EQUIPMENT_API + "/" + equipmentId, null, payload);
 //					System.out.println("Update Response: " + response);
-					MainScreen.equipmentController.fillEquipments(response);
+//					MainScreen.equipmentController.fillEquipments(response);
+					try {
+						Success success = mapper.readValue(response, Success.class);
+						List<Equipment> equipmentList = (List<Equipment>) success.getResultList();
+						String res = mapper.writeValueAsString(equipmentList);
+						JOptionPane.showMessageDialog(null, success.getMessage());
+						MainScreen.equipmentController.fillEquipments(res);
+					} catch (Exception e) {
+						Failed failed = mapper.readValue(response, Failed.class);
+						JOptionPane.showMessageDialog(null, failed.getMessage());
+					}
 					/*if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
 						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);

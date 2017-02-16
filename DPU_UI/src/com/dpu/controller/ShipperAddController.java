@@ -35,14 +35,14 @@ public class ShipperAddController extends Application implements Initializable{
 	Button btnSaveShipper;
 	
 	@FXML
-	TextField txtContact, txtAddress, txtPosition, txtUnitNo, txtPhone, txtExt, txtCity, txtFax, txtPrefix, 
+	TextField txtLocationName, txtContact, txtAddress, txtPosition, txtUnitNo, txtPhone, txtExt, txtCity, txtFax, txtPrefix, 
 	txtProvince, txtTollFree, txtPlant, txtCellNumber, txtZone, txtEmail, txtLeadTime, txtTimeZone, txtImporter;
 	
 	@FXML
 	TextArea txtInternalNotes, txtStandardNotes;
 	
 	@FXML
-	ComboBox<String> ddlCompany, ddlStatus;
+	ComboBox<String> ddlStatus;
 	
 	@FXML
 	private void btnSaveShipperAction() {
@@ -59,6 +59,7 @@ public class ShipperAddController extends Application implements Initializable{
 		
 		Platform.runLater(new Runnable() {
 			
+			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
 				try {
@@ -67,8 +68,20 @@ public class ShipperAddController extends Application implements Initializable{
 					String payload = mapper.writeValueAsString(shipper);
 					System.out.println(payload);
 					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_SHIPPER_API, null, payload);
-					MainScreen.shipperController.fillShippers(response);
-					
+					if(MainScreen.shipperController != null) {
+						try {
+							Success success = mapper.readValue(response, Success.class);
+							List<Shipper> shipperList = (List<Shipper>) success.getResultList();
+							String res = mapper.writeValueAsString(shipperList);
+							JOptionPane.showMessageDialog(null, success.getMessage());
+							MainScreen.shipperController.fillShippers(res);
+						} catch (Exception e) {
+							Failed failed = mapper.readValue(response, Failed.class);
+							JOptionPane.showMessageDialog(null, failed.getMessage());
+						}
+					} else if(MainScreen.terminalController != null) {
+						MainScreen.terminalController.openAddTerminalScreen();
+					}
 					/*if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
 						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
@@ -111,8 +124,8 @@ public class ShipperAddController extends Application implements Initializable{
 				try {
 					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_SHIPPER_API + "/openAdd", null);
 					Shipper shipper = mapper.readValue(response, Shipper.class);
-					companyList = shipper.getCompanyList();
-					fillDropDown(ddlCompany, companyList);
+					/*companyList = shipper.getCompanyList();
+					fillDropDown(ddlCompany, companyList);*/
 					statusList = shipper.getStatusList();
 					fillDropDown(ddlStatus, statusList);
 				} catch (Exception e) {
@@ -129,16 +142,16 @@ public class ShipperAddController extends Application implements Initializable{
 				Status status = (Status) object;
 				comboBox.getItems().add(status.getStatus());
 			}
-			if(object != null && object instanceof Company) {
+			/*if(object != null && object instanceof Company) {
 				Company company = (Company) object;
 				comboBox.getItems().add(company.getName());
-			}
+			}*/
 		}
 	}
 	
 	private Shipper setShipperValue() {
 		Shipper shipper = new Shipper();
-		shipper.setCompanyId(companyList.get(ddlCompany.getSelectionModel().getSelectedIndex()).getCompanyId());
+		shipper.setLocationName(txtLocationName.getText());
 		shipper.setContact(txtContact.getText());
 		shipper.setAddress(txtAddress.getText());
 		shipper.setPosition(txtPosition.getText());

@@ -14,7 +14,9 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.Division;
+import com.dpu.model.Failed;
 import com.dpu.model.Status;
+import com.dpu.model.Success;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -63,6 +65,7 @@ public class DivisionEditController extends Application implements Initializable
 		System.out.println("dId:: " + divisionId);
 		Platform.runLater(new Runnable() {
 
+			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
 				try {
@@ -79,7 +82,17 @@ public class DivisionEditController extends Application implements Initializable
 =======
 					System.out.println("update payload: " + payload);
 					String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API + "/" + divisionId, null, payload);
-					MainScreen.divisionController.fillDivisions(response);
+//					MainScreen.divisionController.fillDivisions(response);
+					try {
+						Success success = mapper.readValue(response, Success.class);
+						List<Division> divisionList = (List<Division>) success.getResultList();
+						String res = mapper.writeValueAsString(divisionList);
+						JOptionPane.showMessageDialog(null, success.getMessage());
+						MainScreen.divisionController.fillDivisions(res);
+					} catch (Exception e) {
+						Failed failed = mapper.readValue(response, Failed.class);
+						JOptionPane.showMessageDialog(null, failed.getMessage());
+					}
 
 					/*if (response != null && response.contains("message")) {
 >>>>>>> de161973cf2dd6940475f2799d7f67299d76fcb4

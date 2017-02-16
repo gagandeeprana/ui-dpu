@@ -58,6 +58,7 @@ public class DriverEditController extends Application implements Initializable{
 		
 		Platform.runLater(new Runnable() {
 			
+			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
 				try {
@@ -66,7 +67,17 @@ public class DriverEditController extends Application implements Initializable{
 					String payload = mapper.writeValueAsString(driver);
 					System.out.println("PP:: " + payload);
 					String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_DRIVER_API + "/" + driverId, null, payload);
-					MainScreen.driverController.fillDriver(response);
+					try {
+						Success success = mapper.readValue(response, Success.class);
+						List<Driver> driverList = (List<Driver>) success.getResultList();
+						String res = mapper.writeValueAsString(driverList);
+						JOptionPane.showMessageDialog(null, success.getMessage());
+						MainScreen.driverController.fillDriver(res);
+					} catch (Exception e) {
+						Failed failed = mapper.readValue(response, Failed.class);
+						JOptionPane.showMessageDialog(null, failed.getMessage());
+					}
+//					MainScreen.driverController.fillDriver(response);
 					
 					/*if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);

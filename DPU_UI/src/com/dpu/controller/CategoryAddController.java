@@ -12,7 +12,9 @@ import com.dpu.client.GetAPIClient;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.Category;
+import com.dpu.model.Failed;
 import com.dpu.model.Status;
+import com.dpu.model.Success;
 import com.dpu.model.Type;
 
 import javafx.application.Application;
@@ -52,6 +54,7 @@ public class CategoryAddController extends Application implements Initializable{
 		
 		Platform.runLater(new Runnable() {
 			
+			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
 				try {
@@ -60,8 +63,17 @@ public class CategoryAddController extends Application implements Initializable{
 					String payload = mapper.writeValueAsString(category);
 
 					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_CATEGORY_API, null, payload);
-					MainScreen.categoryController.fillCategories(response);
-					
+//					MainScreen.categoryController.fillCategories(response);
+					try {
+						Success success = mapper.readValue(response, Success.class);
+						List<Category> categoryList = (List<Category>) success.getResultList();
+						String res = mapper.writeValueAsString(categoryList);
+						JOptionPane.showMessageDialog(null, success.getMessage());
+						MainScreen.categoryController.fillCategories(res);
+					} catch (Exception e) {
+						Failed failed = mapper.readValue(response, Failed.class);
+						JOptionPane.showMessageDialog(null, failed.getMessage());
+					}
 					/*if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
 						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);

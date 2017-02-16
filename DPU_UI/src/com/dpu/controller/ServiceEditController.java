@@ -11,7 +11,9 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.DPUService;
+import com.dpu.model.Failed;
 import com.dpu.model.Status;
+import com.dpu.model.Success;
 import com.dpu.model.Type;
 import com.dpu.util.Validate;
 
@@ -96,6 +98,7 @@ public class ServiceEditController extends Application implements Initializable{
 		
 		Platform.runLater(new Runnable() {
 			
+			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
 				try {
@@ -104,7 +107,17 @@ public class ServiceEditController extends Application implements Initializable{
 					String payload = mapper.writeValueAsString(service);
 
 					String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_SERVICE_API + "/" + serviceId, null, payload);
-					MainScreen.serviceController.fillServices(response);
+//					MainScreen.serviceController.fillServices(response);
+					try {
+						Success success = mapper.readValue(response, Success.class);
+						List<DPUService> serviceList = (List<DPUService>) success.getResultList();
+						String res = mapper.writeValueAsString(serviceList);
+						JOptionPane.showMessageDialog(null, success.getMessage());
+						MainScreen.serviceController.fillServices(res);
+					} catch (Exception e) {
+						Failed failed = mapper.readValue(response, Failed.class);
+						JOptionPane.showMessageDialog(null, failed.getMessage());
+					}
 
 					/*if(response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);

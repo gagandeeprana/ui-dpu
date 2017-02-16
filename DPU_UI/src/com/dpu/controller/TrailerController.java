@@ -22,14 +22,20 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -84,7 +90,7 @@ public class TrailerController extends Application implements Initializable {
 	        
 	        Stage stage = new Stage();
 	        stage.initModality(Modality.APPLICATION_MODAL);
-	        stage.setTitle("Edit Company");
+	        stage.setTitle("Edit Trailer");
 	        stage.setScene(new Scene(root)); 
 	        stage.show();
 	        return fxmlLoader.getController();
@@ -100,19 +106,29 @@ public class TrailerController extends Application implements Initializable {
 		if(trailer != null) {
 			Platform.runLater(new Runnable() {
 				
+				@SuppressWarnings("unchecked")
 				@Override
 				public void run() {
 					try {
-						ObjectMapper mapper = new ObjectMapper();
 						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_TRAILER_API + "/" + trailer.getTrailerId(), null);
-						if(response != null && response.contains("message")) {
+//						MainScreen.trailerController.fillTrailer(response);
+						try {
+							Success success = mapper.readValue(response, Success.class);
+							List<Trailer> trailerList = (List<Trailer>) success.getResultList();
+							String res = mapper.writeValueAsString(trailerList);
+							JOptionPane.showMessageDialog(null, success.getMessage());
+							fillTrailer(res);
+						} catch (Exception e) {
+							Failed failed = mapper.readValue(response, Failed.class);
+							JOptionPane.showMessageDialog(null, failed.getMessage());
+						}
+						/*if(response != null && response.contains("message")) {
 							Success success = mapper.readValue(response, Success.class);
 							JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
 						} else {
 							Failed failed = mapper.readValue(response, Failed.class);
 							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-						}
-						fetchTrailers();
+						}*/
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
 					}
@@ -133,7 +149,34 @@ public class TrailerController extends Application implements Initializable {
 	        stage.setScene(new Scene(root)); 
 	        stage.show();
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println(e);
+		}
+	}
+	
+	List<Trailer> trailerList = null;
+	
+	ObjectMapper mapper = new ObjectMapper();
+	
+	public void fillTrailer(String response) {
+		
+		try {
+			ObservableList<Trailer> data = null;
+			trailerList = new ArrayList<Trailer>();
+			setColumnValues();
+			if(response != null && response.length() > 0) {
+				Trailer c[] = mapper.readValue(response, Trailer[].class);
+				for(Trailer ccl : c) {
+					trailerList.add(ccl);
+				}
+				data = FXCollections.observableArrayList(trailerList);
+			} else {
+				data = FXCollections.observableArrayList(trailerList);
+			}
+			tblTrailer.setItems(data);
+            tblTrailer.setVisible(true);
+		} catch (Exception e) {
+			System.out.println("DriverController: fillDriver(): "+ e.getMessage());
 		}
 	}
 
@@ -260,4 +303,86 @@ public class TrailerController extends Application implements Initializable {
 			}
 		});
 	}
+	
+	// ADD MENU
+
+		public int tblTrailerMenuCount = 0;
+		
+		@FXML
+		public void handleAddContMouseClick(MouseEvent event) {
+
+			// Create ContextMenu
+			ContextMenu contextMenu = new ContextMenu();
+
+			MenuItem item1 = new MenuItem("ADD");
+			item1.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+				}
+
+			});
+			MenuItem item2 = new MenuItem("EDIT");
+			item2.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+
+				}
+			});
+
+			MenuItem item3 = new MenuItem("DELETE");
+			item3.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+
+				}
+			});
+			
+			MenuItem item4 = new MenuItem("PERSONALIZE");
+			item1.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+				}
+
+			});
+			MenuItem item5 = new MenuItem("DUPLICATE");
+			item2.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+
+				}
+			});
+
+			MenuItem item6 = new MenuItem("FILTER BY");
+			item3.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+
+				}
+			});
+
+
+
+			// Add MenuItem to ContextMenu
+			contextMenu.getItems().addAll(item1, item2, item3, item4, item5, item6);
+			if (tblTrailerMenuCount == 0) {
+				tblTrailerMenuCount++;
+				// When user right-click on Table
+				tblTrailer.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+					@Override
+					public void handle(ContextMenuEvent event) {
+						contextMenu.show(tblTrailer, event.getScreenX(), event.getScreenY());
+
+					}
+
+				});
+
+			}
+
+		}
 }

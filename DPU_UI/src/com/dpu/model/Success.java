@@ -1,6 +1,7 @@
 package com.dpu.model;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import java.util.List;
+
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 /**
@@ -9,24 +10,27 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Success {
 
+
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/** The code. */
-	//@JsonProperty("success-code")
+//	@JsonProperty("success-code")
 	private long code;
 
 	/** The message. */
-	//@JsonProperty("success-message")
+//	@JsonProperty("success-message")
 	private String message;
 
 	/** The auxiliary. */
-	//@JsonProperty("success-auxiliary")
+//	@JsonProperty("success-auxiliary")
 	private String auxiliary;
 
 	/** The parms. */
-	//@JsonProperty("params")
+//	@JsonProperty("params")
 	private Object parms;
+	
+	private Object resultList;
 
 	/**
 	 * Instantiates a new success.
@@ -138,5 +142,14 @@ public class Success {
 	public void setParms(Object parms) {
 		this.parms = parms;
 	}
+
+	public Object getResultList() {
+		return resultList;
+	}
+
+	public void setResultList(Object resultList) {
+		this.resultList = resultList;
+	}
+
 
 }

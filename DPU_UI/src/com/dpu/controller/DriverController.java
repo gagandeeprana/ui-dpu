@@ -22,15 +22,21 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -195,12 +201,23 @@ public class DriverController extends Application implements Initializable {
 		if(driver != null) {
 			Platform.runLater(new Runnable() {
 				
+				@SuppressWarnings("unchecked")
 				@Override
 				public void run() {
 					try {
 						ObjectMapper mapper = new ObjectMapper();
 						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_DRIVER_API + "/" + driver.getDriverId(), null);
-						MainScreen.driverController.fillDriver(response);
+//						MainScreen.driverController.fillDriver(response);
+						try {
+							Success success = mapper.readValue(response, Success.class);
+							List<Driver> driverList = (List<Driver>) success.getResultList();
+							String res = mapper.writeValueAsString(driverList);
+							JOptionPane.showMessageDialog(null, success.getMessage());
+							fillDriver(res);
+						} catch (Exception e) {
+							Failed failed = mapper.readValue(response, Failed.class);
+							JOptionPane.showMessageDialog(null, failed.getMessage());
+						}
 						/*if(response != null && response.contains("message")) {
 							Success success = mapper.readValue(response, Success.class);
 							JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
@@ -360,5 +377,86 @@ public class DriverController extends Application implements Initializable {
 			}
 		});
 	}
+
+	// ADD MENU
+	
+		public int tblDriverMenuCount = 0;
+		@FXML
+		public void handleAddContMouseClick(MouseEvent event) {
+
+			// Create ContextMenu
+			ContextMenu contextMenu = new ContextMenu();
+
+			MenuItem item1 = new MenuItem("ADD");
+			item1.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+				}
+
+			});
+			MenuItem item2 = new MenuItem("EDIT");
+			item2.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+
+				}
+			});
+
+			MenuItem item3 = new MenuItem("DELETE");
+			item3.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+
+				}
+			});
+			
+			MenuItem item4 = new MenuItem("PERSONALIZE");
+			item1.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+				}
+
+			});
+			MenuItem item5 = new MenuItem("DUPLICATE");
+			item2.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+
+				}
+			});
+
+			MenuItem item6 = new MenuItem("FILTER BY");
+			item3.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+
+				}
+			});
+
+
+
+			// Add MenuItem to ContextMenu
+			contextMenu.getItems().addAll(item1, item2, item3, item4, item5, item6);
+			if (tblDriverMenuCount == 0) {
+				tblDriverMenuCount++;
+				// When user right-click on Table
+				tblDriver.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+					@Override
+					public void handle(ContextMenuEvent event) {
+						contextMenu.show(tblDriver, event.getScreenX(), event.getScreenY());
+
+					}
+
+				});
+
+			}
+
+		}
 
 }
