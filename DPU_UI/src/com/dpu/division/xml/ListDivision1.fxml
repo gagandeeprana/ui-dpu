@@ -6,25 +6,25 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1015.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.DivisionController">
-   <children>
-      <AnchorPane prefHeight="49.0" prefWidth="1015.0" style="-fx-background-color: lightgrey;">
+  <Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.DivisionController">
+     <children>
+      <AnchorPane prefHeight="49.0" prefWidth="969.0" style="-fx-background-color: lightgrey;">
          <children>
-            <Text layoutX="13.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quick Filter">
+            <Text layoutX="14.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quick Filter">
                <font>
                   <Font size="13.0" />
                </font>
             </Text>
-            <TextField fx:id="txtSearchDivision" focusTraversable="false" layoutX="82.0" layoutY="12.0" prefHeight="25.0" prefWidth="200.0" promptText="Enter division name to search..." />
-            <CheckBox layoutX="325.0" layoutY="15.0" mnemonicParsing="false" text="Show All" />
-            <Button fx:id="btnGoDivision" layoutX="287.0" layoutY="12.0" mnemonicParsing="false" onAction="#btnGoDivisionAction" text="Go" />
-            <Button fx:id="btnAddDivision" layoutX="398.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnAddDivisionAction" prefHeight="25.0" prefWidth="55.0" text="Add" />
-            <Button fx:id="btnEditDivision" layoutX="458.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnEditDivisionAction" prefHeight="25.0" prefWidth="55.0" text="Edit" />
-            <Button fx:id="btnDeleteDivision" layoutX="518.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnDeleteDivisionAction" prefHeight="25.0" prefWidth="55.0" text="Delete" />
-            <Button layoutX="578.0" layoutY="11.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="E-Mail" />
+            <TextField layoutX="88.0" layoutY="9.0" />
+            <CheckBox fx:id="chkShowAll" layoutX="276.0" layoutY="11.0" mnemonicParsing="false" text="Show All" />
+            <Button fx:id="btnGo" layoutX="238.0" layoutY="8.0" mnemonicParsing="false" text="Go" />
+            <Button fx:id="btnAdd" layoutX="349.0" layoutY="7.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="Add" onAction="#btnAddDivisionAction" />
+            <Button fx:id="btnEdit" layoutX="409.0" layoutY="7.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="Edit" onAction="#btnEditDivisionAction"/>
+            <Button fx:id="btnDelete" layoutX="469.0" layoutY="7.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="Delete" />
+            <Button fx:id="btnEmail" layoutX="529.0" layoutY="7.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="E-Mail" />
          </children>
       </AnchorPane>
-      <TableView fx:id="tblDivision" onMouseClicked="#handleAddContMouseClick" layoutY="43.0" prefHeight="584.0" prefWidth="1015.0">
+      <TableView fx:id="tblDivision" layoutY="42.0" prefHeight="758.0" prefWidth="969.0">
          <columns>
             <TableColumn fx:id="code" prefWidth="96.0" text="Code" />
             <TableColumn fx:id="name" prefWidth="139.0" text="Name" />
@@ -33,4 +33,4 @@
          </columns>
       </TableView>
    </children>
-</AnchorPane>
+</Pane>
