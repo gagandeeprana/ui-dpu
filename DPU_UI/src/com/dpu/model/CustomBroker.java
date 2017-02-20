@@ -14,8 +14,9 @@ public class CustomBroker {
 	private String phoneNo;
 	private String extension;
 	private String faxNo;
-	private Integer emailAddress;
-	private Date webSite;
+	private String emailAddress;
+	private String webSite;
+	
 
 	public Long getCustomBrokerId() {
 		return customBrokerId;
@@ -65,19 +66,19 @@ public class CustomBroker {
 		this.faxNo = faxNo;
 	}
 
-	public Integer getEmailAddress() {
+	public String getEmailAddress() {
 		return emailAddress;
 	}
 
-	public void setEmailAddress(Integer emailAddress) {
+	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
 	}
 
-	public Date getWebSite() {
+	public String getWebSite() {
 		return webSite;
 	}
 
-	public void setWebSite(Date webSite) {
+	public void setWebSite(String webSite) {
 		this.webSite = webSite;
 	}
 

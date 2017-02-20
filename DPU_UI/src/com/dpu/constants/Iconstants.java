@@ -70,8 +70,10 @@ public class Iconstants {
 	public static final String CUSTOM_BROKER_BASE_PACKAGE = "com/dpu/custombroker/xml/";
 	public static final String XML_CUSTOM_BROKER_SCREEN = "ListCustomBroker.fxml";
 	public static final String URL_CUSTOM_BROKER_API = "custombroker";
-	public static final String XML_CUSTOM_BROKER_ADD_SCREEN = "";
-	public static final String XML_CUSTOM_BROKER_EDIT_SCREEN = "";
+	public static final String XML_CUSTOM_BROKER_ADD_SCREEN = "AddCustomerBroker.fxml";
+	public static final String XML_CUSTOM_BROKER_EDIT_SCREEN = "UpdateCustomerBroker.fxml";
+	public static final String XML_NEW_BORDER_AGENT = "NewBorderAgent.fxml";
+	public static final String XML_UPDATE_BORDER_AGENT = "UpdateBorderAgent.fxml";
 
 	public static final String CATEGORY_BASE_PACKAGE = "com/dpu/category/xml/";
 	public static final String XML_CATEGORY_SCREEN = "List Categories.fxml";
