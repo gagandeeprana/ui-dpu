@@ -71,8 +71,8 @@
         <ComboBox fx:id="ddlStatus" layoutX="342.0" layoutY="175.0" prefHeight="25.0" prefWidth="105.0">
           <items>
             <FXCollections fx:factory="observableArrayList">
-              <String fx:value="Active" />
-              <String fx:value="InActive" />
+              <String fx:value= "0" />
+              <String fx:value="1" />
                
                         </FXCollections>
           </items>

@@ -63,7 +63,8 @@ public class BillingAddController implements Initializable {
 			String contact = txtContact.getText();
 			String zip = txtZip.getText();
 			String fax = txtFax.getText();
-			BillingControllerModel bcm1 = new BillingControllerModel(company, address, city, phone, contact, zip, fax);
+			Long statusId = Long.parseLong("1");
+			BillingControllerModel bcm1 = new BillingControllerModel(company, address, city, phone, contact, zip, fax,statusId);
 
 			if (CompanyAddController.add == 0) {
 				CompanyAddController.listOfBilling.set(CompanyAddController.addEditIndex, bcm1);
@@ -129,7 +130,7 @@ public class BillingAddController implements Initializable {
 		 
 		if (CompanyAddController.add != 1) {
 			if (CompanyAddController.billingControllerModel != null) {
-				txtCompany.setText(CompanyAddController.billingControllerModel.getCompany());
+				txtCompany.setText(CompanyAddController.billingControllerModel.getName());
 				txtAddress.setText(CompanyAddController.billingControllerModel.getAddress());
 				txtCity.setText(CompanyAddController.billingControllerModel.getCity());
 				txtPhone.setText(CompanyAddController.billingControllerModel.getPhone());

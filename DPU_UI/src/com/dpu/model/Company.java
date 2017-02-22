@@ -1,236 +1,279 @@
 package com.dpu.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.annotate.JsonPropertyOrder;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
 @JsonSerialize(include = Inclusion.NON_NULL)
-public class Company implements Serializable{
+@JsonPropertyOrder({
+    "name",
+    "address",
+    "unitNo",
+    "city",
+    "provinceState",
+    "zip",
+    "email",
+    "website",
+    "contact",
+    "position",
+    "phone",
+    "ext",
+    "fax",
+    "companyPrefix",
+    "tollfree",
+    "cellular",
+    "pager",
+    "afterHours",
+    "billingLocations",
+    "additionalContacts"
+})
+public class Company {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    @JsonProperty("name")
+    private String name;
+    @JsonProperty("address")
+    private String address;
+    @JsonProperty("unitNo")
+    private String unitNo;
+    @JsonProperty("city")
+    private String city;
+    @JsonProperty("provinceState")
+    private String provinceState;
+    @JsonProperty("zip")
+    private String zip;
+    @JsonProperty("email")
+    private String email;
+    @JsonProperty("website")
+    private String website;
+    @JsonProperty("contact")
+    private String contact;
+    @JsonProperty("position")
+    private String position;
+    @JsonProperty("phone")
+    private String phone;
+    @JsonProperty("ext")
+    private String ext;
+    @JsonProperty("fax")
+    private String fax;
+    @JsonProperty("companyPrefix")
+    private String companyPrefix;
+    @JsonProperty("tollfree")
+    private String tollfree;
+    @JsonProperty("cellular")
+    private String cellular;
+    @JsonProperty("pager")
+    private String pager;
+    @JsonProperty("afterHours")
+    private String afterHours;
+    @JsonProperty("billingLocations")
+    private List<BillingControllerModel> billingLocations = null;
+    @JsonProperty("additionalContacts")
+    private List<AdditionalContact> additionalContacts = null;
+    
 
-	//@JsonProperty("company_id")
-	private Long companyId;
-	
-	//@JsonProperty("name")
-	private String name;
-	
-	//@JsonProperty("address")
-	private String address;
-	
-	//@JsonProperty("unit_no")
-	private String unitNo;
-	
-	//@JsonProperty("city")
-	private String city;
-	
-	//@JsonProperty("province_state")
-	private String provinceState;
-	
-	//@JsonProperty("zip")
-	private String zip;
-	
-	//@JsonProperty("email")
-	private String email;
-	
-	//@JsonProperty("website")
-	private String website;
-	
-	//@JsonProperty("contact")
-	private String contact;
-	
-	//@JsonProperty("position")
-	private String position;
-	
-	//@JsonProperty("phone")
-	private String phone;
-	
-	//@JsonProperty("ext")
-	private String ext;
-	
-	//@JsonProperty("fax")
-	private String fax;
-	
-	//@JsonProperty("company_prefix")
-	private String companyPrefix;
-	
-	//@JsonProperty("tollfree")
-	private String tollfree;
-	
-	//@JsonProperty("cellular")
-	private String cellular;
-	
-	//@JsonProperty("pager")
-	private String pager;
-	
-	//@JsonProperty("customer_notes")
-	private String customerNotes;
-	
-	//@JsonProperty("after_hours")
-	private String afterHours;
+    @JsonProperty("name")
+    public String getName() {
+        return name;
+    }
 
-	public Long getCompanyId() {
-		return companyId;
-	}
+    @JsonProperty("name")
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setCompanyId(Long companyId) {
-		this.companyId = companyId;
-	}
+    @JsonProperty("address")
+    public String getAddress() {
+        return address;
+    }
 
-	public String getName() {
-		return name;
-	}
+    @JsonProperty("address")
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    @JsonProperty("unitNo")
+    public String getUnitNo() {
+        return unitNo;
+    }
 
-	public String getAddress() {
-		return address;
-	}
+    @JsonProperty("unitNo")
+    public void setUnitNo(String unitNo) {
+        this.unitNo = unitNo;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    @JsonProperty("city")
+    public String getCity() {
+        return city;
+    }
 
-	public String getUnitNo() {
-		return unitNo;
-	}
+    @JsonProperty("city")
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	public void setUnitNo(String unitNo) {
-		this.unitNo = unitNo;
-	}
+    @JsonProperty("provinceState")
+    public String getProvinceState() {
+        return provinceState;
+    }
 
-	public String getCity() {
-		return city;
-	}
+    @JsonProperty("provinceState")
+    public void setProvinceState(String provinceState) {
+        this.provinceState = provinceState;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    @JsonProperty("zip")
+    public String getZip() {
+        return zip;
+    }
 
-	public String getProvinceState() {
-		return provinceState;
-	}
+    @JsonProperty("zip")
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
 
-	public void setProvinceState(String provinceState) {
-		this.provinceState = provinceState;
-	}
+    @JsonProperty("email")
+    public String getEmail() {
+        return email;
+    }
 
-	public String getZip() {
-		return zip;
-	}
+    @JsonProperty("email")
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setZip(String zip) {
-		this.zip = zip;
-	}
+    @JsonProperty("website")
+    public String getWebsite() {
+        return website;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    @JsonProperty("website")
+    public void setWebsite(String website) {
+        this.website = website;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    @JsonProperty("contact")
+    public String getContact() {
+        return contact;
+    }
 
-	public String getWebsite() {
-		return website;
-	}
+    @JsonProperty("contact")
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
 
-	public void setWebsite(String website) {
-		this.website = website;
-	}
+    @JsonProperty("position")
+    public String getPosition() {
+        return position;
+    }
 
-	public String getContact() {
-		return contact;
-	}
+    @JsonProperty("position")
+    public void setPosition(String position) {
+        this.position = position;
+    }
 
-	public void setContact(String contact) {
-		this.contact = contact;
-	}
+    @JsonProperty("phone")
+    public String getPhone() {
+        return phone;
+    }
 
-	public String getPosition() {
-		return position;
-	}
+    @JsonProperty("phone")
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-	public void setPosition(String position) {
-		this.position = position;
-	}
+    @JsonProperty("ext")
+    public String getExt() {
+        return ext;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    @JsonProperty("ext")
+    public void setExt(String ext) {
+        this.ext = ext;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    @JsonProperty("fax")
+    public String getFax() {
+        return fax;
+    }
 
-	public String getExt() {
-		return ext;
-	}
+    @JsonProperty("fax")
+    public void setFax(String fax) {
+        this.fax = fax;
+    }
 
-	public void setExt(String ext) {
-		this.ext = ext;
-	}
+    @JsonProperty("companyPrefix")
+    public String getCompanyPrefix() {
+        return companyPrefix;
+    }
 
-	public String getFax() {
-		return fax;
-	}
+    @JsonProperty("companyPrefix")
+    public void setCompanyPrefix(String companyPrefix) {
+        this.companyPrefix = companyPrefix;
+    }
 
-	public void setFax(String fax) {
-		this.fax = fax;
-	}
+    @JsonProperty("tollfree")
+    public String getTollfree() {
+        return tollfree;
+    }
 
-	public String getCompanyPrefix() {
-		return companyPrefix;
-	}
+    @JsonProperty("tollfree")
+    public void setTollfree(String tollfree) {
+        this.tollfree = tollfree;
+    }
 
-	public void setCompanyPrefix(String companyPrefix) {
-		this.companyPrefix = companyPrefix;
-	}
+    @JsonProperty("cellular")
+    public String getCellular() {
+        return cellular;
+    }
 
-	public String getTollfree() {
-		return tollfree;
-	}
+    @JsonProperty("cellular")
+    public void setCellular(String cellular) {
+        this.cellular = cellular;
+    }
 
-	public void setTollfree(String tollfree) {
-		this.tollfree = tollfree;
-	}
+    @JsonProperty("pager")
+    public String getPager() {
+        return pager;
+    }
 
-	public String getCellular() {
-		return cellular;
-	}
+    @JsonProperty("pager")
+    public void setPager(String pager) {
+        this.pager = pager;
+    }
 
-	public void setCellular(String cellular) {
-		this.cellular = cellular;
-	}
+    @JsonProperty("afterHours")
+    public String getAfterHours() {
+        return afterHours;
+    }
 
-	public String getPager() {
-		return pager;
-	}
+    @JsonProperty("afterHours")
+    public void setAfterHours(String afterHours) {
+        this.afterHours = afterHours;
+    }
 
-	public void setPager(String pager) {
-		this.pager = pager;
-	}
+    @JsonProperty("billingLocations")
+    public List<BillingControllerModel> getBillingLocations() {
+        return billingLocations;
+    }
 
-	public String getCustomerNotes() {
-		return customerNotes;
-	}
+    @JsonProperty("billingLocations")
+    public void setBillingLocations(List<BillingControllerModel> billingLocations) {
+        this.billingLocations = billingLocations;
+    }
 
-	public void setCustomerNotes(String customerNotes) {
-		this.customerNotes = customerNotes;
-	}
+    @JsonProperty("additionalContacts")
+    public List<AdditionalContact> getAdditionalContacts() {
+        return additionalContacts;
+    }
 
-	public String getAfterHours() {
-		return afterHours;
-	}
+    @JsonProperty("additionalContacts")
+    public void setAdditionalContacts(List<AdditionalContact> additionalContacts) {
+        this.additionalContacts = additionalContacts;
+    }
 
-	public void setAfterHours(String afterHours) {
-		this.afterHours = afterHours;
-	}
+
 }

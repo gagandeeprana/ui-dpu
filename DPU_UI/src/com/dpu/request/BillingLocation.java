@@ -16,7 +16,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
     "address",
     "city",
     "zip",
-    "status",
+    "statusId",
     "contact",
     "position",
     "email",
@@ -38,7 +38,7 @@ public class BillingLocation {
     private String city;
     @JsonProperty("zip")
     private String zip;
-    @JsonProperty("status")
+    @JsonProperty("statusId")
     private Integer status;
     @JsonProperty("contact")
     private String contact;
@@ -108,12 +108,12 @@ public class BillingLocation {
         this.zip = zip;
     }
 
-    @JsonProperty("status")
+    @JsonProperty("statusId")
     public Integer getStatus() {
         return status;
     }
 
-    @JsonProperty("status")
+    @JsonProperty("statusId")
     public void setStatus(Integer status) {
         this.status = status;
     }

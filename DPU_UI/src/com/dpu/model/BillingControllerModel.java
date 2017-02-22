@@ -2,45 +2,63 @@
 package com.dpu.model;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonPropertyOrder;
 
 import javafx.beans.property.SimpleStringProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-//@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-
-		"company", "address", "city", "phone", "contact", "zip", "fax"
-
-})
+@JsonPropertyOrder({ "name", "address", "city", "zip", "statusId", "contact", "position", "email", "cellular", "phone",
+		"ext", "fax", "tollfree" })
 public class BillingControllerModel {
 
-	private Long billingLocationId = null;
-	private Long companyId;
-	private SimpleStringProperty company = new SimpleStringProperty();
-	private SimpleStringProperty address = new SimpleStringProperty();
-	private SimpleStringProperty city = new SimpleStringProperty();
-	private SimpleStringProperty phone = new SimpleStringProperty();
-	private SimpleStringProperty contact = new SimpleStringProperty();
-	private SimpleStringProperty zip = new SimpleStringProperty();
-	private SimpleStringProperty fax = new SimpleStringProperty();
+	@JsonProperty("name")
+	private String name;
+	@JsonProperty("address")
+	private String address;
+	@JsonProperty("city")
+	private String city;
+	@JsonProperty("zip")
+	private String zip;
+	@JsonProperty("statusId")
+	private Long statusId;
+	@JsonProperty("contact")
+	private String contact;
+	@JsonProperty("position")
+	private String position;
+	@JsonProperty("email")
+	private String email;
+	@JsonProperty("cellular")
+	private String cellular;
+	@JsonProperty("phone")
+	private String phone;
+	@JsonProperty("ext")
+	private String ext;
+	@JsonProperty("fax")
+	private String fax;
+	@JsonProperty("tollfree")
+	private String tollfree;
+
+	public Long companyId;
+	public Long billingLocationId = null;
+
+	public BillingControllerModel(String company, String address2, String city2, String phone2, String contact2,
+			String zip2, String fax2, Long statusId2) {
+		this.name = company;
+		this.address = address2;
+		this.city = city2;
+		this.phone = phone2;
+		this.contact = contact2;
+		this.zip = zip2;
+		this.fax = fax2;
+		this.statusId = statusId2;
+
+	}
 
 	public BillingControllerModel() {
 
 	}
 
-	public BillingControllerModel(String cmpny, String addr, String cty, String phn, String cnt, String zp, String fx) {
-		this.company = new SimpleStringProperty(cmpny);
-		this.address = new SimpleStringProperty(addr);
-		this.city = new SimpleStringProperty(cty);
-		this.phone = new SimpleStringProperty(phn);
-		this.contact = new SimpleStringProperty(cnt);
-		this.zip = new SimpleStringProperty(zp);
-		this.fax = new SimpleStringProperty(fx);
-
-	}
-	
-	  
 	public Long getCompanyId() {
 		return companyId;
 	}
@@ -57,60 +75,134 @@ public class BillingControllerModel {
 		this.billingLocationId = billingLocationId;
 	}
 
-	public String getCompany() {
-		return company.get();
+	@JsonProperty("name")
+	public String getName() {
+		return name;
 	}
 
-	public void setCompany(String fName) {
-		company.set(fName);
+	@JsonProperty("name")
+	public void setName(String name) {
+		this.name = name;
 	}
 
+	@JsonProperty("address")
 	public String getAddress() {
-		return address.get();
+		return address;
 	}
 
-	public void setAddress(String fName) {
-		address.set(fName);
+	@JsonProperty("address")
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
+	@JsonProperty("city")
 	public String getCity() {
-		return city.get();
+		return city;
 	}
 
-	public void setCity(String fName) {
-		city.set(fName);
+	@JsonProperty("city")
+	public void setCity(String city) {
+		this.city = city;
 	}
 
-	public String getPhone() {
-		return phone.get();
-	}
-
-	public void setPhone(String fName) {
-		phone.set(fName);
-	}
-
-	public String getContact() {
-		return contact.get();
-	}
-
-	public void setContact(String fName) {
-		contact.set(fName);
-	}
-
+	@JsonProperty("zip")
 	public String getZip() {
-		return zip.get();
+		return zip;
 	}
 
-	public void setZip(String fName) {
-		zip.set(fName);
+	@JsonProperty("zip")
+	public void setZip(String zip) {
+		this.zip = zip;
 	}
 
+	@JsonProperty("statusId")
+	public Long getStatusId() {
+		return statusId;
+	}
+
+	@JsonProperty("statusId")
+	public void setStatusId(Long statusId) {
+		this.statusId = statusId;
+	}
+
+	@JsonProperty("contact")
+	public String getContact() {
+		return contact;
+	}
+
+	@JsonProperty("contact")
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
+
+	@JsonProperty("position")
+	public String getPosition() {
+		return position;
+	}
+
+	@JsonProperty("position")
+	public void setPosition(String position) {
+		this.position = position;
+	}
+
+	@JsonProperty("email")
+	public String getEmail() {
+		return email;
+	}
+
+	@JsonProperty("email")
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	@JsonProperty("cellular")
+	public String getCellular() {
+		return cellular;
+	}
+
+	@JsonProperty("cellular")
+	public void setCellular(String cellular) {
+		this.cellular = cellular;
+	}
+
+	@JsonProperty("phone")
+	public String getPhone() {
+		return phone;
+	}
+
+	@JsonProperty("phone")
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	@JsonProperty("ext")
+	public String getExt() {
+		return ext;
+	}
+
+	@JsonProperty("ext")
+	public void setExt(String ext) {
+		this.ext = ext;
+	}
+
+	@JsonProperty("fax")
 	public String getFax() {
-		return fax.get();
+		return fax;
 	}
 
-	public void setFax(String fName) {
-		fax.set(fName);
+	@JsonProperty("fax")
+	public void setFax(String fax) {
+		this.fax = fax;
+	}
+
+	@JsonProperty("tollfree")
+	public String getTollfree() {
+		return tollfree;
+	}
+
+	@JsonProperty("tollfree")
+	public void setTollfree(String tollfree) {
+		this.tollfree = tollfree;
 	}
 
 }

@@ -293,7 +293,7 @@ public class CompanyEditController extends Application implements Initializable 
 				BillingControllerModel billingModel = listOfBilling.get(i);
 				if (billingModel.getBillingLocationId() != null)
 					billingLocation.setBillingLocationId(billingModel.getBillingLocationId());
-				billingLocation.setName(billingModel.getCompany());
+				billingLocation.setName(billingModel.getName());
 				billingLocation.setAddress(billingModel.getAddress());
 				billingLocation.setCity(billingModel.getCity());
 				billingLocation.setZip(billingModel.getZip());
@@ -306,7 +306,7 @@ public class CompanyEditController extends Application implements Initializable 
 				billingLocation.setPhone(billingModel.getPhone());
 				billingLocation.setExt(txtExt.getText());
 				billingLocation.setFax(billingModel.getFax());
-				billingLocation.setTollfree(billingModel.getCompany());
+				billingLocation.setTollfree(billingModel.getName());
 				billingLocations.add(billingLocation);
 			}
 		}
@@ -323,12 +323,12 @@ public class CompanyEditController extends Application implements Initializable 
 
 				if (additionalContactModel.getAdditionalContactId() != null)
 					additionalContact.setAdditionalContactId(additionalContactModel.getAdditionalContactId());
-				additionalContact.setCustomerName(additionalContactModel.getAdditionalContact());
+				additionalContact.setCustomerName(additionalContactModel.getCustomerName());
 				additionalContact.setPosition(additionalContactModel.getPosition());
 				additionalContact.setPhone(additionalContactModel.getPhone());
-				additionalContact.setExt(additionalContactModel.getExtension());
+				additionalContact.setExt(additionalContactModel.getExt());
 				additionalContact.setFax(additionalContactModel.getFax());
-				additionalContact.setPrefix(additionalContactModel.getPager());
+				additionalContact.setPrefix(additionalContactModel.getPrefix());
 				additionalContact.setCellular(additionalContactModel.getCellular());
 				additionalContact.setStatus(1);
 				additionalContact.setEmail(additionalContactModel.getEmail());
@@ -572,7 +572,6 @@ public class CompanyEditController extends Application implements Initializable 
 
 	private void openAddAdditionalContactScreen() {
 		try {
-
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
 					.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_EDIT_ADDITIONAL_CONTACT_SCREEN));
 			Parent root = (Parent) fxmlLoader.load();
@@ -834,7 +833,7 @@ public class CompanyEditController extends Application implements Initializable 
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getAdditionalContact() + "");
+						return new SimpleStringProperty(param.getValue().getCustomerName() + "");
 					}
 				});
 		position.setCellValueFactory(
@@ -882,7 +881,7 @@ public class CompanyEditController extends Application implements Initializable 
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getExtension() + "");
+						return new SimpleStringProperty(param.getValue().getExt() + "");
 					}
 				});
 		pager.setCellValueFactory(
@@ -890,7 +889,7 @@ public class CompanyEditController extends Application implements Initializable 
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getPager() + "");
+						return new SimpleStringProperty(param.getValue().getPrefix() + "");
 					}
 				});
 		status.setCellValueFactory(
@@ -898,7 +897,7 @@ public class CompanyEditController extends Application implements Initializable 
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getStatus() + "");
+						return new SimpleStringProperty(param.getValue().getStatusId() + "");
 					}
 				});
 	}
@@ -910,7 +909,7 @@ public class CompanyEditController extends Application implements Initializable 
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<BillingControllerModel, String> param) {
-						return new SimpleStringProperty(param.getValue().getCompany() + "");
+						return new SimpleStringProperty(param.getValue().getName() + "");
 					}
 				});
 		address.setCellValueFactory(

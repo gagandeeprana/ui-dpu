@@ -62,14 +62,15 @@ public class BillingEditController implements Initializable {
 			String contact = txtContact.getText();
 			String zip = txtZip.getText();
 			String fax = txtFax.getText();
-			BillingControllerModel bcm1 = new BillingControllerModel(company, address, city, phone, contact, zip, fax);
+			Long statusId =Long.parseLong("1");
+			BillingControllerModel bcm1 = new BillingControllerModel(company, address, city, phone, contact, zip, fax,statusId);
 
 			if (CompanyEditController.add == 0) {
-//				if (CompanyEditController.billingLocationIdPri != 0l
-//						|| CompanyEditController.billingLocationIdPri != null)
-//					bcm1.setBillingLocationId(CompanyEditController.billingLocationIdPri);
+				if (CompanyEditController.billingLocationIdPri != 0l
+						|| CompanyEditController.billingLocationIdPri != null)
+					bcm1.setBillingLocationId(CompanyEditController.billingLocationIdPri);
 				CompanyEditController.listOfBilling.set(CompanyEditController.editIndex, bcm1);
-//				CompanyEditController.billingLocationIdPri = 0l;
+				CompanyEditController.billingLocationIdPri = 0l;
 
 			} else if (CompanyEditController.add == 1) {
 				CompanyEditController.listOfBilling.add(bcm1);
@@ -131,7 +132,7 @@ public class BillingEditController implements Initializable {
 
 		if (CompanyEditController.add != 1) {
 			if (CompanyEditController.billingControllerModel != null) {
-				txtCompany.setText(CompanyEditController.billingControllerModel.getCompany());
+				txtCompany.setText(CompanyEditController.billingControllerModel.getName());
 				txtAddress.setText(CompanyEditController.billingControllerModel.getAddress());
 				txtCity.setText(CompanyEditController.billingControllerModel.getCity());
 				txtPhone.setText(CompanyEditController.billingControllerModel.getPhone());

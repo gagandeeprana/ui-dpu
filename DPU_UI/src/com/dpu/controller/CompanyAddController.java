@@ -384,7 +384,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<BillingControllerModel, String> param) {
-						return new SimpleStringProperty(param.getValue().getCompany() + "");
+						return new SimpleStringProperty(param.getValue().getName() + "");
 					}
 				});
 		address.setCellValueFactory(
@@ -469,7 +469,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getAdditionalContact() + "");
+						return new SimpleStringProperty(param.getValue().getCustomerName() + "");
 					}
 				});
 		position.setCellValueFactory(
@@ -517,7 +517,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getExtension() + "");
+						return new SimpleStringProperty(param.getValue().getExt() + "");
 					}
 				});
 		pager.setCellValueFactory(
@@ -525,7 +525,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getPager() + "");
+						return new SimpleStringProperty(param.getValue().getPrefix() + "");
 					}
 				});
 		status.setCellValueFactory(
@@ -533,7 +533,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getStatus() + "");
+						return new SimpleStringProperty(param.getValue().getStatusId() + "");
 					}
 				});
 	}
@@ -719,7 +719,6 @@ public class CompanyAddController extends Application implements Initializable {
 		closeAddCompanyScreen(btnSaveCompany);
 	}
 
-	// ----------=======-----------
 	@FXML
 	private void btnCancelCompanyAction() {
 		listOfBilling = new ArrayList<BillingControllerModel>();
@@ -795,7 +794,7 @@ public class CompanyAddController extends Application implements Initializable {
 			for (int i = 0; i < sizeOfBilling; i++) {
 				BillingLocation billingLocation = new BillingLocation();
 				BillingControllerModel billingModel = listOfBilling.get(i);
-				billingLocation.setName(billingModel.getCompany());
+				billingLocation.setName(billingModel.getName());
 				billingLocation.setAddress(billingModel.getAddress());
 				billingLocation.setCity(billingModel.getCity());
 				billingLocation.setZip(billingModel.getZip());
@@ -808,7 +807,7 @@ public class CompanyAddController extends Application implements Initializable {
 				billingLocation.setPhone(billingModel.getPhone());
 				billingLocation.setExt(txtExt.getText());
 				billingLocation.setFax(billingModel.getFax());
-				billingLocation.setTollfree(billingModel.getCompany());
+				billingLocation.setTollfree(billingModel.getName());
 				billingLocations.add(billingLocation);
 			}
 		}
@@ -822,13 +821,13 @@ public class CompanyAddController extends Application implements Initializable {
 
 				AdditionalContact additionalContactModel = listOfAdditionalContact.get(i);
 				com.dpu.request.AdditionalContact additionalContact = new com.dpu.request.AdditionalContact();
-				additionalContact.setCustomerName(additionalContactModel.getAdditionalContact());
+				additionalContact.setCustomerName(additionalContactModel.getCustomerName());
 				additionalContact.setPosition(additionalContactModel.getPosition());
 				additionalContact.setPhone(additionalContactModel.getPhone());
-				additionalContact.setExt(additionalContactModel.getExtension());
+				additionalContact.setExt(additionalContactModel.getExt());
 				additionalContact.setFax(additionalContactModel.getFax());
 				// set Pager in prefix.. chnage it
-				additionalContact.setPrefix(additionalContactModel.getPager());
+				additionalContact.setPrefix(additionalContactModel.getPrefix());
 				additionalContact.setCellular(additionalContactModel.getCellular());
 				// need to set Status here
 				additionalContact.setStatus(1);

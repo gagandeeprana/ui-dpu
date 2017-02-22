@@ -19,7 +19,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
     "fax",
     "prefix",
     "cellular",
-    "status",
+    "statusId",
     "email"
 })
 public class AdditionalContact {
@@ -40,7 +40,7 @@ public class AdditionalContact {
     private String prefix;
     @JsonProperty("cellular")
     private String cellular;
-    @JsonProperty("status")
+    @JsonProperty("statusId")
     private Integer status;
     @JsonProperty("email")
     private String email;
@@ -125,12 +125,12 @@ public class AdditionalContact {
         this.cellular = cellular;
     }
 
-    @JsonProperty("status")
+    @JsonProperty("statusId")
     public Integer getStatus() {
         return status;
     }
 
-    @JsonProperty("status")
+    @JsonProperty("statusId")
     public void setStatus(Integer status) {
         this.status = status;
     }

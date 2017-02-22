@@ -1,55 +1,52 @@
 package com.dpu.model;
 
-import java.io.Serializable;
-
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonPropertyOrder;
 
-import javafx.beans.property.SimpleStringProperty;
-
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonPropertyOrder({
+@JsonPropertyOrder({ "customerName", "position", "phone", "ext", "fax", "prefix", "cellular", "statusId", "email" })
+public class AdditionalContact {
 
-		"additionalContact", "position", "phone", "fax", "cellular", "email", "extension", "pager", "status"
+	@JsonProperty("customerName")
+	private String customerName;
+	@JsonProperty("position")
+	private String position;
+	@JsonProperty("phone")
+	private String phone;
+	@JsonProperty("ext")
+	private String ext;
+	@JsonProperty("fax")
+	private String fax;
+	@JsonProperty("prefix")
+	private String prefix;
+	@JsonProperty("cellular")
+	private String cellular;
+	@JsonProperty("statusId")
+	private Long statusId;
+	@JsonProperty("email")
+	private String email;
 
-})
-//@JsonInclude(JsonInclude.Include.NON_NULL)
-public class AdditionalContact implements Serializable {
+	public Long companyId;
+	public Long additionalContactId = null;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private Long additionalContactId = null ;
-	private Long companyId;
-	private SimpleStringProperty additionalContact = new SimpleStringProperty();
-	private SimpleStringProperty position = new SimpleStringProperty();
-	private SimpleStringProperty phone = new SimpleStringProperty();
-	private SimpleStringProperty fax = new SimpleStringProperty();
-	private SimpleStringProperty cellular = new SimpleStringProperty();
-	private SimpleStringProperty email = new SimpleStringProperty();
-	private SimpleStringProperty extension = new SimpleStringProperty();
-	private SimpleStringProperty pager = new SimpleStringProperty();
-	private SimpleStringProperty status = new SimpleStringProperty();
+	public AdditionalContact(String additionalContact, String position2, String phone2, String fax2, String cellular2,
+			String email2, String extension, String pager, Long status) {
+		this.customerName = additionalContact;
+		this.position = position2;
+		this.phone = phone2;
+		this.ext = extension;
+		this.fax = fax2;
+		this.prefix = pager;
+		this.cellular = cellular2;
+		this.statusId = status;
+		this.email = email2;
+	}
 
 	public AdditionalContact() {
-		// 0-param constructor
-	}
-
-	public AdditionalContact(String additionalContact, String position, String phone, String fax, String cellular,
-			String email, String extension, String pager, String status) {
-		this.additionalContact = new SimpleStringProperty(additionalContact);
-		this.position = new SimpleStringProperty(position);
-		this.phone = new SimpleStringProperty(phone);
-		this.fax = new SimpleStringProperty(fax);
-		this.cellular = new SimpleStringProperty(cellular);
-		this.email = new SimpleStringProperty(email);
-		this.extension = new SimpleStringProperty(extension);
-		this.pager = new SimpleStringProperty(pager);
-		this.status = new SimpleStringProperty(status);
 
 	}
- 
+
 	public Long getCompanyId() {
 		return companyId;
 	}
@@ -66,76 +63,94 @@ public class AdditionalContact implements Serializable {
 		this.additionalContactId = additionalContactId;
 	}
 
-	public  String  getAdditionalContact() {
-		return additionalContact.get();
+	@JsonProperty("customerName")
+	public String getCustomerName() {
+		return customerName;
 	}
 
-	public void setAdditionalContact( String  additionalContac ) {
-		additionalContact.set(additionalContac);
+	@JsonProperty("customerName")
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
 
-	public  String  getPosition() {
-		return position.get();
+	@JsonProperty("position")
+	public String getPosition() {
+		return position;
 	}
 
-	public void setPosition( String  positionn) {
-		 position.set(positionn); 
+	@JsonProperty("position")
+	public void setPosition(String position) {
+		this.position = position;
 	}
 
-	public  String  getPhone() {
-		return phone.get();
+	@JsonProperty("phone")
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setPhone( String  phonee) {
-		 phone.set(phonee); 
+	@JsonProperty("phone")
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
-	public  String  getFax() {
-		return fax.get();
+	@JsonProperty("ext")
+	public String getExt() {
+		return ext;
 	}
 
-	public void setFax( String  faxx) {
-		 fax.set(faxx);
+	@JsonProperty("ext")
+	public void setExt(String ext) {
+		this.ext = ext;
 	}
 
-	public  String  getCellular() {
-		return cellular.get();
+	@JsonProperty("fax")
+	public String getFax() {
+		return fax;
 	}
 
-	public void setCellular( String  cellularr) {
-		 cellular.set(cellularr);
+	@JsonProperty("fax")
+	public void setFax(String fax) {
+		this.fax = fax;
 	}
 
-	public  String getEmail() {
-		return email.get();
+	@JsonProperty("prefix")
+	public String getPrefix() {
+		return prefix;
 	}
 
-	public void setEmail( String  emaill) {
-		email.set(emaill);
+	@JsonProperty("prefix")
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
 	}
 
-	public  String  getExtension() {
-		return extension.get();
+	@JsonProperty("cellular")
+	public String getCellular() {
+		return cellular;
 	}
 
-	public void setExtension( String  extensionn) {
-		 extension.set(extensionn);
+	@JsonProperty("cellular")
+	public void setCellular(String cellular) {
+		this.cellular = cellular;
 	}
 
-	public  String  getPager() {
-		return pager.get();
+	@JsonProperty("statusId")
+	public Long getStatusId() {
+		return statusId;
 	}
 
-	public void setPager( String pagerr) {
-		 pager.set(pagerr);
+	@JsonProperty("statusId")
+	public void setStatusId(Long statusId) {
+		this.statusId = statusId;
 	}
 
-	public  String   getStatus() {
-		return status.get();
+	@JsonProperty("email")
+	public String getEmail() {
+		return email;
 	}
 
-	public void setStatus( String  statuss) {
-		 status.set(statuss);
+	@JsonProperty("email")
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

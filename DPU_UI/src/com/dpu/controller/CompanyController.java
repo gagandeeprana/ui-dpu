@@ -1,3 +1,4 @@
+ 
 package com.dpu.controller;
 
 import java.net.URL;
@@ -14,8 +15,6 @@ import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.AdditionalContact;
 import com.dpu.model.BillingControllerModel;
-import com.dpu.model.Failed;
-import com.dpu.model.Success;
 import com.dpu.request.CompanyModel;
 
 import javafx.application.Application;
@@ -36,7 +35,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
@@ -56,7 +54,7 @@ public class CompanyController extends Application implements Initializable {
 
 	@FXML
 	private void btnAddCompanyAction() {
-//		CompanyEditController.selectedTabValue = 0 ;
+		CompanyEditController.selectedTabValue = 0 ;
 		CompanyAddController.listOfBilling = new ArrayList<BillingControllerModel>();
 		CompanyAddController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
 		CompanyAddController.company = new CompanyModel();
@@ -72,7 +70,7 @@ public class CompanyController extends Application implements Initializable {
 		CompanyEditController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
 		CompanyEditController.company = new CompanyModel();
 		
-//		CompanyEditController.selectedTabValue = 0 ;
+		CompanyEditController.selectedTabValue = 0 ;
 
 		CompanyModel companyy = cList.get(tblCompany.getSelectionModel().getSelectedIndex());
 		companyId = Long.parseLong(companyy.getCompanyId());
@@ -103,7 +101,7 @@ public class CompanyController extends Application implements Initializable {
 									bcm.setBillingLocationId(c.getBillingLocations().get(i).getBillingLocationId());
 									bcm.setAddress(c.getBillingLocations().get(i).getAddress());
 									bcm.setCity(c.getBillingLocations().get(i).getCity());
-									bcm.setCompany(c.getBillingLocations().get(i).getName());
+									bcm.setName(c.getBillingLocations().get(i).getName());
 									bcm.setContact(c.getBillingLocations().get(i).getContact());
 									bcm.setFax(c.getBillingLocations().get(i).getFax());
 									bcm.setPhone(c.getBillingLocations().get(i).getPhone());
@@ -121,15 +119,15 @@ public class CompanyController extends Application implements Initializable {
 									additionalContact.setAdditionalContactId(
 											c.getAdditionalContacts().get(j).getAdditionalContactId());
 									additionalContact
-											.setAdditionalContact(c.getAdditionalContacts().get(j).getCustomerName());
+											.setCustomerName (c.getAdditionalContacts().get(j).getCustomerName());
 									additionalContact.setCellular(c.getAdditionalContacts().get(j).getCellular());
 									additionalContact.setEmail(c.getAdditionalContacts().get(j).getEmail());
-									additionalContact.setExtension(c.getAdditionalContacts().get(j).getExt());
+									additionalContact.setExt(c.getAdditionalContacts().get(j).getExt());
 									additionalContact.setFax(c.getAdditionalContacts().get(j).getFax());
-									additionalContact.setPager(c.getAdditionalContacts().get(j).getCellular());
+									additionalContact.setPrefix(c.getAdditionalContacts().get(j).getCellular());
 									additionalContact.setPhone(c.getAdditionalContacts().get(j).getPhone());
 									additionalContact.setPosition(c.getAdditionalContacts().get(j).getPosition());
-									additionalContact.setStatus(c.getAdditionalContacts().get(j).getStatus() + "");
+									additionalContact.setStatusId(0l);
 
 									CompanyEditController.listOfAdditionalContact.add(additionalContact);
 								}
@@ -415,8 +413,7 @@ public class CompanyController extends Application implements Initializable {
 			@Override
 			public void handle(ActionEvent event) {
 				 
-				System.out.println("Clicked on Add Button.");
-//				CompanyEditController.selectedTabValue = 0 ;
+				CompanyEditController.selectedTabValue = 0 ;
 				CompanyAddController.listOfBilling = new ArrayList<BillingControllerModel>();
 				CompanyAddController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
 				CompanyAddController.company = new CompanyModel();
@@ -436,7 +433,7 @@ public class CompanyController extends Application implements Initializable {
 				CompanyEditController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
 				CompanyEditController.company = new CompanyModel();
 				
-//				CompanyEditController.selectedTabValue = 0 ;
+				CompanyEditController.selectedTabValue = 0 ;
 
 				CompanyModel companyy = cList.get(tblCompany.getSelectionModel().getSelectedIndex());
 				companyId = Long.parseLong(companyy.getCompanyId());
@@ -467,7 +464,7 @@ public class CompanyController extends Application implements Initializable {
 											bcm.setBillingLocationId(c.getBillingLocations().get(i).getBillingLocationId());
 											bcm.setAddress(c.getBillingLocations().get(i).getAddress());
 											bcm.setCity(c.getBillingLocations().get(i).getCity());
-											bcm.setCompany(c.getBillingLocations().get(i).getName());
+											bcm.setName(c.getBillingLocations().get(i).getName());
 											bcm.setContact(c.getBillingLocations().get(i).getContact());
 											bcm.setFax(c.getBillingLocations().get(i).getFax());
 											bcm.setPhone(c.getBillingLocations().get(i).getPhone());
@@ -485,15 +482,15 @@ public class CompanyController extends Application implements Initializable {
 											additionalContact.setAdditionalContactId(
 													c.getAdditionalContacts().get(j).getAdditionalContactId());
 											additionalContact
-													.setAdditionalContact(c.getAdditionalContacts().get(j).getCustomerName());
+													.setCustomerName(c.getAdditionalContacts().get(j).getCustomerName());
 											additionalContact.setCellular(c.getAdditionalContacts().get(j).getCellular());
 											additionalContact.setEmail(c.getAdditionalContacts().get(j).getEmail());
-											additionalContact.setExtension(c.getAdditionalContacts().get(j).getExt());
+											additionalContact.setExt(c.getAdditionalContacts().get(j).getExt());
 											additionalContact.setFax(c.getAdditionalContacts().get(j).getFax());
-											additionalContact.setPager(c.getAdditionalContacts().get(j).getCellular());
+											additionalContact.setPrefix(c.getAdditionalContacts().get(j).getCellular());
 											additionalContact.setPhone(c.getAdditionalContacts().get(j).getPhone());
 											additionalContact.setPosition(c.getAdditionalContacts().get(j).getPosition());
-											additionalContact.setStatus(c.getAdditionalContacts().get(j).getStatus() + "");
+											additionalContact.setStatusId(0l);
 
 											CompanyEditController.listOfAdditionalContact.add(additionalContact);
 										}
@@ -585,29 +582,26 @@ public class CompanyController extends Application implements Initializable {
 
 		// Add MenuItem to ContextMenu
 		contextMenu.getItems().addAll(item1, item2, item3, item4, item5 , item6);
-		
 		if (tblCompanyMenuCount == 0) {
 			tblCompanyMenuCount++;
 			// When user right-click on Table
 			tblCompany.setOnMouseClicked(new EventHandler<MouseEvent>() {
-				 
-				
-
+				  
 				@Override
 				public void handle(MouseEvent mouseEvent) {
 					
 					if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
-						int count =0;
-			            if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.SECONDARY) && count == 0){
+						//int count =0;
+			            if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.SECONDARY)  ){
 			            	contextMenu.show(tblCompany, mouseEvent.getScreenX(), mouseEvent.getScreenY());
 							//System.out.println("X: " + mouseEvent.getX() + " Y: " + mouseEvent.getY());
-							count =1;
+							//count =1;
 							}
 						//contextMenu.hide();
 			           // else if (((MouseEvent) mouseEvent).getClickCount() == 2)
 			            else{
 			            	contextMenu.hide();
-			            	count = 0;
+			            	//count = 0;
 			            }
 			        }
 				}

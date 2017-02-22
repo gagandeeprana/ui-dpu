@@ -106,7 +106,8 @@ public class AdditionalContactAddController implements Initializable {
 			String fax = txtFax.getText();
 			String pager = txtPager.getText();
 			String cellular = txtCellular.getText();
-			String status = ddlStatus.getSelectionModel().getSelectedItem();
+			 
+			Long status = Long.parseLong(ddlStatus.getSelectionModel().getSelectedItem()+"");
 			String email = txtEmail.getText();
 			AdditionalContact bcm1 = new AdditionalContact(additionalContact, position, phone, fax, cellular, email,
 					extension, pager, status);
@@ -168,13 +169,13 @@ public class AdditionalContactAddController implements Initializable {
 		if (CompanyAddController.addAddtionalContact != 1) {
 			if (CompanyAddController.additionalContactModel != null) {
 
-				txtAdditionalContact.setText(CompanyAddController.additionalContactModel.getAdditionalContact());
+				txtAdditionalContact.setText(CompanyAddController.additionalContactModel.getCustomerName());
 				txtPosition.setText(CompanyAddController.additionalContactModel.getPosition());
-				txtExtension.setText(CompanyAddController.additionalContactModel.getExtension());
+				txtExtension.setText(CompanyAddController.additionalContactModel.getExt());
 				txtFax.setText(CompanyAddController.additionalContactModel.getFax());
 				txtCellular.setText(CompanyAddController.additionalContactModel.getCellular());
 				txtEmail.setText(CompanyAddController.additionalContactModel.getEmail());
-				txtPager.setText(CompanyAddController.additionalContactModel.getPager());
+				txtPager.setText(CompanyAddController.additionalContactModel.getPrefix());
 				txtPhone.setText(CompanyAddController.additionalContactModel.getPhone());
 				// ddlStatus.getSelectionModel().getSelectedItem();
 

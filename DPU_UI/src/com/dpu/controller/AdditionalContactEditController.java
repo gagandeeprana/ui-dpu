@@ -78,7 +78,7 @@ public class AdditionalContactEditController implements Initializable {
 	@FXML
 	void btnCancelAdditionalContactAction(ActionEvent event) {
 		try {
-//			CompanyEditController.selectedTabValue = 1;
+			CompanyEditController.selectedTabValue = 1;
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
 					.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_EDIT_SCREEN));
 			Parent root = (Parent) fxmlLoader.load();
@@ -91,14 +91,14 @@ public class AdditionalContactEditController implements Initializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-//		CompanyEditController.selectedTabValue = 0;
+		CompanyEditController.selectedTabValue = 0;
 		closeAddAdditionalContactScreen(btnCancelAdditionalContact);
 	}
 
 	@FXML
 	void btnSaveAdditionalContactAction(ActionEvent event) {
 		try {
-//			CompanyEditController.selectedTabValue = 1;
+			CompanyEditController.selectedTabValue = 1;
 			String additionalContact = txtAdditionalContact.getText();
 			String position = txtPosition.getText();
 			String phone = txtPhone.getText();
@@ -106,19 +106,18 @@ public class AdditionalContactEditController implements Initializable {
 			String fax = txtFax.getText();
 			String pager = txtPager.getText();
 			String cellular = txtCellular.getText();
-			String status = ddlStatus.getSelectionModel().getSelectedItem();
+			Long status = Long.parseLong(ddlStatus.getSelectionModel().getSelectedItem());
 			String email = txtEmail.getText();
 			AdditionalContact bcm1 = new AdditionalContact(additionalContact, position, phone, fax, cellular, email,
 					extension, pager, status);
 
-			
 			// if(CompanyEditController.editIndex != -1){
 			if (CompanyEditController.addAddtionalContact == 0) {
-//				if (CompanyEditController.additionalContactIdPri != 0l
-//						|| CompanyEditController.additionalContactIdPri != null)
-//					bcm1.setAdditionalContactId(CompanyEditController.additionalContactIdPri);
+				if (CompanyEditController.additionalContactIdPri != 0l
+						|| CompanyEditController.additionalContactIdPri != null)
+					bcm1.setAdditionalContactId(CompanyEditController.additionalContactIdPri);
 				CompanyEditController.listOfAdditionalContact.set(CompanyEditController.editIndex, bcm1);
-//				CompanyEditController.additionalContactIdPri = 0l;
+				CompanyEditController.additionalContactIdPri = 0l;
 			} else if (CompanyEditController.addAddtionalContact == 1) {
 				CompanyEditController.listOfAdditionalContact.add(bcm1);
 			}
@@ -137,7 +136,7 @@ public class AdditionalContactEditController implements Initializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-//		CompanyEditController.selectedTabValue = 0;
+		CompanyEditController.selectedTabValue = 0;
 		closeAddAdditionalContactScreen(btnSaveAdditionalContact);
 	}
 
@@ -173,13 +172,13 @@ public class AdditionalContactEditController implements Initializable {
 		if (CompanyEditController.addAddtionalContact != 1) {
 			if (CompanyEditController.additionalContactModel != null) {
 
-				txtAdditionalContact.setText(CompanyEditController.additionalContactModel.getAdditionalContact());
+				txtAdditionalContact.setText(CompanyEditController.additionalContactModel.getCustomerName());
 				txtPosition.setText(CompanyEditController.additionalContactModel.getPosition());
-				txtExtension.setText(CompanyEditController.additionalContactModel.getExtension());
+				txtExtension.setText(CompanyEditController.additionalContactModel.getExt());
 				txtFax.setText(CompanyEditController.additionalContactModel.getFax());
 				txtCellular.setText(CompanyEditController.additionalContactModel.getCellular());
 				txtEmail.setText(CompanyEditController.additionalContactModel.getEmail());
-				txtPager.setText(CompanyEditController.additionalContactModel.getPager());
+				txtPager.setText(CompanyEditController.additionalContactModel.getPrefix());
 				txtPhone.setText(CompanyEditController.additionalContactModel.getPhone());
 				// ddlStatus.getSelectionModel().getSelectedItem();
 
