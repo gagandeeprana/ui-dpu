@@ -56,7 +56,7 @@ public class CompanyController extends Application implements Initializable {
 
 	@FXML
 	private void btnAddCompanyAction() {
-		CompanyEditController.selectedTabValue = 0 ;
+//		CompanyEditController.selectedTabValue = 0 ;
 		CompanyAddController.listOfBilling = new ArrayList<BillingControllerModel>();
 		CompanyAddController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
 		CompanyAddController.company = new CompanyModel();
@@ -72,7 +72,7 @@ public class CompanyController extends Application implements Initializable {
 		CompanyEditController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
 		CompanyEditController.company = new CompanyModel();
 		
-		CompanyEditController.selectedTabValue = 0 ;
+//		CompanyEditController.selectedTabValue = 0 ;
 
 		CompanyModel companyy = cList.get(tblCompany.getSelectionModel().getSelectedIndex());
 		companyId = Long.parseLong(companyy.getCompanyId());
@@ -416,7 +416,7 @@ public class CompanyController extends Application implements Initializable {
 			public void handle(ActionEvent event) {
 				 
 				System.out.println("Clicked on Add Button.");
-				CompanyEditController.selectedTabValue = 0 ;
+//				CompanyEditController.selectedTabValue = 0 ;
 				CompanyAddController.listOfBilling = new ArrayList<BillingControllerModel>();
 				CompanyAddController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
 				CompanyAddController.company = new CompanyModel();
@@ -436,7 +436,7 @@ public class CompanyController extends Application implements Initializable {
 				CompanyEditController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
 				CompanyEditController.company = new CompanyModel();
 				
-				CompanyEditController.selectedTabValue = 0 ;
+//				CompanyEditController.selectedTabValue = 0 ;
 
 				CompanyModel companyy = cList.get(tblCompany.getSelectionModel().getSelectedIndex());
 				companyId = Long.parseLong(companyy.getCompanyId());

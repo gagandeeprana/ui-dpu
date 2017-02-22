@@ -62,7 +62,7 @@ public class DivisionEditController extends Application implements Initializable
 	}
 
 	private void editDivision() {
-		System.out.println("dId:: " + divisionId);
+
 		Platform.runLater(new Runnable() {
 
 			@SuppressWarnings("unchecked")
@@ -71,15 +71,7 @@ public class DivisionEditController extends Application implements Initializable
 				try {
 					ObjectMapper mapper = new ObjectMapper();
 					Division division = setDivisionValue();
-					System.out.println("editDivision()::::::: " + division.getDivisionCode() + "  "
-							+ division.getDivisionName() + "  " + division.getFedral() + "  " + division.getSCAC());
 					String payload = mapper.writeValueAsString(division);
-<<<<<<< HEAD
-					String response = PutAPIClient.callPutAPI(
-							Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API + "/" + divisionId, null, payload);
-					System.out.println("res:: " + response);
-					if (response != null && response.contains("message")) {
-=======
 					System.out.println("update payload: " + payload);
 					String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API + "/" + divisionId, null, payload);
 //					MainScreen.divisionController.fillDivisions(response);
@@ -95,27 +87,14 @@ public class DivisionEditController extends Application implements Initializable
 					}
 
 					/*if (response != null && response.contains("message")) {
->>>>>>> de161973cf2dd6940475f2799d7f67299d76fcb4
 						Success success = mapper.readValue(response, Success.class);
 						JOptionPane.showMessageDialog(null, success.getMessage(), "Info", 1);
-						System.out.println("editDivision()::::::: 1111111111 " + success);
 					} else {
-						System.out.println("editDivision()::::::: 2222222222");
-
 						Failed failed = mapper.readValue(response, Failed.class);
 						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-<<<<<<< HEAD
-					}
-
-					MainScreen.divisionController.fetchDivisions();
-					// new DivisionController().fetchDivisions();
-
-=======
 					}*/
->>>>>>> de161973cf2dd6940475f2799d7f67299d76fcb4
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
-					e.printStackTrace();
 				}
 			}
 		});
@@ -150,14 +129,7 @@ public class DivisionEditController extends Application implements Initializable
 	List<Status> statusList = null;
 	
 	public void initData(Division d) {
-<<<<<<< HEAD
-		System.out.print("dId::: " + d.getDivisionId());
 		divisionId = d.getDivisionId();
-		txtCarrierCode.setText(d.getCarrierCode());
-		txtContractPrefix.setText(d.getContractPrefix());
-=======
-		divisionId = d.getDivisionId();
->>>>>>> de161973cf2dd6940475f2799d7f67299d76fcb4
 		txtDivisionCode.setText(d.getDivisionCode());
 		txtDivisionName.setText(d.getDivisionName());
 		statusList = d.getStatusList();

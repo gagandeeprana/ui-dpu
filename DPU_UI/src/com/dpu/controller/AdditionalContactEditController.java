@@ -78,7 +78,7 @@ public class AdditionalContactEditController implements Initializable {
 	@FXML
 	void btnCancelAdditionalContactAction(ActionEvent event) {
 		try {
-			CompanyEditController.selectedTabValue = 1;
+//			CompanyEditController.selectedTabValue = 1;
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
 					.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_EDIT_SCREEN));
 			Parent root = (Parent) fxmlLoader.load();
@@ -91,14 +91,14 @@ public class AdditionalContactEditController implements Initializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		CompanyEditController.selectedTabValue = 0;
+//		CompanyEditController.selectedTabValue = 0;
 		closeAddAdditionalContactScreen(btnCancelAdditionalContact);
 	}
 
 	@FXML
 	void btnSaveAdditionalContactAction(ActionEvent event) {
 		try {
-			CompanyEditController.selectedTabValue = 1;
+//			CompanyEditController.selectedTabValue = 1;
 			String additionalContact = txtAdditionalContact.getText();
 			String position = txtPosition.getText();
 			String phone = txtPhone.getText();
@@ -114,11 +114,11 @@ public class AdditionalContactEditController implements Initializable {
 			
 			// if(CompanyEditController.editIndex != -1){
 			if (CompanyEditController.addAddtionalContact == 0) {
-				if (CompanyEditController.additionalContactIdPri != 0l
-						|| CompanyEditController.additionalContactIdPri != null)
-					bcm1.setAdditionalContactId(CompanyEditController.additionalContactIdPri);
+//				if (CompanyEditController.additionalContactIdPri != 0l
+//						|| CompanyEditController.additionalContactIdPri != null)
+//					bcm1.setAdditionalContactId(CompanyEditController.additionalContactIdPri);
 				CompanyEditController.listOfAdditionalContact.set(CompanyEditController.editIndex, bcm1);
-				CompanyEditController.additionalContactIdPri = 0l;
+//				CompanyEditController.additionalContactIdPri = 0l;
 			} else if (CompanyEditController.addAddtionalContact == 1) {
 				CompanyEditController.listOfAdditionalContact.add(bcm1);
 			}
@@ -137,7 +137,7 @@ public class AdditionalContactEditController implements Initializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		CompanyEditController.selectedTabValue = 0;
+//		CompanyEditController.selectedTabValue = 0;
 		closeAddAdditionalContactScreen(btnSaveAdditionalContact);
 	}
 

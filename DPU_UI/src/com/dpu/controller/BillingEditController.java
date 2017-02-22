@@ -65,11 +65,11 @@ public class BillingEditController implements Initializable {
 			BillingControllerModel bcm1 = new BillingControllerModel(company, address, city, phone, contact, zip, fax);
 
 			if (CompanyEditController.add == 0) {
-				if (CompanyEditController.billingLocationIdPri != 0l
-						|| CompanyEditController.billingLocationIdPri != null)
-					bcm1.setBillingLocationId(CompanyEditController.billingLocationIdPri);
+//				if (CompanyEditController.billingLocationIdPri != 0l
+//						|| CompanyEditController.billingLocationIdPri != null)
+//					bcm1.setBillingLocationId(CompanyEditController.billingLocationIdPri);
 				CompanyEditController.listOfBilling.set(CompanyEditController.editIndex, bcm1);
-				CompanyEditController.billingLocationIdPri = 0l;
+//				CompanyEditController.billingLocationIdPri = 0l;
 
 			} else if (CompanyEditController.add == 1) {
 				CompanyEditController.listOfBilling.add(bcm1);
