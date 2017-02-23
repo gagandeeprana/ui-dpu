@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+
+<Pane prefHeight="408.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.TrailerAddController">
+   <children>
+      <TabPane layoutY="23.0" prefHeight="385.0" prefWidth="857.0" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab text="General">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="356.0" prefWidth="870.0" style="-fx-border-color: black;">
+                     <children>
+                        <Pane layoutX="14.0" layoutY="43.0" prefHeight="270.0" prefWidth="837.0">
+                           <children>
+                              <Label layoutX="14.0" layoutY="1.0" text="PAPAS">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="14.0" layoutY="37.0" text="Contact Name" />
+                              <Label layoutX="13.0" layoutY="73.0" text="Operation" />
+                              <Label layoutX="14.0" layoutY="107.0" text="Central Phone#" />
+                              <Label layoutX="14.0" layoutY="143.0" text="Cental Fax#" />
+                              <Label layoutX="14.0" layoutY="177.0" text="Email" />
+                              <Label layoutX="13.0" layoutY="212.0" text="Tracker Link" />
+                              <TextField fx:id="txtContactName" layoutX="115.0" layoutY="33.0" prefHeight="25.0" prefWidth="288.0" />
+                              <Separator layoutX="416.0" layoutY="2.0" orientation="VERTICAL" prefHeight="261.0" prefWidth="14.0" />
+                              <ComboBox fx:id="ddlOperation" layoutX="116.0" layoutY="69.0" prefHeight="25.0" prefWidth="287.0" />
+                              <TextField fx:id="txtCentralPhone" layoutX="115.0" layoutY="103.0" prefHeight="25.0" prefWidth="111.0" />
+                              <Label layoutX="234.0" layoutY="107.0" text="Extension" />
+                              <TextField fx:id="txtExtension" layoutX="294.0" layoutY="103.0" prefHeight="25.0" prefWidth="112.0" />
+                              <TextField fx:id="txtCentralFax" layoutX="115.0" layoutY="139.0" prefHeight="25.0" prefWidth="111.0" />
+                              <Label layoutX="235.0" layoutY="143.0" text="24 Hours" />
+                              <ComboBox fx:id="ddl24Hours" layoutX="292.0" layoutY="139.0" prefHeight="25.0" prefWidth="116.0" />
+                              <TextField fx:id="txtEmail" layoutX="116.0" layoutY="173.0" prefHeight="25.0" prefWidth="293.0" />
+                              <TextField fx:id="txtTrackerLink" layoutX="116.0" layoutY="208.0" prefHeight="25.0" prefWidth="293.0" />
+                              <Label layoutX="441.0" layoutY="10.0" text="PARS">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="441.0" layoutY="37.0" text="Contact Name" />
+                              <TextField fx:id="txtContactName2" layoutX="535.0" layoutY="33.0" prefHeight="25.0" prefWidth="288.0" />
+                              <ComboBox fx:id="ddlOperation2" layoutX="536.0" layoutY="69.0" prefHeight="25.0" prefWidth="287.0" />
+                              <TextField fx:id="txtTackerLink2" layoutX="537.0" layoutY="213.0" prefHeight="25.0" prefWidth="293.0" />
+                              <TextField fx:id="txtEmail2" layoutX="537.0" layoutY="178.0" prefHeight="25.0" prefWidth="293.0" />
+                              <ComboBox fx:id="ddl24Hours2" layoutX="713.0" layoutY="144.0" prefHeight="25.0" prefWidth="116.0" />
+                              <Label layoutX="656.0" layoutY="148.0" text="24 Hours" />
+                              <TextField fx:id="txtCentralFax2" layoutX="536.0" layoutY="144.0" prefHeight="25.0" prefWidth="111.0" />
+                              <TextField fx:id="txtExtension2" layoutX="715.0" layoutY="108.0" prefHeight="25.0" prefWidth="112.0" />
+                              <Label layoutX="654.0" layoutY="112.0" text="Extension" />
+                              <TextField fx:id="txtCentralPhone2" layoutX="536.0" layoutY="108.0" prefHeight="25.0" prefWidth="111.0" />
+                              <Label layoutX="440.0" layoutY="217.0" text="Tracker Link" />
+                              <Label layoutX="441.0" layoutY="186.0" text="Email" />
+                              <Label layoutX="441.0" layoutY="152.0" text="Cental Fax#" />
+                              <Label layoutX="442.0" layoutY="112.0" text="Central Phone#" />
+                              <Label layoutX="439.0" layoutY="73.0" text="Operation" />
+                           </children>
+                        </Pane>
+                        <Button fx:id="btnSave" layoutX="689.0" layoutY="317.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="53.0" text="Save" />
+                        <Button fx:id="btnCancel" layoutX="752.0" layoutY="317.0" mnemonicParsing="false" text="Cancel" />
+                        <Label layoutX="14.0" layoutY="14.0" text="Customer Broker Name" />
+                        <TextField fx:id="txtCustomerBrokerName" layoutX="152.0" layoutY="10.0" prefHeight="25.0" prefWidth="306.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Products">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               </content>
+            </Tab>
+            <Tab text="About">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="Contact">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+      <Label layoutX="-1.0" layoutY="-1.0" prefHeight="27.0" prefWidth="857.0" style="-fx-background-color: lightgrey; -fx-border-color: black;" text="Add Custom Broker">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>
