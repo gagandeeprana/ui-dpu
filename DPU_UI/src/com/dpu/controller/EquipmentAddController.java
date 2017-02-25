@@ -161,10 +161,6 @@ public class EquipmentAddController extends Application implements Initializable
 	public void start(Stage primaryStage) {
 	}
 
-	public static void main(String[] args) {
-		launch(args);
-	}
-	
 	private Equipment setEquipmentValue() {
 		Equipment equipment = new Equipment();
 		equipment.setEquipmentName(txtName.getText());

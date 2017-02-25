@@ -150,8 +150,4 @@ public class DivisionAddController extends Application implements Initializable 
 		// TODO Auto-generated method stub
 
 	}
-
-	public static void main(String[] args) {
-		launch(args);
-	}
 }

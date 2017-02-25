@@ -190,10 +190,6 @@ public class ServiceAddController<T> extends Application implements Initializabl
 	public void start(Stage primaryStage) {
 	}
 
-	public static void main(String[] args) {
-		launch(args);
-	}
-	
 	private DPUService setServiceValue() {
 		DPUService dPUService = new DPUService();
 		dPUService.setServiceName(txtService.getText());

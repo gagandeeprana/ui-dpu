@@ -184,10 +184,6 @@ public class TrailerController extends Application implements Initializable {
 	public void start(Stage primaryStage) {
 	}
 
-	public static void main(String[] args) {
-		launch(args);
-	}
-	
 	@SuppressWarnings("unchecked")
 	private void fetchColumns() {
 		unitNo = (TableColumn<Trailer, String>) tblTrailer.getColumns().get(0);

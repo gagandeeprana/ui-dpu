@@ -101,10 +101,6 @@ public class DriverEditController extends Application implements Initializable{
 	public void start(Stage primaryStage) {
 	}
 
-	public static void main(String[] args) {
-		launch(args);
-	}
-	
 	private Driver setDriverValue() {
 		Driver driver = new Driver();
 		driver.setDriverCode(txtCode.getText());

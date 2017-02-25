@@ -108,10 +108,6 @@ public class DivisionEditController extends Application implements Initializable
 	public void start(Stage primaryStage) {
 	}
 
-	public static void main(String[] args) {
-		launch(args);
-	}
-
 	private Division setDivisionValue() {
 		Division division = new Division();
 		division.setDivisionCode(txtDivisionCode.getText());

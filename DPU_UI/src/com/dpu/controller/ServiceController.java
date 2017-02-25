@@ -66,10 +66,6 @@ public class ServiceController extends Application implements Initializable {
 	public void start(Stage primaryStage) {
 	}
 
-	public static void main(String[] args) {
-		launch(args);
-	}
-	
 	@FXML
 	private void btnAddServiceAction() {
 		openAddServiceScreen();

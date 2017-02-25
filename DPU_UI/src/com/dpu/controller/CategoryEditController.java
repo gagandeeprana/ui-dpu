@@ -106,10 +106,6 @@ public class CategoryEditController extends Application implements Initializable
 	public void start(Stage primaryStage) {
 	}
 
-	public static void main(String[] args) {
-		launch(args);
-	}
-	
 	List<Type> typeList, highlightList;
 	
 	List<Status> statusList;

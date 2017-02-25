@@ -99,10 +99,6 @@ public class TruckEditController extends Application implements Initializable{
 	public void start(Stage primaryStage) {
 	}
 
-	public static void main(String[] args) {
-		launch(args);
-	}
-	
 	private Truck setTruckValue() {
 		Truck truck = new Truck();
 		truck.setUnitNo(Integer.parseInt(txtUnitNo.getText()));

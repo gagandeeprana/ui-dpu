@@ -68,10 +68,6 @@ public class EquipmentController extends Application implements Initializable {
 	public void start(Stage primaryStage) {
 	}
 
-	public static void main(String[] args) {
-		launch(args);
-	}
-	
 	@SuppressWarnings("unchecked")
 	private void fetchColumns() {
 		name = (TableColumn<Equipment, String>) tblEquipment.getColumns().get(0);

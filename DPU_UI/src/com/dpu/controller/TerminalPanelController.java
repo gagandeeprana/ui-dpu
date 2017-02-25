@@ -236,10 +236,6 @@ public class TerminalPanelController extends Application implements Initializabl
 	public void start(Stage primaryStage) {
 	}
 
-	public static void main(String[] args) {
-		launch(args);
-	}
-
 	@SuppressWarnings("unchecked")
 	private void fetchColumns() {
 		System.out.println("[fetchColumns]: Enter ");

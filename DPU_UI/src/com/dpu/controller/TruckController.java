@@ -189,10 +189,6 @@ public class TruckController extends Application implements Initializable {
 	public void start(Stage primaryStage) {
 	}
 
-	public static void main(String[] args) {
-		launch(args);
-	}
-	
 	@SuppressWarnings("unchecked")
 	private void fetchColumns() {
 		unitNo = (TableColumn<Truck, String>) tblTruck.getColumns().get(0);

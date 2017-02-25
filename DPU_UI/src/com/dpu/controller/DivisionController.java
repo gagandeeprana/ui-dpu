@@ -225,10 +225,6 @@ public class DivisionController extends Application implements Initializable {
 	public void start(Stage primaryStage) {
 	}
 
-	public static void main(String[] args) {
-		launch(args);
-	}
-
 	@SuppressWarnings("unchecked")
 	private void fetchColumns() {
 		code = (TableColumn<Division, String>) tblDivision.getColumns().get(0);

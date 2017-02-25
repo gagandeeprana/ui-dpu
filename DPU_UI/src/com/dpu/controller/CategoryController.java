@@ -152,10 +152,6 @@ public class CategoryController extends Application implements Initializable {
 	public void start(Stage primaryStage) {
 	}
 
-	public static void main(String[] args) {
-		launch(args);
-	}
-	
 	@SuppressWarnings("unchecked")
 	private void fetchColumns() {
 		type = (TableColumn<Category, String>) tblCategory.getColumns().get(0);

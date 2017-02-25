@@ -152,10 +152,6 @@ public class EquipmentEditController extends Application implements Initializabl
 	public void start(Stage primaryStage) {
 	}
 
-	public static void main(String[] args) {
-		launch(args);
-	}
-	
 	private Equipment setEquipmentValue() {
 		Equipment equipment = new Equipment();
 		equipment.setEquipmentId(equipmentId);

@@ -156,10 +156,6 @@ public class ServiceEditController extends Application implements Initializable{
 	public void start(Stage primaryStage) {
 	}
 
-	public static void main(String[] args) {
-		launch(args);
-	}
-	
 	public void initData(DPUService service) {
 		serviceId = service.getServiceId();
 		txtService.setText(service.getServiceName());

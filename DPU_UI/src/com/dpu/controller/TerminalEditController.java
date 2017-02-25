@@ -97,10 +97,6 @@ public class TerminalEditController extends Application implements Initializable
 	public void start(Stage primaryStage) {
 	}
 
-	public static void main(String[] args) {
-		launch(args);
-	}
-
 	private Terminal setTerminalValue() {
 		Terminal terminal = new Terminal();
 		terminal.setTerminalName(txtTerminalName.getText());

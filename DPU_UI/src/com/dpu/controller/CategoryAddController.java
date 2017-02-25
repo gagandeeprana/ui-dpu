@@ -141,10 +141,6 @@ public class CategoryAddController extends Application implements Initializable{
 	public void start(Stage primaryStage) {
 	}
 
-	public static void main(String[] args) {
-		launch(args);
-	}
-	
 	private Category setCategoryValue() {
 		Category category = new Category();
 		category.setTypeId(typeList.get(ddlType.getSelectionModel().getSelectedIndex()).getTypeId());
