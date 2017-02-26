@@ -29,8 +29,8 @@
       </Label>
       <Button fx:id="btnDeleteCompany" layoutX="523.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnDeleteCompanyAction" prefHeight="25.0" prefWidth="55.0" text="Delete" />
       <Button fx:id="btnEditCompany" layoutX="463.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnEditCompanyAction" prefHeight="25.0" prefWidth="55.0" text="  Edit  " />
-      <Button layoutX="287.0" layoutY="11.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="32.0" text="Go" />
-      <TextField layoutX="82.0" layoutY="11.0" prefHeight="25.0" prefWidth="200.0" />
+      <Button fx:id="btnGoCompany" layoutX="287.0" layoutY="11.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="32.0" onAction="#btnGoCompanyAction" text="Go" />
+      <TextField fx:id="txtGoCompany" layoutX="82.0" layoutY="11.0" prefHeight="25.0" prefWidth="200.0" promptText="Enter company name to search..."/>
       <Button fx:id="btnAddCompany" layoutX="402.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnAddCompanyAction" prefHeight="25.0" prefWidth="55.0" text="Add" />
       <CheckBox layoutX="327.0" layoutY="15.0" mnemonicParsing="false" text="Show All" />
    </children>

@@ -31,7 +31,7 @@ public class AdditionalContactEditController implements Initializable {
 	private Button btnCancelAdditionalContact;
 
 	@FXML
-	private Button btnSaveAdditionalContact;
+	private Button btnUpdateAdditionalContact;
 
 	@FXML
 	private CheckBox chkActualDelivery;
@@ -78,27 +78,27 @@ public class AdditionalContactEditController implements Initializable {
 	@FXML
 	void btnCancelAdditionalContactAction(ActionEvent event) {
 		try {
-			CompanyEditController.selectedTabValue = 1;
+			CompanyEditController.selectedTabValue =1;
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
 					.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_EDIT_SCREEN));
 			Parent root = (Parent) fxmlLoader.load();
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Update Company");
+			stage.setTitle("Add New Company");
 			stage.setScene(new Scene(root));
 			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		CompanyEditController.selectedTabValue = 0;
+		CompanyEditController.selectedTabValue =0;
 		closeAddAdditionalContactScreen(btnCancelAdditionalContact);
 	}
 
 	@FXML
-	void btnSaveAdditionalContactAction(ActionEvent event) {
+	void btnUpdateAdditionalContactAction(ActionEvent event) {
 		try {
-			CompanyEditController.selectedTabValue = 1;
+			
 			String additionalContact = txtAdditionalContact.getText();
 			String position = txtPosition.getText();
 			String phone = txtPhone.getText();
@@ -106,22 +106,19 @@ public class AdditionalContactEditController implements Initializable {
 			String fax = txtFax.getText();
 			String pager = txtPager.getText();
 			String cellular = txtCellular.getText();
-			Long status = Long.parseLong(ddlStatus.getSelectionModel().getSelectedItem());
+			 
+			Long status = Long.parseLong(ddlStatus.getSelectionModel().getSelectedItem()+"");
 			String email = txtEmail.getText();
 			AdditionalContact bcm1 = new AdditionalContact(additionalContact, position, phone, fax, cellular, email,
 					extension, pager, status);
-
-			// if(CompanyEditController.editIndex != -1){
-			if (CompanyEditController.addAddtionalContact == 0) {
-				if (CompanyEditController.additionalContactIdPri != 0l
-						|| CompanyEditController.additionalContactIdPri != null)
-					bcm1.setAdditionalContactId(CompanyEditController.additionalContactIdPri);
-				CompanyEditController.listOfAdditionalContact.set(CompanyEditController.editIndex, bcm1);
-				CompanyEditController.additionalContactIdPri = 0l;
-			} else if (CompanyEditController.addAddtionalContact == 1) {
-				CompanyEditController.listOfAdditionalContact.add(bcm1);
-			}
-			// }
+			CompanyEditController.selectedTabValue =1;
+			//if(CompanyAddController.addEditIndex != -1){
+				if (CompanyEditController.addAddtionalContact == 0) {
+					CompanyEditController.listOfAdditionalContact.set(CompanyEditController.editIndex, bcm1);
+				} else if(CompanyEditController.addAddtionalContact == 1){
+					CompanyEditController.listOfAdditionalContact.add(bcm1);
+				}
+			//}
 
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
 					.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_EDIT_SCREEN));
@@ -129,15 +126,15 @@ public class AdditionalContactEditController implements Initializable {
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Update Company");
+			stage.setTitle("Add New Company");
 			stage.setScene(new Scene(root));
 			stage.show();
-
+ 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		CompanyEditController.selectedTabValue = 0;
-		closeAddAdditionalContactScreen(btnSaveAdditionalContact);
+		closeAddAdditionalContactScreen(btnUpdateAdditionalContact);
 	}
 
 	private void closeAddAdditionalContactScreen(Button clickedButton) {
@@ -148,7 +145,7 @@ public class AdditionalContactEditController implements Initializable {
 	@FXML
 	void initialize() {
 		assert btnCancelAdditionalContact != null : "fx:id=\"btnCancelAdditionalContact\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-		assert btnSaveAdditionalContact != null : "fx:id=\"btnSaveAdditionalContact\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
+		assert btnUpdateAdditionalContact != null : "fx:id=\"btnSaveAdditionalContact\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
 		assert chkActualDelivery != null : "fx:id=\"chkActualDelivery\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
 		assert chkActualPickupDetails != null : "fx:id=\"chkActualPickupDetails\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
 		assert chkETADeliveryDetails != null : "fx:id=\"chkETADeliveryDetails\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";

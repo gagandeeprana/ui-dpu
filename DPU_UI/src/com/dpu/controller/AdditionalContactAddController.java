@@ -113,11 +113,16 @@ public class AdditionalContactAddController implements Initializable {
 					extension, pager, status);
 			CompanyAddController.selectedTabValue =1;
 			//if(CompanyAddController.addEditIndex != -1){
-				if (CompanyAddController.addAddtionalContact == 0) {
+			if (CompanyAddController.addAddtionalContact == 0) {
+				CompanyEditController.listOfAdditionalContact.set(CompanyAddController.addEditIndex, bcm1);
+			} else if(CompanyAddController.addAddtionalContact == 1){
+				CompanyEditController.listOfAdditionalContact.add(bcm1);
+			}
+				/*if (CompanyAddController.addAddtionalContact == 0) {
 					CompanyAddController.listOfAdditionalContact.set(CompanyAddController.addEditIndex, bcm1);
 				} else if(CompanyAddController.addAddtionalContact == 1){
 					CompanyAddController.listOfAdditionalContact.add(bcm1);
-				}
+				}*/
 			//}
 
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()

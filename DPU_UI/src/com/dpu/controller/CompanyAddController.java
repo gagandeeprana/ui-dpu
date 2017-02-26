@@ -3,7 +3,7 @@ package com.dpu.controller;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
+import java.util.ResourceBundle; 
 
 import javax.swing.JOptionPane;
 
@@ -181,6 +181,9 @@ public class CompanyAddController extends Application implements Initializable {
 	public static int addAddtionalContact = 0;
 	public static BillingControllerModel billingControllerModel = new BillingControllerModel();
 	public static AdditionalContact additionalContactModel = new  AdditionalContact();
+	public static ArrayList<BillingControllerModel> listOfBilling = new ArrayList<BillingControllerModel>();
+	public static ArrayList<AdditionalContact> listOfAdditionalContact = new ArrayList<AdditionalContact>();
+	public static CompanyModel company = new CompanyModel();
 	
 	
 	int additionalContactCountMenu =0;
@@ -195,6 +198,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
+				add = 1;
 				selectedTabValue = 1;
 				addAddtionalContact = 1;
 				company.setName(txtCompany.getText());
@@ -220,7 +224,6 @@ public class CompanyAddController extends Application implements Initializable {
 
 				try {
 					closeAddCompanyScreen(btnSaveCompany);
-
 				} catch (Exception e) {
 					e.printStackTrace();
 					System.exit(0);
@@ -233,6 +236,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
+				add = 0;
 				selectedTabValue = 1;
 				addAddtionalContact = 0;
 				addEditIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
@@ -251,7 +255,7 @@ public class CompanyAddController extends Application implements Initializable {
 			public void handle(ActionEvent event) {
 				selectedTabValue = 1 ;
 				addEditIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
-				listOfAdditionalContact.remove(addEditIndex);
+				CompanyEditController.listOfAdditionalContact.remove(addEditIndex);
 				addEditIndex = -1;
 				
 				try{
@@ -344,13 +348,11 @@ public class CompanyAddController extends Application implements Initializable {
 
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		launch(args);
-	}
+	}*/
 
-	public static ArrayList<BillingControllerModel> listOfBilling = new ArrayList<BillingControllerModel>();
-	public static ArrayList<AdditionalContact> listOfAdditionalContact = new ArrayList<AdditionalContact>();
-	public static CompanyModel company = new CompanyModel();
+	
 
 	// new added
 	public void fetchBillingLocations() {
@@ -362,8 +364,8 @@ public class CompanyAddController extends Application implements Initializable {
 			public void run() {
 				try {
 
-					if (listOfBilling != null & !(listOfBilling.isEmpty())) {
-						ObservableList<BillingControllerModel> data = FXCollections.observableArrayList(listOfBilling);
+					if (CompanyEditController.listOfBilling != null & !(CompanyEditController.listOfBilling.isEmpty())) {
+						ObservableList<BillingControllerModel> data = FXCollections.observableArrayList(CompanyEditController.listOfBilling);
 						setColumnValues();
 						tableBillingLocations.setItems(data);
 						tableBillingLocations.setVisible(true);
@@ -446,9 +448,9 @@ public class CompanyAddController extends Application implements Initializable {
 			public void run() {
 				try {
 
-					if (listOfAdditionalContact != null & !(listOfAdditionalContact.isEmpty())) {
+					if (CompanyEditController.listOfAdditionalContact != null & !(CompanyEditController.listOfAdditionalContact.isEmpty())) {
 						ObservableList<AdditionalContact> data = FXCollections
-								.observableArrayList(listOfAdditionalContact);
+								.observableArrayList(CompanyEditController.listOfAdditionalContact);
 						setAdditionalContactColumnValues();
 						tableAdditionalContact.setItems(data);
 						tableAdditionalContact.setVisible(true);
@@ -545,8 +547,6 @@ public class CompanyAddController extends Application implements Initializable {
 
 		fetchBillingLocations();
 		fetchAdditionalContacts();
-		 
-
 		txtCompany.setText(company.getName());
 		txtAddress.setText(company.getAddress());
 		txtUnitNo.setText(company.getUnitNo());
@@ -566,7 +566,7 @@ public class CompanyAddController extends Application implements Initializable {
 		txtPager.setText(company.getPager());
 		txtAfterHours.setText(company.getAfterHours());
 		tabPane.getSelectionModel().select(selectedTabValue);
-
+		 
 	}
 
 	int billingLocationCountMenu = 0;
@@ -637,7 +637,8 @@ public class CompanyAddController extends Application implements Initializable {
 			public void handle(ActionEvent event) {
 				selectedTabValue = 0 ;
 				addEditIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
- 				listOfBilling.remove(addEditIndex);
+				System.out.println("addEditIndex : "+addEditIndex);
+				CompanyEditController.listOfBilling.remove(addEditIndex);
 				addEditIndex = -1;
 				
 				
@@ -721,8 +722,8 @@ public class CompanyAddController extends Application implements Initializable {
 
 	@FXML
 	private void btnCancelCompanyAction() {
-		listOfBilling = new ArrayList<BillingControllerModel>();
-		listOfAdditionalContact = new ArrayList<AdditionalContact>();
+		CompanyEditController.listOfBilling = new ArrayList<BillingControllerModel>();
+		CompanyEditController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
 		company = new CompanyModel();
 		closeAddCompanyScreen(btnCancelCompany);
 	}
@@ -760,6 +761,36 @@ public class CompanyAddController extends Application implements Initializable {
 			}
 		});
 	}
+	
+	public void addCompany(String reponse) {
+
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					ObjectMapper mapper = new ObjectMapper();
+					CompanyModel company = setCompanyValue();
+					String payload = mapper.writeValueAsString(company);
+
+					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API,
+							null, payload);
+
+					if (response != null && response.contains("message")) {
+						Success success = mapper.readValue(response, Success.class);
+						JOptionPane.showMessageDialog(null, success.getMessage(), "Info", 1);
+					} else {
+						Failed failed = mapper.readValue(response, Failed.class);
+						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
+					}
+					MainScreen.companyController.fetchCompanies();
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+				}
+			}
+		});
+	}
+
 
 	private CompanyModel setCompanyValue() {
 
@@ -789,11 +820,11 @@ public class CompanyAddController extends Application implements Initializable {
 		// need to use for loop here
 
 		
-		if (listOfBilling != null) {
-			int sizeOfBilling = listOfBilling.size();
+		if (CompanyEditController.listOfBilling != null) {
+			int sizeOfBilling = CompanyEditController.listOfBilling.size();
 			for (int i = 0; i < sizeOfBilling; i++) {
 				BillingLocation billingLocation = new BillingLocation();
-				BillingControllerModel billingModel = listOfBilling.get(i);
+				BillingControllerModel billingModel = CompanyEditController.listOfBilling.get(i);
 				billingLocation.setName(billingModel.getName());
 				billingLocation.setAddress(billingModel.getAddress());
 				billingLocation.setCity(billingModel.getCity());
@@ -815,11 +846,11 @@ public class CompanyAddController extends Application implements Initializable {
 		company.setBillingLocations(billingLocations);
 
 		// need to use for loop here
-		if (listOfAdditionalContact != null) {
-			int sizeOfAdditionalContact = listOfAdditionalContact.size();
+		if (CompanyEditController.listOfAdditionalContact != null) {
+			int sizeOfAdditionalContact = CompanyEditController.listOfAdditionalContact.size();
 			for (int i = 0; i < sizeOfAdditionalContact; i++) {
 
-				AdditionalContact additionalContactModel = listOfAdditionalContact.get(i);
+				AdditionalContact additionalContactModel = CompanyEditController.listOfAdditionalContact.get(i);
 				com.dpu.request.AdditionalContact additionalContact = new com.dpu.request.AdditionalContact();
 				additionalContact.setCustomerName(additionalContactModel.getCustomerName());
 				additionalContact.setPosition(additionalContactModel.getPosition());
@@ -872,6 +903,29 @@ public class CompanyAddController extends Application implements Initializable {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	 
+	public void initData(CompanyModel c) {
+		//fetchBillingLocations();
+		//fetchAdditionalContacts();
+		txtCompany.setText(c.getName());
+		txtContact.setText(c.getContact());
+		txtAddress.setText(c.getAddress());
+		txtPosition.setText(c.getPosition());
+		txtUnitNo.setText(c.getUnitNo());
+		txtPhone.setText(c.getPhone());
+		txtExt.setText(c.getExt());
+		txtCity.setText(c.getCity());
+		txtFax.setText(c.getFax());
+		txtPrefix.setText(c.getCompanyPrefix());
+		txtProvince.setText(c.getProvinceState());
+		txtZip.setText(c.getZip());
+		txtAfterHours.setText(c.getAfterHours());
+		txtEmail.setText(c.getEmail());
+		txtTollFree.setText(c.getTollfree());
+		txtWebsite.setText(c.getWebsite());
+		txtCellular.setText(c.getCellular());
+		txtPager.setText(c.getPager());
 	}
 
 }

@@ -178,6 +178,16 @@ public class CompanyEditController extends Application implements Initializable 
 	@FXML
 	Button btnUpdateCompany;
 
+	public static int editIndex = -1;
+	public static int addBillingLocation = 0;
+	public static int addAddtionalContact = 0;
+	public static BillingControllerModel billingControllerModel = new BillingControllerModel();
+	public static AdditionalContact additionalContactModel = new AdditionalContact();
+	public static ArrayList<BillingControllerModel> listOfBilling = new ArrayList<BillingControllerModel>(); 
+	public static ArrayList<AdditionalContact> listOfAdditionalContact = new ArrayList<AdditionalContact>();
+
+	public static CompanyModel company = new CompanyModel();
+
 	Long companyId = 0l;
 
 	public static int selectedTabValue = 0;
@@ -255,9 +265,9 @@ public class CompanyEditController extends Application implements Initializable 
 
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		launch(args);
-	}
+	}*/
 
 	private CompanyModel setCompanyValue() {
 
@@ -341,7 +351,7 @@ public class CompanyEditController extends Application implements Initializable 
 	}
 
 	public void initData(CompanyModel c) {
-		companyId = Long.parseLong(c.getCompanyId());
+		companyId =  c.getCompanyId();
 		txtCompany.setText(c.getName());
 		txtContact.setText(c.getContact());
 		txtAddress.setText(c.getAddress());
@@ -361,17 +371,6 @@ public class CompanyEditController extends Application implements Initializable 
 		txtCellular.setText(c.getCellular());
 		txtPager.setText(c.getPager());
 	}
-
-	public static int editIndex = -1;
-	public static int add = 0;
-	public static int addAddtionalContact = 0;
-	public static BillingControllerModel billingControllerModel = new BillingControllerModel();
-	public static AdditionalContact additionalContactModel = new AdditionalContact();
-
-	public static ArrayList<BillingControllerModel> listOfBilling = new ArrayList<BillingControllerModel>();
-	public static ArrayList<AdditionalContact> listOfAdditionalContact = new ArrayList<AdditionalContact>();
-
-	public static CompanyModel company = new CompanyModel();
 
 	@FXML
 	private void btnCancelCompanyAction() {
@@ -431,6 +430,7 @@ public class CompanyEditController extends Application implements Initializable 
 
 			@Override
 			public void handle(ActionEvent event) {
+				//add = 1;
 				setValuesToCmpanyTextField();
 				addAddtionalContact = 1;
 				selectedTabValue = 1;
@@ -492,16 +492,7 @@ public class CompanyEditController extends Application implements Initializable 
 				selectedTabValue = 1;
 				setValuesToCmpanyTextField();
 				editIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
-
-				System.out.println(listOfAdditionalContact.get(editIndex).getAdditionalContactId());
-
-				// if
-				// (listOfAdditionalContact.get(editIndex).getAdditionalContactId()
-				// != null
-				// ||
-				// listOfAdditionalContact.get(editIndex).getAdditionalContactId()
-				// != 0l) {
-
+ 
 				Long additionalontactId = listOfAdditionalContact.get(editIndex).getAdditionalContactId();
 				Long companyId = listOfAdditionalContact.get(editIndex).getCompanyId();
 
@@ -641,8 +632,9 @@ public class CompanyEditController extends Application implements Initializable 
 
 			@Override
 			public void handle(ActionEvent event) {
+				addBillingLocation = 1;
 				selectedTabValue = 0;
-				add = 1;
+				//add = 1;
 				setValuesToCmpanyTextField();
 				openAddBillingLocationScreen();
 
@@ -663,7 +655,7 @@ public class CompanyEditController extends Application implements Initializable 
 			public void handle(ActionEvent event) {
 				selectedTabValue = 0;
 				setValuesToCmpanyTextField();
-				add = 0;
+				addBillingLocation = 0;
 				editIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
 				billingControllerModel = tableBillingLocations.getSelectionModel().getSelectedItem();
 
@@ -682,7 +674,7 @@ public class CompanyEditController extends Application implements Initializable 
 			@Override
 			public void handle(ActionEvent event) {
 				selectedTabValue = 0;
-				
+
 				editIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
 
 				// hit API to remove record from db.

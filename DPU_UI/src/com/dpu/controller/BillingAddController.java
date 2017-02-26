@@ -67,10 +67,15 @@ public class BillingAddController implements Initializable {
 			BillingControllerModel bcm1 = new BillingControllerModel(company, address, city, phone, contact, zip, fax,statusId);
 
 			if (CompanyAddController.add == 0) {
+				CompanyEditController.listOfBilling.set(CompanyAddController.addEditIndex, bcm1);
+			} else if(CompanyAddController.add == 1){
+				CompanyEditController.listOfBilling.add(bcm1);
+			}
+			/*if (CompanyAddController.add == 0) {
 				CompanyAddController.listOfBilling.set(CompanyAddController.addEditIndex, bcm1);
 			} else if(CompanyAddController.add == 1){
 				CompanyAddController.listOfBilling.add(bcm1);
-			}
+			}*/
 
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
 					.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_ADD_SCREEN));

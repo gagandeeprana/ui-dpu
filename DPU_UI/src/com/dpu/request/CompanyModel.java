@@ -5,40 +5,17 @@ import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
-import org.codehaus.jackson.annotate.JsonPropertyOrder;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
  
 
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonSerialize(include= Inclusion.NON_NULL)
-@JsonPropertyOrder({
-	"companyId",
-    "name",
-    "address",
-    "unitNo",
-    "city",
-    "provinceState",
-    "zip",
-    "email",
-    "website",
-    "contact",
-    "position",
-    "phone",
-    "ext",
-    "fax",
-    "companyPrefix",
-    "tollfree",
-    "cellular",
-    "pager",
-    "afterHours",
-    "billingLocations",
-    "additionalContacts"
-})
+ 
 public class CompanyModel {
 
 	@JsonProperty("companyId")
-	private String companyId;
+	private Long companyId;
     @JsonProperty("name")
     private String name;
     @JsonProperty("address")
@@ -85,12 +62,12 @@ public class CompanyModel {
     
     
     @JsonProperty("companyId")
-    public String getCompanyId() {
+    public Long getCompanyId() {
 		return companyId;
 	}
 
     @JsonProperty("companyId")
-	public void setCompanyId(String companyId) {
+	public void setCompanyId(Long companyId) {
 		this.companyId = companyId;
 	}
 

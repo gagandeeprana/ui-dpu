@@ -28,7 +28,7 @@ public class BillingEditController implements Initializable {
 	private Button btnCancelBillingLocation;
 
 	@FXML
-	private Button btnSaveBillingLocation;
+	private Button btnUpdateBillingLocation;
 
 	@FXML
 	private TextField txtAddress;
@@ -52,7 +52,7 @@ public class BillingEditController implements Initializable {
 	private TextField txtZip;
 
 	@FXML
-	void btnSaveBillingLocationAction(ActionEvent event) {
+	void btnUpdateBillingLocationAction(ActionEvent event) {
 		try {
 
 			String company = txtCompany.getText();
@@ -65,15 +65,16 @@ public class BillingEditController implements Initializable {
 			Long statusId =Long.parseLong("1");
 			BillingControllerModel bcm1 = new BillingControllerModel(company, address, city, phone, contact, zip, fax,statusId);
 
-			if (CompanyEditController.add == 0) {
+			if (CompanyEditController.addBillingLocation == 0 ) {
 				if (CompanyEditController.billingLocationIdPri != 0l
 						|| CompanyEditController.billingLocationIdPri != null)
-					bcm1.setBillingLocationId(CompanyEditController.billingLocationIdPri);
+				bcm1.setBillingLocationId(CompanyEditController.billingLocationIdPri);
 				CompanyEditController.listOfBilling.set(CompanyEditController.editIndex, bcm1);
 				CompanyEditController.billingLocationIdPri = 0l;
 
-			} else if (CompanyEditController.add == 1) {
+			} else if (CompanyEditController.addBillingLocation == 1) {
 				CompanyEditController.listOfBilling.add(bcm1);
+				
 			}
 
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
@@ -88,7 +89,7 @@ public class BillingEditController implements Initializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		closeAddBillingScreen(btnSaveBillingLocation);
+		closeAddBillingScreen(btnUpdateBillingLocation);
 
 	}
 
@@ -117,7 +118,7 @@ public class BillingEditController implements Initializable {
 
 	@FXML
 	void initialize() {
-		assert btnSaveBillingLocation != null : "fx:id=\"btnSaveBillingLocation\" was not injected: check your FXML file 'AddBillingLocationScreen.fxml'.";
+		assert btnUpdateBillingLocation != null : "fx:id=\"btnSaveBillingLocation\" was not injected: check your FXML file 'AddBillingLocationScreen.fxml'.";
 		assert txtAddress != null : "fx:id=\"txtAddress\" was not injected: check your FXML file 'AddBillingLocationScreen.fxml'.";
 		assert txtCity != null : "fx:id=\"txtCity\" was not injected: check your FXML file 'AddBillingLocationScreen.fxml'.";
 		assert txtCompany != null : "fx:id=\"txtCompany\" was not injected: check your FXML file 'AddBillingLocationScreen.fxml'.";
@@ -130,7 +131,7 @@ public class BillingEditController implements Initializable {
 
 	public void initialize(URL location, ResourceBundle resources) {
 
-		if (CompanyEditController.add != 1) {
+		if (CompanyEditController.addBillingLocation != 1) {
 			if (CompanyEditController.billingControllerModel != null) {
 				txtCompany.setText(CompanyEditController.billingControllerModel.getName());
 				txtAddress.setText(CompanyEditController.billingControllerModel.getAddress());

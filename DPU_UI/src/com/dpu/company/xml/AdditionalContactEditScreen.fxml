@@ -87,7 +87,7 @@
                <font>
                   <Font size="13.0" />
                </font></CheckBox>
-        <Button fx:id="btnSaveAdditionalContact" layoutX="319.0" layoutY="373.0" mnemonicParsing="false" onAction="#btnSaveAdditionalContactAction" prefHeight="25.0" prefWidth="65.0" text="Save">
+        <Button fx:id="btnUpdateAdditionalContact" layoutX="319.0" layoutY="373.0" mnemonicParsing="false" onAction="#btnUpdateAdditionalContactAction" prefHeight="25.0" prefWidth="65.0" text="Save">
                <font>
                   <Font size="13.0" />
                </font></Button>
