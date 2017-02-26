@@ -637,7 +637,6 @@ public class CompanyAddController extends Application implements Initializable {
 			public void handle(ActionEvent event) {
 				selectedTabValue = 0 ;
 				addEditIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
-				System.out.println("addEditIndex : "+addEditIndex);
 				CompanyEditController.listOfBilling.remove(addEditIndex);
 				addEditIndex = -1;
 				
@@ -861,7 +860,7 @@ public class CompanyAddController extends Application implements Initializable {
 				additionalContact.setPrefix(additionalContactModel.getPrefix());
 				additionalContact.setCellular(additionalContactModel.getCellular());
 				// need to set Status here
-				additionalContact.setStatus(1);
+				additionalContact.setStatus(0l);
 				additionalContact.setEmail(additionalContactModel.getEmail());
 
 				additionalContacts.add(additionalContact);

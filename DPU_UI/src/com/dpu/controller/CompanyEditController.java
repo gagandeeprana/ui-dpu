@@ -340,7 +340,7 @@ public class CompanyEditController extends Application implements Initializable 
 				additionalContact.setFax(additionalContactModel.getFax());
 				additionalContact.setPrefix(additionalContactModel.getPrefix());
 				additionalContact.setCellular(additionalContactModel.getCellular());
-				additionalContact.setStatus(1);
+				additionalContact.setStatus(1l);
 				additionalContact.setEmail(additionalContactModel.getEmail());
 				additionalContacts.add(additionalContact);
 			}

@@ -1,11 +1,15 @@
 
 package com.dpu.request;
 
+import java.util.List;
+
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonPropertyOrder;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+
+import com.dpu.model.Status;
  
 
 @JsonIgnoreProperties(ignoreUnknown=true)
@@ -41,11 +45,30 @@ public class AdditionalContact {
     @JsonProperty("cellular")
     private String cellular;
     @JsonProperty("statusId")
-    private Integer status;
+    public   Long status;
     @JsonProperty("email")
     private String email;
+    public   List<Status> statusList;
+     
     
-    @JsonProperty("additionalContactId")
+ 
+	public Long getStatus() {
+		return status;
+	}
+
+	public void setStatus(Long status) {
+		this.status = status;
+	}
+
+	public List<Status> getStatusList() {
+		return statusList;
+	}
+
+	public void setStatusList(List<Status> statusList) {
+		this.statusList = statusList;
+	}
+
+	@JsonProperty("additionalContactId")
     public Long getAdditionalContactId() {
         return additionalContactId;
     }
@@ -125,17 +148,11 @@ public class AdditionalContact {
         this.cellular = cellular;
     }
 
-    @JsonProperty("statusId")
-    public Integer getStatus() {
-        return status;
-    }
 
-    @JsonProperty("statusId")
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
+    
 
-    @JsonProperty("email")
+	 
+	@JsonProperty("email")
     public String getEmail() {
         return email;
     }

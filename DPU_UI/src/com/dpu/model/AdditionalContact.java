@@ -1,7 +1,5 @@
 package com.dpu.model;
 
-import org.codehaus.jackson.annotate.JsonProperty;
-
 public class AdditionalContact {
 
 	private String customerName;
@@ -12,14 +10,13 @@ public class AdditionalContact {
 	private String fax;
 	private String prefix;
 	private String cellular;
-	private Long statusId;
+	private String statusId;
 	private String email;
-
 	public Long companyId;
 	public Long additionalContactId = null;
 
 	public AdditionalContact(String additionalContact, String position2, String phone2, String fax2, String cellular2,
-			String email2, String extension, String pager, Long status) {
+			String email2, String extension, String pager, String status) {
 		this.customerName = additionalContact;
 		this.position = position2;
 		this.phone = phone2;
@@ -107,11 +104,11 @@ public class AdditionalContact {
 		this.cellular = cellular;
 	}
 
-	public Long getStatusId() {
+	public String getStatusId() {
 		return statusId;
 	}
 
-	public void setStatusId(Long statusId) {
+	public void setStatusId(String statusId) {
 		this.statusId = statusId;
 	}
 

@@ -174,7 +174,7 @@ public class CompanyController extends Application implements Initializable {
 									additionalContact.setPrefix(c.getAdditionalContacts().get(j).getCellular());
 									additionalContact.setPhone(c.getAdditionalContacts().get(j).getPhone());
 									additionalContact.setPosition(c.getAdditionalContacts().get(j).getPosition());
-									additionalContact.setStatusId(0l);
+									additionalContact.setStatusId("Active");
 
 									CompanyEditController.listOfAdditionalContact.add(additionalContact);
 								}
@@ -588,7 +588,7 @@ public class CompanyController extends Application implements Initializable {
 											additionalContact.setPhone(c.getAdditionalContacts().get(j).getPhone());
 											additionalContact
 													.setPosition(c.getAdditionalContacts().get(j).getPosition());
-											additionalContact.setStatusId(0l);
+											additionalContact.setStatusId("Active");
 
 											CompanyEditController.listOfAdditionalContact.add(additionalContact);
 										}
@@ -720,7 +720,7 @@ public class CompanyController extends Application implements Initializable {
 											additionalContact.setPhone(c.getAdditionalContacts().get(j).getPhone());
 											additionalContact
 													.setPosition(c.getAdditionalContacts().get(j).getPosition());
-											additionalContact.setStatusId(0l);
+											additionalContact.setStatusId("Active");
 
 											CompanyEditController.listOfAdditionalContact.add(additionalContact);
 										}
@@ -768,13 +768,12 @@ public class CompanyController extends Application implements Initializable {
 		});
 
 		MenuItem item6 = new MenuItem("FILTER BY");
-		// item6.setStyle("-fx-border-color: red; -fx-effect: dropshadow(
-		// one-pass-box , red , 10,0.5,0,0 );");
 		item6.setStyle("-fx-padding: 0 10 0 10;");
 		item6.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
+				System.out.println("clicked on Filter By");
 			}
 		});
 
@@ -826,46 +825,5 @@ public class CompanyController extends Application implements Initializable {
 
 	}
 
-	/*
-	 * private void initialize() {
-	 * 
-	 * ObjectMapper mapper = new ObjectMapper(); String response =
-	 * GetAPIClient.callGetAPI(Iconstants.URL_SERVER +
-	 * Iconstants.URL_COMPANY_API, null); if (response != null &&
-	 * response.length() > 0) { CompanyModel c[] = mapper.readValue(response,
-	 * CompanyModel[].class); cList = new ArrayList<CompanyModel>(); for
-	 * (CompanyModel ccl : c) { cList.add(ccl); } ObservableList<CompanyModel>
-	 * masterData = FXCollections.observableArrayList(cList);
-	 * 
-	 * // 0. Initialize the columns. name.setCellValueFactory(cellData ->
-	 * cellData.getValue().getName()); unitNo.setCellValueFactory(cellData ->
-	 * cellData.getValue().getUnitNo());
-	 * 
-	 * // 1. Wrap the ObservableList in a FilteredList (initially display all
-	 * data). FilteredList<CompanyModel> filteredData = new
-	 * FilteredList<>(masterData, p -> true);
-	 * 
-	 * // 2. Set the filter Predicate whenever the filter changes.
-	 * name.textProperty().addListener((observable, oldValue, newValue) -> {
-	 * filteredData.setPredicate(person -> { // If filter text is empty, display
-	 * all persons. if (newValue == null || newValue.isEmpty()) { return true; }
-	 * 
-	 * // Compare first name and last name of every person with filter text.
-	 * String lowerCaseFilter = newValue.toLowerCase();
-	 * 
-	 * if (person.getName().toLowerCase().contains(lowerCaseFilter)) { return
-	 * true; // Filter matches first name. } else if
-	 * (person.getUnitNo().toLowerCase().contains(lowerCaseFilter)) { return
-	 * true; // Filter matches last name. } return false; // Does not match. });
-	 * });
-	 * 
-	 * // 3. Wrap the FilteredList in a SortedList. SortedList<CompanyModel>
-	 * sortedData = new SortedList<>(filteredData);
-	 * 
-	 * // 4. Bind the SortedList comparator to the TableView comparator.
-	 * sortedData.comparatorProperty().bind(tblCompany.comparatorProperty());
-	 * 
-	 * // 5. Add sorted (and filtered) data to the table.
-	 * tblCompany.setItems(sortedData); }
-	 */
+	 
 }

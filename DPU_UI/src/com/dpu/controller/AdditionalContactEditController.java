@@ -106,8 +106,7 @@ public class AdditionalContactEditController implements Initializable {
 			String fax = txtFax.getText();
 			String pager = txtPager.getText();
 			String cellular = txtCellular.getText();
-			 
-			Long status = Long.parseLong(ddlStatus.getSelectionModel().getSelectedItem()+"");
+			String status =  ddlStatus.getSelectionModel().getSelectedItem();
 			String email = txtEmail.getText();
 			AdditionalContact bcm1 = new AdditionalContact(additionalContact, position, phone, fax, cellular, email,
 					extension, pager, status);
