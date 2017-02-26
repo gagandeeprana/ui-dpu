@@ -14,7 +14,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -111,7 +110,6 @@ public class MainScreen extends Application implements Initializable {
 
 	@Override
 	public void start(Stage primaryStage) {
-
 	}
 
 	@Override
@@ -124,6 +122,9 @@ public class MainScreen extends Application implements Initializable {
 			Parent root = (Parent) fxmlLoader.load();
 			Pane pane = (Pane) root;
 			StackPane stackPane = new StackPane();
+			stackPane.setMinWidth(Login.width);
+			stackPane.setPrefWidth(Login.width);
+			stackPane.setMaxWidth(Login.width);
 			stackPane.setAlignment(Pos.TOP_LEFT);
 			stackPane.getChildren().add(pane);
 
