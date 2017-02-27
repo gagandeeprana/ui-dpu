@@ -77,11 +77,17 @@
                   <MenuItem fx:id="miEquipment" mnemonicParsing="false" onAction="#miEquipmentAction" text="Equipment" />
                   <MenuItem fx:id="miTerminal" mnemonicParsing="false" onAction="#miTerminalAction" text="Terminal" />
                   <MenuItem fx:id="miDivision" mnemonicParsing="false" onAction="#miDivisionAction" text="Division" />
+                  <MenuItem fx:id="miHandling" mnemonicParsing="false" onAction="#miHandlingAction" text="Handling" />
             </items>
                <graphic>
                   <Label fx:id="lblLists" text="Lists" textFill="WHITE" />
                </graphic>
           </Menu>
+            <Menu mnemonicParsing="false">
+               <graphic>
+                  <Label fx:id="lblCustomBroker" onMouseClicked="#lblCustomBrokerAction" text="Custom Broker" textFill="WHITE" />
+               </graphic>
+            </Menu>
          </menus>
       </MenuBar>
   </children>

@@ -4,6 +4,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.dpu.constants.Iconstants;
+import com.dpu.controller.database.CustomBrokerController;
+import com.dpu.controller.database.HandlingController;
 
 import javafx.application.Application;
 import javafx.collections.ObservableList;
@@ -51,7 +53,10 @@ public class MainScreen extends Application implements Initializable {
 	
 	static EquipmentController equipmentController;
 
-
+	public static HandlingController handlingController;
+	
+	public static CustomBrokerController customBrokerController;
+	
 	@FXML
 	private void miDriverAction() {
 		driverController = (DriverController) showPanel(Iconstants.DRIVER_BASE_PACKAGE, Iconstants.XML_DRIVER_SCREEN);
@@ -106,6 +111,16 @@ public class MainScreen extends Application implements Initializable {
 	@FXML
 	private void miTerminalAction() {
 		terminalController = (TerminalPanelController)showPanel(Iconstants.TERMINAL_BASE_PACKAGE, Iconstants.XML_TERMINAL_SCREEN);
+	}
+	
+	@FXML
+	private void miHandlingAction() {
+		handlingController = (HandlingController) showPanel(Iconstants.HANDLING_BASE_PACKAGE, Iconstants.XML_HANDLING_SCREEN);
+	}
+	
+	@FXML
+	private void lblCustomBrokerAction() {
+		customBrokerController = (CustomBrokerController) showPanel(Iconstants.CUSTOM_BROKER_BASE_PACKAGE, Iconstants.XML_CUSTOM_BROKER_SCREEN);
 	}
 
 	@Override
