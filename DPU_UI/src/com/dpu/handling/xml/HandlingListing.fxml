@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1015.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.database.controller.HandlingController">
+  <children>
+      <AnchorPane prefHeight="49.0" prefWidth="1015.0" style="-fx-background-color: lightgrey;" />
+    <TableView fx:id="tblHandling" layoutY="43.0" onMouseClicked="#handleAddContMouseClick" prefHeight="584.0" prefWidth="1015.0">
+      <columns>
+        <TableColumn fx:id="handling" maxWidth="5000.0" minWidth="10.0" prefWidth="250.0" text="Service" />
+      </columns>
+    </TableView>
+      <Button fx:id="btnDeleteHandling" layoutX="446.0" layoutY="12.0" mnemonicParsing="false" onAction="#btnDeleteHandlingAction" prefHeight="25.0" prefWidth="55.0" text="Delete" />
+      <Button fx:id="btnEditHandling" layoutX="386.0" layoutY="12.0" mnemonicParsing="false" onAction="#btnEditHandlingAction" prefHeight="25.0" prefWidth="55.0" text="Edit" />
+      <Button fx:id="btnAddHandling" layoutX="327.0" layoutY="12.0" mnemonicParsing="false" onAction="#btnAddHandlingAction" prefHeight="25.0" prefWidth="55.0" text="Add" />
+      <Button fx:id="btnGoHandling" layoutX="288.0" layoutY="12.0" mnemonicParsing="false" onAction="#btnGoHandlingAction" prefHeight="25.0" prefWidth="32.0" text="Go" />
+      <TextField fx:id="txtSearchHandling" focusTraversable="false" layoutX="83.0" layoutY="12.0" prefHeight="25.0" prefWidth="200.0" promptText="Enter handling name to search..." />
+      <Text layoutX="13.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quick Filter">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Text>
+  </children>
+</AnchorPane>
