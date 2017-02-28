@@ -44,15 +44,15 @@
                               </Label>
                               <Label layoutX="441.0" layoutY="37.0" text="Contact Name" />
                               <TextField fx:id="txtContactNamePARS" layoutX="535.0" layoutY="33.0" prefHeight="25.0" prefWidth="288.0" />
-                              <ComboBox fx:id="ddlOperation2" layoutX="536.0" layoutY="69.0" prefHeight="25.0" prefWidth="287.0" />
-                              <TextField fx:id="txtTackerLink2" layoutX="537.0" layoutY="213.0" prefHeight="25.0" prefWidth="293.0" />
-                              <TextField fx:id="txtEmail2" layoutX="537.0" layoutY="178.0" prefHeight="25.0" prefWidth="293.0" />
-                              <ComboBox fx:id="ddl24Hours2" layoutX="713.0" layoutY="144.0" prefHeight="25.0" prefWidth="116.0" />
+                              <ComboBox fx:id="ddlOperationPARS" layoutX="536.0" layoutY="69.0" prefHeight="25.0" prefWidth="287.0" />
+                              <TextField fx:id="txtTrackerLinkPARS" layoutX="537.0" layoutY="213.0" prefHeight="25.0" prefWidth="293.0" />
+                              <TextField fx:id="txtEmailPARS" layoutX="537.0" layoutY="178.0" prefHeight="25.0" prefWidth="293.0" />
+                              <ComboBox fx:id="ddl24HoursPARS" layoutX="713.0" layoutY="144.0" prefHeight="25.0" prefWidth="116.0" />
                               <Label layoutX="656.0" layoutY="148.0" text="24 Hours" />
-                              <TextField fx:id="txtCentralFax2" layoutX="536.0" layoutY="144.0" prefHeight="25.0" prefWidth="111.0" />
-                              <TextField fx:id="txtExtension2" layoutX="715.0" layoutY="108.0" prefHeight="25.0" prefWidth="112.0" />
+                              <TextField fx:id="txtCentralFaxPARS" layoutX="536.0" layoutY="144.0" prefHeight="25.0" prefWidth="111.0" />
+                              <TextField fx:id="txtExtensionPARS" layoutX="715.0" layoutY="108.0" prefHeight="25.0" prefWidth="112.0" />
                               <Label layoutX="654.0" layoutY="112.0" text="Extension" />
-                              <TextField fx:id="txtCentralPhone2" layoutX="536.0" layoutY="108.0" prefHeight="25.0" prefWidth="111.0" />
+                              <TextField fx:id="txtCentralPhonePARS" layoutX="536.0" layoutY="108.0" prefHeight="25.0" prefWidth="111.0" />
                               <Label layoutX="440.0" layoutY="217.0" text="Tracker Link" />
                               <Label layoutX="441.0" layoutY="186.0" text="Email" />
                               <Label layoutX="441.0" layoutY="152.0" text="Cental Fax#" />
@@ -60,7 +60,7 @@
                               <Label layoutX="439.0" layoutY="73.0" text="Operation" />
                               <Label layoutX="13.0" layoutY="238.0" text="Status" />
                               <ComboBox fx:id="ddlStatusPAPS" layoutX="116.0" layoutY="243.0" prefHeight="25.0" prefWidth="293.0" />
-                              <ComboBox layoutX="545.0" layoutY="245.0" prefHeight="25.0" prefWidth="293.0" />
+                              <ComboBox fx:id="ddlStatusPARS" layoutX="545.0" layoutY="245.0" prefHeight="25.0" prefWidth="293.0" />
                               <Label layoutX="442.0" layoutY="240.0" text="Status" />
                            </children>
                         </Pane>

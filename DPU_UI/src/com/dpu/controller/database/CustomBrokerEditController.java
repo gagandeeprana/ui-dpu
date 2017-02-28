@@ -145,9 +145,11 @@ public class CustomBrokerEditController extends Application implements Initializ
 		switch (customBrokerType) {
 		case Iconstants.CUSTOM_BROKER_PAPS:
 			setPAPS(customBroker, 0);
+			setOther(customBrokerType);
 			break;
 		case Iconstants.CUSTOM_BROKER_PARS:
 			setPARS(customBroker, 0);
+			setOther(customBrokerType);
 			break;
 		default:
 			setBoth(customBroker, 0);
@@ -164,6 +166,36 @@ public class CustomBrokerEditController extends Application implements Initializ
 	}
 	
 	List<Type> typeList, operationList, timeZoneList;
+	
+	private void setOther(String customBrokerType) {
+		if(customBrokerType.equals(Iconstants.CUSTOM_BROKER_PAPS)) {
+			for(int i = 0; i< operationList.size();i++) {
+				Type type = operationList.get(i);
+				ddlOperationPARS.getItems().add(type.getTypeName());
+			}
+			for(int i = 0; i < timeZoneList.size();i++) {
+				Type type = timeZoneList.get(i);
+				ddl24HoursPARS.getItems().add(type.getTypeName());
+			}
+			for(int i = 0; i < statusList.size();i++) {
+				Status status = statusList.get(i);
+				ddlStatusPARS.getItems().add(status.getStatus());
+			}
+		} else if(customBrokerType.equals(Iconstants.CUSTOM_BROKER_PARS)) {
+			for(int i = 0; i< operationList.size();i++) {
+				Type type = operationList.get(i);
+				ddlOperationPAPS.getItems().add(type.getTypeName());
+			}
+			for(int i = 0; i < timeZoneList.size();i++) {
+				Type type = timeZoneList.get(i);
+				ddl24HoursPAPS.getItems().add(type.getTypeName());
+			}
+			for(int i = 0; i < statusList.size();i++) {
+				Status status = statusList.get(i);
+				ddlStatusPAPS.getItems().add(status.getStatus());
+			}
+		}
+	}
 	
 	private void setPAPS(CustomBroker customBroker, int index) {
 		CustomBrokerTypeModel customBrokerTypeModel = customBroker.getCustomBrokerTypes().get(index);

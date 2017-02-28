@@ -151,10 +151,6 @@ public class HandlingAddController<T> extends Application implements Initializab
 	public void start(Stage primaryStage) {
 	}
 
-	public static void main(String[] args) {
-		launch(args);
-	}
-	
 	private HandlingModel setHandlingValue() {
 		HandlingModel dPUHandling = new HandlingModel();
 		dPUHandling.setName(txtHandling.getText());

@@ -171,10 +171,6 @@ public class CustomBrokerAddController<T> extends Application implements Initial
 	public void start(Stage primaryStage) {
 	}
 
-	public static void main(String[] args) {
-		launch(args);
-	}
-	
 	private CustomBroker setCustomBrokerValue() {
 		CustomBroker customBroker = new CustomBroker();
 		customBroker.setCustomBrokerName(txtCustomerBrokerName.getText());

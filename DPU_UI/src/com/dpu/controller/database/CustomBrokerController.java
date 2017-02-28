@@ -12,7 +12,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.model.HandlingModel;
 import com.dpu.model.CustomBroker;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
@@ -23,21 +22,15 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -142,6 +135,7 @@ public class CustomBrokerController extends Application implements Initializable
 					try {
 						ObjectMapper mapper = new ObjectMapper();
 						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_CUSTOM_BROKER_API + "/" + customBroker.getCustomBrokerId(), null);
+						System.out.println(response);
 						if(response != null && response.length() > 0) {
 							CustomBroker c = mapper.readValue(response, CustomBroker.class);
 							CustomBrokerEditController customBrokerEditController = (CustomBrokerEditController) openEditCustomBrokerScreen();
