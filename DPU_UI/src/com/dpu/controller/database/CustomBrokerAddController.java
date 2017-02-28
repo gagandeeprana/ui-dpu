@@ -1,6 +1,7 @@
 package com.dpu.controller.database;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -13,10 +14,11 @@ import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.controller.MainScreen;
 import com.dpu.model.CustomBroker;
+import com.dpu.model.CustomBrokerTypeModel;
 import com.dpu.model.Failed;
-import com.dpu.model.HandlingModel;
 import com.dpu.model.Status;
 import com.dpu.model.Success;
+import com.dpu.model.Type;
 import com.dpu.util.Validate;
 
 import javafx.application.Application;
@@ -38,16 +40,18 @@ public class CustomBrokerAddController<T> extends Application implements Initial
 	txtContactNamePARS, txtCentralPhonePARS, txtExtensionPARS, txtCentralFaxPARS, txtEmailPARS, txtTrackerLinkPARS;
 	
 	@FXML
-	ComboBox<String> ddlOperationPAPS, ddl24HoursPAPS, ddlStatusPAPS, ddlOperationPARS, ddl24HoursPARS, ddlStatusPARS;
+	ComboBox<String> ddlOperationPAPS, ddl24HoursPAPS, ddlStatusPAPS, ddlOperationPARS, ddl24HoursPARS, ddlStatusPARS, ddlType;
 	
 	List<Status> statusList;
+	
+	List<Type> typeList, operationList, timeZoneList;
 	
 	ObjectMapper mapper = new ObjectMapper();
 	
 	Validate validate = new Validate();
 	
 	@FXML
-	private void btnSaveHandlingAction() {
+	private void btnSaveCustomBrokerAction() {
 //		boolean response = validateAddHandlingScreen();
 //		if(response) {
 			addCustomBroker();
@@ -93,6 +97,7 @@ public class CustomBrokerAddController<T> extends Application implements Initial
 					ObjectMapper mapper = new ObjectMapper();
 					CustomBroker customBroker = setCustomBrokerValue();
 					String payload = mapper.writeValueAsString(customBroker);
+					System.out.println(payload);
 					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_CUSTOM_BROKER_API, null, payload);
 					if(MainScreen.customBrokerController != null) {
 						try {
@@ -107,6 +112,7 @@ public class CustomBrokerAddController<T> extends Application implements Initial
 						}
 					}
 				} catch (Exception e) {
+					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
 				}
 			}
@@ -122,6 +128,10 @@ public class CustomBrokerAddController<T> extends Application implements Initial
 	private void fillDropDown(ComboBox<String> comboBox, List<?> list) {
 		for(int i=0;i<list.size();i++) {
 			Object object = list.get(i);
+			if(object != null && object instanceof Type) {
+				Type type = (Type) object;
+				comboBox.getItems().add(type.getTypeName());
+			}
 			if(object != null && object instanceof Status) {
 				Status status = (Status) object;
 				comboBox.getItems().add(status.getStatus());
@@ -137,10 +147,18 @@ public class CustomBrokerAddController<T> extends Application implements Initial
 			public void run() {
 				try {
 					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_CUSTOM_BROKER_API + "/openAdd", null);
-					HandlingModel service = mapper.readValue(response, HandlingModel.class);
-					statusList = service.getStatusList();
+					CustomBroker customBroker = mapper.readValue(response, CustomBroker.class);
+					statusList = customBroker.getStatusList();
+					typeList = customBroker.getTypeList();
+					timeZoneList = customBroker.getTimeZoneList();
+					operationList = customBroker.getOperationList();
 					fillDropDown(ddlStatusPAPS, statusList);
 					fillDropDown(ddlStatusPARS, statusList);
+					fillDropDown(ddl24HoursPAPS, timeZoneList);
+					fillDropDown(ddl24HoursPARS, timeZoneList);
+					fillDropDown(ddlOperationPAPS, operationList);
+					fillDropDown(ddlOperationPARS, operationList);
+					fillDropDown(ddlType, typeList);
 				} catch (Exception e) {
 					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
@@ -159,8 +177,56 @@ public class CustomBrokerAddController<T> extends Application implements Initial
 	
 	private CustomBroker setCustomBrokerValue() {
 		CustomBroker customBroker = new CustomBroker();
-//		customBroker.setName(txtHandling.getText());
-//		dPUHandling.setStatusId(statusList.get(ddlStatus.getSelectionModel().getSelectedIndex()).getId());
+		customBroker.setCustomBrokerName(txtCustomerBrokerName.getText());
+		List<CustomBrokerTypeModel> customBrokerTypeModelList = new ArrayList<>();
+		CustomBrokerTypeModel customBrokerTypeModel = null;
+		switch(ddlType.getSelectionModel().getSelectedItem()) {
+		case Iconstants.CUSTOM_BROKER_PAPS:
+			customBrokerTypeModel = setPAPS();
+			customBrokerTypeModelList.add(customBrokerTypeModel);
+			break;
+		case Iconstants.CUSTOM_BROKER_PARS:
+			customBrokerTypeModel = setPARS();
+			customBrokerTypeModelList.add(customBrokerTypeModel);
+			break;
+		default:
+			customBrokerTypeModel = setPAPS();
+			customBrokerTypeModelList.add(customBrokerTypeModel);
+			customBrokerTypeModel = setPARS();
+			customBrokerTypeModelList.add(customBrokerTypeModel);
+		}
+		customBroker.setTypeId(typeList.get(ddlType.getSelectionModel().getSelectedIndex()).getTypeId());
+		customBroker.setCustomBrokerTypes(customBrokerTypeModelList);
 		return customBroker;
+	}
+	
+	private CustomBrokerTypeModel setPAPS() {
+		CustomBrokerTypeModel customBrokerTypeModel = new CustomBrokerTypeModel();
+		customBrokerTypeModel.setContactName(txtContactNamePAPS.getText());
+		customBrokerTypeModel.setOperationId(operationList.get(ddlOperationPAPS.getSelectionModel().getSelectedIndex()).getTypeId());
+		customBrokerTypeModel.setPhone(txtCentralPhonePAPS.getText());
+		customBrokerTypeModel.setExtention(txtExtensionPAPS.getText());
+		customBrokerTypeModel.setFaxNumber(txtCentralFaxPAPS.getText());
+		customBrokerTypeModel.setTimeZoneId(timeZoneList.get(ddl24HoursPAPS.getSelectionModel().getSelectedIndex()).getTypeId());
+		customBrokerTypeModel.setEmail(txtEmailPAPS.getText());
+		customBrokerTypeModel.setTrackerLink(txtTrackerLinkPAPS.getText());
+		customBrokerTypeModel.setStatusId(statusList.get(ddlStatusPAPS.getSelectionModel().getSelectedIndex()).getId());		customBrokerTypeModel.setTypeId(typeList.get(ddlType.getSelectionModel().getSelectedIndex()).getTypeId());
+		customBrokerTypeModel.setTypeId(typeList.get(ddlType.getSelectionModel().getSelectedIndex()).getTypeId());
+		return customBrokerTypeModel;
+	}
+	
+	private CustomBrokerTypeModel setPARS() {
+		CustomBrokerTypeModel customBrokerTypeModel = new CustomBrokerTypeModel();
+		customBrokerTypeModel.setContactName(txtContactNamePARS.getText());
+		customBrokerTypeModel.setOperationId(operationList.get(ddlOperationPARS.getSelectionModel().getSelectedIndex()).getTypeId());
+		customBrokerTypeModel.setPhone(txtCentralPhonePARS.getText());
+		customBrokerTypeModel.setExtention(txtExtensionPARS.getText());
+		customBrokerTypeModel.setFaxNumber(txtCentralFaxPARS.getText());
+		customBrokerTypeModel.setTimeZoneId(timeZoneList.get(ddl24HoursPARS.getSelectionModel().getSelectedIndex()).getTypeId());
+		customBrokerTypeModel.setEmail(txtEmailPARS.getText());
+		customBrokerTypeModel.setTrackerLink(txtTrackerLinkPARS.getText());
+		customBrokerTypeModel.setStatusId(statusList.get(ddlStatusPARS.getSelectionModel().getSelectedIndex()).getId());
+		customBrokerTypeModel.setTypeId(typeList.get(ddlType.getSelectionModel().getSelectedIndex()).getTypeId());
+		return customBrokerTypeModel;
 	}
 }

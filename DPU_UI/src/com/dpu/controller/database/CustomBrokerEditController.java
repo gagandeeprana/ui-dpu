@@ -12,10 +12,12 @@ import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.controller.MainScreen;
 import com.dpu.model.CustomBroker;
+import com.dpu.model.CustomBrokerTypeModel;
 import com.dpu.model.Failed;
 import com.dpu.model.HandlingModel;
 import com.dpu.model.Status;
 import com.dpu.model.Success;
+import com.dpu.model.Type;
 import com.dpu.util.Validate;
 
 import javafx.application.Application;
@@ -37,7 +39,7 @@ public class CustomBrokerEditController extends Application implements Initializ
 	txtContactNamePARS, txtCentralPhonePARS, txtExtensionPARS, txtCentralFaxPARS, txtEmailPARS, txtTrackerLinkPARS;
 	
 	@FXML
-	ComboBox<String> ddlOperationPAPS, ddl24HoursPAPS, ddlStatusPAPS, ddlOperationPARS, ddl24HoursPARS, ddlStatusPARS;
+	ComboBox<String> ddlOperationPAPS, ddl24HoursPAPS, ddlStatusPAPS, ddlOperationPARS, ddl24HoursPARS, ddlStatusPARS, ddlType;
 	
 	Long customBrokerId = 0l;
 	
@@ -132,14 +134,115 @@ public class CustomBrokerEditController extends Application implements Initializ
 
 	public void initData(CustomBroker customBroker) {
 		customBrokerId = customBroker.getCustomBrokerId();
-		/*txtHandling.setText(handling.getName());
-		statusList = handling.getStatusList();
-		for(int i = 0; i< handling.getStatusList().size();i++) {
-			Status status = handling.getStatusList().get(i);
-			ddlStatus.getItems().add(status.getStatus());
-			if(status.getId() == handling.getStatusId()) {
-				ddlStatus.getSelectionModel().select(i);
+		txtCustomerBrokerName.setText(customBroker.getCustomBrokerName());
+		String customBrokerType = null;
+		for(Type type : customBroker.getTypeList()) {
+			if(type.getTypeId() == customBroker.getTypeId()) {
+				customBrokerType = type.getTypeName();
+				break;
+			}
+		}
+		switch (customBrokerType) {
+		case Iconstants.CUSTOM_BROKER_PAPS:
+			setPAPS(customBroker, 0);
+			break;
+		case Iconstants.CUSTOM_BROKER_PARS:
+			setPARS(customBroker, 0);
+			break;
+		default:
+			setBoth(customBroker, 0);
+			break;
+		}
+		typeList = customBroker.getTypeList();
+		for(int i = 0; i < typeList.size();i++) {
+			Type type = typeList.get(i);
+			ddlType.getItems().add(type.getTypeName());
+			if(type.getTypeId() == customBroker.getTypeId()) {
+				ddlType.getSelectionModel().select(i);
+			}
+		}
+	}
+	
+	List<Type> typeList, operationList, timeZoneList;
+	
+	private void setPAPS(CustomBroker customBroker, int index) {
+		CustomBrokerTypeModel customBrokerTypeModel = customBroker.getCustomBrokerTypes().get(index);
+		txtContactNamePAPS.setText(customBrokerTypeModel.getContactName());
+		operationList = customBroker.getOperationList();
+		for(int i = 0; i< operationList.size();i++) {
+			Type type = operationList.get(i);
+			ddlOperationPAPS.getItems().add(type.getTypeName());
+			if(type.getTypeId() == customBrokerTypeModel.getOperationId()) {
+				ddlOperationPAPS.getSelectionModel().select(i);
+			}
+		}
+		txtCentralPhonePAPS.setText(customBrokerTypeModel.getPhone());
+		txtExtensionPAPS.setText(customBrokerTypeModel.getExtention());
+		txtCentralFaxPAPS.setText(customBrokerTypeModel.getFaxNumber());
+		timeZoneList = customBroker.getTimeZoneList();
+		for(int i = 0; i < timeZoneList.size();i++) {
+			Type type = timeZoneList.get(i);
+			ddl24HoursPAPS.getItems().add(type.getTypeName());
+			if(type.getTypeId() == customBrokerTypeModel.getTimeZoneId()) {
+				ddl24HoursPAPS.getSelectionModel().select(i);
+			}
+		}
+		txtEmailPAPS.setText(customBrokerTypeModel.getEmail());
+		txtTrackerLinkPAPS.setText(customBrokerTypeModel.getTrackerLink());
+		statusList = customBroker.getStatusList();
+		for(int i = 0; i < statusList.size();i++) {
+			Status status = statusList.get(i);
+			ddlStatusPAPS.getItems().add(status.getStatus());
+			if(status.getId() == customBrokerTypeModel.getStatusId()) {
+				ddlStatusPAPS.getSelectionModel().select(i);
+			}
+		}
+		/*typeList = customBroker.getTypeList();
+		for(int i = 0; i < typeList.size();i++) {
+			Type type = typeList.get(i);
+			ddlType.getItems().add(type.getTypeName());
+			if(type.getTypeId() == customBrokerTypeModel.getTypeId()) {
+				ddlType.getSelectionModel().select(i);
 			}
 		}*/
+	}
+	
+	private void setPARS(CustomBroker customBroker, int index) {
+		CustomBrokerTypeModel customBrokerTypeModel = customBroker.getCustomBrokerTypes().get(index);
+		txtContactNamePARS.setText(customBrokerTypeModel.getContactName());
+		operationList = customBroker.getOperationList();
+		for(int i = 0; i< operationList.size();i++) {
+			Type type = operationList.get(i);
+			ddlOperationPARS.getItems().add(type.getTypeName());
+			if(type.getTypeId() == customBrokerTypeModel.getOperationId()) {
+				ddlOperationPARS.getSelectionModel().select(i);
+			}
+		}
+		txtCentralPhonePARS.setText(customBrokerTypeModel.getPhone());
+		txtExtensionPARS.setText(customBrokerTypeModel.getExtention());
+		txtCentralFaxPARS.setText(customBrokerTypeModel.getFaxNumber());
+		timeZoneList = customBroker.getTimeZoneList();
+		for(int i = 0; i < timeZoneList.size();i++) {
+			Type type = timeZoneList.get(i);
+			ddl24HoursPARS.getItems().add(type.getTypeName());
+			if(type.getTypeId() == customBrokerTypeModel.getTimeZoneId()) {
+				ddl24HoursPARS.getSelectionModel().select(i);
+			}
+		}
+		txtEmailPARS.setText(customBrokerTypeModel.getEmail());
+		txtTrackerLinkPARS.setText(customBrokerTypeModel.getTrackerLink());
+		statusList = customBroker.getStatusList();
+		for(int i = 0; i < statusList.size();i++) {
+			Status status = statusList.get(i);
+			ddlStatusPARS.getItems().add(status.getStatus());
+			if(status.getId() == customBrokerTypeModel.getStatusId()) {
+				ddlStatusPARS.getSelectionModel().select(i);
+			}
+		}
+	}
+	
+	private void setBoth(CustomBroker customBroker, int index) {
+		setPAPS(customBroker, 0);
+		setPARS(customBroker, 1);
 	}
 }

@@ -66,6 +66,9 @@ public class Iconstants {
 	public static final String XML_CUSTOM_BROKER_EDIT_SCREEN = "EditCustomBroker.fxml";
 	public static final String XML_NEW_BORDER_AGENT = "NewBorderAgent.fxml";
 	public static final String XML_UPDATE_BORDER_AGENT = "UpdateBorderAgent.fxml";
+	public static final String CUSTOM_BROKER_PAPS = "PAPS";
+	public static final String CUSTOM_BROKER_PARS = "PARS";
+	public static final String CUSTOM_BROKER_BOTH = "Both";
 
 	public static final String CATEGORY_BASE_PACKAGE = "com/dpu/category/xml/";
 	public static final String XML_CATEGORY_SCREEN = "List Categories.fxml";

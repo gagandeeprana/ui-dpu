@@ -67,5 +67,4 @@ public class CustomBroker {
 	public void setStatusList(List<Status> statusList) {
 		this.statusList = statusList;
 	}
-	
 }
