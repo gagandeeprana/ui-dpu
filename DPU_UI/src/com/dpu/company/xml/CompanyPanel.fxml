@@ -34,4 +34,6 @@
       <Button fx:id="btnAddCompany" layoutX="402.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnAddCompanyAction" prefHeight="25.0" prefWidth="55.0" text="Add" />
       <CheckBox layoutX="327.0" layoutY="15.0" mnemonicParsing="false" text="Show All" />
    </children>
+   <TextField fx:id="textfield" layoutX="29.0" layoutY="298.0" onAction="#onEnter" prefWidth="121.0"  promptText="Enter here to filter"/>
+  <!--  <TextField fx:id="yourTextField" onKeyPressed="#handleEnterPressed"> -->
 </Pane>
