@@ -36,6 +36,8 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -48,8 +50,15 @@ public class TrailerController extends Application implements Initializable {
 	@FXML
 	TableColumn<Trailer, String> unitNo, owner, oOName, category, status, usage, division, terminal, trailerType, finance;
 	
+	@FXML
+	AnchorPane trailerRootAnchorPane;
+	
+	@FXML
+	Pane trailerPane;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		Login.setWidthForAll(trailerPane, tblTrailer);
 		fetchTrailers();
 	}
 	
@@ -182,6 +191,7 @@ public class TrailerController extends Application implements Initializable {
 
 	@Override
 	public void start(Stage primaryStage) {
+		
 	}
 
 	@SuppressWarnings("unchecked")

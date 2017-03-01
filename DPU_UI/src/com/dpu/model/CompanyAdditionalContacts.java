@@ -1,44 +1,38 @@
 package com.dpu.model;
 
-public class AdditionalContact {
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+
+@JsonSerialize(include = Inclusion.NON_NULL)
+public class CompanyAdditionalContacts {
+
+	private Long additionalContactId;
 
 	private String customerName;
 
 	private String position;
+
 	private String phone;
+
 	private String ext;
+
 	private String fax;
+
 	private String prefix;
+
 	private String cellular;
-	private String statusId;
+
+	private Status status;
+
 	private String email;
-	public Long companyId;
-	public Long additionalContactId = null;
 
-	public AdditionalContact(String additionalContact, String position2, String phone2, String fax2, String cellular2,
-			String email2, String extension, String pager, String status) {
-		this.customerName = additionalContact;
-		this.position = position2;
-		this.phone = phone2;
-		this.ext = extension;
-		this.fax = fax2;
-		this.prefix = pager;
-		this.cellular = cellular2;
-		this.statusId = status;
-		this.email = email2;
-	}
+	private Map<Integer, List<CompanyWorkingHours>> map = new HashMap<>();
 
-	public AdditionalContact() {
-
-	}
-
-	public Long getCompanyId() {
-		return companyId;
-	}
-
-	public void setCompanyId(Long companyId) {
-		this.companyId = companyId;
-	}
+	private Company company;
 
 	public Long getAdditionalContactId() {
 		return additionalContactId;
@@ -104,20 +98,35 @@ public class AdditionalContact {
 		this.cellular = cellular;
 	}
 
-	public String getStatusId() {
-		return statusId;
-	}
-
-	public void setStatusId(String statusId) {
-		this.statusId = statusId;
-	}
-
 	public String getEmail() {
 		return email;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
+	public Map<Integer, List<CompanyWorkingHours>> getMap() {
+		return map;
+	}
+
+	public void setMap(Map<Integer, List<CompanyWorkingHours>> map) {
+		this.map = map;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
 }

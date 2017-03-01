@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="198.0" prefWidth="416.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.database.HandlingEditController">
+   <children>
+      <BorderPane layoutX="9.0" layoutY="34.0" prefHeight="104.0" prefWidth="396.0" style="-fx-border-color: lightgray;">
+         <left>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Status" wrappingWidth="123.759765625" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+         </left>
+         <center>
+            <ComboBox fx:id="ddlStatus" prefHeight="25.0" prefWidth="230.0" BorderPane.alignment="CENTER" />
+         </center></BorderPane>
+      <Text layoutX="14.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Handling" wrappingWidth="107.759765625" AnchorPane.bottomAnchor="205.984375" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="441.240234375" AnchorPane.topAnchor="41.734375">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <TextField fx:id="txtHandling" layoutX="155.0" layoutY="43.0" prefHeight="25.0" prefWidth="240.0" />
+      <Button fx:id="btnUpdateHandling" layoutX="265.0" layoutY="154.0" mnemonicParsing="false" onAction="#btnUpdateHandlingAction" prefHeight="25.0" prefWidth="65.0" text="Update">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Button>
+      <Button layoutX="337.0" layoutY="154.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Cancel">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Button>
+      <Label layoutY="1.0" prefHeight="27.0" prefWidth="416.0" style="-fx-background-color: lightgrey; -fx-border-color: black;" text="   Edit Handling">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

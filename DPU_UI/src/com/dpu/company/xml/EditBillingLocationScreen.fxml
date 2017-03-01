@@ -56,7 +56,7 @@
                     <TextField fx:id="txtContact" layoutX="392.0" layoutY="21.0" prefHeight="25.0" prefWidth="240.0" />
         <TextField fx:id="txtZip" layoutX="392.0" layoutY="53.0" prefHeight="25.0" prefWidth="240.0" />
         <TextField fx:id="txtFax" layoutX="392.0" layoutY="86.0" prefHeight="25.0" prefWidth="240.0" />
-        <Button id="btnSaveDriver" fx:id="btnSaveBillingLocation" layoutX="513.0" layoutY="160.0" mnemonicParsing="false" onAction="#btnSaveBillingLocationAction" prefHeight="25.0" prefWidth="65.0" text="Save">
+        <Button id="btnSaveDriver" fx:id="btnUpdateBillingLocation" layoutX="513.0" layoutY="160.0" mnemonicParsing="false" onAction="#btnUpdateBillingLocationAction" prefHeight="25.0" prefWidth="65.0" text="Save">
                <font>
                   <Font size="13.0" />
                </font>

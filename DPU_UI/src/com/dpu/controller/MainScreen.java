@@ -4,6 +4,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.dpu.constants.Iconstants;
+import com.dpu.controller.database.CustomBrokerController;
+import com.dpu.controller.database.HandlingController;
 
 import javafx.application.Application;
 import javafx.collections.ObservableList;
@@ -14,7 +16,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -52,7 +53,10 @@ public class MainScreen extends Application implements Initializable {
 	
 	static EquipmentController equipmentController;
 
-
+	public static HandlingController handlingController;
+	
+	public static CustomBrokerController customBrokerController;
+	
 	@FXML
 	private void miDriverAction() {
 		driverController = (DriverController) showPanel(Iconstants.DRIVER_BASE_PACKAGE, Iconstants.XML_DRIVER_SCREEN);
@@ -108,10 +112,19 @@ public class MainScreen extends Application implements Initializable {
 	private void miTerminalAction() {
 		terminalController = (TerminalPanelController)showPanel(Iconstants.TERMINAL_BASE_PACKAGE, Iconstants.XML_TERMINAL_SCREEN);
 	}
+	
+	@FXML
+	private void miHandlingAction() {
+		handlingController = (HandlingController) showPanel(Iconstants.HANDLING_BASE_PACKAGE, Iconstants.XML_HANDLING_SCREEN);
+	}
+	
+	@FXML
+	private void lblCustomBrokerAction() {
+		customBrokerController = (CustomBrokerController) showPanel(Iconstants.CUSTOM_BROKER_BASE_PACKAGE, Iconstants.XML_CUSTOM_BROKER_SCREEN);
+	}
 
 	@Override
 	public void start(Stage primaryStage) {
-
 	}
 
 	@Override
@@ -124,6 +137,9 @@ public class MainScreen extends Application implements Initializable {
 			Parent root = (Parent) fxmlLoader.load();
 			Pane pane = (Pane) root;
 			StackPane stackPane = new StackPane();
+			stackPane.setMinWidth(Login.width);
+			stackPane.setPrefWidth(Login.width);
+			stackPane.setMaxWidth(Login.width);
 			stackPane.setAlignment(Pos.TOP_LEFT);
 			stackPane.getChildren().add(pane);
 

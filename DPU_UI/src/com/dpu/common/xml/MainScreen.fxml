@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -7,49 +9,85 @@
 
 <VBox id="mainScreen" fx:id="mainScreenVBox" prefHeight="552.0001831054688" prefWidth="766.000244140625" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.MainScreen">
   <children>
-    <MenuBar fx:id="mnuBar" focusTraversable="false" prefWidth="766.0003441406225">
+    <MenuBar fx:id="mnuBar" focusTraversable="false" prefWidth="766.0003441406225" style="-fx-background-color: #82e0aa;">
       <menus>
         <Menu mnemonicParsing="false" text="File" />
         <Menu mnemonicParsing="false" text="Edit" />
         <Menu mnemonicParsing="false" text="Help" />
       </menus>
     </MenuBar>
-      <MenuBar>
+      <MenuBar style="-fx-background-color: #d6eaf8;">
         <menus>
           <Menu fx:id="mnuDatamaintenance" mnemonicParsing="false">
                <graphic>
-                  <Label fx:id="lblD" onMouseClicked="#lblDAction" text="Datamaintenance" />
+                  <Label fx:id="lblD" onMouseClicked="#lblDAction">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="com/dpu/common/xml/database-image.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Label>
                </graphic></Menu>
+            <Menu mnemonicParsing="false">
+               <graphic>
+                  <Label>
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="com/dpu/common/xml/order.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+               </graphic>
+            </Menu>
         </menus>
       </MenuBar>
-      <MenuBar fx:id="mnuBarDatamaintenance">
+      <MenuBar fx:id="mnuBarDatamaintenance" style="-fx-background-color: #2c3e50;" stylesheets="@style.css">
          <menus>
-            <Menu mnemonicParsing="false">
+            <Menu fx:id="mnuCompany" mnemonicParsing="false">
                <graphic>
-                  <Label fx:id="lblCompanyHeader" onMouseClicked="#lblCompanyHeaderAction" text="Company" />
+                  <Label fx:id="lblCompanyHeader" onMouseClicked="#lblCompanyHeaderAction" text="Company" textFill="WHITE" />
                </graphic>
             </Menu>
-            <Menu mnemonicParsing="false">
+            <Menu fx:id="mnuLocation" mnemonicParsing="false">
                <graphic>
-                  <Label fx:id="lblLocationsHeader" onMouseClicked="#lblLocationsHeaderAction" text="Locations" />
+                  <Label fx:id="lblLocationsHeader" onMouseClicked="#lblLocationsHeaderAction" text="Locations" textFill="WHITE">
+                     <stylesheets>
+                        <URL value="@style.css" />
+                        <URL value="@caspian.css" />
+                     </stylesheets></Label>
                </graphic>
             </Menu>
-          <Menu mnemonicParsing="false" text="Resources">
+          <Menu fx:id="mnuResources" mnemonicParsing="false">
             <items>
               <MenuItem fx:id="miDriver" mnemonicParsing="false" onAction="#miDriverAction" text="Drivers" />
                   <MenuItem fx:id="miTrailers" mnemonicParsing="false" onAction="#miTrailersAction" text="Trailers" />
                   <MenuItem fx:id="miTrucks" mnemonicParsing="false" onAction="#miTrucksAction" text="Trucks" />
             </items>
+               <graphic>
+                  <Label fx:id="lblResources" text="Resources" textFill="WHITE" />
+               </graphic>
           </Menu>
-          <Menu mnemonicParsing="false" text="Lists">
+          <Menu fx:id="mnuLists" mnemonicParsing="false">
             <items>
                   <MenuItem fx:id="miService" mnemonicParsing="false" onAction="#miServiceAction" text="Service" />
               <MenuItem fx:id="miCategory" mnemonicParsing="false" onAction="#miCategoryAction" text="Category" />
                   <MenuItem fx:id="miEquipment" mnemonicParsing="false" onAction="#miEquipmentAction" text="Equipment" />
                   <MenuItem fx:id="miTerminal" mnemonicParsing="false" onAction="#miTerminalAction" text="Terminal" />
                   <MenuItem fx:id="miDivision" mnemonicParsing="false" onAction="#miDivisionAction" text="Division" />
+                  <MenuItem fx:id="miHandling" mnemonicParsing="false" onAction="#miHandlingAction" text="Handling" />
             </items>
+               <graphic>
+                  <Label fx:id="lblLists" text="Lists" textFill="WHITE" />
+               </graphic>
           </Menu>
+            <Menu mnemonicParsing="false">
+               <graphic>
+                  <Label fx:id="lblCustomBroker" onMouseClicked="#lblCustomBrokerAction" text="Custom Broker" textFill="WHITE" />
+               </graphic>
+            </Menu>
          </menus>
       </MenuBar>
   </children>

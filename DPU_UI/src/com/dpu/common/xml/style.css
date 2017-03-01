@@ -1,0 +1,32 @@
+#mnuLocation:hover{
+	-fx-background-color: "#FFFFFF";
+	-fx-text-fill:"#2c3e50";
+}
+#mnuCompany:hover{
+	-fx-background-color: "#FFFFFF";
+	-fx-text-fill:"#2c3e50";
+}
+#lblCompanyHeader:hover{
+	-fx-background-color: "#FFFFFF";
+	-fx-text-fill:"#2c3e50";
+}
+#mnuResources:hover{
+	-fx-background-color: "#FFFFFF";
+	-fx-text-fill:"#2c3e50";
+}
+#lblResources:hover{
+	-fx-background-color: "#FFFFFF";
+	-fx-text-fill:"#2c3e50";
+}
+#mnuLists:hover{
+	-fx-background-color: "#FFFFFF";
+	-fx-text-fill:"#2c3e50";
+}
+#lblLists:hover{
+	-fx-background-color: "#FFFFFF";
+	-fx-text-fill:"#2c3e50";
+}
+#lblLocationsHeader:hover{
+	-fx-background-color: "#FFFFFF";
+	-fx-text-fill:"#2c3e50";
+}

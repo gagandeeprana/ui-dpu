@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 //import javafx.scene.control.Alert;
@@ -16,9 +17,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class Login extends Application implements Initializable{
@@ -37,6 +42,16 @@ public class Login extends Application implements Initializable{
 	
 	@FXML
 	MenuBar mnuBarDatamaintenance;
+	
+	static double width = 0.0;
+
+	public static void setWidthForAll(Object obj, TableView<?> tableView) {
+		if(obj != null && obj instanceof Pane) {
+			Pane pane = (Pane) obj;
+			pane.prefWidthProperty().bind(stage.widthProperty());
+			tableView.prefWidthProperty().bind(stage.widthProperty());
+		}
+	}
 	
 	@FXML
 	private void btnLoginAction() {
@@ -62,6 +77,7 @@ public class Login extends Application implements Initializable{
 		try {
 			Parent parent = FXMLLoader.load(getClass().getClassLoader().getResource(Iconstants.COMMON_BASE_PACKAGE + Iconstants.XML_LOGIN_SCREEN));
 			Scene scene = new Scene(parent);
+			primaryStage.getIcons().add(new Image(getClass().getClassLoader().getResourceAsStream(Iconstants.COMMON_BASE_PACKAGE + "application-image.png")));
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Login");
 			primaryStage.show();
@@ -96,6 +112,8 @@ public class Login extends Application implements Initializable{
 		}
 	}
 	
+	static Stage stage = null;
+	
 	private void openMainScreen() {
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.COMMON_BASE_PACKAGE + Iconstants.XML_MAIN_SCREEN));
@@ -106,11 +124,15 @@ public class Login extends Application implements Initializable{
 	        mnuBarDatamaintenance.setVisible(false);
 	        
 	        Stage stage = new Stage();
+	        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+	        stage.getIcons().add(new Image(getClass().getClassLoader().getResourceAsStream(Iconstants.COMMON_BASE_PACKAGE + "application-image.png")));
 	        stage.initModality(Modality.APPLICATION_MODAL);
 	//        stage.initStyle(StageStyle.UNDECORATED);
 	        stage.setTitle("Dashboard");
 	        stage.setScene(new Scene(root)); 
 	        stage.setMaximized(true);
+	        width = primaryScreenBounds.getWidth();
+	        this.stage = stage;
 	        mnuBar.prefWidthProperty().bind(stage.widthProperty());
 	//        fxmlLoader.setController(MainScreen.class);
 	        stage.show();
