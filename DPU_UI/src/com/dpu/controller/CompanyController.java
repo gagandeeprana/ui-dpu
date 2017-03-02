@@ -21,6 +21,7 @@ import com.dpu.request.CompanyResponse;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,6 +30,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -36,12 +38,15 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -53,81 +58,55 @@ public class CompanyController extends Application implements Initializable {
 	String newText = filterBy;
 	MouseEvent me;
 
-	@FXML
-	TextField textfield;
-
-	@FXML
-	public void onEnter(ActionEvent ae) {
-
-		newText = filterBy + textfield.getText();
-		textfield.setVisible(false);
-		getLoadNewMenu(me);
+ 
+	private void filterBySelectedValue() {
 		
-		String searchCompany = textfield.getText();
-		
-		
-		ObservableList data =  tblCompany.getItems();
-		textfield.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-		            if (oldValue != null && (newValue.length() < oldValue.length())) {
-		            	tblCompany.setItems(data);
-		            }
-		            String value = newValue.toLowerCase();
-		            ObservableList<CompanyModel> subentries = FXCollections.observableArrayList();
+		tblCompany.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+			  
+			@Override
+			public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
+				// Check whether item is selected and set value of selected item
+				// to Label
+				String valu = "";
+				Object val = "";
+				if (tblCompany.getSelectionModel().getSelectedItem() != null) {
+					TableViewSelectionModel selectionModel = tblCompany.getSelectionModel();
+					ObservableList selectedCells = selectionModel.getSelectedCells();
+					TablePosition tablePosition = (TablePosition) selectedCells.get(0);
+					if(!newValue.equals(null))
+							  val = tablePosition.getTableColumn().getCellData(newValue);
+					if(val != null)
+						valu = val + "";
+					 
+					int countt = 0;
+					
+					if (valu.length() > 0 && countt == 0) {
+						countt =1;
+						String value = valu.toLowerCase();
+						ObservableList<CompanyModel> subentries = FXCollections.observableArrayList();
 
-		            long count = tblCompany.getColumns().stream().count();
-		            for (int i = 0; i < tblCompany.getItems().size(); i++) {
-		                for (int j = 0; j < count; j++) {
-		                    String entry = "" + tblCompany.getColumns().get(j).getCellData(i);
-		                    if (entry.toLowerCase().contains(value)) {
-		                        subentries.add(tblCompany.getItems().get(i));
-		                        break;
-		                    }
-		                }
-		            }
-		            tblCompany.setItems(subentries);
-		        });
+						long count = tblCompany.getColumns().stream().count();
+						for (int i = 0; i < tblCompany.getItems().size(); i++) {
+							for (int j = 0; j < count; j++) {
+								String entry = "" + tblCompany.getColumns().get(j).getCellData(i);
+								if (entry.toLowerCase().contains(value)) {
+									subentries.add(tblCompany.getItems().get(i));
+									break;
+								}
+							}
+						}
+						tblCompany.setItems(subentries);
+					}
 
-		//if (searchCompany != null && searchCompany.length() > 0) {
-		//	Platform.runLater(new Runnable() {
-//
-	//			@Override
-		//		public void run() {
-		 //			try {
-			//			String response = GetAPIClient.callGetAPI(
-			//					Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + searchCompany + "/search",
-			//					null);
-			//			fetchSearchCompanies(response);
-			//		} catch (Exception e) {
-			//			JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
-			//		}
-			//	}
-			//});
-	//	}
+				}
 
-		//if (searchCompany != null && searchCompany.length() == 0) {
-			//Platform.runLater(new Runnable() {
+			}
 
-				//@Override
-				//public void run() {
-				//	try {
-						//String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API,
-						//		null);
-					///	fetchSearchCompanies(response);
-				//	} catch (Exception e) {
-						//JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
-					//}
-				//}
-			//});
-		//}
-		// handleAddContMouseClick(me);
+		});
+
+		 
 	}
 
-	@FXML
-	public void handleEnterPressed(KeyEvent event) {
-		if (event.getCode() == KeyCode.ENTER) {
-			 
-		}
-	}
 
 	@FXML
 	TableView<CompanyModel> tblCompany;
@@ -367,7 +346,7 @@ public class CompanyController extends Application implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		textfield.setVisible(false);
+		// textfield.setVisible(false);
 		fetchCompanies();
 		unitNo.setVisible(unitNumber);
 		name.setVisible(namee);
@@ -619,7 +598,7 @@ public class CompanyController extends Application implements Initializable {
 					if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
 						if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.SECONDARY)) {
 							contextMenu.show(tblCompany, mouseEvent.getScreenX(), mouseEvent.getScreenY());
-							textfield.setVisible(false);
+							//textfield.setVisible(false);
 							// contextMenu1 = new ContextMenu();
 							// contextMenu1.hide();
 						} else {
@@ -656,12 +635,14 @@ public class CompanyController extends Application implements Initializable {
 
 	private void menuFilterBy(MenuItem item6) {
 		item6.setStyle("-fx-padding: 0 10 0 10;");
+
 		item6.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				textfield.setVisible(true);
+				// textfield.setVisible(true);
 				item6.setText(newText);
+				filterBySelectedValue();
 			}
 		});
 	}
@@ -937,9 +918,9 @@ public class CompanyController extends Application implements Initializable {
 
 		if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
 			if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.SECONDARY)) {
-				textfield.setVisible(false);
+				//textfield.setVisible(false);
 				contextMenu.show(tblCompany, mouseEvent.getScreenX(), mouseEvent.getScreenY());
-				
+
 			} else {
 				contextMenu.hide();
 			}
