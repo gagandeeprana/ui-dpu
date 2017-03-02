@@ -22,11 +22,20 @@
             <Button fx:id="btnDeleteEquipment" layoutX="533.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnDeleteEquipmentAction" prefHeight="25.0" prefWidth="55.0" text="Delete" />
          </children>
       </AnchorPane>
-      <TableView fx:id="tblEquipment" onMouseClicked="#handleAddContMouseClick" layoutY="42.0" prefHeight="758.0" prefWidth="969.0">
+      <TableView fx:id="tblEquipment" layoutY="42.0" onMouseClicked="#handleAddContMouseClick" prefHeight="758.0" prefWidth="969.0">
         <columns>
-            <TableColumn fx:id="name" prefWidth="206.0" text="Name" />
-          <TableColumn fx:id="type" prefWidth="190.0" text="Type" />
-          <TableColumn fx:id="description" prefWidth="525.0" text="Description" />
+            <TableColumn fx:id="name" prefWidth="206.0">
+               <graphic>
+                  <Label fx:id="lblName" text="Name" />
+               </graphic></TableColumn>
+          <TableColumn fx:id="type" prefWidth="190.0">
+               <graphic>
+                  <Label fx:id="lblType" text="Type" />
+               </graphic></TableColumn>
+          <TableColumn fx:id="description" prefWidth="525.0">
+               <graphic>
+                  <Label fx:id="lblDescription" text="Description" />
+               </graphic></TableColumn>
         </columns>
       </TableView>
    </children>

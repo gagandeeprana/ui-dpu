@@ -46,6 +46,10 @@ public class CustomBrokerEditController extends Application implements Initializ
 	
 	Validate validate = new Validate();
 	
+	List<Status> statusList;
+
+	private Long customBrokerTypeId;
+	
 	@FXML
 	ComboBox<String> ddlStatus;
 	
@@ -96,14 +100,14 @@ public class CustomBrokerEditController extends Application implements Initializ
 					ObjectMapper mapper = new ObjectMapper();
 					CustomBroker customBroker = setCustomBrokerValue();
 					String payload = mapper.writeValueAsString(customBroker);
-
+					System.out.println("AYYYY: " + payload);
 					String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_CUSTOM_BROKER_API + "/" + customBrokerId, null, payload);
 					try {
 						Success success = mapper.readValue(response, Success.class);
-						List<HandlingModel> handlingList = (List<HandlingModel>) success.getResultList();
-						String res = mapper.writeValueAsString(handlingList);
+						List<CustomBroker> customBrokerList = (List<CustomBroker>) success.getResultList();
+						String res = mapper.writeValueAsString(customBrokerList);
 						JOptionPane.showMessageDialog(null, success.getMessage());
-						MainScreen.handlingController.fillHandling(res);
+						MainScreen.customBrokerController.fillCustomBrokers(res);
 					} catch (Exception e) {
 						Failed failed = mapper.readValue(response, Failed.class);
 						JOptionPane.showMessageDialog(null, failed.getMessage());
@@ -116,26 +120,25 @@ public class CustomBrokerEditController extends Application implements Initializ
 		});
 	}
 	
-	List<Status> statusList;
-
 	private CustomBroker setCustomBrokerValue() {
 		CustomBroker customBroker = new CustomBroker();
+		customBroker.setCustomBrokerId(customBrokerId);
 		customBroker.setCustomBrokerName(txtCustomerBrokerName.getText());
 		List<CustomBrokerTypeModel> customBrokerTypeModelList = new ArrayList<>();
 		CustomBrokerTypeModel customBrokerTypeModel = null;
 		switch(ddlType.getSelectionModel().getSelectedItem()) {
 		case Iconstants.CUSTOM_BROKER_PAPS:
-			customBrokerTypeModel = setPAPS();
+			customBrokerTypeModel = setPAPS(customBroker);
 			customBrokerTypeModelList.add(customBrokerTypeModel);
 			break;
 		case Iconstants.CUSTOM_BROKER_PARS:
-			customBrokerTypeModel = setPARS();
+			customBrokerTypeModel = setPARS(customBroker);
 			customBrokerTypeModelList.add(customBrokerTypeModel);
 			break;
 		default:
-			customBrokerTypeModel = setPAPS();
+			customBrokerTypeModel = setPAPS(customBroker);
 			customBrokerTypeModelList.add(customBrokerTypeModel);
-			customBrokerTypeModel = setPARS();
+			customBrokerTypeModel = setPARS(customBroker);
 			customBrokerTypeModelList.add(customBrokerTypeModel);
 		}
 		customBroker.setTypeId(typeList.get(ddlType.getSelectionModel().getSelectedIndex()).getTypeId());
@@ -143,8 +146,18 @@ public class CustomBrokerEditController extends Application implements Initializ
 		return customBroker;
 	}
 	
-	private CustomBrokerTypeModel setPAPS() {
+	private CustomBrokerTypeModel setPAPS(CustomBroker customBroker) {
 		CustomBrokerTypeModel customBrokerTypeModel = new CustomBrokerTypeModel();
+		for(Type type : typeList) {
+			if(type.getTypeName().equals(Iconstants.CUSTOM_BROKER_PAPS)) {
+				customBrokerTypeModel.setTypeId(type.getTypeId());
+				break;
+			}
+		}
+		if(papsCustomBrokerTypeId != null && papsCustomBrokerTypeId != 0l) {
+			customBrokerTypeModel.setCustomBrokerTypeId(papsCustomBrokerTypeId);
+		}
+//		customBrokerTypeModel.setCustomBrokerTypeId(customBrokerTypeId);
 		customBrokerTypeModel.setContactName(txtContactNamePAPS.getText());
 		customBrokerTypeModel.setOperationId(operationList.get(ddlOperationPAPS.getSelectionModel().getSelectedIndex()).getTypeId());
 		customBrokerTypeModel.setPhone(txtCentralPhonePAPS.getText());
@@ -153,13 +166,22 @@ public class CustomBrokerEditController extends Application implements Initializ
 		customBrokerTypeModel.setTimeZoneId(timeZoneList.get(ddl24HoursPAPS.getSelectionModel().getSelectedIndex()).getTypeId());
 		customBrokerTypeModel.setEmail(txtEmailPAPS.getText());
 		customBrokerTypeModel.setTrackerLink(txtTrackerLinkPAPS.getText());
-		customBrokerTypeModel.setStatusId(statusList.get(ddlStatusPAPS.getSelectionModel().getSelectedIndex()).getId());		customBrokerTypeModel.setTypeId(typeList.get(ddlType.getSelectionModel().getSelectedIndex()).getTypeId());
-		customBrokerTypeModel.setTypeId(typeList.get(ddlType.getSelectionModel().getSelectedIndex()).getTypeId());
+		customBrokerTypeModel.setStatusId(statusList.get(ddlStatusPAPS.getSelectionModel().getSelectedIndex()).getId());		
+//		customBrokerTypeModel.setTypeId(typeList.get(ddlType.getSelectionModel().getSelectedIndex()).getTypeId());
 		return customBrokerTypeModel;
 	}
 	
-	private CustomBrokerTypeModel setPARS() {
+	private CustomBrokerTypeModel setPARS(CustomBroker customBroker) {
 		CustomBrokerTypeModel customBrokerTypeModel = new CustomBrokerTypeModel();
+		for(Type type : typeList) {
+			if(type.getTypeName().equals(Iconstants.CUSTOM_BROKER_PARS)) {
+				customBrokerTypeModel.setTypeId(type.getTypeId());
+				break;
+			}
+		}
+		if(parsCustomBrokerTypeId != null && parsCustomBrokerTypeId != 0l) {
+			customBrokerTypeModel.setCustomBrokerTypeId(parsCustomBrokerTypeId);
+		}
 		customBrokerTypeModel.setContactName(txtContactNamePARS.getText());
 		customBrokerTypeModel.setOperationId(operationList.get(ddlOperationPARS.getSelectionModel().getSelectedIndex()).getTypeId());
 		customBrokerTypeModel.setPhone(txtCentralPhonePARS.getText());
@@ -169,7 +191,7 @@ public class CustomBrokerEditController extends Application implements Initializ
 		customBrokerTypeModel.setEmail(txtEmailPARS.getText());
 		customBrokerTypeModel.setTrackerLink(txtTrackerLinkPARS.getText());
 		customBrokerTypeModel.setStatusId(statusList.get(ddlStatusPARS.getSelectionModel().getSelectedIndex()).getId());
-		customBrokerTypeModel.setTypeId(typeList.get(ddlType.getSelectionModel().getSelectedIndex()).getTypeId());
+//		customBrokerTypeModel.setTypeId(typeList.get(ddlType.getSelectionModel().getSelectedIndex()).getTypeId());
 		return customBrokerTypeModel;
 	}
 
@@ -197,6 +219,7 @@ public class CustomBrokerEditController extends Application implements Initializ
 			setOther(customBrokerType);
 			break;
 		case Iconstants.CUSTOM_BROKER_PARS:
+			customBrokerTypeId = customBroker.getCustomBrokerTypes().get(0).getCustomBrokerTypeId();
 			setPARS(customBroker, 0);
 			setOther(customBrokerType);
 			break;
@@ -204,6 +227,7 @@ public class CustomBrokerEditController extends Application implements Initializ
 			setBoth(customBroker, 0);
 			break;
 		}
+		customBrokerTypeId = customBroker.getCustomBrokerTypes().get(0).getCustomBrokerTypeId();
 		typeList = customBroker.getTypeList();
 		for(int i = 0; i < typeList.size();i++) {
 			Type type = typeList.get(i);
@@ -246,10 +270,13 @@ public class CustomBrokerEditController extends Application implements Initializ
 		}
 	}
 	
+	Long papsCustomBrokerTypeId, parsCustomBrokerTypeId = 0l;
+	
 	private void setPAPS(CustomBroker customBroker, int index) {
 		CustomBrokerTypeModel customBrokerTypeModel = customBroker.getCustomBrokerTypes().get(index);
 		txtContactNamePAPS.setText(customBrokerTypeModel.getContactName());
 		operationList = customBroker.getOperationList();
+		papsCustomBrokerTypeId = customBroker.getCustomBrokerTypes().get(0).getCustomBrokerTypeId();
 		for(int i = 0; i< operationList.size();i++) {
 			Type type = operationList.get(i);
 			ddlOperationPAPS.getItems().add(type.getTypeName());
@@ -278,20 +305,13 @@ public class CustomBrokerEditController extends Application implements Initializ
 				ddlStatusPAPS.getSelectionModel().select(i);
 			}
 		}
-		/*typeList = customBroker.getTypeList();
-		for(int i = 0; i < typeList.size();i++) {
-			Type type = typeList.get(i);
-			ddlType.getItems().add(type.getTypeName());
-			if(type.getTypeId() == customBrokerTypeModel.getTypeId()) {
-				ddlType.getSelectionModel().select(i);
-			}
-		}*/
 	}
 	
 	private void setPARS(CustomBroker customBroker, int index) {
 		CustomBrokerTypeModel customBrokerTypeModel = customBroker.getCustomBrokerTypes().get(index);
 		txtContactNamePARS.setText(customBrokerTypeModel.getContactName());
 		operationList = customBroker.getOperationList();
+		parsCustomBrokerTypeId = customBroker.getCustomBrokerTypes().get(0).getCustomBrokerTypeId();
 		for(int i = 0; i< operationList.size();i++) {
 			Type type = operationList.get(i);
 			ddlOperationPARS.getItems().add(type.getTypeName());

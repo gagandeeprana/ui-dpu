@@ -60,7 +60,7 @@ public class Iconstants {
 	public static final String XML_DIVISION_EDIT_SCREEN = "EditDivision1.fxml";
 	
 	public static final String CUSTOM_BROKER_BASE_PACKAGE = "com/dpu/custombroker/xml/";
-	public static final String XML_CUSTOM_BROKER_SCREEN = "ListCustomBroker1.fxml";
+	public static final String XML_CUSTOM_BROKER_SCREEN = "ListCustomBroker2.fxml";
 	public static final String URL_CUSTOM_BROKER_API = "custombroker";
 	public static final String XML_CUSTOM_BROKER_ADD_SCREEN = "AddCustomBroker.fxml";
 	public static final String XML_CUSTOM_BROKER_EDIT_SCREEN = "EditCustomBroker.fxml";

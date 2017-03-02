@@ -22,21 +22,19 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -298,8 +296,71 @@ public class EquipmentController extends Application implements Initializable {
 		});
 	}
 	// ADD MENU
+	
+	@FXML
+	Label lblName, lblType, lblDescription;
+	
+	@SuppressWarnings("rawtypes")
+	@FXML
+	private void handleAddContMouseClick(MouseEvent event) {
+		tblEquipment.getScene().getStylesheets().add(Iconstants.EQUIPMENT_BASE_PACKAGE + "sample.css");
+		lblName.setStyle("-fx-text-fill: red;");
+		/*final ObservableList<TablePosition> selectedCells = tblEquipment.getSelectionModel().getSelectedCells();
 
-			public int tblEquipmentMenuCount = 0;
+		selectedCells.addListener(new ListChangeListener<TablePosition>() {
+		    @Override
+		    public void onChanged(Change change) {
+		    	System.out.println("gggggg");
+		        for (TablePosition pos : selectedCells) {
+		        	tblEquipment.getScene().getStylesheets().add(Iconstants.EQUIPMENT_BASE_PACKAGE + "sample.css");
+	                switch (pos.getColumn()) {
+					case 0:
+						lblName.setStyle("-fx-text-fill: red;");
+						break;
+					case 1:
+						lblType.setStyle("-fx-text-fill: red;");
+						break;
+					case 2:
+						lblDescription.setStyle("-fx-text-fill: red;");
+						break;
+					default:
+						break;
+					}
+		        }
+		    }
+		});*/
+		
+		
+		System.out.println("bbbbbb");
+//		tblEquipment.setOnMouseClicked(new EventHandler<MouseEvent>(){
+
+//	        @Override
+//	        public void handle(MouseEvent event){
+//	        	System.out.println("Here 1");
+               
+//	        }
+//	    });
+		/*lblType.setOnMouseClicked(new EventHandler<MouseEvent>(){
+
+	        @Override
+	        public void handle(MouseEvent event){
+	        	System.out.println("Here 2");
+                tblEquipment.getScene().getStylesheets().add(Iconstants.EQUIPMENT_BASE_PACKAGE + "sample.css");
+                lblType.setStyle("-fx-text-fill: red;");
+	        }
+	    });
+		lblDescription.setOnMouseClicked(new EventHandler<MouseEvent>(){
+
+	        @Override
+	        public void handle(MouseEvent event){
+	        	System.out.println("Here 3");
+                tblEquipment.getScene().getStylesheets().add(Iconstants.EQUIPMENT_BASE_PACKAGE + "sample.css");
+                lblDescription.setStyle("-fx-text-fill: red;");
+	        }
+	    });*/
+	}
+	
+		/*	public int tblEquipmentMenuCount = 0;
 
 			@FXML
 			public void handleAddContMouseClick(MouseEvent event) {
@@ -377,5 +438,5 @@ public class EquipmentController extends Application implements Initializable {
 
 				}
 
-			}
+			}*/
 }
