@@ -62,40 +62,63 @@ public class CompanyController extends Application implements Initializable {
 		newText = filterBy + textfield.getText();
 		textfield.setVisible(false);
 		getLoadNewMenu(me);
+		
 		String searchCompany = textfield.getText();
+		
+		
+		ObservableList data =  tblCompany.getItems();
+		textfield.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+		            if (oldValue != null && (newValue.length() < oldValue.length())) {
+		            	tblCompany.setItems(data);
+		            }
+		            String value = newValue.toLowerCase();
+		            ObservableList<CompanyModel> subentries = FXCollections.observableArrayList();
 
-		if (searchCompany != null && searchCompany.length() > 0) {
-			Platform.runLater(new Runnable() {
+		            long count = tblCompany.getColumns().stream().count();
+		            for (int i = 0; i < tblCompany.getItems().size(); i++) {
+		                for (int j = 0; j < count; j++) {
+		                    String entry = "" + tblCompany.getColumns().get(j).getCellData(i);
+		                    if (entry.toLowerCase().contains(value)) {
+		                        subentries.add(tblCompany.getItems().get(i));
+		                        break;
+		                    }
+		                }
+		            }
+		            tblCompany.setItems(subentries);
+		        });
 
-				@Override
-				public void run() {
-					try {
-						String response = GetAPIClient.callGetAPI(
-								Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + searchCompany + "/search",
-								null);
-						fetchSearchCompanies(response);
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
-					}
-				}
-			});
-		}
+		//if (searchCompany != null && searchCompany.length() > 0) {
+		//	Platform.runLater(new Runnable() {
+//
+	//			@Override
+		//		public void run() {
+		 //			try {
+			//			String response = GetAPIClient.callGetAPI(
+			//					Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + searchCompany + "/search",
+			//					null);
+			//			fetchSearchCompanies(response);
+			//		} catch (Exception e) {
+			//			JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
+			//		}
+			//	}
+			//});
+	//	}
 
-		if (searchCompany != null && searchCompany.length() == 0) {
-			Platform.runLater(new Runnable() {
+		//if (searchCompany != null && searchCompany.length() == 0) {
+			//Platform.runLater(new Runnable() {
 
-				@Override
-				public void run() {
-					try {
-						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API,
-								null);
-						fetchSearchCompanies(response);
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
-					}
-				}
-			});
-		}
+				//@Override
+				//public void run() {
+				//	try {
+						//String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API,
+						//		null);
+					///	fetchSearchCompanies(response);
+				//	} catch (Exception e) {
+						//JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
+					//}
+				//}
+			//});
+		//}
 		// handleAddContMouseClick(me);
 	}
 
