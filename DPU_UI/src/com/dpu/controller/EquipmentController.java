@@ -1,8 +1,7 @@
 package com.dpu.controller;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -22,7 +21,6 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,9 +30,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -223,9 +225,10 @@ public class EquipmentController extends Application implements Initializable {
 			@Override
 			public void run() {
 				try {
-					long startTime = new Date().getTime();
+//					long startTime = new Date().getTime();
 					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_EQUIPMENT_API, null);
-					System.out.println(response);
+					fillEquipments(response);
+					/*System.out.println(response);
 					if(response != null && response.length() > 0) {
 						Equipment c[] = mapper.readValue(response, Equipment[].class);
 						equipments = new ArrayList<Equipment>();
@@ -240,7 +243,7 @@ public class EquipmentController extends Application implements Initializable {
 			            
 			    		tblEquipment.setVisible(true);
 			            System.out.println("Time to fetch equipments: " + (new Date().getTime() - startTime));
-					}
+					}*/
 				} catch (Exception e) {
 																																																					JOptionPane.showMessageDialog(null, "Try Again..  " + e , "Info", 1);
 				}
@@ -253,11 +256,12 @@ public class EquipmentController extends Application implements Initializable {
 		
 		try {
 			ObservableList<Equipment> data = null;
-			equipments = new ArrayList<Equipment>();
+			equipments = new LinkedList<Equipment>();
 			setColumnValues();
 			if(response != null && response.length() > 0) {
 				Equipment c[] = mapper.readValue(response, Equipment[].class);
 				for(Equipment ccl : c) {
+					System.out.println(ccl.getEquipmentName());
 					equipments.add(ccl);
 				}
 				data = FXCollections.observableArrayList(equipments);
@@ -300,11 +304,51 @@ public class EquipmentController extends Application implements Initializable {
 	@FXML
 	Label lblName, lblType, lblDescription;
 	
-	@SuppressWarnings("rawtypes")
-	@FXML
-	private void handleAddContMouseClick(MouseEvent event) {
-		tblEquipment.getScene().getStylesheets().add(Iconstants.EQUIPMENT_BASE_PACKAGE + "sample.css");
-		lblName.setStyle("-fx-text-fill: red;");
+	
+//		tblEquipment.getScene().getStylesheets().add(Iconstants.EQUIPMENT_BASE_PACKAGE + "sample.css");
+//		lblName.setStyle("-fx-text-fill: red;");
+		/*selectedCells.addListener(new ListChangeListener<TablePosition>() {
+		    @Override
+		    public void onChanged(Change change) {
+		        for (TablePosition pos : selectedCells) {
+		            System.out.println("Cell selected in row "+pos.getRow()+" and column "+ pos.getColumn());
+		        }
+		    }
+		});*/
+		/*System.out.println("inside table");
+		lblName.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e) {
+				System.out.println("1111111111");
+				tblEquipment.getScene().getStylesheets().add(Iconstants.EQUIPMENT_BASE_PACKAGE + "sample.css");
+				lblName.setStyle("-fx-text-fill: red;");
+
+			}
+		});
+		lblName.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			 public void handle(MouseEvent mouseEvent) {
+					System.out.println("2222222222222");
+				 if(mouseEvent.getButton() == MouseButton.PRIMARY) {
+					 tblEquipment.getScene().getStylesheets().add(Iconstants.EQUIPMENT_BASE_PACKAGE + "sample.css");
+					 lblName.setStyle("-fx-text-fill: red;");
+				 }
+		    }
+		});
+		lblType.setOnMouseClicked(new EventHandler<Event>() {
+			public void handle(Event event) {
+				tblEquipment.getScene().getStylesheets().add(Iconstants.EQUIPMENT_BASE_PACKAGE + "sample.css");
+				lblType.setStyle("-fx-text-fill: red;");
+				
+			};
+		});*/
+		/*TableColumn<Equipment, ?> col1 = columns.get(0);
+		col1.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			
+		    @Override
+		    public void handle(MouseEvent event) {
+		         System.out.println("cell clicked!");
+		    }
+		});*/
+		
 		/*final ObservableList<TablePosition> selectedCells = tblEquipment.getSelectionModel().getSelectedCells();
 
 		selectedCells.addListener(new ListChangeListener<TablePosition>() {
@@ -331,7 +375,6 @@ public class EquipmentController extends Application implements Initializable {
 		});*/
 		
 		
-		System.out.println("bbbbbb");
 //		tblEquipment.setOnMouseClicked(new EventHandler<MouseEvent>(){
 
 //	        @Override
@@ -358,6 +401,51 @@ public class EquipmentController extends Application implements Initializable {
                 lblDescription.setStyle("-fx-text-fill: red;");
 	        }
 	    });*/
+	
+	String selectedColumnName = null;
+	boolean searchByHeader = false;
+	
+	@FXML
+	private void lblNameMouseClick(MouseEvent event) {
+		if(event.getButton() == MouseButton.PRIMARY) {
+			searchByHeader = true;
+			selectedColumnName = lblName.getText();
+			lblName.setStyle("-fx-text-fill: red;");
+			lblType.setStyle("-fx-text-fill: black;");
+		}
+	}
+	
+	@FXML
+	private void anchorPaneKeyTyped(KeyEvent event) {
+		if(searchByHeader) {
+			String key = event.getText();
+//			System.out.println(key);
+//			final KeyCombination keyComb1=new KeyCodeCombination(KeyCode.I,KeyCombination.CONTROL_DOWN);
+			if(key != null && key.length() > 0) {
+//				String keyTyped = event.getCharacter();
+//				System.out.println(key);
+				search(key, selectedColumnName);
+			}
+		}
+	}
+	
+	private void search(String value, String columnName) {
+		for(int i=0;i<equipments.size();i++) {
+			Equipment equipment = equipments.get(i);
+			if(selectedColumnName.equals(columnName) && equipment.getEquipmentName().startsWith(value)) {
+//				System.out.println("index: " + i + "  equipmentName:  " + equipment.getEquipmentName() + "  columnName: " + columnName + " header/boolean: " + searchByHeader + "  valuekeytyped: " + value);
+				tblEquipment.getSelectionModel().select(equipment);
+				break;
+			}
+		}
+	}
+	
+	@FXML
+	private void lblTypeMouseClick(MouseEvent event) {
+		if(event.getButton() == MouseButton.PRIMARY) {
+			lblName.setStyle("-fx-text-fill: black;");
+			lblType.setStyle("-fx-text-fill: red;");
+		}
 	}
 	
 		/*	public int tblEquipmentMenuCount = 0;
@@ -368,7 +456,7 @@ public class EquipmentController extends Application implements Initializable {
 				// Create ContextMenu
 				ContextMenu contextMenu = new ContextMenu();
 
-				MenuItem item1 = new MenuItem("ADD");
+				MenuItem item1 = new-------------- MenuItem("ADD");
 				item1.setOnAction(new EventHandler<ActionEvent>() {
 
 					@Override

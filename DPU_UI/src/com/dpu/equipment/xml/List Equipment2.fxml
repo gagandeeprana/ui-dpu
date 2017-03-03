@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="equipmentParentAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="969.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.EquipmentController">
+<AnchorPane fx:id="equipmentParentAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyReleased="#anchorPaneKeyTyped" prefHeight="800.0" prefWidth="969.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.EquipmentController">
    <children>
       <AnchorPane prefHeight="49.0" prefWidth="969.0" style="-fx-background-color: lightgrey;">
          <children>
@@ -22,15 +22,15 @@
             <Button fx:id="btnDeleteEquipment" layoutX="533.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnDeleteEquipmentAction" prefHeight="25.0" prefWidth="55.0" text="Delete" />
          </children>
       </AnchorPane>
-      <TableView fx:id="tblEquipment" layoutY="42.0" onMouseClicked="#handleAddContMouseClick" prefHeight="758.0" prefWidth="969.0">
+      <TableView fx:id="tblEquipment" layoutY="42.0" prefHeight="758.0" prefWidth="969.0">
         <columns>
             <TableColumn fx:id="name" prefWidth="206.0">
                <graphic>
-                  <Label fx:id="lblName" text="Name" />
+                  <Label fx:id="lblName" onMousePressed="#lblNameMouseClick" prefHeight="17.0" prefWidth="200.0" text="Name" />
                </graphic></TableColumn>
           <TableColumn fx:id="type" prefWidth="190.0">
                <graphic>
-                  <Label fx:id="lblType" text="Type" />
+                  <Label fx:id="lblType" onMousePressed="#lblTypeMouseClick" prefHeight="17.0" prefWidth="184.0" text="Type" />
                </graphic></TableColumn>
           <TableColumn fx:id="description" prefWidth="525.0">
                <graphic>

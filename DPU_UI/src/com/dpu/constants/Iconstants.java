@@ -78,7 +78,7 @@ public class Iconstants {
 	public static final String XML_CATEGORY_EDIT_SCREEN = "Edit Categories.fxml";
 
 	public static final String EQUIPMENT_BASE_PACKAGE = "com/dpu/equipment/xml/";
-	public static final String XML_EQUIPMENT_SCREEN = "List Equipment.fxml";
+	public static final String XML_EQUIPMENT_SCREEN = "List Equipment2.fxml";
 	public static final String URL_EQUIPMENT_API = "equipment";
 	public static final String XML_EQUIPMENT_ADD_SCREEN = "Add Equipment Type.fxml";
 	public static final String XML_EQUIPMENT_EDIT_SCREEN = "Edit Equipment Type.fxml";
