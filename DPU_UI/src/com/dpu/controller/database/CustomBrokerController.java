@@ -126,7 +126,7 @@ public class CustomBrokerController extends Application implements Initializable
 	
 	@FXML
 	private void btnEditCustomBrokerAction() {
-		CustomBroker customBroker = customBrokers.get(tblCustomBroker.getSelectionModel().getSelectedIndex());
+		CustomBroker customBroker = tblCustomBroker.getSelectionModel().getSelectedItem();
 		if(customBroker != null) {
 			Platform.runLater(new Runnable() {
 				
@@ -244,6 +244,11 @@ public class CustomBrokerController extends Application implements Initializable
 				return new SimpleStringProperty(param.getValue().getCustomBrokerName() + "");
 			}
 		});
+	}
+	
+	@FXML
+	private void tblCustomBrokerAction() {
+		tblCustomBroker.getScene().getStylesheets().add(Iconstants.CUSTOM_BROKER_BASE_PACKAGE + "sample.css");
 	}
 	
 	// ADD MENU

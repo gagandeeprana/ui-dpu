@@ -11,13 +11,11 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.GetAPIClient;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.model.Category;
 import com.dpu.model.Company;
 import com.dpu.model.Failed;
 import com.dpu.model.Shipper;
 import com.dpu.model.Status;
 import com.dpu.model.Success;
-import com.dpu.model.Type;
 
 import javafx.application.Application;
 import javafx.application.Platform;

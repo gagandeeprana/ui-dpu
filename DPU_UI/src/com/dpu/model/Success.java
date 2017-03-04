@@ -1,7 +1,5 @@
 package com.dpu.model;
 
-import java.util.List;
-
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 /**

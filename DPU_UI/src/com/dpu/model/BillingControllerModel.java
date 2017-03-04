@@ -1,8 +1,6 @@
 
 package com.dpu.model;
 
-import org.codehaus.jackson.annotate.JsonProperty;
-
 public class BillingControllerModel {
 
 	private String name;

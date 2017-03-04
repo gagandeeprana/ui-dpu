@@ -66,10 +66,6 @@ Scene scene = new Scene(root, 300, 400);
     primaryStage.show();
   }
 
-  public static void main(String[] args) {
-    launch(args);
-  }
-
   public static class cours {
     private StringProperty columnName;
     private StringProperty coursID;

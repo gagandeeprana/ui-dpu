@@ -5,8 +5,6 @@ import java.util.List;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
-
-import com.dpu.model.Status;
 @JsonIgnoreProperties(ignoreUnknown = true) 
 @JsonSerialize(include = Inclusion.NON_NULL)
 public class HandlingModel {
