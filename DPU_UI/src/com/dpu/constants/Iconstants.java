@@ -2,10 +2,9 @@ package com.dpu.constants;
 
 public class Iconstants {
 
-	public static final String URL_SERVER = "http://localhost:8080/DPUWebProject/";
-	//public static final String URL_SERVER = "http://35.154.6.180:9090/DPUWebProject/";
- 
-	
+	public static final String URL_SERVER = "http://localhost:8082/DPUWebProject/";
+//	public static final String URL_SERVER = "http://35.154.6.180:8080/DPUWebProject/";
+
 	public static final String COMMON_BASE_PACKAGE = "com/dpu/common/xml/";
 
 	public static final String XML_LOGIN_SCREEN = "Login.fxml";
@@ -61,12 +60,15 @@ public class Iconstants {
 	public static final String XML_DIVISION_EDIT_SCREEN = "EditDivision1.fxml";
 	
 	public static final String CUSTOM_BROKER_BASE_PACKAGE = "com/dpu/custombroker/xml/";
-	public static final String XML_CUSTOM_BROKER_SCREEN = "ListCustomBroker.fxml";
+	public static final String XML_CUSTOM_BROKER_SCREEN = "ListCustomBroker2.fxml";
 	public static final String URL_CUSTOM_BROKER_API = "custombroker";
-	public static final String XML_CUSTOM_BROKER_ADD_SCREEN = "AddCustomerBroker.fxml";
-	public static final String XML_CUSTOM_BROKER_EDIT_SCREEN = "UpdateCustomerBroker.fxml";
+	public static final String XML_CUSTOM_BROKER_ADD_SCREEN = "AddCustomBroker.fxml";
+	public static final String XML_CUSTOM_BROKER_EDIT_SCREEN = "EditCustomBroker.fxml";
 	public static final String XML_NEW_BORDER_AGENT = "NewBorderAgent.fxml";
 	public static final String XML_UPDATE_BORDER_AGENT = "UpdateBorderAgent.fxml";
+	public static final String CUSTOM_BROKER_PAPS = "PAPS";
+	public static final String CUSTOM_BROKER_PARS = "PARS";
+	public static final String CUSTOM_BROKER_BOTH = "Both";
 
 	public static final String CATEGORY_BASE_PACKAGE = "com/dpu/category/xml/";
 	public static final String XML_CATEGORY_SCREEN = "List Categories.fxml";
@@ -76,7 +78,7 @@ public class Iconstants {
 	public static final String XML_CATEGORY_EDIT_SCREEN = "Edit Categories.fxml";
 
 	public static final String EQUIPMENT_BASE_PACKAGE = "com/dpu/equipment/xml/";
-	public static final String XML_EQUIPMENT_SCREEN = "List Equipment.fxml";
+	public static final String XML_EQUIPMENT_SCREEN = "List Equipment2.fxml";
 	public static final String URL_EQUIPMENT_API = "equipment";
 	public static final String XML_EQUIPMENT_ADD_SCREEN = "Add Equipment Type.fxml";
 	public static final String XML_EQUIPMENT_EDIT_SCREEN = "Edit Equipment Type.fxml";
@@ -103,5 +105,13 @@ public class Iconstants {
 	
 	public static final String URL_PROVINCE_API = "province";
 	public static final String XML_PROVINCE_STATE = "province_state.fxml";
+
+	public static final String URL_ORDER_API = "order";
+	
+	public static final String URL_HANDLING_API = "handling";
+	public static final String HANDLING_BASE_PACKAGE = "com/dpu/handling/xml/";
+	public static final String XML_HANDLING_EDIT_SCREEN = "Edit Handling.fxml";
+	public static final String XML_HANDLING_ADD_SCREEN = "Add Handling.fxml";
+	public static final String XML_HANDLING_SCREEN = "HandlingListing.fxml";
 
 }
