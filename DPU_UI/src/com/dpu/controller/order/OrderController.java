@@ -37,12 +37,12 @@ public class OrderController extends Application implements Initializable {
 	ObjectMapper mapper = new ObjectMapper();
 	
 	@FXML
-	TableView<OrderAndProbillModel> tblOrder;
+	TableView<OrderModel> tblOrder;
 	
 	List<OrderModel> orders = null;
 	
 	@FXML
-	TableColumn<OrderAndProbillModel, String> orderId, probill, status, customerName, poNumber, pickUpDate, pickUpCompany,
+	TableColumn<OrderModel, String> orderId, probill, status, customerName, poNumber, pickUpDate, pickUpCompany,
 	pickUpLocation, provinceState, pickUpPostal, deliveryDate, deliveryCompany, deliveryLocation, deliveryPostal,
 	orderCharges;
 	
@@ -60,21 +60,21 @@ public class OrderController extends Application implements Initializable {
 
 	@SuppressWarnings("unchecked")
 	private void fetchColumns() {
-		orderId = (TableColumn<OrderAndProbillModel, String>) tblOrder.getColumns().get(0);
-		probill = (TableColumn<OrderAndProbillModel, String>) tblOrder.getColumns().get(1);
-		status = (TableColumn<OrderAndProbillModel, String>) tblOrder.getColumns().get(2);
-		customerName = (TableColumn<OrderAndProbillModel, String>) tblOrder.getColumns().get(3);
-		poNumber = (TableColumn<OrderAndProbillModel, String>) tblOrder.getColumns().get(4);
-		pickUpDate = (TableColumn<OrderAndProbillModel, String>) tblOrder.getColumns().get(5);
-		pickUpCompany = (TableColumn<OrderAndProbillModel, String>) tblOrder.getColumns().get(6);
-		pickUpLocation = (TableColumn<OrderAndProbillModel, String>) tblOrder.getColumns().get(7);
-		provinceState = (TableColumn<OrderAndProbillModel, String>) tblOrder.getColumns().get(8);
-		pickUpPostal = (TableColumn<OrderAndProbillModel, String>) tblOrder.getColumns().get(9);
-		deliveryDate = (TableColumn<OrderAndProbillModel, String>) tblOrder.getColumns().get(10);
-		deliveryCompany = (TableColumn<OrderAndProbillModel, String>) tblOrder.getColumns().get(11);
-		deliveryLocation = (TableColumn<OrderAndProbillModel, String>) tblOrder.getColumns().get(12);
-		deliveryPostal = (TableColumn<OrderAndProbillModel, String>) tblOrder.getColumns().get(13);
-		orderCharges = (TableColumn<OrderAndProbillModel, String>) tblOrder.getColumns().get(14);
+		orderId = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(0);
+//		probill = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(1);
+//		status = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(2);
+//		customerName = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(3);
+//		poNumber = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(4);
+//		pickUpDate = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(5);
+//		pickUpCompany = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(6);
+//		pickUpLocation = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(7);
+//		provinceState = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(8);
+//		pickUpPostal = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(9);
+//		deliveryDate = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(10);
+//		deliveryCompany = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(11);
+//		deliveryLocation = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(12);
+//		deliveryPostal = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(13);
+//		orderCharges = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(14);
 	}
 
 	/*@FXML
@@ -237,16 +237,16 @@ public class OrderController extends Application implements Initializable {
 	public void fillOrders(String response) {
 		
 		try {
-			ObservableList<OrderAndProbillModel> data = null;
+			ObservableList<OrderModel> data = null;
 			orders = new ArrayList<OrderModel>();
 			setColumnValues();
-			List<OrderAndProbillModel> listOrderAndProbill = new ArrayList<>();
+//			List<OrderAndProbillModel> listOrderAndProbill = new ArrayList<>();
 			if(response != null && response.length() > 0) {
 				OrderModel c[] = mapper.readValue(response, OrderModel[].class);
 				for(OrderModel ccl : c) {
 					orders.add(ccl);
 				}
-				for(OrderModel orderModel : orders) {
+				/*for(OrderModel orderModel : orders) {
 					List<ProbilModel> probilModelList = orderModel.getProbilList();
 					for(ProbilModel probilModel : probilModelList) {
 						OrderAndProbillModel orderAndProbill = new OrderAndProbillModel();
@@ -254,10 +254,10 @@ public class OrderController extends Application implements Initializable {
 						orderAndProbill.setProbilModel(probilModel);
 						listOrderAndProbill.add(orderAndProbill);
 					}
-				}
-				data = FXCollections.observableArrayList(listOrderAndProbill);
+				}*/
+				data = FXCollections.observableArrayList(orders);
 			} else {
-				data = FXCollections.observableArrayList(listOrderAndProbill);
+				data = FXCollections.observableArrayList(orders);
 			}
 			tblOrder.setItems(data);
             tblOrder.setVisible(true);
@@ -268,11 +268,11 @@ public class OrderController extends Application implements Initializable {
 	
 	private void setColumnValues() {
 		
-		orderId.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<OrderAndProbillModel, String>, ObservableValue<String>>() {
+		orderId.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<OrderModel, String>, ObservableValue<String>>() {
 			
 			@Override
-			public ObservableValue<String> call(CellDataFeatures<OrderAndProbillModel, String> param) {
-				return new SimpleStringProperty(param.getValue().getOrderModel().getId() + "");
+			public ObservableValue<String> call(CellDataFeatures<OrderModel, String> param) {
+				return new SimpleStringProperty(param.getValue().getId() + "");
 			}
 		});
 	}

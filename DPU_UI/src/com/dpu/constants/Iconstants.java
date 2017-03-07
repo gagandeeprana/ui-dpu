@@ -8,7 +8,7 @@ public class Iconstants {
 	public static final String COMMON_BASE_PACKAGE = "com/dpu/common/xml/";
 
 	public static final String XML_LOGIN_SCREEN = "Login.fxml";
-	public static final String XML_MAIN_SCREEN = "MainScreen.fxml";
+	public static final String XML_MAIN_SCREEN = "MainScreen1.fxml";
 
 	public static final String TERMINAL_BASE_PACKAGE = "com/dpu/terminal/xml/";
 	public static final String XML_TERMINAL_SCREEN = "ListTerminal.fxml";
@@ -107,11 +107,14 @@ public class Iconstants {
 	public static final String XML_PROVINCE_STATE = "province_state.fxml";
 
 	public static final String URL_ORDER_API = "order";
+	public static final String ORDER_BASE_PACKAGE = "com/dpu/order/xml/";
+	public static final String XML_ORDER_SCREEN = "ListOrders.fxml";
 	
 	public static final String URL_HANDLING_API = "handling";
 	public static final String HANDLING_BASE_PACKAGE = "com/dpu/handling/xml/";
 	public static final String XML_HANDLING_EDIT_SCREEN = "Edit Handling.fxml";
 	public static final String XML_HANDLING_ADD_SCREEN = "Add Handling.fxml";
 	public static final String XML_HANDLING_SCREEN = "HandlingListing.fxml";
+
 
 }

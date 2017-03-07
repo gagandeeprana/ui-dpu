@@ -51,29 +51,149 @@ public class OrderModel implements Serializable{
 	private List<Type> pickupList;
 	
 	private List<Type> deliveryList;
-
+	
 	public Long getId() {
 		return id;
 	}
-
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	
 	public String getCompanyName() {
 		return companyName;
 	}
-
+	
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}
-
+	
 	public Long getCompanyId() {
 		return companyId;
 	}
-
+	
 	public void setCompanyId(Long companyId) {
 		this.companyId = companyId;
+	}
+	
+	public String getBillingLocationName() {
+		return billingLocationName;
+	}
+	
+	public void setBillingLocationName(String billingLocationName) {
+		this.billingLocationName = billingLocationName;
+	}
+	
+	public Long getBillingLocationId() {
+		return billingLocationId;
+	}
+	
+	public void setBillingLocationId(Long billingLocationId) {
+		this.billingLocationId = billingLocationId;
+	}
+	
+	public List<CompanyBillingLocation> getBillingLocationList() {
+		return billingLocationList;
+	}
+	
+	public void setBillingLocationList(
+			List<CompanyBillingLocation> billingLocationList) {
+		this.billingLocationList = billingLocationList;
+	}
+	
+	public String getContactName() {
+		return contactName;
+	}
+	
+	public void setContactName(String contactName) {
+		this.contactName = contactName;
+	}
+	
+	public Long getContactId() {
+		return contactId;
+	}
+	
+	public void setContactId(Long contactId) {
+		this.contactId = contactId;
+	}
+	
+	public List<CompanyAdditionalContacts> getContactsList() {
+		return contactsList;
+	}
+	
+	public void setContactsList(List<CompanyAdditionalContacts> contactsList) {
+		this.contactsList = contactsList;
+	}
+	
+	public String getTemperatureName() {
+		return temperatureName;
+	}
+	
+	public void setTemperatureName(String temperatureName) {
+		this.temperatureName = temperatureName;
+	}
+	
+	public Long getTemperatureId() {
+		return temperatureId;
+	}
+	
+	public void setTemperatureId(Long temperatureId) {
+		this.temperatureId = temperatureId;
+	}
+	
+	public Double getTemperatureValue() {
+		return temperatureValue;
+	}
+	
+	public void setTemperatureValue(Double temperatureValue) {
+		this.temperatureValue = temperatureValue;
+	}
+	public String getTemperatureTypeName() {
+		return temperatureTypeName;
+	}
+	
+	public void setTemperatureTypeName(String temperatureTypeName) {
+		this.temperatureTypeName = temperatureTypeName;
+	}
+	
+	public Long getTemperatureTypeId() {
+		return temperatureTypeId;
+	}
+	
+	public void setTemperatureTypeId(Long temperatureTypeId) {
+		this.temperatureTypeId = temperatureTypeId;
+	}
+	
+	public Double getRate() {
+		return rate;
+	}
+	
+	public void setRate(Double rate) {
+		this.rate = rate;
+	}
+	
+	public Long getPoNo() {
+		return poNo;
+	}
+	
+	public void setPoNo(Long poNo) {
+		this.poNo = poNo;
+	}
+	
+	public String getCurrencyName() {
+		return currencyName;
+	}
+	
+	public void setCurrencyName(String currencyName) {
+		this.currencyName = currencyName;
+	}
+	
+	public Long getCurrencyId() {
+		return currencyId;
+	}
+	
+	public void setCurrencyId(Long currencyId) {
+		this.currencyId = currencyId;
 	}
 
 	public List<Company> getCompanyList() {
@@ -84,70 +204,6 @@ public class OrderModel implements Serializable{
 		this.companyList = companyList;
 	}
 
-	public String getBillingLocationName() {
-		return billingLocationName;
-	}
-
-	public void setBillingLocationName(String billingLocationName) {
-		this.billingLocationName = billingLocationName;
-	}
-
-	public Long getBillingLocationId() {
-		return billingLocationId;
-	}
-
-	public void setBillingLocationId(Long billingLocationId) {
-		this.billingLocationId = billingLocationId;
-	}
-
-	public List<CompanyBillingLocation> getBillingLocationList() {
-		return billingLocationList;
-	}
-
-	public void setBillingLocationList(List<CompanyBillingLocation> billingLocationList) {
-		this.billingLocationList = billingLocationList;
-	}
-
-	public String getContactName() {
-		return contactName;
-	}
-
-	public void setContactName(String contactName) {
-		this.contactName = contactName;
-	}
-
-	public Long getContactId() {
-		return contactId;
-	}
-
-	public void setContactId(Long contactId) {
-		this.contactId = contactId;
-	}
-
-	public List<CompanyAdditionalContacts> getContactsList() {
-		return contactsList;
-	}
-
-	public void setContactsList(List<CompanyAdditionalContacts> contactsList) {
-		this.contactsList = contactsList;
-	}
-
-	public String getTemperatureName() {
-		return temperatureName;
-	}
-
-	public void setTemperatureName(String temperatureName) {
-		this.temperatureName = temperatureName;
-	}
-
-	public Long getTemperatureId() {
-		return temperatureId;
-	}
-
-	public void setTemperatureId(Long temperatureId) {
-		this.temperatureId = temperatureId;
-	}
-
 	public List<Type> getTemperatureList() {
 		return temperatureList;
 	}
@@ -156,68 +212,12 @@ public class OrderModel implements Serializable{
 		this.temperatureList = temperatureList;
 	}
 
-	public Double getTemperatureValue() {
-		return temperatureValue;
-	}
-
-	public void setTemperatureValue(Double temperatureValue) {
-		this.temperatureValue = temperatureValue;
-	}
-
-	public String getTemperatureTypeName() {
-		return temperatureTypeName;
-	}
-
-	public void setTemperatureTypeName(String temperatureTypeName) {
-		this.temperatureTypeName = temperatureTypeName;
-	}
-
-	public Long getTemperatureTypeId() {
-		return temperatureTypeId;
-	}
-
-	public void setTemperatureTypeId(Long temperatureTypeId) {
-		this.temperatureTypeId = temperatureTypeId;
-	}
-
 	public List<Type> getTemperatureTypeList() {
 		return temperatureTypeList;
 	}
 
 	public void setTemperatureTypeList(List<Type> temperatureTypeList) {
 		this.temperatureTypeList = temperatureTypeList;
-	}
-
-	public Double getRate() {
-		return rate;
-	}
-
-	public void setRate(Double rate) {
-		this.rate = rate;
-	}
-
-	public Long getPoNo() {
-		return poNo;
-	}
-
-	public void setPoNo(Long poNo) {
-		this.poNo = poNo;
-	}
-
-	public String getCurrencyName() {
-		return currencyName;
-	}
-
-	public void setCurrencyName(String currencyName) {
-		this.currencyName = currencyName;
-	}
-
-	public Long getCurrencyId() {
-		return currencyId;
-	}
-
-	public void setCurrencyId(Long currencyId) {
-		this.currencyId = currencyId;
 	}
 
 	public List<Type> getCurrencyList() {

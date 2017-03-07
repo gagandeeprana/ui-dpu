@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import com.dpu.constants.Iconstants;
 import com.dpu.controller.database.CustomBrokerController;
 import com.dpu.controller.database.HandlingController;
+import com.dpu.controller.order.OrderController;
 
 import javafx.application.Application;
 import javafx.collections.ObservableList;
@@ -57,6 +58,8 @@ public class MainScreen extends Application implements Initializable {
 	
 	public static CustomBrokerController customBrokerController;
 	
+	public static OrderController orderController;
+
 	@FXML
 	private void miDriverAction() {
 		driverController = (DriverController) showPanel(Iconstants.DRIVER_BASE_PACKAGE, Iconstants.XML_DRIVER_SCREEN);
@@ -106,6 +109,11 @@ public class MainScreen extends Application implements Initializable {
 	@FXML
 	private void lblDAction() {
 		mnuBarDatamaintenance.setVisible(true);
+	}
+	
+	@FXML
+	private void lblOrderAction() {
+		orderController = (OrderController) showPanel(Iconstants.ORDER_BASE_PACKAGE, Iconstants.XML_ORDER_SCREEN);
 	}
 
 	@FXML
@@ -162,6 +170,9 @@ public class MainScreen extends Application implements Initializable {
 //				// Grey Background
 //				pane.setDisable(true);
 //				stackPane.getChildren().add(box);
+				if(basePackage.contains("order")) {
+					nodes.remove(3);
+				}
 				nodes.add(stackPane);
 			}
 			return fxmlLoader.getController();

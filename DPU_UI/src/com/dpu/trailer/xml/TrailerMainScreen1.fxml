@@ -11,7 +11,7 @@
 
 <AnchorPane id="AnchorPane" fx:id="trailerRootAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1015.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.TrailerController">
   <children>
-    <Pane fx:id="trailerPane" layoutX="-5.0" prefHeight="625.0" prefWidth="1021.0" style="-fx-background-color: #2c3e50;">
+    <Pane fx:id="trailerPane" layoutX="-5.0" prefHeight="625.0" prefWidth="1021.0" style="-fx-background-color: #d6eaf8;">
       <children>
         <TableView fx:id="tblTrailer" layoutY="43.0" onMouseClicked="#handleAddContMouseClick" prefHeight="581.0" prefWidth="1015.0">
           <columns>
