@@ -44,10 +44,12 @@ public class OrderController extends Application implements Initializable {
 	@FXML
 	TableColumn<OrderModel, String> orderId, probill, status, customerName, poNumber, pickUpDate, pickUpCompany,
 	pickUpLocation, provinceState, pickUpPostal, deliveryDate, deliveryCompany, deliveryLocation, deliveryPostal,
-	orderCharges;
+	orderCharges, billingLocationName;
 	
 	@FXML
 	AnchorPane equipmentParentAnchorPane;
+
+	private TableColumn<OrderModel, String> contactName;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -63,7 +65,15 @@ public class OrderController extends Application implements Initializable {
 		orderId = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(0);
 //		probill = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(1);
 //		status = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(2);
-//		customerName = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(3);
+//		customerName = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(1);
+//		billingLocationName = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(2);
+//		contactName = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(2);
+//		temperatureName = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(2);
+//		temperatureValue = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(2);
+//		temperatureTypeName = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(2);
+//		rate = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(2);
+//		poNo = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(2);
+//		currencyName = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(2);
 //		poNumber = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(4);
 //		pickUpDate = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(5);
 //		pickUpCompany = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(6);

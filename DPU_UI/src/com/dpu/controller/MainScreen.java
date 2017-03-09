@@ -108,7 +108,11 @@ public class MainScreen extends Application implements Initializable {
 
 	@FXML
 	private void lblDAction() {
-		mnuBarDatamaintenance.setVisible(true);
+		ObservableList<Node> nodes = mainScreenVBox.getChildren();
+		if(!mnuBarDatamaintenance.isVisible() && nodes != null && nodes.size() >= 3 && nodes.get(2) != null) {
+			nodes.add(2, mnuBarDatamaintenance);
+			mnuBarDatamaintenance.setVisible(true);
+		}
 	}
 	
 	@FXML
@@ -163,6 +167,9 @@ public class MainScreen extends Application implements Initializable {
 				nodes.remove(3);
 				nodes.add(3, stackPane);
 				
+			} else if(nodes != null && nodes.size() >=3 && nodes.get(2) != null && basePackage.contains(Iconstants.URL_ORDER_API) && !mnuBarDatamaintenance.isVisible()){
+				nodes.remove(2);
+				nodes.add(stackPane);
 			} else {
 //				ProgressIndicator pi = new ProgressIndicator();
 //				VBox box = new VBox(pi);
@@ -170,9 +177,11 @@ public class MainScreen extends Application implements Initializable {
 //				// Grey Background
 //				pane.setDisable(true);
 //				stackPane.getChildren().add(box);
-				if(basePackage.contains("order")) {
-					nodes.remove(3);
+//				if(basePackage.contains("order")) {
+				if(nodes != null && nodes.size() >=3 && nodes.get(2) != null && basePackage.contains(Iconstants.URL_ORDER_API) && mnuBarDatamaintenance.isVisible()) {
+					nodes.remove(2);
 				}
+//				}
 				nodes.add(stackPane);
 			}
 			return fxmlLoader.getController();
