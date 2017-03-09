@@ -8,24 +8,19 @@ import javax.swing.JOptionPane;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.dpu.client.GetAPIClient;
-import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.model.Driver;
-import com.dpu.model.Failed;
 import com.dpu.model.ProvinceStateResponse;
-import com.dpu.model.Success;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;

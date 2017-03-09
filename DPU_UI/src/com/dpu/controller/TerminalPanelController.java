@@ -15,7 +15,6 @@ import com.dpu.constants.Iconstants;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
 import com.dpu.model.Terminal;
-import com.dpu.model.Trailer;
 
 import javafx.application.Application;
 import javafx.application.Platform;

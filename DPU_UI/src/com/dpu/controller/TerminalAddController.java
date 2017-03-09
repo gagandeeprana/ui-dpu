@@ -20,47 +20,85 @@ import com.dpu.model.Terminal;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class TerminalAddController extends Application implements Initializable{
+public class TerminalAddController extends Application implements Initializable {
 
 	@FXML
 	Button btnSaveTerminal;
-	
+
 	@FXML
 	Button btnCancelTerminal, btnAddAvailableServices, btnAddNewLocation;
-	
+
 	@FXML
 	TextField txtTerminalName;
-	
+
 	@FXML
-	ComboBox<String> ddlAvailableServices, ddlLocation;
-	
+	ComboBox<DPUService> ddlAvailableServices;
+	ComboBox<String> ddlLocation;
+
 	@FXML
 	private void btnSaveTerminalAction() {
 		addTerminal();
 		closeAddTerminalScreen(btnSaveTerminal);
 	}
-	
+
 	private void closeAddTerminalScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
-        loginStage.close();
+		loginStage.close();
 	}
-	
+
 	@FXML
-	private void btnCancelTerminalAction(){
-		
+	private void btnCancelTerminalAction() {
+
 	}
-	
+	///////
+
+	// Terminal terminal = mapper.readValue(response, Terminal.class);
+	// serviceList = terminal.getServiceList();
+
+	private void createComboBox(List<DPUService> serviceList) {
+//		ComboBox<DPUService> combo = new ComboBox<>();
+		CheckBox btn = new CheckBox();
+		ddlAvailableServices.getItems().addAll(serviceList);
+		ddlAvailableServices.setCellFactory(listView -> new CheckItemListCell());
+	}
+
+	class CheckItemListCell extends ListCell<DPUService> {
+		private final CheckBox btn;
+
+		CheckItemListCell() {
+			// setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+			btn = new CheckBox();
+		}
+
+		@Override
+		protected void updateItem(DPUService item, boolean empty) {
+			super.updateItem(item, empty);
+
+			if (item == null || empty) {
+				setGraphic(null);
+			} else {
+				btn.setText(item.getServiceName());
+				// btn.selectedProperty().setValue(item.selected);
+				setGraphic(btn);
+			}
+		}
+	}
+
+	///////
 	private void addTerminal() {
-		
+
 		Platform.runLater(new Runnable() {
-			
+
 			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
@@ -69,8 +107,9 @@ public class TerminalAddController extends Application implements Initializable{
 					Terminal terminal = setTerminalValue();
 					String payload = mapper.writeValueAsString(terminal);
 					System.out.println("terminal add payload: " + payload);
-					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_TERMINAL_API, null, payload);
-//					MainScreen.terminalController.fillTerminal(response);
+					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_TERMINAL_API,
+							null, payload);
+					// MainScreen.terminalController.fillTerminal(response);
 					try {
 						Success success = mapper.readValue(response, Success.class);
 						List<Terminal> terminalList = (List<Terminal>) success.getResultList();
@@ -81,28 +120,30 @@ public class TerminalAddController extends Application implements Initializable{
 						Failed failed = mapper.readValue(response, Failed.class);
 						JOptionPane.showMessageDialog(null, failed.getMessage());
 					}
-					/*if(response != null && response.contains("message")) {
-						Success success = mapper.readValue(response, Success.class);
-						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
-					} else {
-						Failed failed = mapper.readValue(response, Failed.class);
-						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-					}*/
-//					TerminalPanelController tm=new TerminalPanelController();
-//					tm.fetchTerminals();
+					/*
+					 * if(response != null && response.contains("message")) {
+					 * Success success = mapper.readValue(response,
+					 * Success.class); JOptionPane.showMessageDialog(null,
+					 * success.getMessage() , "Info", 1); } else { Failed failed
+					 * = mapper.readValue(response, Failed.class);
+					 * JOptionPane.showMessageDialog(null, failed.getMessage(),
+					 * "Info", 1); }
+					 */
+					// TerminalPanelController tm=new TerminalPanelController();
+					// tm.fetchTerminals();
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
 				}
 			}
 		});
 	}
-	
+
 	@FXML
 	private void btnAddNewLocationAction() {
 		closeAddTerminalScreen(btnAddNewLocation);
 		ShipperController.openAddShipperScreen();
 	}
-	
+
 	@FXML
 	private void btnAddAvailableServicesAction() {
 		closeAddTerminalScreen(btnAddAvailableServices);
@@ -113,24 +154,26 @@ public class TerminalAddController extends Application implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 		fetchMasterDataForDropDowns();
 	}
-	
+
 	ObjectMapper mapper = new ObjectMapper();
-	
+
 	List<DPUService> serviceList = null;
-	
+
 	List<Shipper> shipperList = null;
-	
+
 	private void fetchMasterDataForDropDowns() {
-		
+
 		Platform.runLater(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				try {
-					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_TERMINAL_API + "/openAdd", null);
+					String response = GetAPIClient
+							.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_TERMINAL_API + "/openAdd", null);
 					Terminal terminal = mapper.readValue(response, Terminal.class);
 					serviceList = terminal.getServiceList();
-					fillDropDown(ddlAvailableServices, serviceList);
+					// fillDropDown(ddlAvailableServices, serviceList);
+					createComboBox(serviceList);
 					shipperList = terminal.getShipperList();
 					fillDropDown(ddlLocation, shipperList);
 				} catch (Exception e) {
@@ -140,17 +183,17 @@ public class TerminalAddController extends Application implements Initializable{
 			}
 		});
 	}
-	
+
 	private void fillDropDown(ComboBox<String> comboBox, List<?> list) {
-		if(comboBox != null) {
+		if (comboBox != null) {
 			comboBox.getItems().clear();
-			for(int i=0;i<list.size();i++) {
+			for (int i = 0; i < list.size(); i++) {
 				Object object = list.get(i);
-				if(object != null && object instanceof DPUService) {
+				if (object != null && object instanceof DPUService) {
 					DPUService dpuService = (DPUService) object;
 					comboBox.getItems().add(dpuService.getServiceName());
 				}
-				if(object != null && object instanceof Shipper) {
+				if (object != null && object instanceof Shipper) {
 					Shipper shipper = (Shipper) object;
 					comboBox.getItems().add(shipper.getLocationName());
 				}
