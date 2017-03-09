@@ -57,6 +57,15 @@ public class MainScreen extends Application implements Initializable {
 	
 	public static CustomBrokerController customBrokerController;
 	
+	public static CarrierController carrierController;
+
+	
+	@FXML
+	private void miCarrierAction() {
+		carrierController = (CarrierController) showPanel(Iconstants.CARRIER_BASE_PACKAGE, Iconstants.XML_CARRIER_SCREEN);
+	}
+
+	
 	@FXML
 	private void miDriverAction() {
 		driverController = (DriverController) showPanel(Iconstants.DRIVER_BASE_PACKAGE, Iconstants.XML_DRIVER_SCREEN);
