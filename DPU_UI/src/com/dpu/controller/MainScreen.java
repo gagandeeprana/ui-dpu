@@ -17,6 +17,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -102,15 +103,17 @@ public class MainScreen extends Application implements Initializable {
 
 	@FXML
 	private void lblCompanyHeaderAction() {
-		companyController = (CompanyController) showPanel(Iconstants.COMPANY_BASE_PACKAGE,
-				Iconstants.XML_COMPANY_SCREEN);
+		companyController = (CompanyController) showPanel(Iconstants.COMPANY_BASE_PACKAGE, Iconstants.XML_COMPANY_SCREEN);
 	}
 
 	@FXML
 	private void lblDAction() {
 		ObservableList<Node> nodes = mainScreenVBox.getChildren();
-		if(!mnuBarDatamaintenance.isVisible() && nodes != null && nodes.size() >= 3 && nodes.get(2) != null) {
-			nodes.add(2, mnuBarDatamaintenance);
+		if(nodes != null && nodes.size() >= 3 && nodes.get(2) != null) {
+			Node node = nodes.get(2);
+			if(node instanceof StackPane) {
+				nodes.add(2, mnuBarDatamaintenance);
+			}
 			mnuBarDatamaintenance.setVisible(true);
 		}
 	}
@@ -141,6 +144,8 @@ public class MainScreen extends Application implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+//		ObservableList<Node> nodes = mainScreenVBox.getChildren();
+//		nodes.remove(2);
 	}
 
 	private Object showPanel(String basePackage, String screenName) {
@@ -167,10 +172,10 @@ public class MainScreen extends Application implements Initializable {
 				nodes.remove(3);
 				nodes.add(3, stackPane);
 				
-			} else if(nodes != null && nodes.size() >=3 && nodes.get(2) != null && basePackage.contains(Iconstants.URL_ORDER_API) && !mnuBarDatamaintenance.isVisible()){
+			} /*else if(nodes != null && nodes.size() >=3 && nodes.get(2) != null && basePackage.contains(Iconstants.URL_ORDER_API) && !mnuBarDatamaintenance.isVisible()){
 				nodes.remove(2);
 				nodes.add(stackPane);
-			} else {
+			} */else {
 //				ProgressIndicator pi = new ProgressIndicator();
 //				VBox box = new VBox(pi);
 //				box.setAlignment(Pos.CENTER);
@@ -178,10 +183,13 @@ public class MainScreen extends Application implements Initializable {
 //				pane.setDisable(true);
 //				stackPane.getChildren().add(box);
 //				if(basePackage.contains("order")) {
-				if(nodes != null && nodes.size() >=3 && nodes.get(2) != null && basePackage.contains(Iconstants.URL_ORDER_API) && mnuBarDatamaintenance.isVisible()) {
+				/*if(nodes != null && nodes.size() >=3 && nodes.get(2) != null && basePackage.contains(Iconstants.URL_ORDER_API) && mnuBarDatamaintenance.isVisible()) {
+					nodes.remove(2);
+				}*/
+//				}
+				if(!mnuBarDatamaintenance.isVisible()) {
 					nodes.remove(2);
 				}
-//				}
 				nodes.add(stackPane);
 			}
 			return fxmlLoader.getController();
