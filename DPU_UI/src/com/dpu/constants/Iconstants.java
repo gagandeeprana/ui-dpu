@@ -3,8 +3,7 @@ package com.dpu.constants;
 public class Iconstants {
 
 	public static final String URL_SERVER = "http://localhost:8080/DPUWebProject/";
-	// public static final String URL_SERVER =
-	// "http://35.154.6.180:8080/DPUWebProject/";
+//	public static final String URL_SERVER = "http://35.154.6.180:8080/DPUWebProject/";
 
 	public static final String COMMON_BASE_PACKAGE = "com/dpu/common/xml/";
 
@@ -28,7 +27,7 @@ public class Iconstants {
 	public static final String URL_COMPANY_API = "company";
 	public static final String XML_COMPANY_ADD_SCREEN = "AddCompany.fxml";
 	public static final String XML_COMPANY_PERSONALIZE_SCREEN = "companyPersonlize.fxml";
-	// public static final String XML_COMPANY_EDIT_SCREEN = "EditCompany.fxml";
+	//public static final String XML_COMPANY_EDIT_SCREEN = "EditCompany.fxml";
 
 	public static final String TRUCK_BASE_PACKAGE = "com/dpu/truck/xml/";
 	public static final String XML_TRUCK_SCREEN = "TruckMainScreen.fxml";
@@ -59,7 +58,7 @@ public class Iconstants {
 	public static final String URL_DIVISION_API = "division";
 	public static final String XML_DIVISION_ADD_SCREEN = "AddDivision.fxml";
 	public static final String XML_DIVISION_EDIT_SCREEN = "EditDivision1.fxml";
-
+	
 	public static final String CUSTOM_BROKER_BASE_PACKAGE = "com/dpu/custombroker/xml/";
 	public static final String XML_CUSTOM_BROKER_SCREEN = "ListCustomBroker2.fxml";
 	public static final String URL_CUSTOM_BROKER_API = "custombroker";
@@ -83,42 +82,41 @@ public class Iconstants {
 	public static final String URL_EQUIPMENT_API = "equipment";
 	public static final String XML_EQUIPMENT_ADD_SCREEN = "Add Equipment Type.fxml";
 	public static final String XML_EQUIPMENT_EDIT_SCREEN = "Edit Equipment Type.fxml";
-
+	
 	public static final String URL_TYPE_API = "masterData/type";
-
+	
 	public static final String XML_ADD_BILLING_LOCATION_SCREEN = "AddBillingLocationScreen.fxml";
-	public static final String URL_DELETE_BILLING_LOCATION_API = "company";
-
+	public static final String URL_DELETE_BILLING_LOCATION_API= "company";
+	 
 	public static int val = 0;
-
-	public static final String XML_ADD_ADDITIONAL_CONTACT_SCREEN = "AdditionalContactAddScreen.fxml";
+	
+	public static final String XML_ADD_ADDITIONAL_CONTACT_SCREEN ="AdditionalContactAddScreen.fxml";
 
 	public static final String URL_STATUS_API = "status";
-
-	public static final String XML_EDIT_ADDITIONAL_CONTACT_SCREEN = "AdditionalContactEditScreen.fxml";
+	
+	public static final String XML_EDIT_ADDITIONAL_CONTACT_SCREEN ="AdditionalContactEditScreen.fxml";
 	public static final String XML_EDIT_BILLING_LOCATION_SCREEN = "EditBillingLocationScreen.fxml";
 	public static final String XML_COMPANY_EDIT_SCREEN = "EditCompanyOld.fxml";
 
-	// status
+	// status 
 	public static final String STATUS_ACTIVE = "Active";
 	public static final String STATUS_INACTIVE = "InActive";
 	public static final String COMPANY_ADDED_SUCCESS_MSG = "Company Deleted Successfully";
-
+	
 	public static final String URL_PROVINCE_API = "province";
 	public static final String XML_PROVINCE_STATE = "province_state.fxml";
 
 	public static final String URL_ORDER_API = "order";
-
+	
 	public static final String URL_HANDLING_API = "handling";
 	public static final String HANDLING_BASE_PACKAGE = "com/dpu/handling/xml/";
 	public static final String XML_HANDLING_EDIT_SCREEN = "Edit Handling.fxml";
 	public static final String XML_HANDLING_ADD_SCREEN = "Add Handling.fxml";
 	public static final String XML_HANDLING_SCREEN = "HandlingListing.fxml";
 
+
 	public static final String URL_CARRIER_API = "carrier";
 	public static final String CARRIER_BASE_PACKAGE = "com/dpu/carrier/xml/";
 	public static final String XML_CARRIER_SCREEN = "Listing Carrier.fxml";
-	public static final String XML_CARRIER_EDIT_SCREEN = "EditCarrier.fxml";
-	public static final String XML_CARRIER_ADD_SCREEN = "AddCarrier.fxml";
 
 }
