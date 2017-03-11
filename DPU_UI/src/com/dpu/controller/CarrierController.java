@@ -9,10 +9,15 @@ import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.model.AdditionalContact;
+import com.dpu.model.BillingControllerModel;
 import com.dpu.model.CarrierModel;
+import com.dpu.request.CarrierResponse;
 import com.dpu.request.CompanyModel;
+import com.dpu.request.CompanyResponse;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -21,10 +26,14 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -243,4 +252,85 @@ public class CarrierController extends Application implements Initializable {
 		});
 	}
 
+	private void fetchCarriers(String response) {
+
+		fetchColumns();
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					ObjectMapper mapper = new ObjectMapper();
+					ObservableList<CarrierModel> data = null;
+					cList = new ArrayList<CarrierModel>();
+					CarrierResponse compRes = mapper.readValue(response, CarrierResponse.class);
+
+					if (response != null && response.length() > 0) {
+						List<CarrierModel> c = compRes.getResultList();
+						for (CarrierModel ccl : c) {
+							cList.add(ccl);
+						}
+						data = FXCollections.observableArrayList(cList);
+					} else {
+						data = FXCollections.observableArrayList(cList);
+					}
+					setColumnValues();
+					tblCarrier.setItems(data);
+					tblCarrier.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Try Againnn.." + e, "Info", 1);
+				}
+			}
+		});
+	}
+
+	@FXML
+	private void btnDeleteCarrierAction() {
+		CarrierModel carrierModel = cList.get(tblCarrier.getSelectionModel().getSelectedIndex());
+		if (carrierModel != null) {
+			Platform.runLater(new Runnable() {
+
+				@Override
+				public void run() {
+					try {
+						String response = DeleteAPIClient.callDeleteAPI(
+								Iconstants.URL_SERVER + Iconstants.URL_CARRIER_API + "/" + carrierModel.getCarrierId(),
+								null);
+						fetchCarriers(response);
+						JOptionPane.showMessageDialog(null, "Carrier Deleted Successfully", "Info", 1);
+					} catch (Exception e) {
+						e.printStackTrace();
+						JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
+					}
+				}
+			});
+		}
+	}
+	private void openAddCarrierScreen() {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
+					.getResource(Iconstants.CARRIER_BASE_PACKAGE+ Iconstants.XML_CARRIER_ADD_SCREEN));
+
+			Parent root = (Parent) fxmlLoader.load();
+
+			Stage stage = new Stage();
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setTitle("Add New Carrier");
+			stage.setScene(new Scene(root));
+			stage.show();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	@FXML
+	private void btnAddCarrierAction() {
+//		CompanyEditController.selectedTabValue = 0;
+//		CompanyAddController.listOfBilling = new ArrayList<BillingControllerModel>();
+//		CompanyAddController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
+//		CompanyAddController.company = new CompanyModel();
+		openAddCarrierScreen();
+
+	}
 }
