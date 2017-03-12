@@ -5,10 +5,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1247.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.CompanyController">
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1247.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.CarrierController">
    <children>
       <Pane prefHeight="49.0" prefWidth="1239.0" style="-fx-background-color: lightgrey;" />
-      <TableView fx:id="tblCompany" layoutY="42.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#handleAddContMouseClick" prefHeight="584.0" prefWidth="1239.0">
+      <TableView fx:id="tblCarrier" layoutY="42.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"  prefHeight="584.0" prefWidth="1239.0">
          <columns>
             <TableColumn fx:id="unitNo" prefWidth="90.0" text="Carrier Name" />
             <TableColumn fx:id="name" prefWidth="84.0" text="Address" />
@@ -32,11 +32,11 @@
             <Font size="13.0" />
          </font>
       </Label>
-      <Button fx:id="btnDeleteCompany" layoutX="523.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnDeleteCompanyAction" prefHeight="25.0" prefWidth="55.0" text="Delete" />
-      <Button fx:id="btnEditCompany" layoutX="463.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnEditCompanyAction" prefHeight="25.0" prefWidth="55.0" text="  Edit  " />
-      <Button fx:id="btnGoCompany" layoutX="287.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnGoCompanyAction" prefHeight="25.0" prefWidth="32.0" text="Go" />
-      <TextField fx:id="txtGoCompany" layoutX="82.0" layoutY="11.0" prefHeight="25.0" prefWidth="200.0" promptText="Enter company name to search..." />
-      <Button fx:id="btnAddCompany" layoutX="402.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnAddCompanyAction" prefHeight="25.0" prefWidth="55.0" text="Add" />
+      <Button fx:id="btnDeleteCarrier" layoutX="523.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnDeleteCarrierAction" prefHeight="25.0" prefWidth="55.0" text="Delete" />
+      <Button fx:id="btnEditCarrier" layoutX="463.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnEditCarrierAction" prefHeight="25.0" prefWidth="55.0" text="  Edit  " />
+      <Button fx:id="btnGoCarrier" layoutX="287.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnGoCarrierAction" prefHeight="25.0" prefWidth="32.0" text="Go" />
+      <TextField fx:id="txtGoCarrier" layoutX="82.0" layoutY="11.0" prefHeight="25.0" prefWidth="200.0" promptText="Enter company name to search..." />
+      <Button id="btnAddCarrier" fx:id="btnAddCarrier" layoutX="402.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnAddCarrierAction" prefHeight="25.0" prefWidth="55.0" text="Add" />
       <CheckBox layoutX="327.0" layoutY="15.0" mnemonicParsing="false" text="Show All" />
    </children>
 </Pane>

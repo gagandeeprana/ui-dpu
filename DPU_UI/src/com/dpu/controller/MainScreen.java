@@ -64,7 +64,7 @@ public class MainScreen extends Application implements Initializable {
 
 	
 	@FXML
-	private void miCarrierAction() {
+	private void lblOutsideCarrierAction() {
 		carrierController = (CarrierController) showPanel(Iconstants.CARRIER_BASE_PACKAGE, Iconstants.XML_CARRIER_SCREEN);
 	}
 

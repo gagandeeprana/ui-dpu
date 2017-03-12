@@ -101,6 +101,11 @@
                   <Label fx:id="lblCustomBroker" onMouseClicked="#lblCustomBrokerAction" text="Custom Broker" textFill="#186a3b" />
                </graphic>
             </Menu>
+            <Menu mnemonicParsing="false">
+               <graphic>
+                  <Label fx:id="lblOutsideCarrier" onMouseClicked="#lblOutsideCarrierAction" text="Outside Carrier" textFill="#186a3b" />
+               </graphic>
+            </Menu>
          </menus>
       </MenuBar>
   </children>

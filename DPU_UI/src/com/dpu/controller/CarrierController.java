@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.CarrierModel;
@@ -41,6 +42,7 @@ public class CarrierController extends Application implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
+		fetchCarriers();
 
 	}
 
@@ -53,20 +55,20 @@ public class CarrierController extends Application implements Initializable {
 	@SuppressWarnings("unchecked")
 	private void fetchColumns() {
 		carrierName = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(0);
-		address = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(0);
-		unit = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(0);
-		city = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(0);
-		ps = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(0);
-		postalCode = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(0);
-		contact = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(0);
-		contactPosition = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(0);
-		phoneNumber = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(0);
-		extension = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(0);
-		faxNumber = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(0);
-		tollFree = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(0);
-		email = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(0);
-		apCodeCDN = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(0);
-		apCodeUS = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(0);
+		address = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(1);
+		unit = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(2);
+		city = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(3);
+		ps = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(4);
+		postalCode = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(5);
+		contact = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(6);
+		contactPosition = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(7);
+		phoneNumber = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(8);
+		extension = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(9);
+		faxNumber = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(10);
+		tollFree = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(11);
+		email = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(12);
+		apCodeCDN = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(13);
+		apCodeUS = (TableColumn<CarrierModel, String>) tblCarrier.getColumns().get(14);
 
 	}
 
@@ -241,6 +243,41 @@ public class CarrierController extends Application implements Initializable {
 				}
 			}
 		});
+	}
+
+	@FXML
+	private void btnDeleteCarrierAction() {
+		CarrierModel carrierModel = cList.get(tblCarrier.getSelectionModel().getSelectedIndex());
+		if (carrierModel != null) {
+			Platform.runLater(new Runnable() {
+
+				@Override
+				public void run() {
+					try {
+						String response = DeleteAPIClient.callDeleteAPI(
+								Iconstants.URL_SERVER + Iconstants.URL_CARRIER_API + "/" + carrierModel.getCarrierId(),
+								null);
+						fetchCarriers();
+						JOptionPane.showMessageDialog(null, "Carrier Deleted Successfully", "Info", 1);
+					} catch (Exception e) {
+						e.printStackTrace();
+						JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
+					}
+				}
+			});
+		}
+	}
+
+	@FXML
+	private void btnEditCarrierAction() {
+	}
+
+	@FXML
+	private void btnGoCarrierAction() {
+	}
+
+	@FXML
+	private void btnAddCarrierAction() {
 	}
 
 }
