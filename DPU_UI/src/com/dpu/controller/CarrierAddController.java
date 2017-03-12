@@ -9,8 +9,8 @@ import java.util.ResourceBundle;
 
 import com.dpu.constants.Iconstants;
 import com.dpu.model.AdditionalContact;
+import com.dpu.model.AddtionalCarrierContact;
 import com.dpu.model.CarrierModel;
-import com.dpu.request.CompanyModel;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -67,7 +67,7 @@ public class CarrierAddController extends Application implements Initializable {
 
 	@FXML
 	private TableColumn<AdditionalContact, String> status;
-	
+
 	@FXML
 	private TableView<AdditionalContact> tableAdditionalContact;
 
@@ -125,15 +125,35 @@ public class CarrierAddController extends Application implements Initializable {
 	@FXML
 	public TextField txtEmail;
 
-	public static  int addEditIndex = -1;
+	public static int addEditIndex = -1;
 	public static int add = 0;
 	public static int addAddtionalContact = 0;
 	public static int selectedTabValue = 0;
 	public static AdditionalContact additionalContactModel = new AdditionalContact();
-	public static ArrayList<AdditionalContact> listOfAdditionalContact = new ArrayList<AdditionalContact>();
+	public static ArrayList<AddtionalCarrierContact> listOfAdditionalContact = new ArrayList<AddtionalCarrierContact>();
 	public static CarrierModel carrierModel = new CarrierModel();
 
 	int additionalContactCountMenu = 0;
+
+	private CarrierModel setCarrierValue() {
+		carrierModel.setAddress(txtAddress.getText());
+		carrierModel.setCellular("cellular");
+		carrierModel.setCity(txtCity.getText());
+		carrierModel.setContact(txtContact.getText());
+		carrierModel.setEmail(txtEmail.getText());
+		carrierModel.setExt(txtExt.getText());
+		carrierModel.setFax(txtFax.getText());
+		carrierModel.setPhone(txtPhone.getText());
+		carrierModel.setPosition(txtPosition.getText());
+		carrierModel.setPrefix(txtPrefix.getText());
+		carrierModel.setProvinceState("province");
+		carrierModel.setTollfree(txtTollFree.getText());
+		carrierModel.setUnitNo(txtUnit.getText());
+		carrierModel.setWebsite(txtWebsite.getText());
+		carrierModel.setZip("zp");
+		carrierModel.setAdditionalContacts(listOfAdditionalContact);
+		return carrierModel;
+	}
 
 	@FXML
 	void handleAddContMouseClick(MouseEvent event) {
@@ -146,25 +166,6 @@ public class CarrierAddController extends Application implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				add = 1;
-				selectedTabValue = 1;
-				addAddtionalContact = 1;
-				carrierModel.setAddress(txtAddress.getText());
-				carrierModel.setCarrierId(Long.parseLong(txtCarrier.getText()));
-				carrierModel.setCellular(txtContact.getText());
-				carrierModel.setCity(txtCity.getText());
-				carrierModel.setContact(txtContact.getText());
-				carrierModel.setEmail(txtEmail.getText());
-				carrierModel.setExt(txtExt.getText());
-				carrierModel.setFax(txtFax.getText());
-				carrierModel.setPhone(txtPhone.getText());
-				carrierModel.setPosition(txtPosition.getText());
-				carrierModel.setPrefix(txtPrefix.getText());
-				carrierModel.setProvinceState(txtPS.getText());
-				carrierModel.setTollfree(txtTollFree.getText());
-				carrierModel.setUnitNo(txtUnit.getText());
-				carrierModel.setWebsite(txtWebsite.getText());
-				carrierModel.setZip(txtPSZE.getText());
 
 				openAddAdditionalContactScreen();
 
@@ -177,65 +178,71 @@ public class CarrierAddController extends Application implements Initializable {
 
 			}
 		});
-		MenuItem item2 = new MenuItem("EDIT");
-//		item2.setOnAction(new EventHandler<ActionEvent>() {
-//
-//			@Override
-//			public void handle(ActionEvent event) {
-//				add = 0;
-//				selectedTabValue = 1;
-//				addAddtionalContact = 0;
-//				addEditIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
-//				additionalContactModel = tableAdditionalContact.getSelectionModel().getSelectedItem();
-//				openAddAdditionalContactScreen();
-//				closeAddCarrierScreen(btnSaveCarrier);
-//
-//			}
-//		});
-
-		MenuItem item3 = new MenuItem("DELETE");
-//		item3.setOnAction(new EventHandler<ActionEvent>() {
-//
-//			@Override
-//			public void handle(ActionEvent event) {
-//				selectedTabValue = 1;
-//				addEditIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
-//				CompanyEditController.listOfAdditionalContact.remove(addEditIndex);
-//				addEditIndex = -1;
-//
-//				try {
-//					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-//							.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_ADD_SCREEN));
-//					Parent root = (Parent) fxmlLoader.load();
-//					Stage stage = new Stage();
-//					stage.initModality(Modality.APPLICATION_MODAL);
-//					stage.setTitle("Add New Company");
-//					stage.setScene(new Scene(root));
-//					stage.show();
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//				closeAddCarrierScreen(btnSaveCarrier);
-//
-//			}
-//		});
-
-		// Add MenuItem to ContextMenu
-		contextMenu.getItems().addAll(item1, item2, item3);
-
-		if (additionalContactCountMenu == 0) {
-			additionalContactCountMenu++;
-			// When user right-click on Table
-			tableAdditionalContact.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
-				@Override
-				public void handle(ContextMenuEvent event) {
-					contextMenu.show(tableAdditionalContact, event.getScreenX(), event.getScreenY());
-
-				}
-
-			});
-
-		}
+		// MenuItem item2 = new MenuItem("EDIT");
+		// item2.setOnAction(new EventHandler<ActionEvent>() {
+		//
+		// @Override
+		// public void handle(ActionEvent event) {
+		// add = 0;
+		// selectedTabValue = 1;
+		// addAddtionalContact = 0;
+		// addEditIndex =
+		// tableAdditionalContact.getSelectionModel().getSelectedIndex();
+		// additionalContactModel =
+		// tableAdditionalContact.getSelectionModel().getSelectedItem();
+		// openAddAdditionalContactScreen();
+		// closeAddCarrierScreen(btnSaveCarrier);
+		//
+		// }
+		// });
+		//
+		// MenuItem item3 = new MenuItem("DELETE");
+		// item3.setOnAction(new EventHandler<ActionEvent>() {
+		//
+		// @Override
+		// public void handle(ActionEvent event) {
+		// selectedTabValue = 1;
+		// addEditIndex =
+		// tableAdditionalContact.getSelectionModel().getSelectedIndex();
+		// CompanyEditController.listOfAdditionalContact.remove(addEditIndex);
+		// addEditIndex = -1;
+		//
+		// try {
+		// FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
+		// .getResource(Iconstants.COMPANY_BASE_PACKAGE +
+		// Iconstants.XML_COMPANY_ADD_SCREEN));
+		// Parent root = (Parent) fxmlLoader.load();
+		// Stage stage = new Stage();
+		// stage.initModality(Modality.APPLICATION_MODAL);
+		// stage.setTitle("Add New Company");
+		// stage.setScene(new Scene(root));
+		// stage.show();
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
+		// closeAddCarrierScreen(btnSaveCarrier);
+		//
+		// }
+		// });
+		//
+		// // Add MenuItem to ContextMenu
+		// contextMenu.getItems().addAll(item1, item2, item3);
+		//
+		// if (additionalContactCountMenu == 0) {
+		// additionalContactCountMenu++;
+		// // When user right-click on Table
+		// tableAdditionalContact.setOnContextMenuRequested(new
+		// EventHandler<ContextMenuEvent>() {
+		// @Override
+		// public void handle(ContextMenuEvent event) {
+		// contextMenu.show(tableAdditionalContact, event.getScreenX(),
+		// event.getScreenY());
+		//
+		// }
+		//
+		// });
+		//
+		// }
 
 	}
 
@@ -258,6 +265,7 @@ public class CarrierAddController extends Application implements Initializable {
 		assert txtCell != null : "fx:id=\"txtAddress\" was not injected: check your FXML file 'AddCompany.fxml'.";
 		assert txtEmail != null : "fx:id=\"txtAddress\" was not injected: check your FXML file 'AddCompany.fxml'.";
 	}
+
 	private void openAddAdditionalContactScreen() {
 		try {
 
@@ -274,11 +282,11 @@ public class CarrierAddController extends Application implements Initializable {
 			e.printStackTrace();
 		}
 	}
+
 	private void closeAddCarrierScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
 		loginStage.close();
 	}
-
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {

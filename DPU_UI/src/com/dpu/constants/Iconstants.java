@@ -118,5 +118,6 @@ public class Iconstants {
 	public static final String URL_CARRIER_API = "carrier";
 	public static final String CARRIER_BASE_PACKAGE = "com/dpu/carrier/xml/";
 	public static final String XML_CARRIER_SCREEN = "Listing Carrier.fxml";
+	public static final String XML_CARRIER_ADD_SCREEN = "AddCarrier.fxml";
 
 }
