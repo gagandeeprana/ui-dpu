@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import com.dpu.constants.Iconstants;
 import com.dpu.controller.database.CustomBrokerController;
 import com.dpu.controller.database.HandlingController;
+import com.dpu.controller.order.OrderController;
 
 import javafx.application.Application;
 import javafx.collections.ObservableList;
@@ -58,6 +59,8 @@ public class MainScreen extends Application implements Initializable {
 	public static CustomBrokerController customBrokerController;
 	
 	public static CarrierController carrierController;
+	
+	public static OrderController orderController;
 
 	
 	@FXML
@@ -114,9 +117,21 @@ public class MainScreen extends Application implements Initializable {
 
 	@FXML
 	private void lblDAction() {
-		mnuBarDatamaintenance.setVisible(true);
+		ObservableList<Node> nodes = mainScreenVBox.getChildren();
+		if(nodes != null && nodes.size() >= 3 && nodes.get(2) != null) {
+			Node node = nodes.get(2);
+			if(node instanceof StackPane) {
+				nodes.add(2, mnuBarDatamaintenance);
+			}
+			mnuBarDatamaintenance.setVisible(true);
+		}
 	}
-
+	
+	@FXML
+	private void lblOrderAction() {
+		orderController = (OrderController) showPanel(Iconstants.ORDER_BASE_PACKAGE, Iconstants.XML_ORDER_SCREEN);
+	}
+	
 	@FXML
 	private void miTerminalAction() {
 		terminalController = (TerminalPanelController)showPanel(Iconstants.TERMINAL_BASE_PACKAGE, Iconstants.XML_TERMINAL_SCREEN);
@@ -165,6 +180,9 @@ public class MainScreen extends Application implements Initializable {
 				nodes.add(3, stackPane);
 				
 			} else {
+				if(!mnuBarDatamaintenance.isVisible()) {
+					nodes.remove(2);
+				}
 //				ProgressIndicator pi = new ProgressIndicator();
 //				VBox box = new VBox(pi);
 //				box.setAlignment(Pos.CENTER);
