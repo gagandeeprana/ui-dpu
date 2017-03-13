@@ -11,6 +11,8 @@ public class CarrierModel {
 
 	private Long carrierId;
 
+	private String name;
+	
 	private String address;
 
 	private String unitNo;
@@ -43,6 +45,15 @@ public class CarrierModel {
 
 	private List<AddtionalCarrierContact> additionalContacts = null;
 	
+
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public List<AddtionalCarrierContact> getAdditionalContacts() {
 		return additionalContacts;
