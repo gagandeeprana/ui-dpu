@@ -299,5 +299,9 @@ public class CarrierAddController extends Application implements Initializable {
 		// TODO Auto-generated method stub
 
 	}
+	@FXML
+	private void btnCancelCarrierAction() {}
+	@FXML
+	private void btnSaveCarrierAction() {}
 
 }
