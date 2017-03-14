@@ -19,12 +19,20 @@
             <Button fx:id="btnGoEquipment" layoutX="302.0" layoutY="11.0" mnemonicParsing="false" text="Go" />
             <Button fx:id="btnAddEquipment" layoutX="413.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="Add" />
             <Button fx:id="btnEditEquipment" layoutX="473.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="Edit" />
-            <Button fx:id="btnDeleteEquipment" layoutX="533.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="Delete" />
+            <Button fx:id="btnDeleteOrder" layoutX="533.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnDeleteOrderAction" prefHeight="25.0" prefWidth="55.0" text="Delete" />
          </children>
       </AnchorPane>
-      <TableView fx:id="tblOrder" layoutY="42.0" prefHeight="758.0" prefWidth="969.0">
+      <TableView fx:id="tblOrder" layoutY="42.0" onMouseClicked="#tblOrderMouseClicked" prefHeight="758.0" prefWidth="969.0">
         <columns>
-            <TableColumn fx:id="orderId" prefWidth="206.0" text="OrderNo" />
+            <TableColumn fx:id="customerName" prefWidth="75.0" text="Name" />
+            <TableColumn fx:id="billingLocationName" prefWidth="92.0" text="Billing Location" />
+            <TableColumn fx:id="contactName" prefWidth="87.0" text="Contact Name" />
+            <TableColumn fx:id="temperatureName" prefWidth="125.0" text="Temperature Name" />
+            <TableColumn fx:id="temperatureValue" prefWidth="127.0" text="Temperature Value" />
+            <TableColumn fx:id="temperatureTypeName" prefWidth="127.0" text="Temperature Type" />
+            <TableColumn fx:id="rate" prefWidth="76.0" text="Rate" />
+            <TableColumn fx:id="poNo" prefWidth="107.0" text="PO No." />
+            <TableColumn fx:id="currencyName" prefWidth="152.0" text="Currency Name" />
         </columns>
       </TableView>
    </children>

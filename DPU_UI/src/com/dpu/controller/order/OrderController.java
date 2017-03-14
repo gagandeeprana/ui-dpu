@@ -5,13 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.swing.JOptionPane;
+
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.model.OrderAndProbillModel;
+import com.dpu.model.Failed;
 import com.dpu.model.OrderModel;
 import com.dpu.model.ProbilModel;
+import com.dpu.model.Success;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -22,12 +26,19 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -38,45 +49,88 @@ public class OrderController extends Application implements Initializable {
 	
 	@FXML
 	TableView<OrderModel> tblOrder;
-	
+
 	List<OrderModel> orders = null;
+	List<ProbilModel> probills = null;
+
 	
 	@FXML
-	TableColumn<OrderModel, String> orderId, probill, status, customerName, poNumber, pickUpDate, pickUpCompany,
-	pickUpLocation, provinceState, pickUpPostal, deliveryDate, deliveryCompany, deliveryLocation, deliveryPostal,
-	orderCharges;
+	TableColumn<OrderModel, String> billingLocationName, contactName, temperatureName, temperatureValue, temperatureTypeName, 
+	rate, poNo, currencyName, customerName;
 	
 	@FXML
 	AnchorPane equipmentParentAnchorPane;
 
+	Node detailsPane;
+
+	private void showInnerTable() {
+		tblOrder.setRowFactory(tv -> new TableRow<OrderModel>() {
+            {
+                selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+                    if(detailsPane != null) {
+	                	if (isNowSelected) { 
+	                        getChildren().add(detailsPane);
+	                    } else {
+	                        getChildren().remove(detailsPane);
+	                    }
+                    }
+                    this.requestLayout();
+                });
+            }
+
+            @Override
+            protected double computePrefHeight(double width) {
+                if (isSelected() && detailsPane != null) {
+                    return super.computePrefHeight(width)+detailsPane.prefHeight(getWidth());
+                } else {
+                    return super.computePrefHeight(width);
+                }
+            }
+
+            @Override
+            protected void layoutChildren() {
+                super.layoutChildren();
+                if (isSelected() && detailsPane != null) {
+                    double width = getWidth();
+                    double paneHeight = detailsPane.prefHeight(width);
+                    detailsPane.resizeRelocate(0, getHeight()-paneHeight, width, paneHeight);
+                } 
+            }
+        });
+	}
+ 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		fetchOrders();
 	}
-
+	
 	@Override
 	public void start(Stage primaryStage) {
 	}
+	
+	final TableView tblProbill = new TableView();
+
+	private Node createDetailsPane(TableView<ProbilModel> tblProbil) {
+        final VBox vbox = new VBox();
+        vbox.setSpacing(20);
+        vbox.setPadding(new Insets(10, 10, 10, 10));
+        vbox.getChildren().add(tblProbil);
+        return vbox;
+    }
 
 	@SuppressWarnings("unchecked")
 	private void fetchColumns() {
-		orderId = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(0);
-//		probill = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(1);
-//		status = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(2);
-//		customerName = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(3);
-//		poNumber = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(4);
-//		pickUpDate = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(5);
-//		pickUpCompany = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(6);
-//		pickUpLocation = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(7);
-//		provinceState = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(8);
-//		pickUpPostal = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(9);
-//		deliveryDate = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(10);
-//		deliveryCompany = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(11);
-//		deliveryLocation = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(12);
-//		deliveryPostal = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(13);
-//		orderCharges = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(14);
+		customerName = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(0);
+		billingLocationName = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(1);
+		contactName = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(2);
+		temperatureName = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(3);
+		temperatureValue = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(4);
+		temperatureTypeName = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(5);
+		rate = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(6);
+		poNo = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(7);
+		currencyName = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(8);
 	}
-
+	
 	/*@FXML
 	private void btnAddEquipmentAction() {
 		openAddEquipmentScreen();
@@ -98,30 +152,23 @@ public class OrderController extends Application implements Initializable {
 		}
 	}*/
 	
-	/*@FXML
-	private void btnDeleteEquipmentAction() {
-		Equipment equipment = tblEquipment.getSelectionModel().getSelectedItem();
-		if(equipment != null) {
+	@FXML
+	private void btnDeleteOrderAction() {
+		OrderModel orderModel = tblOrder.getSelectionModel().getSelectedItem();
+		if(orderModel != null) {
 			Platform.runLater(new Runnable() {
 				
 				@SuppressWarnings("unchecked")
 				@Override
 				public void run() {
 					try {
-						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_EQUIPMENT_API + "/" + equipment.getEquipmentId(), null);
-						if(response != null && response.contains("message")) {
-							Success success = mapper.readValue(response, Success.class);
-							JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
-						} else {
-							Failed failed = mapper.readValue(response, Failed.class);
-							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-						}
+						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_ORDER_API + "/" + orderModel.getId(), null);
 						try {
 							Success success = mapper.readValue(response, Success.class);
-							List<Equipment> equipmentList = (List<Equipment>) success.getResultList();
-							String res = mapper.writeValueAsString(equipmentList);
+							List<OrderModel> orderModelList = (List<OrderModel>) success.getResultList();
+							String res = mapper.writeValueAsString(orderModelList);
 							JOptionPane.showMessageDialog(null, success.getMessage());
-							fillEquipments(res);
+							fillOrders(res);
 						} catch (Exception e) {
 							Failed failed = mapper.readValue(response, Failed.class);
 							JOptionPane.showMessageDialog(null, failed.getMessage());
@@ -132,7 +179,7 @@ public class OrderController extends Application implements Initializable {
 				}
 			});
 		}
-	}*/
+	}
 	
 	/*@FXML
 	private void btnGoEquipmentAction() {
@@ -234,33 +281,101 @@ public class OrderController extends Application implements Initializable {
 
 	}
 	
+	public void fetchProbills(int orderId) {
+		
+		fetchColumnsForProbills();
+		
+		Platform.runLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_ORDER_API + "/" + orderId, null);
+					fillProbills(response);
+				} catch (Exception e) {
+				}
+			}
+		});
+	}
+	@SuppressWarnings("unchecked")
+	private void fillProbills(String response) {
+
+		ObservableList<ProbilModel> data = null;
+		probills = new ArrayList<ProbilModel>();
+		fetchColumns();
+		if(response != null && response.length() > 0) {
+			ProbilModel c[];
+			try {
+				c = mapper.readValue(response, ProbilModel[].class);
+				for(ProbilModel ccl : c) {
+					probills.add(ccl);
+				}
+				data = FXCollections.observableArrayList(probills);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			data = FXCollections.observableArrayList(probills);
+		}
+		tblProbill.setItems(data);
+        tblProbill.setVisible(true);
+       
+	}
+	
+	private void fetchColumnsForProbills() {
+		
+		TableColumn<ProbilModel, String> firstCol = new TableColumn<ProbilModel, String>("Probill No");
+		TableColumn<ProbilModel, String> secCol = new TableColumn<ProbilModel, String>("Shipper Name");
+		TableColumn<ProbilModel, String> thirdCol = new TableColumn<ProbilModel, String>("Consignee Name");
+		TableColumn<ProbilModel, String> fourthCol = new TableColumn<ProbilModel, String>("Pickup Dt.");
+		TableColumn<ProbilModel, String> fifthCol = new TableColumn<ProbilModel, String>("Pickup Time");
+		TableColumn<ProbilModel, String> sixthCol = new TableColumn<ProbilModel, String>("Delivery Dt.");
+		TableColumn<ProbilModel, String> seventhCol = new TableColumn<ProbilModel, String>("Delivery Time");
+
+	        firstCol.setMinWidth(100);
+	        firstCol.setCellValueFactory(new PropertyValueFactory<>("probilNo"));
+	        
+	        secCol.setMinWidth(100);
+	        secCol.setCellValueFactory(new PropertyValueFactory<>("shipperName"));
+	 
+	        thirdCol.setMinWidth(100);
+	        thirdCol.setCellValueFactory(new PropertyValueFactory<>("consineeName"));
+	        
+	        fourthCol.setMinWidth(100);
+	        fourthCol.setCellValueFactory(new PropertyValueFactory<>("pickupMABDate"));
+	        
+	        fifthCol.setMinWidth(100);
+	        fifthCol.setCellValueFactory(new PropertyValueFactory<>("pickupMABTime"));
+	        
+	        sixthCol.setMinWidth(100);
+	        firstCol.setCellValueFactory(new PropertyValueFactory<>("deliveryMABDate"));
+	        
+	        seventhCol.setMinWidth(100);
+	        seventhCol.setCellValueFactory(new PropertyValueFactory<>("deliveryMABTime"));
+	        tblProbill.getColumns().addAll(firstCol, secCol,thirdCol,fourthCol,fifthCol,sixthCol,seventhCol);
+
+		
+	}
+
 	public void fillOrders(String response) {
 		
 		try {
+			showInnerTable();
 			ObservableList<OrderModel> data = null;
 			orders = new ArrayList<OrderModel>();
 			setColumnValues();
-//			List<OrderAndProbillModel> listOrderAndProbill = new ArrayList<>();
 			if(response != null && response.length() > 0) {
 				OrderModel c[] = mapper.readValue(response, OrderModel[].class);
 				for(OrderModel ccl : c) {
 					orders.add(ccl);
 				}
-				/*for(OrderModel orderModel : orders) {
-					List<ProbilModel> probilModelList = orderModel.getProbilList();
-					for(ProbilModel probilModel : probilModelList) {
-						OrderAndProbillModel orderAndProbill = new OrderAndProbillModel();
-						orderAndProbill.setOrderModel(orderModel);
-						orderAndProbill.setProbilModel(probilModel);
-						listOrderAndProbill.add(orderAndProbill);
-					}
-				}*/
 				data = FXCollections.observableArrayList(orders);
 			} else {
 				data = FXCollections.observableArrayList(orders);
 			}
 			tblOrder.setItems(data);
             tblOrder.setVisible(true);
+            
 		} catch (Exception e) {
 			System.out.println("OrderController: fillOrders(): "+ e.getMessage());
 		}
@@ -268,13 +383,77 @@ public class OrderController extends Application implements Initializable {
 	
 	private void setColumnValues() {
 		
-		orderId.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<OrderModel, String>, ObservableValue<String>>() {
+		customerName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<OrderModel, String>, ObservableValue<String>>() {
+					
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<OrderModel, String> param) {
+						return new SimpleStringProperty(param.getValue().getCompanyName() + "");
+					}
+				});
+		billingLocationName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<OrderModel, String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<OrderModel, String> param) {
-				return new SimpleStringProperty(param.getValue().getId() + "");
+				return new SimpleStringProperty(param.getValue().getBillingLocationName() + "");
 			}
 		});
+		contactName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<OrderModel, String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<OrderModel, String> param) {
+				return new SimpleStringProperty(param.getValue().getContactName() + "");
+			}
+		});
+		temperatureName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<OrderModel, String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<OrderModel, String> param) {
+				return new SimpleStringProperty(param.getValue().getTemperatureName() + "");
+			}
+		});
+		temperatureValue.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<OrderModel, String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<OrderModel, String> param) {
+				return new SimpleStringProperty(param.getValue().getTemperatureValue() + "");
+			}
+		});
+		temperatureTypeName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<OrderModel, String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<OrderModel, String> param) {
+				return new SimpleStringProperty(param.getValue().getTemperatureTypeName() + "");
+			}
+		});
+		rate.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<OrderModel, String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<OrderModel, String> param) {
+				return new SimpleStringProperty(param.getValue().getRate() + "");
+			}
+		});
+		poNo.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<OrderModel, String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<OrderModel, String> param) {
+				return new SimpleStringProperty(param.getValue().getPoNo() + "");
+			}
+		});
+		currencyName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<OrderModel, String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<OrderModel, String> param) {
+				return new SimpleStringProperty(param.getValue().getCurrencyName() + "");
+			}
+		});
+	}
+	
+	@FXML
+	private void tblOrderMouseClicked(MouseEvent event) {
+		if(event.getButton() == MouseButton.PRIMARY) {
+			detailsPane = createDetailsPane(tblProbill);
+	        showInnerTable();
+		}
 	}
 	// ADD MENU
 
