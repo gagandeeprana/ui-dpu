@@ -14,9 +14,9 @@
                   <Font size="13.0" />
                </font>
             </Text>
-            <TextField fx:id="txtSearchEquipment" focusTraversable="false" layoutX="88.0" layoutY="9.0" prefHeight="25.0" prefWidth="207.0" />
+            <TextField fx:id="txtSearchOrders" focusTraversable="false" layoutX="88.0" layoutY="9.0" prefHeight="25.0" prefWidth="207.0" promptText="Enter company name to search orders..." />
             <CheckBox layoutX="340.0" layoutY="14.0" mnemonicParsing="false" text="Show All" />
-            <Button fx:id="btnGoEquipment" layoutX="302.0" layoutY="11.0" mnemonicParsing="false" text="Go" />
+            <Button fx:id="btnGoOrder" layoutX="302.0" layoutY="11.0" mnemonicParsing="false" onAction="#txtSearchOrdersAction" text="Go" />
             <Button fx:id="btnAddEquipment" layoutX="413.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="Add" />
             <Button fx:id="btnEditEquipment" layoutX="473.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="Edit" />
             <Button fx:id="btnDeleteOrder" layoutX="533.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnDeleteOrderAction" prefHeight="25.0" prefWidth="55.0" text="Delete" />

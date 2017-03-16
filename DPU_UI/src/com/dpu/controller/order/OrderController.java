@@ -34,6 +34,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -53,6 +54,8 @@ public class OrderController extends Application implements Initializable {
 	List<OrderModel> orders = null;
 	List<ProbilModel> probills = null;
 
+	@FXML
+	TextField txtSearchOrders;
 	
 	@FXML
 	TableColumn<OrderModel, String> billingLocationName, contactName, temperatureName, temperatureValue, temperatureTypeName, 
@@ -108,15 +111,7 @@ public class OrderController extends Application implements Initializable {
 	public void start(Stage primaryStage) {
 	}
 	
-	final TableView tblProbill = new TableView();
-
-	private Node createDetailsPane(TableView<ProbilModel> tblProbil) {
-        final VBox vbox = new VBox();
-        vbox.setSpacing(20);
-        vbox.setPadding(new Insets(10, 10, 10, 10));
-        vbox.getChildren().add(tblProbil);
-        return vbox;
-    }
+	final TableView<ProbilModel> tblProbill = new TableView<ProbilModel>();
 
 	@SuppressWarnings("unchecked")
 	private void fetchColumns() {
@@ -181,17 +176,17 @@ public class OrderController extends Application implements Initializable {
 		}
 	}
 	
-	/*@FXML
-	private void btnGoEquipmentAction() {
-		String searchEquipment = txtSearchEquipment.getText();
-		if(searchEquipment != null && searchEquipment.length() > 0) {
+	@FXML
+	private void txtSearchOrdersAction() {
+		String searchOrders = txtSearchOrders.getText();
+		if(searchOrders != null && searchOrders.length() > 0) {
 			Platform.runLater(new Runnable() {
 				
 				@Override
 				public void run() {
 					try {
-						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_EQUIPMENT_API + "/" + searchEquipment + "/search", null);
-						fillEquipments(response);
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_ORDER_API + "/" + searchOrders + "/search", null);
+						fillOrders(response);
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
 					}
@@ -200,14 +195,14 @@ public class OrderController extends Application implements Initializable {
 			
 		}
 		
-		if(searchEquipment != null && searchEquipment.length() == 0) {
+		if(searchOrders != null && searchOrders.length() == 0) {
 			Platform.runLater(new Runnable() {
 				
 				@Override
 				public void run() {
 					try {
-						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_EQUIPMENT_API, null);
-						fillEquipments(response);
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_ORDER_API, null);
+						fillOrders(response);
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
 					}
@@ -215,7 +210,7 @@ public class OrderController extends Application implements Initializable {
 			});
 			
 		}
-	}*/
+	}
 	
 	/*@FXML
 	private void btnEditEquipmentAction() {
@@ -281,9 +276,9 @@ public class OrderController extends Application implements Initializable {
 
 	}
 	
-	public void fetchProbills(int orderId) {
+	public Node fetchProbills(long orderId) {
 		
-		fetchColumnsForProbills();
+		Node node = fetchColumnsForProbills();
 		
 		Platform.runLater(new Runnable() {
 			
@@ -296,21 +291,23 @@ public class OrderController extends Application implements Initializable {
 				}
 			}
 		});
+		return node;
 	}
-	@SuppressWarnings("unchecked")
+	
 	private void fillProbills(String response) {
 
 		ObservableList<ProbilModel> data = null;
 		probills = new ArrayList<ProbilModel>();
 		fetchColumns();
 		if(response != null && response.length() > 0) {
-			ProbilModel c[];
+		
 			try {
-				c = mapper.readValue(response, ProbilModel[].class);
-				for(ProbilModel ccl : c) {
+				OrderModel orderModel = mapper.readValue(response, OrderModel.class);
+				List<ProbilModel> c = orderModel.getProbilList();
+				/*for(ProbilModel ccl : c) {
 					probills.add(ccl);
-				}
-				data = FXCollections.observableArrayList(probills);
+				}*/
+				data = FXCollections.observableArrayList(c);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -322,7 +319,8 @@ public class OrderController extends Application implements Initializable {
        
 	}
 	
-	private void fetchColumnsForProbills() {
+	@SuppressWarnings("unchecked")
+	private Node fetchColumnsForProbills() {
 		
 		TableColumn<ProbilModel, String> firstCol = new TableColumn<ProbilModel, String>("Probill No");
 		TableColumn<ProbilModel, String> secCol = new TableColumn<ProbilModel, String>("Shipper Name");
@@ -332,29 +330,32 @@ public class OrderController extends Application implements Initializable {
 		TableColumn<ProbilModel, String> sixthCol = new TableColumn<ProbilModel, String>("Delivery Dt.");
 		TableColumn<ProbilModel, String> seventhCol = new TableColumn<ProbilModel, String>("Delivery Time");
 
-	        firstCol.setMinWidth(100);
-	        firstCol.setCellValueFactory(new PropertyValueFactory<>("probilNo"));
-	        
-	        secCol.setMinWidth(100);
-	        secCol.setCellValueFactory(new PropertyValueFactory<>("shipperName"));
-	 
-	        thirdCol.setMinWidth(100);
-	        thirdCol.setCellValueFactory(new PropertyValueFactory<>("consineeName"));
-	        
-	        fourthCol.setMinWidth(100);
-	        fourthCol.setCellValueFactory(new PropertyValueFactory<>("pickupMABDate"));
-	        
-	        fifthCol.setMinWidth(100);
-	        fifthCol.setCellValueFactory(new PropertyValueFactory<>("pickupMABTime"));
-	        
-	        sixthCol.setMinWidth(100);
-	        firstCol.setCellValueFactory(new PropertyValueFactory<>("deliveryMABDate"));
-	        
-	        seventhCol.setMinWidth(100);
-	        seventhCol.setCellValueFactory(new PropertyValueFactory<>("deliveryMABTime"));
-	        tblProbill.getColumns().addAll(firstCol, secCol,thirdCol,fourthCol,fifthCol,sixthCol,seventhCol);
-
-		
+        firstCol.setMinWidth(100);
+        firstCol.setCellValueFactory(new PropertyValueFactory<>("probilNo"));
+        
+        secCol.setMinWidth(100);
+        secCol.setCellValueFactory(new PropertyValueFactory<>("shipperName"));
+ 
+        thirdCol.setMinWidth(100);
+        thirdCol.setCellValueFactory(new PropertyValueFactory<>("consineeName"));
+        
+        fourthCol.setMinWidth(100);
+        fourthCol.setCellValueFactory(new PropertyValueFactory<>("pickupMABDate"));
+        
+        fifthCol.setMinWidth(100);
+        fifthCol.setCellValueFactory(new PropertyValueFactory<>("pickupMABTime"));
+        
+        sixthCol.setMinWidth(100);
+        firstCol.setCellValueFactory(new PropertyValueFactory<>("deliveryMABDate"));
+        
+        seventhCol.setMinWidth(100);
+        seventhCol.setCellValueFactory(new PropertyValueFactory<>("deliveryMABTime"));
+        tblProbill.getColumns().addAll(firstCol, secCol,thirdCol,fourthCol,fifthCol,sixthCol,seventhCol);
+        final VBox vbox = new VBox();
+        vbox.setSpacing(20);
+        vbox.setPadding(new Insets(10, 10, 10, 10));
+        vbox.getChildren().add(tblProbill);
+        return vbox;
 	}
 
 	public void fillOrders(String response) {
@@ -369,6 +370,7 @@ public class OrderController extends Application implements Initializable {
 				for(OrderModel ccl : c) {
 					orders.add(ccl);
 				}
+				counter = new int[orders.size()];
 				data = FXCollections.observableArrayList(orders);
 			} else {
 				data = FXCollections.observableArrayList(orders);
@@ -448,11 +450,14 @@ public class OrderController extends Application implements Initializable {
 		});
 	}
 	
+	int counter[];
+	
 	@FXML
 	private void tblOrderMouseClicked(MouseEvent event) {
-		if(event.getButton() == MouseButton.PRIMARY) {
-			detailsPane = createDetailsPane(tblProbill);
-	        showInnerTable();
+		if(event.getButton() == MouseButton.PRIMARY && counter[tblOrder.getSelectionModel().getSelectedIndex()] == 0) {
+			detailsPane = fetchProbills(tblOrder.getSelectionModel().getSelectedItem().getId());
+	        counter[tblOrder.getSelectionModel().getSelectedIndex()]++;
+			showInnerTable();
 		}
 	}
 	// ADD MENU
