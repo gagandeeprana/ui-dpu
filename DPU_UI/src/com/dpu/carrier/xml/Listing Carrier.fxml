@@ -8,7 +8,7 @@
 <Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1247.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.CarrierController">
    <children>
       <Pane prefHeight="49.0" prefWidth="1239.0" style="-fx-background-color: lightgrey;" />
-      <TableView fx:id="tblCarrier" layoutY="42.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"  prefHeight="584.0" prefWidth="1239.0">
+      <TableView fx:id="tblCarrier" layoutY="42.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="584.0" prefWidth="1239.0">
          <columns>
             <TableColumn fx:id="unitNo" prefWidth="90.0" text="Carrier Name" />
             <TableColumn fx:id="name" prefWidth="84.0" text="Address" />
@@ -23,8 +23,8 @@
             <TableColumn prefWidth="74.0" text="Fax Number" />
             <TableColumn prefWidth="75.0" text="Toll Free" />
             <TableColumn prefWidth="75.0" text="Email" />
-            <TableColumn prefWidth="75.0" text="A/P Code(CDN)" />
-            <TableColumn prefWidth="75.0" text="A/P Code(U.S)" />
+            <TableColumn prefWidth="68.0" text="A/P Code(CDN)" />
+            <TableColumn prefWidth="82.0" text="A/P Code(U.S)" />
          </columns>
       </TableView>
       <Label layoutX="15.0" layoutY="15.0" text="Quick Filter">

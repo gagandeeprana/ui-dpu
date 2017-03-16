@@ -26,117 +26,121 @@ public class AdditionCaarierContactAddController implements Initializable {
 
 	@FXML
 	private Button btnSaveAdditionalContact;
-	@FXML
-	private ComboBox<String> ddlStatus;
 
 	@FXML
-	private TextField txtAdditionalContact;
+	private TextField txtIncCompany;
 
 	@FXML
-	private TextField txtCellular;
+	private TextField txtPolicyNumber;
+
+	@FXML
+	private TextField txtIncBroker;
+
+	@FXML
+	private TextField txtBrokerContact;
+
+	@FXML
+	private TextField txtBrokerPhone;
 
 	@FXML
 	private TextField txtEmail;
 
 	@FXML
-	private TextField txtExtension;
+	private TextField txtExt;
 
 	@FXML
-	private TextField txtFax;
+	private TextField txtBrokerFax;
 
 	@FXML
-	private TextField txtPager;
+	private TextField txtCongCoverage;
 
 	@FXML
-	private TextField txtPhone;
+	private TextField txtLibilityCoverage;
+
+	// @FXML
+	// void initialize() {
+	// assert btnCancelAdditionalContact != null :
+	// "fx:id=\"btnCancelAdditionalContact\" was not injected: check your FXML
+	// file 'AdditionalContactAddScreen.fxml'.";
+	// assert btnSaveAdditionalContact != null :
+	// "fx:id=\"btnSaveAdditionalContact\" was not injected: check your FXML
+	// file 'AdditionalContactAddScreen.fxml'.";
+	// assert ddlStatus != null : "fx:id=\"ddlStatus\" was not injected: check
+	// your FXML file 'AdditionalContactAddScreen.fxml'.";
+	// assert txtAdditionalContact != null : "fx:id=\"txtAdditionalContact\" was
+	// not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
+	// assert txtCellular != null : "fx:id=\"txtCellular\" was not injected:
+	// check your FXML file 'AdditionalContactAddScreen.fxml'.";
+	// assert txtEmail != null : "fx:id=\"txtEmail\" was not injected: check
+	// your FXML file 'AdditionalContactAddScreen.fxml'.";
+	// assert txtExtension != null : "fx:id=\"txtExtension\" was not injected:
+	// check your FXML file 'AdditionalContactAddScreen.fxml'.";
+	// assert txtFax != null : "fx:id=\"txtFax\" was not injected: check your
+	// FXML file 'AdditionalContactAddScreen.fxml'.";
+	// assert txtPager != null : "fx:id=\"txtPager\" was not injected: check
+	// your FXML file 'AdditionalContactAddScreen.fxml'.";
+	// assert txtPhone != null : "fx:id=\"txtPhone\" was not injected: check
+	// your FXML file 'AdditionalContactAddScreen.fxml'.";
+	// assert txtPosition != null : "fx:id=\"txtPosition\" was not injected:
+	// check your FXML file 'AdditionalContactAddScreen.fxml'.";
+	//
+	// }
 
 	@FXML
-	private TextField txtPosition;
-
-	@FXML
-	void initialize() {
-		assert btnCancelAdditionalContact != null : "fx:id=\"btnCancelAdditionalContact\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-		assert btnSaveAdditionalContact != null : "fx:id=\"btnSaveAdditionalContact\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-		// assert chkActualDelivery != null : "fx:id=\"chkActualDelivery\" was
-		// not injected: check your FXML file
-		// 'AdditionalContactAddScreen.fxml'.";
-		// assert chkActualPickupDetails != null :
-		// "fx:id=\"chkActualPickupDetails\" was not injected: check your FXML
-		// file 'AdditionalContactAddScreen.fxml'.";
-		// assert chkETADeliveryDetails != null :
-		// "fx:id=\"chkETADeliveryDetails\" was not injected: check your FXML
-		// file 'AdditionalContactAddScreen.fxml'.";
-		// assert chkETAPickupDetails != null : "fx:id=\"chkETAPickupDetails\"
-		// was not injected: check your FXML file
-		// 'AdditionalContactAddScreen.fxml'.";
-		// assert chkOrderConfirmation != null : "fx:id=\"chkOrderConfirmation\"
-		// was not injected: check your FXML file
-		// 'AdditionalContactAddScreen.fxml'.";
-		assert ddlStatus != null : "fx:id=\"ddlStatus\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-		assert txtAdditionalContact != null : "fx:id=\"txtAdditionalContact\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-		assert txtCellular != null : "fx:id=\"txtCellular\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-		assert txtEmail != null : "fx:id=\"txtEmail\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-		assert txtExtension != null : "fx:id=\"txtExtension\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-		assert txtFax != null : "fx:id=\"txtFax\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-		assert txtPager != null : "fx:id=\"txtPager\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-		assert txtPhone != null : "fx:id=\"txtPhone\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-		assert txtPosition != null : "fx:id=\"txtPosition\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-
-	}
-
-	@FXML
-	void btnCancelAdditionalCarrierContactAction(ActionEvent event) {
-		try {
-			CompanyAddController.selectedTabValue = 1;
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-					.getResource(Iconstants.CARRIER_BASE_PACKAGE + Iconstants.XML_CARRIER_ADD_SCREEN));
-			Parent root = (Parent) fxmlLoader.load();
-
-			Stage stage = new Stage();
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add New Carrier");
-			stage.setScene(new Scene(root));
-			stage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	void btnCancelAdditionalContactAction(ActionEvent event) {
+		openAddCarrierScree();
 		closeAddAdditionalContactScreen(btnCancelAdditionalContact);
 	}
 
 	@FXML
-	void btnSaveAdditionalCarrierContactAction(ActionEvent event) {
+	void btnSaveAdditionalContactAction(ActionEvent event) {
 		try {
 
-			String additionalContact = txtAdditionalContact.getText();
-			String position = txtPosition.getText();
-			String phone = txtPhone.getText();
-			String extension = txtExtension.getText();
-			String fax = txtFax.getText();
-			String pager = txtPager.getText();
-			String cellular = txtCellular.getText();
-			String ext = txtExtension.getText();
-			String status = ddlStatus.getSelectionModel().getSelectedItem();
+			String brokerContact = txtBrokerContact.getText();
+			String brokerFax = txtBrokerFax.getText();
+			String brokerPhone = txtBrokerPhone.getText();
+			String congCoverage = txtCongCoverage.getText();
 			String email = txtEmail.getText();
+			String ext = txtExt.getText();
+			String incBroker = txtIncBroker.getText();
+			String company = txtIncCompany.getText();
+			String libilityCoverage = txtLibilityCoverage.getText();
+			String policyNumber = txtPolicyNumber.getText();
 
-			AddtionalCarrierContact addtionalCarrierContact = new AddtionalCarrierContact(additionalContact, position,
-					phone, ext, fax, pager, cellular, status, email);
-			CarrierAddController.listOfAdditionalContact.add(addtionalCarrierContact);
-
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-					.getResource(Iconstants.CARRIER_BASE_PACKAGE + Iconstants.XML_CARRIER_ADD_SCREEN));
-			Parent root = (Parent) fxmlLoader.load();
-
-			Stage stage = new Stage();
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add New Carrier");
-			stage.setScene(new Scene(root));
-			stage.show();
+			AddtionalCarrierContact addtionalCarrierContact = new AddtionalCarrierContact(company, policyNumber,
+					incBroker, brokerContact, brokerPhone, ext, congCoverage, libilityCoverage, brokerFax, email);
+			if (CarrierAddController.addAddtionalContact == 0) {
+				CarrierAddController.listOfAdditionalContact.set(CarrierAddController.addEditIndex,
+						addtionalCarrierContact);
+			} else if (CarrierAddController.addAddtionalContact == 1) {
+				CarrierAddController.listOfAdditionalContact.add(addtionalCarrierContact);
+			}
+			// CarrierAddController.listOfAdditionalContact.add(addtionalCarrierContact);
+			openAddCarrierScree();
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		closeAddAdditionalContactScreen(btnSaveAdditionalContact);
+	}
+
+	private void openAddCarrierScree() {
+		try {
+
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
+					.getResource(Iconstants.CARRIER_BASE_PACKAGE + Iconstants.XML_CARRIER_ADD_SCREEN));
+			Parent root = (Parent) fxmlLoader.load();
+
+			Stage stage = new Stage();
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setTitle("Add New Carrier");
+			stage.setScene(new Scene(root));
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	private void closeAddAdditionalContactScreen(Button clickedButton) {
@@ -146,6 +150,18 @@ public class AdditionCaarierContactAddController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		if (CarrierAddController.additionalContactModel != null) {
+			txtBrokerContact.setText(CarrierAddController.additionalContactModel.getBrokerContact());
+			txtBrokerFax.setText(CarrierAddController.additionalContactModel.getBrokerFax());
+			txtBrokerPhone.setText(CarrierAddController.additionalContactModel.getBrokerPhone());
+			txtCongCoverage.setText(CarrierAddController.additionalContactModel.getCongCoverage());
+			txtEmail.setText(CarrierAddController.additionalContactModel.getEmail());
+			txtExt.setText(CarrierAddController.additionalContactModel.getExt());
+			txtIncBroker.setText(CarrierAddController.additionalContactModel.getIncBroker());
+			txtIncCompany.setText(CarrierAddController.additionalContactModel.getIncCompany());
+			txtLibilityCoverage.setText(CarrierAddController.additionalContactModel.getLibilityCoverage());
+			txtPolicyNumber.setText(CarrierAddController.additionalContactModel.getPolicyNumber());
+		}
 
 	}
 

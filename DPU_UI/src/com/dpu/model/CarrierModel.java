@@ -43,7 +43,7 @@ public class CarrierModel {
 
 	private String email;
 
-	private List<AddtionalCarrierContact> additionalContacts = null;
+	private List<AddtionalCarrierContact> carrierAdditionalContactModel = null;
 	
 
 	
@@ -56,11 +56,11 @@ public class CarrierModel {
 	}
 
 	public List<AddtionalCarrierContact> getAdditionalContacts() {
-		return additionalContacts;
+		return carrierAdditionalContactModel;
 	}
 
 	public void setAdditionalContacts(List<AddtionalCarrierContact> additionalContacts) {
-		this.additionalContacts = additionalContacts;
+		this.carrierAdditionalContactModel = additionalContacts;
 	}
 
 	public Long getCarrierId() {

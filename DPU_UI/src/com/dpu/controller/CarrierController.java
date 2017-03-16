@@ -12,6 +12,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.model.AddtionalCarrierContact;
 import com.dpu.model.CarrierModel;
 import com.dpu.request.CompanyModel;
 
@@ -83,7 +84,7 @@ public class CarrierController extends Application implements Initializable {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<CarrierModel, String> param) {
-						return new SimpleStringProperty("no value" + "");
+						return new SimpleStringProperty(param.getValue().getName() + "");
 					}
 				});
 
@@ -274,6 +275,48 @@ public class CarrierController extends Application implements Initializable {
 
 	@FXML
 	private void btnEditCarrierAction() {
+		CarrierModel carrierModel = cList.get(tblCarrier.getSelectionModel().getSelectedIndex());
+		if (carrierModel != null) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						String response = GetAPIClient.callGetAPI(
+								Iconstants.URL_SERVER + Iconstants.URL_CARRIER_API + "/" + carrierModel.getCarrierId(),
+								null);
+						if (response != null && response.length() > 1) {
+							CarrierModel carrierModel = mapper.readValue(response, CarrierModel.class);
+							CarrierEditController carrierEditController = (CarrierEditController) openEditCarrierScreen();
+							carrierEditController.initData(carrierModel);
+						}
+
+					} catch (Exception e) {
+						e.printStackTrace();
+						JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
+					}
+				}
+			});
+		}
+	}
+
+	private Object openEditCarrierScreen() {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
+					.getResource(Iconstants.CARRIER_BASE_PACKAGE + Iconstants.XML_CARRIER_Edit_SCREEN));
+
+			Parent root = (Parent) fxmlLoader.load();
+
+			Stage stage = new Stage();
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setTitle("Edit Carrier");
+			stage.setScene(new Scene(root));
+			stage.show();
+			return fxmlLoader.getController();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@FXML
@@ -283,6 +326,8 @@ public class CarrierController extends Application implements Initializable {
 
 	@FXML
 	private void btnAddCarrierAction() {
+		CarrierAddController.listOfAdditionalContact = new ArrayList<AddtionalCarrierContact>();
+		CarrierAddController.carrierModel = new CarrierModel();
 		openAddCarrierScreen();
 	}
 

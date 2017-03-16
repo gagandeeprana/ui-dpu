@@ -121,5 +121,6 @@ public class Iconstants {
 	public static final String CARRIER_BASE_PACKAGE = "com/dpu/carrier/xml/";
 	public static final String XML_CARRIER_SCREEN = "Listing Carrier.fxml";
 	public static final String XML_CARRIER_ADD_SCREEN = "AddCarrier.fxml";
-
+	public static final String XML_CARRIER_Edit_SCREEN = "EditCarrier.fxml";
+	public static final String XML_ADD_CARRIER_ADDITIONAL_CONTACT_SCREEN ="AdditionalCarrierContactAddScreen.fxml";
 }
