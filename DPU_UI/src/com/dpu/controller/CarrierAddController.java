@@ -1,18 +1,27 @@
-/**
- * 
- */
+
 package com.dpu.controller;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javax.swing.JOptionPane;
+
+import org.codehaus.jackson.map.ObjectMapper;
+
+import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.model.AdditionalContact;
 import com.dpu.model.AddtionalCarrierContact;
 import com.dpu.model.CarrierModel;
+import com.dpu.model.Failed;
+import com.dpu.model.Success;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -23,7 +32,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.ContextMenuEvent;
@@ -31,6 +42,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 /**
  * @author jagvir
@@ -42,34 +54,34 @@ public class CarrierAddController extends Application implements Initializable {
 	private Pane addCarrierPane;
 
 	@FXML
-	private TableColumn<AdditionalContact, String> additionalContact;
+	private TableColumn<AddtionalCarrierContact, String> incCompany;
 
 	@FXML
-	private TableColumn<AdditionalContact, String> position;
+	private TableColumn<AddtionalCarrierContact, String> policyNumber;
 
 	@FXML
-	private TableColumn<AdditionalContact, String> phoneNo;
+	private TableColumn<AddtionalCarrierContact, String> incBroker;
 
 	@FXML
-	private TableColumn<AdditionalContact, String> faxNo;
+	private TableColumn<AddtionalCarrierContact, String> brokerContact;
 
 	@FXML
-	private TableColumn<AdditionalContact, String> cellular;
+	private TableColumn<AddtionalCarrierContact, String> brokerPhone;
 
 	@FXML
-	private TableColumn<AdditionalContact, String> email;
+	private TableColumn<AddtionalCarrierContact, String> ext;
 
 	@FXML
-	private TableColumn<AdditionalContact, String> extension;
+	private TableColumn<AddtionalCarrierContact, String> congCoverage;
 
 	@FXML
-	private TableColumn<AdditionalContact, String> pager;
+	private TableColumn<AddtionalCarrierContact, String> email;
 
 	@FXML
-	private TableColumn<AdditionalContact, String> status;
+	private TableColumn<AddtionalCarrierContact, String> brokerFax;
 
 	@FXML
-	private TableView<AdditionalContact> tableAdditionalContact;
+	private TableView<AddtionalCarrierContact> tableAdditionalContact;
 
 	@FXML
 	private Button btnSaveCarrier;
@@ -93,7 +105,7 @@ public class CarrierAddController extends Application implements Initializable {
 	public TextField txtPS;
 
 	@FXML
-	public TextField txtPSZE;
+	public TextField txtPCZe;
 
 	@FXML
 	public TextField txtWebsite;
@@ -125,11 +137,14 @@ public class CarrierAddController extends Application implements Initializable {
 	@FXML
 	public TextField txtEmail;
 
+	@FXML
+	private TabPane tabPane;
+
 	public static int addEditIndex = -1;
 	public static int add = 0;
 	public static int addAddtionalContact = 0;
 	public static int selectedTabValue = 0;
-	public static AdditionalContact additionalContactModel = new AdditionalContact();
+	public static AddtionalCarrierContact additionalContactModel = new AddtionalCarrierContact();
 	public static ArrayList<AddtionalCarrierContact> listOfAdditionalContact = new ArrayList<AddtionalCarrierContact>();
 	public static CarrierModel carrierModel = new CarrierModel();
 
@@ -150,7 +165,8 @@ public class CarrierAddController extends Application implements Initializable {
 		carrierModel.setTollfree(txtTollFree.getText());
 		carrierModel.setUnitNo(txtUnit.getText());
 		carrierModel.setWebsite(txtWebsite.getText());
-		carrierModel.setZip("zp");
+		carrierModel.setName(txtCarrier.getText());
+		// carrierModel.setZip("null");
 		carrierModel.setAdditionalContacts(listOfAdditionalContact);
 		return carrierModel;
 	}
@@ -166,6 +182,22 @@ public class CarrierAddController extends Application implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
+				addAddtionalContact = 1;
+				carrierModel.setAddress(txtAddress.getText());
+				carrierModel.setCellular(txtCell.getText());
+				carrierModel.setCity(txtCity.getText());
+				carrierModel.setContact(txtContact.getText());
+				carrierModel.setEmail(txtEmail.getText());
+				carrierModel.setExt(txtExt.getText());
+				carrierModel.setFax(txtFax.getText());
+				carrierModel.setPhone(txtPhone.getText());
+				carrierModel.setPosition(txtPosition.getText());
+				carrierModel.setPrefix(txtPrefix.getText());
+				carrierModel.setProvinceState("province");
+				carrierModel.setTollfree(txtTollFree.getText());
+				carrierModel.setUnitNo(txtUnit.getText());
+				carrierModel.setWebsite(txtWebsite.getText());
+				carrierModel.setName(txtCarrier.getText());
 
 				openAddAdditionalContactScreen();
 
@@ -178,104 +210,119 @@ public class CarrierAddController extends Application implements Initializable {
 
 			}
 		});
-		// MenuItem item2 = new MenuItem("EDIT");
-		// item2.setOnAction(new EventHandler<ActionEvent>() {
-		//
-		// @Override
-		// public void handle(ActionEvent event) {
-		// add = 0;
-		// selectedTabValue = 1;
-		// addAddtionalContact = 0;
-		// addEditIndex =
-		// tableAdditionalContact.getSelectionModel().getSelectedIndex();
-		// additionalContactModel =
-		// tableAdditionalContact.getSelectionModel().getSelectedItem();
-		// openAddAdditionalContactScreen();
-		// closeAddCarrierScreen(btnSaveCarrier);
-		//
-		// }
-		// });
-		//
-		// MenuItem item3 = new MenuItem("DELETE");
-		// item3.setOnAction(new EventHandler<ActionEvent>() {
-		//
-		// @Override
-		// public void handle(ActionEvent event) {
-		// selectedTabValue = 1;
-		// addEditIndex =
-		// tableAdditionalContact.getSelectionModel().getSelectedIndex();
-		// CompanyEditController.listOfAdditionalContact.remove(addEditIndex);
-		// addEditIndex = -1;
-		//
-		// try {
-		// FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-		// .getResource(Iconstants.COMPANY_BASE_PACKAGE +
-		// Iconstants.XML_COMPANY_ADD_SCREEN));
-		// Parent root = (Parent) fxmlLoader.load();
-		// Stage stage = new Stage();
-		// stage.initModality(Modality.APPLICATION_MODAL);
-		// stage.setTitle("Add New Company");
-		// stage.setScene(new Scene(root));
-		// stage.show();
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
-		// closeAddCarrierScreen(btnSaveCarrier);
-		//
-		// }
-		// });
-		//
-		// // Add MenuItem to ContextMenu
-		// contextMenu.getItems().addAll(item1, item2, item3);
-		//
-		// if (additionalContactCountMenu == 0) {
-		// additionalContactCountMenu++;
-		// // When user right-click on Table
-		// tableAdditionalContact.setOnContextMenuRequested(new
-		// EventHandler<ContextMenuEvent>() {
-		// @Override
-		// public void handle(ContextMenuEvent event) {
-		// contextMenu.show(tableAdditionalContact, event.getScreenX(),
-		// event.getScreenY());
-		//
-		// }
-		//
-		// });
-		//
-		// }
+		MenuItem item2 = new MenuItem("EDIT");
+		item2.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				add = 0;
+				selectedTabValue = 1;
+				addAddtionalContact = 0;
+				addEditIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
+				additionalContactModel = tableAdditionalContact.getSelectionModel().getSelectedItem();
+				openAddAdditionalContactScreen();
+				closeAddCarrierScreen(btnSaveCarrier);
+
+			}
+		});
+
+		MenuItem item3 = new MenuItem("DELETE");
+		item3.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				selectedTabValue = 1;
+				addEditIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
+				CarrierAddController.listOfAdditionalContact.remove(addEditIndex);
+				addEditIndex = -1;
+
+				try {
+					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
+							.getResource(Iconstants.CARRIER_BASE_PACKAGE + Iconstants.XML_CARRIER_ADD_SCREEN));
+					Parent root = (Parent) fxmlLoader.load();
+					Stage stage = new Stage();
+					stage.initModality(Modality.APPLICATION_MODAL);
+					stage.setTitle("Add New Carrier");
+					stage.setScene(new Scene(root));
+					stage.show();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				closeAddCarrierScreen(btnSaveCarrier);
+
+			}
+		});
+
+		// Add MenuItem to ContextMenu
+		contextMenu.getItems().addAll(item1, item2, item3);
+
+		// When user right-click on Table
+		tableAdditionalContact.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+			@Override
+			public void handle(ContextMenuEvent event) {
+				contextMenu.show(tableAdditionalContact, event.getScreenX(), event.getScreenY());
+
+			}
+
+		});
 
 	}
 
 	@FXML
 	void initialize() {
 		assert addCarrierPane != null : "fx:id=\"addCarierPane\" was not injected: check your FXML file 'AddCarrier.fxml'.";
-		assert txtCarrier != null : "fx:id=\"txtCarier\" was not injected: check your FXML file 'AddCarrier.fxml'.";
-		assert txtAddress != null : "fx:id=\"txtAddress\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtUnit != null : "fx:id=\"txtAddress\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtCity != null : "fx:id=\"txtAddress\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtPS != null : "fx:id=\"txtAddress\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtWebsite != null : "fx:id=\"txtAddress\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtContact != null : "fx:id=\"txtAddress\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtPosition != null : "fx:id=\"txtAddress\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtPhone != null : "fx:id=\"txtAddress\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtExt != null : "fx:id=\"txtAddress\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtFax != null : "fx:id=\"txtAddress\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtPrefix != null : "fx:id=\"txtAddress\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtTollFree != null : "fx:id=\"txtAddress\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtCell != null : "fx:id=\"txtAddress\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtEmail != null : "fx:id=\"txtAddress\" was not injected: check your FXML file 'AddCompany.fxml'.";
+		assert tableAdditionalContact != null : "fx:id=\"tableAdditionalContact\" was not injected: check your FXML file 'AddCarrier.fxml'.";
+		// assert txtCarrier != null : "fx:id=\"txtCarier\" was not injected:
+		// check
+		// your FXML file 'AddCarrier.fxml'.";
+		// assert txtAddress != null : "fx:id=\"txtAddress\" was not injected:
+		// check
+		// your FXML file 'AddCompany.fxml'.";
+		// assert txtUnit != null : "fx:id=\"txtAddress\" was not injected:
+		// check
+		// your FXML file 'AddCompany.fxml'.";
+		// assert txtCity != null : "fx:id=\"txtAddress\" was not injected:
+		// check
+		// your FXML file 'AddCompany.fxml'.";
+		// assert txtPS != null : "fx:id=\"txtAddress\" was not injected: check
+		// your
+		// FXML file 'AddCompany.fxml'.";
+		// assert txtWebsite != null : "fx:id=\"txtAddress\" was not injected:
+		// check
+		// your FXML file 'AddCompany.fxml'.";
+		// assert txtContact != null : "fx:id=\"txtAddress\" was not injected:
+		// check
+		// your FXML file 'AddCompany.fxml'.";
+		// assert txtPosition != null : "fx:id=\"txtAddress\" was not injected:
+		// check your FXML file 'AddCompany.fxml'.";
+		// assert txtPhone != null : "fx:id=\"txtAddress\" was not injected:
+		// check
+		// your FXML file 'AddCompany.fxml'.";
+		// assert txtExt != null : "fx:id=\"txtAddress\" was not injected: check
+		// your FXML file 'AddCompany.fxml'.";
+		// assert txtFax != null : "fx:id=\"txtAddress\" was not injected: check
+		// your FXML file 'AddCompany.fxml'.";
+		// assert txtPrefix != null : "fx:id=\"txtAddress\" was not injected:
+		// check
+		// your FXML file 'AddCompany.fxml'.";
+		// assert txtTollFree != null : "fx:id=\"txtAddress\" was not injected:
+		// check your FXML file 'AddCompany.fxml'.";
+		// assert txtCell != null : "fx:id=\"txtAddress\" was not injected:
+		// check
+		// your FXML file 'AddCompany.fxml'.";
+		// assert txtEmail != null : "fx:id=\"txtAddress\" was not injected:
+		// check
+		// your FXML file 'AddCompany.fxml'.";
 	}
 
 	private void openAddAdditionalContactScreen() {
 		try {
-
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-					.getResource(Iconstants.CARRIER_BASE_PACKAGE + Iconstants.XML_ADD_ADDITIONAL_CONTACT_SCREEN));
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(
+					Iconstants.CARRIER_BASE_PACKAGE + Iconstants.XML_ADD_CARRIER_ADDITIONAL_CONTACT_SCREEN));
 			Parent root = (Parent) fxmlLoader.load();
-
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add Additional Contact");
+			stage.setTitle("Add Additional Carrier Contact");
 			stage.setScene(new Scene(root));
 			stage.show();
 		} catch (Exception e) {
@@ -288,8 +335,163 @@ public class CarrierAddController extends Application implements Initializable {
 		loginStage.close();
 	}
 
+	private void addCarrier() {
+
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					ObjectMapper mapper = new ObjectMapper();
+					CarrierModel carrierModel = setCarrierValue();
+
+					String payload = mapper.writeValueAsString(carrierModel);
+
+					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_CARRIER_API,
+							null, payload);
+
+					if (response != null && response.contains("message")) {
+						Success success = mapper.readValue(response, Success.class);
+						JOptionPane.showMessageDialog(null, success.getMessage(), "Info", 1);
+					} else {
+						Failed failed = mapper.readValue(response, Failed.class);
+						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
+					}
+					MainScreen.carrierController.fetchCarriers();
+				} catch (Exception e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+				}
+			}
+		});
+	}
+
+	private void setAdditionalContactColumnValues() {
+
+		incCompany.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<AddtionalCarrierContact, String> param) {
+						return new SimpleStringProperty(param.getValue().getIncCompany() + "");
+					}
+				});
+		policyNumber.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<AddtionalCarrierContact, String> param) {
+						return new SimpleStringProperty(param.getValue().getPolicyNumber() + "");
+					}
+				});
+		incBroker.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<AddtionalCarrierContact, String> param) {
+						return new SimpleStringProperty(param.getValue().getIncBroker() + "");
+					}
+				});
+		brokerContact.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<AddtionalCarrierContact, String> param) {
+						return new SimpleStringProperty(param.getValue().getBrokerContact() + "");
+					}
+				});
+		brokerPhone.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<AddtionalCarrierContact, String> param) {
+						return new SimpleStringProperty(param.getValue().getBrokerPhone() + "");
+					}
+				});
+		ext.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<AddtionalCarrierContact, String> param) {
+						return new SimpleStringProperty(param.getValue().getExt() + "");
+					}
+				});
+		congCoverage.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<AddtionalCarrierContact, String> param) {
+						return new SimpleStringProperty(param.getValue().getCongCoverage() + "");
+					}
+				});
+		email.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<AddtionalCarrierContact, String> param) {
+						return new SimpleStringProperty(param.getValue().getEmail() + "");
+					}
+				});
+		brokerFax.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<AddtionalCarrierContact, String> param) {
+						return new SimpleStringProperty(param.getValue().getBrokerFax() + "");
+					}
+				});
+
+	}
+
+	public void fetchAdditionalCarrierContacts() {
+		// setAdditionalContactColumnValues();
+
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+
+					if (CarrierAddController.listOfAdditionalContact != null
+							& !(CarrierAddController.listOfAdditionalContact.isEmpty())) {
+
+						ObservableList<AddtionalCarrierContact> data = FXCollections
+								.observableArrayList(CarrierAddController.listOfAdditionalContact);
+						setAdditionalContactColumnValues();
+						tableAdditionalContact.setItems(data);
+						tableAdditionalContact.setVisible(true);
+					}
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Try Again..  " + e, "Info", 1);
+				}
+			}
+
+		});
+	}
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		fetchAdditionalCarrierContacts();
+		txtAddress.setText(CarrierAddController.carrierModel.getAddress());
+		txtCarrier.setText(CarrierAddController.carrierModel.getName());
+		txtCell.setText(CarrierAddController.carrierModel.getCellular());
+		txtCity.setText(CarrierAddController.carrierModel.getCity());
+		txtContact.setText(CarrierAddController.carrierModel.getContact());
+		txtEmail.setText(CarrierAddController.carrierModel.getEmail());
+		txtExt.setText(CarrierAddController.carrierModel.getExt());
+		txtFax.setText(CarrierAddController.carrierModel.getFax());
+		txtPCZe.setText("null");
+		txtPhone.setText(CarrierAddController.carrierModel.getPhone());
+		txtPosition.setText(CarrierAddController.carrierModel.getPosition());
+		txtPrefix.setText(CarrierAddController.carrierModel.getPrefix());
+		txtPS.setText(CarrierAddController.carrierModel.getProvinceState());
+		txtTollFree.setText(CarrierAddController.carrierModel.getTollfree());
+		txtUnit.setText(CarrierAddController.carrierModel.getUnitNo());
+		txtWebsite.setText(CarrierAddController.carrierModel.getWebsite());
+		tabPane.getSelectionModel().select(1);
+
 		// TODO Auto-generated method stub
 
 	}
@@ -299,9 +501,16 @@ public class CarrierAddController extends Application implements Initializable {
 		// TODO Auto-generated method stub
 
 	}
+
 	@FXML
-	private void btnCancelCarrierAction() {}
+	private void btnCancelCarrierAction() {
+		closeAddCarrierScreen(btnCancelCarrier);
+	}
+
 	@FXML
-	private void btnSaveCarrierAction() {}
+	private void btnSaveCarrierAction() {
+		addCarrier();
+		closeAddCarrierScreen(btnSaveCarrier);
+	}
 
 }
