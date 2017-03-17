@@ -458,8 +458,11 @@ public class OrderController extends Application implements Initializable {
 			detailsPane = fetchProbills(tblOrder.getSelectionModel().getSelectedItem().getId());
 	        counter[tblOrder.getSelectionModel().getSelectedIndex()]++;
 			showInnerTable();
+		} else if(event.getButton() == MouseButton.PRIMARY && counter[tblOrder.getSelectionModel().getSelectedIndex()] == 1){
+			
 		}
 	}
+	
 	// ADD MENU
 
 /*			public int tblEquipmentMenuCount = 0;
