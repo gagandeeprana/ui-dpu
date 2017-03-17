@@ -49,7 +49,8 @@ public class Login extends Application implements Initializable{
 		if(obj != null && obj instanceof Pane) {
 			Pane pane = (Pane) obj;
 			pane.prefWidthProperty().bind(stage.widthProperty());
-			tableView.prefWidthProperty().bind(stage.widthProperty());
+			if(tableView != null)
+				tableView.prefWidthProperty().bind(stage.widthProperty());
 		}
 	}
 	

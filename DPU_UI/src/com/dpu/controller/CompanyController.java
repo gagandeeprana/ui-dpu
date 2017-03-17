@@ -42,11 +42,13 @@ import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -58,7 +60,9 @@ public class CompanyController extends Application implements Initializable {
 	String newText = filterBy;
 	MouseEvent me;
 
- 
+	@FXML
+	Pane root, headerPaneCompany;
+	
 	private void filterBySelectedValue() {
 		
 		tblCompany.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
@@ -111,7 +115,7 @@ public class CompanyController extends Application implements Initializable {
 	@FXML
 	TableView<CompanyModel> tblCompany;
 	@FXML
-	private Button btnGoCompany;
+	private ImageView btnGoCompany;
 
 	@FXML
 	private TextField txtGoCompany;
@@ -346,6 +350,8 @@ public class CompanyController extends Application implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		Login.setWidthForAll(root, tblCompany);
+		Login.setWidthForAll(headerPaneCompany, null);
 		// textfield.setVisible(false);
 		fetchCompanies();
 		unitNo.setVisible(unitNumber);

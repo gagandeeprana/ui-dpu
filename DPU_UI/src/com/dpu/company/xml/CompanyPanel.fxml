@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -8,7 +9,30 @@
 
 <Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1015.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.CompanyController">
    <children>
-      <Pane prefHeight="49.0" prefWidth="1015.0" style="-fx-background-color: lightgrey;" />
+      <Pane fx:id="headerPaneCompany" prefHeight="49.0" prefWidth="1015.0" style="-fx-background-color: #d6eaf8;">
+         <children>
+            <TextField fx:id="txtGoCompany" focusTraversable="false" layoutX="768.0" layoutY="5.0" prefHeight="32.0" prefWidth="200.0" promptText="Enter company name to search..." />
+            <ImageView fx:id="btnGoCompany" fitHeight="32.0" fitWidth="32.0" layoutX="974.0" layoutY="5.0" onMouseClicked="#btnGoCompanyAction" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="com/dpu/common/xml/search.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="btnDeleteCompany" fitHeight="32.0" fitWidth="32.0" layoutX="97.0" layoutY="5.0" onMouseClicked="#btnDeleteCompanyAction" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="com/dpu/common/xml/delete.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="btnEditCompany" fitHeight="32.0" fitWidth="32.0" layoutX="56.0" layoutY="5.0" onMouseClicked="#btnEditCompanyAction" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="com/dpu/common/xml/edit.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="btnAddCompany" fitHeight="32.0" fitWidth="32.0" layoutX="14.0" layoutY="5.0" onMouseClicked="#btnAddCompanyAction" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="com/dpu/common/xml/plus.png" />
+               </image>
+            </ImageView>
+         </children></Pane>
       <TableView fx:id="tblCompany" layoutY="42.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#handleAddContMouseClick" prefHeight="584.0" prefWidth="1015.0">
         <columns>
           <TableColumn fx:id="unitNo" prefWidth="112.0" text="UnitNo" />
@@ -22,17 +46,6 @@
             <TableColumn fx:id="afterHours" prefWidth="112.0" text="After Hours" />
         </columns>
       </TableView>
-      <Label layoutX="15.0" layoutY="15.0" text="Quick Filter">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </Label>
-      <Button fx:id="btnDeleteCompany" layoutX="523.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnDeleteCompanyAction" prefHeight="25.0" prefWidth="55.0" text="Delete" />
-      <Button fx:id="btnEditCompany" layoutX="463.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnEditCompanyAction" prefHeight="25.0" prefWidth="55.0" text="  Edit  " />
-      <Button fx:id="btnGoCompany" layoutX="287.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnGoCompanyAction" prefHeight="25.0" prefWidth="32.0" text="Go" />
-      <TextField fx:id="txtGoCompany" layoutX="82.0" layoutY="11.0" prefHeight="25.0" prefWidth="200.0" promptText="Enter company name to search..." />
-      <Button fx:id="btnAddCompany" layoutX="402.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnAddCompanyAction" prefHeight="25.0" prefWidth="55.0" text="Add" />
-      <CheckBox layoutX="327.0" layoutY="15.0" mnemonicParsing="false" text="Show All" />
    </children>
   <!--  <TextField fx:id="textfield" layoutX="29.0" layoutY="298.0" onAction="#onEnter" prefWidth="121.0"  promptText="Enter here to filter"/> -->
   <!--  <TextField fx:id="yourTextField" onKeyPressed="#handleEnterPressed"> -->
