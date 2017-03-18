@@ -161,7 +161,7 @@ public class CarrierAddController extends Application implements Initializable {
 		carrierModel.setPhone(txtPhone.getText());
 		carrierModel.setPosition(txtPosition.getText());
 		carrierModel.setPrefix(txtPrefix.getText());
-		carrierModel.setProvinceState("province");
+		carrierModel.setProvinceState(txtPS.getText());
 		carrierModel.setTollfree(txtTollFree.getText());
 		carrierModel.setUnitNo(txtUnit.getText());
 		carrierModel.setWebsite(txtWebsite.getText());
@@ -193,7 +193,7 @@ public class CarrierAddController extends Application implements Initializable {
 				carrierModel.setPhone(txtPhone.getText());
 				carrierModel.setPosition(txtPosition.getText());
 				carrierModel.setPrefix(txtPrefix.getText());
-				carrierModel.setProvinceState("province");
+				carrierModel.setProvinceState(txtPS.getText());
 				carrierModel.setTollfree(txtTollFree.getText());
 				carrierModel.setUnitNo(txtUnit.getText());
 				carrierModel.setWebsite(txtWebsite.getText());
@@ -344,6 +344,7 @@ public class CarrierAddController extends Application implements Initializable {
 				try {
 					ObjectMapper mapper = new ObjectMapper();
 					CarrierModel carrierModel = setCarrierValue();
+					// System.out.println("size:::"+carrierModel.getAdditionalContacts().size());
 
 					String payload = mapper.writeValueAsString(carrierModel);
 
@@ -444,7 +445,6 @@ public class CarrierAddController extends Application implements Initializable {
 	}
 
 	public void fetchAdditionalCarrierContacts() {
-		// setAdditionalContactColumnValues();
 
 		Platform.runLater(new Runnable() {
 
@@ -461,7 +461,7 @@ public class CarrierAddController extends Application implements Initializable {
 						tableAdditionalContact.setItems(data);
 						tableAdditionalContact.setVisible(true);
 					}
-					
+
 				} catch (Exception e) {
 					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, "Try Again..  " + e, "Info", 1);

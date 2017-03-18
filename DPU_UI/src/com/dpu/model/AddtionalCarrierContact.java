@@ -1,34 +1,59 @@
 package com.dpu.model;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
-@JsonSerialize(include = Inclusion.NON_NULL)
+//@JsonSerialize(include = Inclusion.NON_NULL)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 public class AddtionalCarrierContact {
 
+	// @JsonProperty("additionalContactId")
 	private Long additionalContactId;
 
+	private Long carrierId;
+
+	// @JsonProperty("incCompany")
 	private String incCompany;
 
+	// @JsonProperty("policyNumber")
 	private String policyNumber;
 
+	// @JsonProperty("incBroker")
 	private String incBroker;
 
+	// @JsonProperty("brokerContact")
 	private String brokerContact;
 
+	// @JsonProperty("brokerPhone")
 	private String brokerPhone;
 
+	// @JsonProperty("ext")
 	private String ext;
 
+	// @JsonProperty("expiryDate")
 	private Integer expiryDate;
 
+	// @JsonProperty("congCoverage")
 	private String congCoverage;
 
+	// @JsonProperty("libilityCoverage")
 	private String libilityCoverage;
 
+	// @JsonProperty("brokerFax")
 	private String brokerFax;
 
+	// @JsonProperty("email")
 	private String email;
+
+	public Long getCarrierId() {
+		return carrierId;
+	}
+
+	public void setCarrierId(Long carrierId) {
+		this.carrierId = carrierId;
+	}
 
 	public AddtionalCarrierContact() {
 		super();
@@ -142,6 +167,7 @@ public class AddtionalCarrierContact {
 		return email;
 	}
 
+	@JsonProperty("email")
 	public void setEmail(String email) {
 		this.email = email;
 	}

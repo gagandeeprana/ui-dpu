@@ -97,7 +97,7 @@
 					<content>
 						<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 							<children>
-								<TableView fx:id="tableAdditionalContact" layoutX="1.0"  prefHeight="296.0" prefWidth="661.0">
+								<TableView fx:id="tableAdditionalContact" layoutX="1.0"  onMouseClicked="#handleAddContMouseClick" prefHeight="296.0" prefWidth="661.0">
 									<columns>
 										<TableColumn fx:id="incCompany" prefWidth="79.0" text="Inc Company" />
 										<TableColumn fx:id="policyNumber" prefWidth="90.0" text="Policy Number" />

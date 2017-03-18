@@ -14,7 +14,6 @@ import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.AddtionalCarrierContact;
 import com.dpu.model.CarrierModel;
-import com.dpu.request.CompanyModel;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -28,8 +27,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -120,7 +119,7 @@ public class CarrierController extends Application implements Initializable {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<CarrierModel, String> param) {
-						return new SimpleStringProperty("no value" + "");
+						return new SimpleStringProperty(param.getValue().getProvinceState() + "");
 					}
 				});
 
@@ -275,6 +274,9 @@ public class CarrierController extends Application implements Initializable {
 
 	@FXML
 	private void btnEditCarrierAction() {
+		CarrierEditController.listOfAdditionalContact = new ArrayList<AddtionalCarrierContact>();
+		CarrierEditController.carrierModel = new CarrierModel();
+		CarrierEditController.selectedTabValue = 1;
 		CarrierModel carrierModel = cList.get(tblCarrier.getSelectionModel().getSelectedIndex());
 		if (carrierModel != null) {
 			Platform.runLater(new Runnable() {
@@ -287,6 +289,38 @@ public class CarrierController extends Application implements Initializable {
 								null);
 						if (response != null && response.length() > 1) {
 							CarrierModel carrierModel = mapper.readValue(response, CarrierModel.class);
+
+							if (carrierModel.getAdditionalContacts() != null) {
+								int addtionalContactSize = carrierModel.getAdditionalContacts().size();
+								for (int j = 0; j < addtionalContactSize; j++) {
+									AddtionalCarrierContact additionalContact = new AddtionalCarrierContact();
+
+									additionalContact.setCarrierId(carrierModel.getCarrierId());
+									additionalContact.setAdditionalContactId(
+											carrierModel.getAdditionalContacts().get(j).getAdditionalContactId());
+									additionalContact.setBrokerContact(
+											carrierModel.getAdditionalContacts().get(j).getBrokerContact());
+									additionalContact
+											.setBrokerFax(carrierModel.getAdditionalContacts().get(j).getBrokerFax());
+									additionalContact.setBrokerPhone(
+											carrierModel.getAdditionalContacts().get(j).getBrokerPhone());
+									additionalContact.setCongCoverage(
+											carrierModel.getAdditionalContacts().get(j).getCongCoverage());
+									additionalContact.setEmail(carrierModel.getAdditionalContacts().get(j).getEmail());
+									additionalContact.setExt(carrierModel.getAdditionalContacts().get(j).getExt());
+									additionalContact
+											.setIncBroker(carrierModel.getAdditionalContacts().get(j).getIncBroker());
+									additionalContact
+											.setIncCompany(carrierModel.getAdditionalContacts().get(j).getIncCompany());
+									additionalContact.setLibilityCoverage(
+											carrierModel.getAdditionalContacts().get(j).getLibilityCoverage());
+									additionalContact.setPolicyNumber(
+											carrierModel.getAdditionalContacts().get(j).getPolicyNumber());
+
+									CarrierEditController.listOfAdditionalContact.add(additionalContact);
+								}
+							}
+
 							CarrierEditController carrierEditController = (CarrierEditController) openEditCarrierScreen();
 							carrierEditController.initData(carrierModel);
 						}
