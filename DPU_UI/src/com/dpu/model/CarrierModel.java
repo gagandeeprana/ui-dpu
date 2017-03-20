@@ -2,17 +2,20 @@ package com.dpu.model;
 
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
 @JsonSerialize(include = Inclusion.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+
 public class CarrierModel {
 
 	private Long carrierId;
 
 	private String name;
-	
+
 	private String address;
 
 	private String unitNo;
@@ -43,10 +46,9 @@ public class CarrierModel {
 
 	private String email;
 
+	@JsonProperty("carrierAdditionalContactModel")
 	private List<AddtionalCarrierContact> carrierAdditionalContactModel = null;
-	
 
-	
 	public String getName() {
 		return name;
 	}

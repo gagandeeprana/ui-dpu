@@ -123,4 +123,5 @@ public class Iconstants {
 	public static final String XML_CARRIER_ADD_SCREEN = "AddCarrier.fxml";
 	public static final String XML_CARRIER_Edit_SCREEN = "EditCarrier.fxml";
 	public static final String XML_ADD_CARRIER_ADDITIONAL_CONTACT_SCREEN ="AdditionalCarrierContactAddScreen.fxml";
+	public static final String XML_EDIT_CARRIER_ADDITIONAL_CONTACT_SCREEN ="AdditionalCarrierContactEditScreen.fxml";
 }
