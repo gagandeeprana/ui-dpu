@@ -5,6 +5,7 @@ import java.util.List;
  
 public class Company {
 
+	private Long companyId;
     private String name;
     private String address;
     private String unitNo;
@@ -26,8 +27,15 @@ public class Company {
     private List<BillingControllerModel> billingLocations = null;
     private List<AdditionalContact> additionalContacts = null;
     
+    public Long getCompanyId() {
+		return companyId;
+	}
 
-    public String getName() {
+	public void setCompanyId(Long companyId) {
+		this.companyId = companyId;
+	}
+
+	public String getName() {
         return name;
     }
 

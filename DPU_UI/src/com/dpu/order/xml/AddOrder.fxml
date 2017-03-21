@@ -7,20 +7,19 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="566.0" prefWidth="886.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<AnchorPane prefHeight="573.0" prefWidth="895.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.order.OrderAddController">
    <children>
-      <Label layoutY="-1.0" prefHeight="29.0" prefWidth="886.0" style="-fx-background-color: lightgrey; -fx-border-color: black;" text="  Add Order">
+      <Label layoutY="-1.0" prefHeight="29.0" prefWidth="895.0" style="-fx-background-color: lightgrey; -fx-border-color: black;" text="  Add Order">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <Button layoutX="588.0" layoutY="502.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Cancel">
+      <Button layoutX="809.0" layoutY="533.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Cancel">
          <font>
             <Font size="13.0" />
          </font>
       </Button>
-      <Button fx:id="btnSaveDriver" layoutX="518.0" layoutY="502.0" mnemonicParsing="false" onAction="#btnSaveDriverAction" prefHeight="25.0" prefWidth="65.0" text="Save">
+      <Button fx:id="btnSaveOrder" layoutX="741.0" layoutY="533.0" mnemonicParsing="false" onAction="#btnSaveOrderAction" prefHeight="25.0" prefWidth="65.0" text="Save">
          <font>
             <Font size="13.0" />
          </font>
@@ -51,7 +50,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="14.0" layoutY="70.0" text="Location">
+      <Label layoutX="14.0" layoutY="70.0" text="Bill To">
          <font>
             <Font size="14.0" />
          </font>
@@ -61,12 +60,12 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <ComboBox fx:id="ddlTerminal1" layoutX="88.0" layoutY="35.0" prefHeight="25.0" prefWidth="270.0">
+      <ComboBox fx:id="ddlCustomer" layoutX="88.0" layoutY="35.0" prefHeight="25.0" prefWidth="270.0">
          <items>
             <FXCollections fx:factory="observableArrayList" />
          </items>
       </ComboBox>
-      <ComboBox fx:id="ddlTerminal12" layoutX="88.0" layoutY="67.0" prefHeight="25.0" prefWidth="270.0">
+      <ComboBox fx:id="ddlAdditionalContacts" layoutX="88.0" layoutY="67.0" prefHeight="25.0" prefWidth="270.0">
          <items>
             <FXCollections fx:factory="observableArrayList" />
          </items>
@@ -127,7 +126,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txtHome" layoutX="463.0" layoutY="67.0" prefHeight="25.0" prefWidth="240.0" />
+      <TextField fx:id="txtPONo" layoutX="463.0" layoutY="67.0" prefHeight="25.0" prefWidth="240.0" />
       <Button layoutX="300.0" layoutY="99.0" mnemonicParsing="false" text="+" />
       <Button layoutX="333.0" layoutY="99.0" mnemonicParsing="false" text="-" />
       <Label layoutX="368.0" layoutY="102.0" text="Category">
@@ -141,8 +140,8 @@
          </items>
       </ComboBox>
       <Separator layoutX="14.0" layoutY="130.0" prefHeight="3.0" prefWidth="818.0" />
-      <TextField fx:id="txtHome1" layoutX="463.0" layoutY="35.0" prefHeight="25.0" prefWidth="240.0" />
-      <ComboBox fx:id="ddlTerminal1111" layoutX="89.0" layoutY="137.0" prefHeight="25.0" prefWidth="240.0">
+      <TextField fx:id="txtCallerName" layoutX="463.0" layoutY="35.0" prefHeight="25.0" prefWidth="240.0" />
+      <ComboBox fx:id="ddlShipper" layoutX="89.0" layoutY="137.0" prefHeight="25.0" prefWidth="240.0">
          <items>
             <FXCollections fx:factory="observableArrayList" />
          </items>
@@ -157,7 +156,7 @@
             <Font size="11.0" />
          </font>
       </Button>
-      <ComboBox fx:id="ddlTerminal11111" layoutX="463.0" layoutY="137.0" prefHeight="25.0" prefWidth="240.0">
+      <ComboBox fx:id="ddlConsignee" layoutX="463.0" layoutY="137.0" prefHeight="25.0" prefWidth="240.0">
          <items>
             <FXCollections fx:factory="observableArrayList" />
          </items>
@@ -328,15 +327,97 @@
             <FXCollections fx:factory="observableArrayList" />
          </items>
       </ComboBox>
-      <ComboBox fx:id="ddlCategory1111" layoutX="92.0" layoutY="492.0" prefHeight="25.0" prefWidth="58.0">
+      <ComboBox fx:id="ddlCategory1111" layoutX="88.0" layoutY="500.0" prefHeight="25.0" prefWidth="58.0">
          <items>
             <FXCollections fx:factory="observableArrayList" />
          </items>
       </ComboBox>
-      <Label layoutX="14.0" layoutY="492.0" text="Order Wgt.">
+      <Label layoutX="12.0" layoutY="502.0" text="Order Vol.">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
+      <ComboBox fx:id="ddlCategory1112" layoutX="244.0" layoutY="463.0" prefHeight="25.0" prefWidth="112.0">
+         <items>
+            <FXCollections fx:factory="observableArrayList" />
+         </items>
+      </ComboBox>
+      <Label layoutX="169.0" layoutY="465.0" text="Commodity">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="171.0" layoutY="502.0" text="Handling">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="ddlCategory11121" layoutX="244.0" layoutY="500.0" prefHeight="25.0" prefWidth="112.0">
+         <items>
+            <FXCollections fx:factory="observableArrayList" />
+         </items>
+      </ComboBox>
+      <Label layoutX="375.0" layoutY="465.0" text="Equipment">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="ddlCategory11122" layoutX="450.0" layoutY="463.0" prefHeight="25.0" prefWidth="112.0">
+         <items>
+            <FXCollections fx:factory="observableArrayList" />
+         </items>
+      </ComboBox>
+      <Label layoutX="395.0" layoutY="503.0" text="Hours">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtCity1112" layoutX="451.0" layoutY="500.0" prefHeight="25.0" prefWidth="57.0" />
+      <TextField fx:id="txtCity11121" layoutX="624.0" layoutY="463.0" prefHeight="25.0" prefWidth="112.0" />
+      <Label layoutX="583.0" layoutY="466.0" text="Rate">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="561.0" layoutY="502.0" text="Currency">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="ddlCategory111221" layoutX="624.0" layoutY="500.0" prefHeight="25.0" prefWidth="112.0">
+         <items>
+            <FXCollections fx:factory="observableArrayList" />
+         </items>
+      </ComboBox>
+      <CheckBox layoutX="746.0" layoutY="141.0" mnemonicParsing="false" text="Overview">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </CheckBox>
+      <Label layoutX="756.0" layoutY="173.0" text="Customs" textFill="#1337e8" underline="true">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="759.0" layoutY="195.0" text="Notes" textFill="#1337e8" underline="true">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="759.0" layoutY="220.0" text="Print History" textFill="#1337e8" underline="true">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <CheckBox layoutX="746.0" layoutY="251.0" mnemonicParsing="false" text="Omit Shipment No">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </CheckBox>
+      <Button layoutX="363.0" layoutY="501.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="24.0" text="T">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

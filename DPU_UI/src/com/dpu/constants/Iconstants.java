@@ -2,8 +2,8 @@ package com.dpu.constants;
 
 public class Iconstants {
 
-//	public static final String URL_SERVER = "http://localhost:8080/DPUWebProject/";
-	public static final String URL_SERVER = "http://35.154.6.180:8080/DPUWebProject/";
+	public static final String URL_SERVER = "http://localhost:8080/DPUWebProject/";
+//	public static final String URL_SERVER = "http://35.154.6.180:8080/DPUWebProject/";
 
 	public static final String COMMON_BASE_PACKAGE = "com/dpu/common/xml/";
 
@@ -109,6 +109,7 @@ public class Iconstants {
 	public static final String URL_ORDER_API = "order";
 	public static final String ORDER_BASE_PACKAGE = "com/dpu/order/xml/";
 	public static final String XML_ORDER_SCREEN = "ListOrders.fxml";
+	public static final String XML_ORDER_ADD_SCREEN = "AddOrder.fxml";
 	
 	public static final String URL_HANDLING_API = "handling";
 	public static final String HANDLING_BASE_PACKAGE = "com/dpu/handling/xml/";
@@ -124,4 +125,5 @@ public class Iconstants {
 	public static final String XML_CARRIER_Edit_SCREEN = "EditCarrier.fxml";
 	public static final String XML_ADD_CARRIER_ADDITIONAL_CONTACT_SCREEN ="AdditionalCarrierContactAddScreen.fxml";
 	public static final String XML_EDIT_CARRIER_ADDITIONAL_CONTACT_SCREEN ="AdditionalCarrierContactEditScreen.fxml";
+
 }

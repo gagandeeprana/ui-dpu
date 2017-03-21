@@ -12,6 +12,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.controller.Login;
 import com.dpu.model.Failed;
 import com.dpu.model.OrderModel;
 import com.dpu.model.ProbilModel;
@@ -65,7 +66,36 @@ public class OrderController extends Application implements Initializable {
 	AnchorPane equipmentParentAnchorPane;
 
 	Node detailsPane;
-
+	
+	@FXML
+	private void btnAddOrderAction() {
+		openAddOrderScreen();
+	}
+	
+	@FXML
+	private void btnEditOrderAction() {
+	}
+	
+	@FXML
+	private void btnGoOrderAction() {
+	}
+	
+	private void openAddOrderScreen() {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.ORDER_BASE_PACKAGE + Iconstants.XML_ORDER_ADD_SCREEN));
+			
+	        Parent root = (Parent) fxmlLoader.load();
+	        
+	        Stage stage = new Stage();
+	        stage.initModality(Modality.APPLICATION_MODAL);
+	        stage.setTitle("Add New Order");
+	        stage.setScene(new Scene(root)); 
+	        stage.show();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
 	private void showInnerTable() {
 		tblOrder.setRowFactory(tv -> new TableRow<OrderModel>() {
             {
@@ -84,7 +114,7 @@ public class OrderController extends Application implements Initializable {
             @Override
             protected double computePrefHeight(double width) {
                 if (isSelected() && detailsPane != null) {
-                    return super.computePrefHeight(width)+detailsPane.prefHeight(getWidth());
+                	return super.computePrefHeight(width)+detailsPane.prefHeight(getWidth());
                 } else {
                     return super.computePrefHeight(width);
                 }
@@ -95,15 +125,22 @@ public class OrderController extends Application implements Initializable {
                 super.layoutChildren();
                 if (isSelected() && detailsPane != null) {
                     double width = getWidth();
-                    double paneHeight = detailsPane.prefHeight(width);
-                    detailsPane.resizeRelocate(0, getHeight()-paneHeight, width, paneHeight);
+//                    double paneHeight = detailsPane.prefHeight(width);
+                    double paneHeight = 100;
+//                    detailsPane.resizeRelocate(0, getHeight()-paneHeight, width, paneHeight);
+                    detailsPane.resizeRelocate(0, getHeight()-detailsPane.prefHeight(width), width, paneHeight);
                 } 
             }
         });
 	}
  	
+	@FXML
+	AnchorPane root, anchorPaneOrder;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		Login.setWidthForAll(root, tblOrder);
+		Login.setWidthForAll(anchorPaneOrder, null);
 		fetchOrders();
 	}
 	

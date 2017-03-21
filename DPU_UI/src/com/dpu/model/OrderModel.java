@@ -141,6 +141,14 @@ public class OrderModel implements Serializable{
 		this.temperatureId = temperatureId;
 	}
 	
+	public List<Type> getTemperatureList() {
+		return temperatureList;
+	}
+	
+	public void setTemperatureList(List<Type> temperatureList) {
+		this.temperatureList = temperatureList;
+	}
+	
 	public Double getTemperatureValue() {
 		return temperatureValue;
 	}
@@ -162,6 +170,14 @@ public class OrderModel implements Serializable{
 	
 	public void setTemperatureTypeId(Long temperatureTypeId) {
 		this.temperatureTypeId = temperatureTypeId;
+	}
+	
+	public List<Type> getTemperatureTypeList() {
+		return temperatureTypeList;
+	}
+	
+	public void setTemperatureTypeList(List<Type> temperatureTypeList) {
+		this.temperatureTypeList = temperatureTypeList;
 	}
 	
 	public Double getRate() {
@@ -195,35 +211,11 @@ public class OrderModel implements Serializable{
 	public void setCurrencyId(Long currencyId) {
 		this.currencyId = currencyId;
 	}
-
-	public List<Company> getCompanyList() {
-		return companyList;
-	}
-
-	public void setCompanyList(List<Company> companyList) {
-		this.companyList = companyList;
-	}
-
-	public List<Type> getTemperatureList() {
-		return temperatureList;
-	}
-
-	public void setTemperatureList(List<Type> temperatureList) {
-		this.temperatureList = temperatureList;
-	}
-
-	public List<Type> getTemperatureTypeList() {
-		return temperatureTypeList;
-	}
-
-	public void setTemperatureTypeList(List<Type> temperatureTypeList) {
-		this.temperatureTypeList = temperatureTypeList;
-	}
-
+	
 	public List<Type> getCurrencyList() {
 		return currencyList;
 	}
-
+	
 	public void setCurrencyList(List<Type> currencyList) {
 		this.currencyList = currencyList;
 	}
@@ -234,6 +226,14 @@ public class OrderModel implements Serializable{
 
 	public void setProbilList(List<ProbilModel> probilList) {
 		this.probilList = probilList;
+	}
+
+	public List<Company> getCompanyList() {
+		return companyList;
+	}
+
+	public void setCompanyList(List<Company> companyList) {
+		this.companyList = companyList;
 	}
 
 	public List<Shipper> getShipperConsineeList() {
@@ -259,4 +259,5 @@ public class OrderModel implements Serializable{
 	public void setDeliveryList(List<Type> deliveryList) {
 		this.deliveryList = deliveryList;
 	}
+	
 }
