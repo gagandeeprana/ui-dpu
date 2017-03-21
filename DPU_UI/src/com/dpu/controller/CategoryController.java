@@ -37,6 +37,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -52,8 +53,13 @@ public class CategoryController extends Application implements Initializable {
 	@FXML
 	TextField txtSearchCategory;
 	
+	@FXML
+	AnchorPane anchorPaneCategory, root;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		Login.setWidthForAll(root, tblCategory);
+		Login.setWidthForAll(anchorPaneCategory, null);
 		fetchCategories();
 	}
 	

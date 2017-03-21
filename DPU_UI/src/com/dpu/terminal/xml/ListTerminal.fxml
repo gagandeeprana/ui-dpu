@@ -1,26 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1015.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.TerminalPanelController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1015.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.TerminalPanelController">
    <children>
-      <AnchorPane prefHeight="49.0" prefWidth="1015.0" style="-fx-background-color: lightgrey;">
+      <AnchorPane fx:id="anchorPaneTerminal" prefHeight="49.0" prefWidth="1015.0" style="-fx-background-color: #d6eaf8;">
          <children>
-            <Text layoutX="14.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quick Filter">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </Text>
-            <TextField fx:id="txtSearchTerminal" focusTraversable="false" layoutX="84.0" layoutY="11.0" prefHeight="25.0" prefWidth="200.0" promptText="Enter terminal name to search..." />
-            <CheckBox fx:id="hkShowAll" layoutX="326.0" layoutY="15.0" mnemonicParsing="false" text="Show All" />
-            <Button fx:id="btnGoTerminal" layoutX="288.0" layoutY="12.0" mnemonicParsing="false" onAction="#btnGoTerminalAction" text="Go" />
-            <Button fx:id="btnAddTerminal" layoutX="399.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnAddTerminalAction" prefHeight="25.0" prefWidth="55.0" text="Add" />
-            <Button fx:id="btnEditTerminal" layoutX="459.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnEditTerminalAction" prefHeight="25.0" prefWidth="55.0" text="Edit" />
-            <Button fx:id="btnDeleteTerminal" layoutX="519.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnDeleteTerminalAction" prefHeight="25.0" prefWidth="55.0" text="Delete" />
-            <Button fx:id="btnEmail" layoutX="579.0" layoutY="11.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="E-Mail" />
+            <TextField fx:id="txtSearchTerminal" focusTraversable="false" layoutX="765.0" layoutY="7.0" prefHeight="32.0" prefWidth="200.0" promptText="Enter terminal name to search..." />
+            <ImageView fx:id="btnAddTerminal" fitHeight="32.0" fitWidth="32.0" layoutX="17.0" layoutY="7.0" onMouseClicked="#btnAddTerminalAction" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="com/dpu/common/xml/plus.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="btnEditTerminal" fitHeight="32.0" fitWidth="32.0" layoutX="59.0" layoutY="7.0" onMouseClicked="#btnEditTerminalAction" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="com/dpu/common/xml/edit.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="btnDeleteTerminal" fitHeight="32.0" fitWidth="32.0" layoutX="100.0" layoutY="7.0" onMouseClicked="#btnDeleteTerminalAction" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="com/dpu/common/xml/delete.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="btnGoTerminal" fitHeight="32.0" fitWidth="32.0" layoutX="974.0" layoutY="7.0" onMouseClicked="#btnGoTerminalAction" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="com/dpu/common/xml/search.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
       <TableView fx:id="tblTerminal" layoutY="42.0" onMouseClicked="#handleAddContMouseClick" prefHeight="584.0" prefWidth="1015.0">

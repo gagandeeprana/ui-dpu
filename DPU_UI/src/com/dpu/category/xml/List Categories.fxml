@@ -1,29 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1015.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.CategoryController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1015.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.CategoryController">
    <children>
-      <AnchorPane prefHeight="49.0" prefWidth="1015.0" style="-fx-background-color: lightgrey;">
+      <AnchorPane fx:id="anchorPaneCategory" prefHeight="49.0" prefWidth="1015.0" style="-fx-background-color: #d6eaf8;">
          <children>
-            <Text layoutX="14.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quick Filter">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </Text>
-            <TextField fx:id="txtSearchCategory" focusTraversable="false" layoutX="88.0" layoutY="9.0" prefHeight="25.0" prefWidth="200.0" promptText="Enter category to search..." />
-            <CheckBox layoutX="332.0" layoutY="13.0" mnemonicParsing="false" text="Show All" />
-            <Button fx:id="btnGoCategory" layoutX="294.0" layoutY="9.0" mnemonicParsing="false" onAction="#btnGoCategoryAction" text="Go" />
-            <Button fx:id="btnAddCategory" layoutX="405.0" layoutY="9.0" mnemonicParsing="false" onAction="#btnAddCategoryAction" prefHeight="25.0" prefWidth="55.0" text="Add" />
-            <Button fx:id="btnEditCategory" layoutX="465.0" layoutY="9.0" mnemonicParsing="false" onAction="#btnEditCategoryAction" prefHeight="25.0" prefWidth="55.0" text="Edit" />
-            <Button fx:id="btnDeleteCategory" layoutX="525.0" layoutY="9.0" mnemonicParsing="false" onAction="#btnDeleteCategoryAction" prefHeight="25.0" prefWidth="55.0" text="Delete" />
-            <Button layoutX="585.0" layoutY="9.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="E-Mail" />
+            <TextField fx:id="txtSearchCategory" focusTraversable="false" layoutX="768.0" layoutY="6.0" prefHeight="32.0" prefWidth="200.0" promptText="Enter category to search..." />
+            <ImageView fx:id="btnAddCategory" fitHeight="32.0" fitWidth="32.0" layoutX="14.0" layoutY="6.0" onMouseClicked="#btnAddCategoryAction" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="com/dpu/common/xml/plus.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="btnEditCategory" fitHeight="32.0" fitWidth="32.0" layoutX="56.0" layoutY="6.0" onMouseClicked="#btnEditCategoryAction" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="com/dpu/common/xml/edit.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="btnDeleteCategory" fitHeight="32.0" fitWidth="32.0" layoutX="97.0" layoutY="6.0" onMouseClicked="#btnDeleteCategoryAction" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="com/dpu/common/xml/delete.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="btnGoCategory" fitHeight="32.0" fitWidth="32.0" layoutX="974.0" layoutY="6.0" onMouseClicked="#btnGoCategoryAction" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="com/dpu/common/xml/search.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
-      <TableView fx:id="tblCategory" onMouseClicked="#handleAddContMouseClick" layoutY="42.0" prefHeight="584.0" prefWidth="1015.0">
+      <TableView fx:id="tblCategory" layoutY="42.0" onMouseClicked="#handleAddContMouseClick" prefHeight="584.0" prefWidth="1015.0">
         <columns>
           <TableColumn fx:id="type" prefWidth="321.0" text="Type" />
           <TableColumn fx:id="category" prefWidth="343.0" text="Category" />

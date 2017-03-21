@@ -37,6 +37,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -49,8 +50,13 @@ public class ShipperController extends Application implements Initializable {
 	@FXML
 	TableColumn<Shipper, String> company, address, unit, city, ps, phone, prefix, tollfree, plant, cellNumber, email, importer;
 	
+	@FXML
+	AnchorPane anchorPaneShipper, root;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		Login.setWidthForAll(root, tblShipper);
+		Login.setWidthForAll(anchorPaneShipper, null);
 		fetchShippers();
 	}
 

@@ -36,6 +36,8 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -50,8 +52,16 @@ public class TruckController extends Application implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		Login.setWidthForAll(root, tblTruck);
+		Login.setWidthForAll(TruckMain, null);
 		fetchTrucks();
 	}
+	
+	@FXML
+	Pane TruckMain;
+
+	@FXML
+	AnchorPane root;
 	
 	@FXML
 	private void btnAddTruckAction() {

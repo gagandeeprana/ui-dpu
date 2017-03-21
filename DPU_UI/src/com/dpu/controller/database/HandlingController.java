@@ -12,6 +12,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.controller.Login;
 import com.dpu.model.Failed;
 import com.dpu.model.HandlingModel;
 import com.dpu.model.Success;
@@ -37,6 +38,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -56,6 +58,8 @@ public class HandlingController extends Application implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		Login.setWidthForAll(root, tblHandling);
+		Login.setWidthForAll(anchorPaneHandling, null);
 		fetchHandling();
 	}
 
@@ -67,6 +71,9 @@ public class HandlingController extends Application implements Initializable {
 	private void btnAddHandlingAction() {
 		openAddHandlingScreen();
 	}
+	
+	@FXML
+	AnchorPane anchorPaneHandling, root;
 	
 	@FXML
 	private void btnGoHandlingAction() {

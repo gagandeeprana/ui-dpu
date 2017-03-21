@@ -1,32 +1,19 @@
-#mnuLocation:hover{
-	-fx-background-color: "#FFFFFF";
-	-fx-text-fill:"#2c3e50";
-}
-#mnuCompany:hover{
-	-fx-background-color: "#FFFFFF";
-	-fx-text-fill:"#2c3e50";
-}
 #lblCompanyHeader:hover{
-	-fx-background-color: "#FFFFFF";
-	-fx-text-fill:"#2c3e50";
-}
-#mnuResources:hover{
-	-fx-background-color: "#FFFFFF";
-	-fx-text-fill:"#2c3e50";
+	-fx-text-fill:"#FFFFFF";
 }
 #lblResources:hover{
-	-fx-background-color: "#FFFFFF";
-	-fx-text-fill:"#2c3e50";
-}
-#mnuLists:hover{
-	-fx-background-color: "#FFFFFF";
-	-fx-text-fill:"#2c3e50";
+	-fx-text-fill:"#FFFFFF";
 }
 #lblLists:hover{
-	-fx-background-color: "#FFFFFF";
-	-fx-text-fill:"#2c3e50";
+	-fx-text-fill:"#FFFFFF";
 }
 #lblLocationsHeader:hover{
-	-fx-background-color: "#FFFFFF";
-	-fx-text-fill:"#2c3e50";
+	-fx-text-fill:"#FFFFFF";
 }
+#lblCustomBroker:hover{
+	-fx-text-fill:"#FFFFFF";
+}
+#lblOutsideCarrier:hover{
+	-fx-text-fill:"#FFFFFF";
+}
+

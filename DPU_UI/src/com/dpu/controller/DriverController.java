@@ -37,6 +37,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -54,6 +55,9 @@ public class DriverController extends Application implements Initializable {
 	
 	@FXML
 	TextField txtSearchDriver;
+	
+	@FXML
+	AnchorPane root, anchorPaneDriver;
 	
 	@FXML
 	public void btnAddDriverAction() {
@@ -139,6 +143,8 @@ public class DriverController extends Application implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		Login.setWidthForAll(root, tblDriver);
+		Login.setWidthForAll(anchorPaneDriver, null);
 		fetchDrivers();	
 	}
 	

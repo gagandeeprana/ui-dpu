@@ -37,6 +37,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -215,9 +217,17 @@ public class DivisionController extends Application implements Initializable {
 			System.out.println("DivisionController: fillDivisions(): "+ e.getMessage());
 		}
 	}
+	
+	@FXML
+	Pane root;
+	
+	@FXML
+	AnchorPane anchorPaneDivision;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		Login.setWidthForAll(root, tblDivision);
+		Login.setWidthForAll(anchorPaneDivision, null);
 		fetchDivisions();
 	}
 

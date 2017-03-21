@@ -12,6 +12,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.controller.Login;
 import com.dpu.model.CustomBroker;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
@@ -31,6 +32,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -50,8 +52,12 @@ public class CustomBrokerController extends Application implements Initializable
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		Login.setWidthForAll(TruckMain, tblCustomBroker);
 		fetchCustomBroker();
 	}
+	
+	@FXML
+	Pane TruckMain;
 
 	@Override
 	public void start(Stage primaryStage) {

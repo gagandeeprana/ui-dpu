@@ -32,9 +32,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -58,9 +55,14 @@ public class EquipmentController extends Application implements Initializable {
 	@FXML
 	TableColumn<Equipment, String> name, type, description;
 	
+	@FXML
+	AnchorPane anchorPaneEquipment, root;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 //        final ProgressIndicator progressIndicator = new ProgressIndicator(0);
+		Login.setWidthForAll(root, tblEquipment);
+		Login.setWidthForAll(anchorPaneEquipment, null);
 		fetchEquipments();
 	}
 
