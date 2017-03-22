@@ -65,7 +65,7 @@
             <FXCollections fx:factory="observableArrayList" />
          </items>
       </ComboBox>
-      <ComboBox fx:id="ddlAdditionalContacts" layoutX="88.0" layoutY="67.0" prefHeight="25.0" prefWidth="270.0">
+      <ComboBox fx:id="ddlBillingLocation" layoutX="88.0" layoutY="67.0" prefHeight="25.0" prefWidth="270.0">
          <items>
             <FXCollections fx:factory="observableArrayList" />
          </items>
@@ -140,7 +140,6 @@
          </items>
       </ComboBox>
       <Separator layoutX="14.0" layoutY="130.0" prefHeight="3.0" prefWidth="818.0" />
-      <TextField fx:id="txtCallerName" layoutX="463.0" layoutY="35.0" prefHeight="25.0" prefWidth="240.0" />
       <ComboBox fx:id="ddlShipper" layoutX="89.0" layoutY="137.0" prefHeight="25.0" prefWidth="240.0">
          <items>
             <FXCollections fx:factory="observableArrayList" />
@@ -419,5 +418,10 @@
             <Font size="11.0" />
          </font>
       </Button>
+      <ComboBox fx:id="ddlAdditionalContacts" layoutX="462.0" layoutY="35.0" prefHeight="25.0" prefWidth="240.0">
+         <items>
+            <FXCollections fx:factory="observableArrayList" />
+         </items>
+      </ComboBox>
    </children>
 </AnchorPane>

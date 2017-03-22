@@ -11,6 +11,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.AdditionalContact;
+import com.dpu.model.BillingControllerModel;
 import com.dpu.model.Company;
 import com.dpu.model.OrderModel;
 import com.dpu.model.Shipper;
@@ -19,6 +20,8 @@ import com.dpu.util.Validate;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -39,7 +42,7 @@ public class OrderAddController extends Application implements Initializable {
 	TextField txtCallerName, txtPONo;
 	
 	@FXML
-	ComboBox<String> ddlCustomer, ddlAdditionalContacts, ddlShipper, ddlConsignee, ddlCurrency, ddlDelivery, ddlPickup;
+	ComboBox<String> ddlCustomer, ddlAdditionalContacts, ddlBillingLocation, ddlShipper, ddlConsignee, ddlCurrency, ddlDelivery, ddlPickup;
 	
 	Validate validate = new Validate();
 
@@ -73,6 +76,8 @@ public class OrderAddController extends Application implements Initializable {
 		}
 		return result;
 	}*/
+	
+	
 	
 	@FXML
 	private void btnSaveOrderAction() {
@@ -161,6 +166,16 @@ public class OrderAddController extends Application implements Initializable {
 				Type type = (Type) object;
 				comboBox.getItems().add(type.getTypeName());
 			}
+			if(object != null && object instanceof AdditionalContact) {
+
+				AdditionalContact additionalContact = (AdditionalContact) object;
+				comboBox.getItems().add(additionalContact.getCustomerName());
+			}
+			if(object != null && object instanceof BillingControllerModel) {
+				
+				BillingControllerModel billingLocation = (BillingControllerModel) object;
+				comboBox.getItems().add(billingLocation.getName());
+			}
 		}
 	}
 	
@@ -205,6 +220,37 @@ public class OrderAddController extends Application implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		ddlCustomer.valueProperty().addListener(new ChangeListener<String>() {
+	        
+			@SuppressWarnings("rawtypes")
+			@Override public void changed(ObservableValue ov, String t, String t1) {
+				Platform.runLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						try {
+							Long companyId = companyList.get(ddlCustomer.getSelectionModel().getSelectedIndex()).getCompanyId();
+							String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_ORDER_API + "/" + companyId + "/getData", null);
+							Company companyResponse = mapper.readValue(response, Company.class);
+							List<AdditionalContact> additionalContacts = companyResponse.getAdditionalContacts();
+							ddlAdditionalContacts.getItems().clear();
+							ddlBillingLocation.getItems().clear();
+
+							if(additionalContacts != null && additionalContacts.size() > 0) {
+								fillDropDown(ddlAdditionalContacts, additionalContacts);
+							}
+							List<BillingControllerModel> billingLocations = companyResponse.getBillingLocations();
+							if(billingLocations != null && billingLocations.size() > 0) {
+								fillDropDown(ddlBillingLocation, billingLocations);
+							}
+						} catch (Exception e) {
+							JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+						}
+					}
+				});
+			}
+			
+	    });
 		fetchMasterDataForDropDowns();
 	}
 

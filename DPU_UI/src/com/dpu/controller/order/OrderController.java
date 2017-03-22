@@ -51,7 +51,7 @@ public class OrderController extends Application implements Initializable {
 	
 	@FXML
 	TableView<OrderModel> tblOrder;
-
+	
 	List<OrderModel> orders = null;
 	List<ProbilModel> probills = null;
 
@@ -96,44 +96,55 @@ public class OrderController extends Application implements Initializable {
 		}
 	}
 	
-	private void showInnerTable() {
-		tblOrder.setRowFactory(tv -> new TableRow<OrderModel>() {
-            {
-                selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
-                    if(detailsPane != null) {
-	                	if (isNowSelected) { 
-	                        getChildren().add(detailsPane);
-	                    } else {
-	                        getChildren().remove(detailsPane);
+	Integer entryScreenCounter = 0;
+	
+	private Integer showInnerTable() {
+		System.out.println("counter value: " + entryScreenCounter);
+		if(entryScreenCounter == -1 || entryScreenCounter == 1) {
+			tblOrder.setRowFactory(tv -> new TableRow<OrderModel>() {
+	            {
+	                selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+	                    if(detailsPane != null) {
+		                	if (isNowSelected) { 
+		                        getChildren().add(detailsPane);
+		                    } else {
+		                        getChildren().remove(detailsPane);
+		                    }
 	                    }
-                    }
-                    this.requestLayout();
-                });
-            }
-
-            @Override
-            protected double computePrefHeight(double width) {
-                if (isSelected() && detailsPane != null) {
-                	return super.computePrefHeight(width)+detailsPane.prefHeight(getWidth());
-                } else {
-                    return super.computePrefHeight(width);
-                }
-            }
-
-            @Override
-            protected void layoutChildren() {
-                super.layoutChildren();
-                if (isSelected() && detailsPane != null) {
-                    double width = getWidth();
-//                    double paneHeight = detailsPane.prefHeight(width);
-                    double paneHeight = 100;
-//                    detailsPane.resizeRelocate(0, getHeight()-paneHeight, width, paneHeight);
-                    detailsPane.resizeRelocate(0, getHeight()-detailsPane.prefHeight(width), width, paneHeight);
-                } 
-            }
-        });
+	                    this.requestLayout();
+	                });
+	            }
+	
+	            @Override
+	            protected double computePrefHeight(double width) {
+	                if (isSelected() && detailsPane != null) {
+	                	return super.computePrefHeight(width)+detailsPane.prefHeight(getWidth());
+	                } else {
+	                    return super.computePrefHeight(width);
+	                }
+	            }
+	
+	            @Override
+	            protected void layoutChildren() {
+	                super.layoutChildren();
+	                if (isSelected() && detailsPane != null) {
+	                    double width = getWidth();
+	//                    double paneHeight = detailsPane.prefHeight(width);
+	                    double paneHeight = 100;
+	//                    detailsPane.resizeRelocate(0, getHeight()-paneHeight, width, paneHeight);
+	                    detailsPane.resizeRelocate(0, getHeight()-detailsPane.prefHeight(width), width, paneHeight);
+	                } 
+	            }
+	        });
+		}
+		entryScreenCounter = 2;
+		return entryScreenCounter;
 	}
- 	
+	
+	private void hideInnerTable() {
+		tblOrder.getSelectionModel().clearSelection(tblOrder.getSelectionModel().getSelectedIndex());
+	}
+	
 	@FXML
 	AnchorPane root, anchorPaneOrder;
 	
@@ -148,8 +159,6 @@ public class OrderController extends Application implements Initializable {
 	public void start(Stage primaryStage) {
 	}
 	
-	final TableView<ProbilModel> tblProbill = new TableView<ProbilModel>();
-
 	@SuppressWarnings("unchecked")
 	private void fetchColumns() {
 		customerName = (TableColumn<OrderModel, String>) tblOrder.getColumns().get(0);
@@ -315,7 +324,9 @@ public class OrderController extends Application implements Initializable {
 	
 	public Node fetchProbills(long orderId) {
 		
-		Node node = fetchColumnsForProbills();
+		final TableView<ProbilModel> tblProbill = new TableView<ProbilModel>();
+
+		Node node = fetchColumnsForProbills(tblProbill);
 		
 		Platform.runLater(new Runnable() {
 			
@@ -323,7 +334,7 @@ public class OrderController extends Application implements Initializable {
 			public void run() {
 				try {
 					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_ORDER_API + "/" + orderId, null);
-					fillProbills(response);
+					fillProbills(response, tblProbill);
 				} catch (Exception e) {
 				}
 			}
@@ -331,7 +342,7 @@ public class OrderController extends Application implements Initializable {
 		return node;
 	}
 	
-	private void fillProbills(String response) {
+	private void fillProbills(String response, TableView<ProbilModel> tblProbill) {
 
 		ObservableList<ProbilModel> data = null;
 		probills = new ArrayList<ProbilModel>();
@@ -357,7 +368,7 @@ public class OrderController extends Application implements Initializable {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private Node fetchColumnsForProbills() {
+	private Node fetchColumnsForProbills(TableView<ProbilModel> tblProbill) {
 		
 		TableColumn<ProbilModel, String> firstCol = new TableColumn<ProbilModel, String>("Probill No");
 		TableColumn<ProbilModel, String> secCol = new TableColumn<ProbilModel, String>("Shipper Name");
@@ -398,7 +409,6 @@ public class OrderController extends Application implements Initializable {
 	public void fillOrders(String response) {
 		
 		try {
-			showInnerTable();
 			ObservableList<OrderModel> data = null;
 			orders = new ArrayList<OrderModel>();
 			setColumnValues();
@@ -412,6 +422,8 @@ public class OrderController extends Application implements Initializable {
 			} else {
 				data = FXCollections.observableArrayList(orders);
 			}
+			entryScreenCounter = -1;
+			showInnerTable();
 			tblOrder.setItems(data);
             tblOrder.setVisible(true);
             
@@ -491,12 +503,14 @@ public class OrderController extends Application implements Initializable {
 	
 	@FXML
 	private void tblOrderMouseClicked(MouseEvent event) {
-		if(event.getButton() == MouseButton.PRIMARY && counter[tblOrder.getSelectionModel().getSelectedIndex()] == 0) {
-			detailsPane = fetchProbills(tblOrder.getSelectionModel().getSelectedItem().getId());
-	        counter[tblOrder.getSelectionModel().getSelectedIndex()]++;
-			showInnerTable();
-		} else if(event.getButton() == MouseButton.PRIMARY && counter[tblOrder.getSelectionModel().getSelectedIndex()] == 1){
-			
+		if(event.getButton() == MouseButton.PRIMARY && counter[tblOrder.getSelectionModel().getSelectedIndex()] == 0 && event.getClickCount() == 2) {
+            detailsPane = fetchProbills(tblOrder.getSelectionModel().getSelectedItem().getId());
+            counter[tblOrder.getSelectionModel().getSelectedIndex()]++;
+            entryScreenCounter = 1;
+            showInnerTable();
+		} else if(event.getButton() == MouseButton.PRIMARY && counter[tblOrder.getSelectionModel().getSelectedIndex()] >= 1 && event.getClickCount() == 2){
+			 counter[tblOrder.getSelectionModel().getSelectedIndex()] = 0;
+			 hideInnerTable();
 		}
 	}
 	
