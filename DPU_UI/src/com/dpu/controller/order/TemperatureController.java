@@ -20,26 +20,16 @@ import com.dpu.util.Validate;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class OrderAddController extends Application implements Initializable {
+public class TemperatureController extends Application implements Initializable {
 
 	@FXML
-	Button btnSaveOrder;
-	
-	@FXML
-	TextField txtCallerName, txtPONo;
-	
-	@FXML
-	ComboBox<String> ddlCustomer, ddlAdditionalContacts, ddlShipper, ddlConsignee, ddlCurrency, ddlDelivery, ddlPickup;
+	ComboBox<String> ddlTemperature, ddlTemperatureType;
 	
 	Validate validate = new Validate();
 
@@ -74,89 +64,9 @@ public class OrderAddController extends Application implements Initializable {
 		return result;
 	}*/
 	
-	@FXML
-	private void btnSaveOrderAction() {
-//		boolean result = validateAddEquipmentScreen();
-//		if(result) {
-//			addOrder();
-			closeAddOrderScreen(btnSaveOrder);
-//		}
-	}
-	
-	private void closeAddOrderScreen(Button clickedButton) {
-		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
-        loginStage.close();
-	}
-	
-	List<Company> companyList = null;
-	List<Shipper> shipperList = null;
-	List<Shipper> consigneeList = null;
-	List<AdditionalContact> additionalContactsList = null;
-	List<Type> currencyList = null, deliveryList = null, pickupList = null;
-	static public List<Type> temperatureList = null, temperatureTypeList = null;
-	
-	ObjectMapper mapper = new ObjectMapper();
-	
-	@FXML
-	private void btnTemperatureAction() {
-		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.ORDER_BASE_PACKAGE + Iconstants.XML_TEMPERATURE_SCREEN));
-			
-	        Parent root = (Parent) fxmlLoader.load();
-	        
-	        Stage stage = new Stage();
-	        stage.initModality(Modality.APPLICATION_MODAL);
-	        stage.setTitle("Temperature");
-	        stage.setScene(new Scene(root)); 
-	        stage.show();
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}
-	
-	private void fetchMasterDataForDropDowns() {
-		
-		Platform.runLater(new Runnable() {
-			
-			@Override
-			public void run() {
-				try {
-					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_ORDER_API + "/openAdd", null);
-					OrderModel orderModel = mapper.readValue(response, OrderModel.class);
-					companyList = orderModel.getCompanyList();
-					fillDropDown(ddlCustomer, companyList);
-					shipperList = orderModel.getShipperConsineeList();
-					fillDropDown(ddlShipper, shipperList);
-					consigneeList = orderModel.getShipperConsineeList();
-					fillDropDown(ddlConsignee, consigneeList);
-					currencyList = orderModel.getCurrencyList();
-					fillDropDown(ddlCurrency, currencyList);
-					pickupList = orderModel.getPickupList();
-					fillDropDown(ddlPickup, pickupList);
-					deliveryList = orderModel.getDeliveryList();
-					fillDropDown(ddlDelivery, deliveryList);
-					temperatureList = orderModel.getTemperatureList();
-					temperatureTypeList = orderModel.getTemperatureTypeList();
-					/*additionalContactsList = orderModel.getAdd
-					fillDropDown(ddlCustomer, companyList);*/
-				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
-				}
-			}
-		});
-	}
-	
 	private void fillDropDown(ComboBox<String> comboBox, List<?> list) {
 		for(int i=0;i<list.size();i++) {
 			Object object = list.get(i);
-			if(object != null && object instanceof Company) {
-				Company company = (Company) object;
-				comboBox.getItems().add(company.getName());
-			}
-			if(object != null && object instanceof Shipper) {
-				Shipper shipper = (Shipper) object;
-				comboBox.getItems().add(shipper.getLocationName());
-			}
 			if(object != null && object instanceof Type) {
 				Type type = (Type) object;
 				comboBox.getItems().add(type.getTypeName());
@@ -205,7 +115,8 @@ public class OrderAddController extends Application implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		fetchMasterDataForDropDowns();
+		fillDropDown(ddlTemperature, OrderAddController.temperatureList);
+		fillDropDown(ddlTemperatureType, OrderAddController.temperatureTypeList);
 	}
 
 	@Override

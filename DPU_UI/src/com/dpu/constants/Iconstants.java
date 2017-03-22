@@ -110,6 +110,7 @@ public class Iconstants {
 	public static final String ORDER_BASE_PACKAGE = "com/dpu/order/xml/";
 	public static final String XML_ORDER_SCREEN = "ListOrders.fxml";
 	public static final String XML_ORDER_ADD_SCREEN = "AddOrder.fxml";
+	public static final String XML_TEMPERATURE_SCREEN = "TemperatureOrder.fxml";
 	
 	public static final String URL_HANDLING_API = "handling";
 	public static final String HANDLING_BASE_PACKAGE = "com/dpu/handling/xml/";
@@ -125,5 +126,6 @@ public class Iconstants {
 	public static final String XML_CARRIER_Edit_SCREEN = "EditCarrier.fxml";
 	public static final String XML_ADD_CARRIER_ADDITIONAL_CONTACT_SCREEN ="AdditionalCarrierContactAddScreen.fxml";
 	public static final String XML_EDIT_CARRIER_ADDITIONAL_CONTACT_SCREEN ="AdditionalCarrierContactEditScreen.fxml";
+
 
 }

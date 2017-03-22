@@ -191,7 +191,7 @@
             <Font size="11.0" />
          </font>
       </Button>
-      <ComboBox fx:id="ddlTerminal2" layoutX="89.0" layoutY="285.0" prefHeight="24.0" prefWidth="240.0">
+      <ComboBox fx:id="ddlPickup" layoutX="89.0" layoutY="285.0" prefHeight="24.0" prefWidth="240.0">
          <items>
             <FXCollections fx:factory="observableArrayList" />
          </items>
@@ -284,7 +284,7 @@
             <Font size="11.0" />
          </font>
       </Button>
-      <ComboBox fx:id="ddlTerminal21" layoutX="468.0" layoutY="285.0" prefHeight="25.0" prefWidth="240.0">
+      <ComboBox fx:id="ddlDelivery" layoutX="468.0" layoutY="285.0" prefHeight="25.0" prefWidth="240.0">
          <items>
             <FXCollections fx:factory="observableArrayList" />
          </items>
@@ -299,7 +299,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="369.0" layoutY="287.0" text="Pickup">
+      <Label layoutX="369.0" layoutY="287.0" text="Delivery">
          <font>
             <Font size="14.0" />
          </font>
@@ -384,7 +384,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <ComboBox fx:id="ddlCategory111221" layoutX="624.0" layoutY="500.0" prefHeight="25.0" prefWidth="112.0">
+      <ComboBox fx:id="ddlCurrency" layoutX="624.0" layoutY="500.0" prefHeight="25.0" prefWidth="112.0">
          <items>
             <FXCollections fx:factory="observableArrayList" />
          </items>
@@ -414,7 +414,7 @@
             <Font size="14.0" />
          </font>
       </CheckBox>
-      <Button layoutX="363.0" layoutY="501.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="24.0" text="T">
+      <Button fx:id="btnTemperature" layoutX="363.0" layoutY="501.0" mnemonicParsing="false" onMouseClicked="#btnTemperatureAction" prefHeight="20.0" prefWidth="24.0" text="T">
          <font>
             <Font size="11.0" />
          </font>
