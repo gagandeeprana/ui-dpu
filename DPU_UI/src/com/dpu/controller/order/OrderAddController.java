@@ -1,6 +1,7 @@
 package com.dpu.controller.order;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -22,6 +23,8 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -29,7 +32,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -42,7 +47,8 @@ public class OrderAddController extends Application implements Initializable {
 	TextField txtCallerName, txtPONo;
 	
 	@FXML
-	ComboBox<String> ddlCustomer, ddlAdditionalContacts, ddlBillingLocation, ddlShipper, ddlConsignee, ddlCurrency, ddlDelivery, ddlPickup;
+	ComboBox<String> ddlCustomer, ddlAdditionalContacts, ddlBillingLocation, ddlShipper, ddlConsignee, ddlCurrency, ddlDelivery, 
+	ddlPickup, ddlProbill;
 	
 	Validate validate = new Validate();
 
@@ -218,8 +224,71 @@ public class OrderAddController extends Application implements Initializable {
 		});
 	}*/
 
+	@FXML
+	Label lblFaxConsignee, lblFaxShipper, lblAddressShipper, lblPhoneShipper, lblAddressConsginee, lblPhoneConsignee;
+	
+	List<Integer> probillDropDownList = new ArrayList<Integer>();
+	
+	@FXML
+	private void btnAddProbillAction() {
+		Integer value = probillDropDownList.get(probillDropDownList.size() - 1);
+		ddlProbill.getItems().add((value + 1) + "");
+		probillDropDownList.add(value + 1);
+	}
+	
+	@FXML
+	TextField txtPickupNo2, txtPickupNo3, txtPickupNo4, txtPickupNo5;
+	
+	@FXML
+	Button btnAddPickupNo2, btnAddPickupNo3, btnAddPickupNo4, btnAddPickupNo5;
+	
+	@FXML
+	AnchorPane root;
+	
+	private void hidePickupComponents() {
+		root.getChildren().removeAll(txtPickupNo2, txtPickupNo3, txtPickupNo4, txtPickupNo5, btnAddPickupNo2, btnAddPickupNo3, btnAddPickupNo4, btnAddPickupNo5);
+	}
+	
+	@FXML
+	private void btnAddPickupNoAction() {
+	}
+	@FXML
+	private void btnAddPickupNo2Action() {
+	}
+	@FXML
+	private void btnAddPickupNo3Action() {
+	}
+	@FXML
+	private void btnAddPickupNo4Action() {
+	}
+	@FXML
+	private void btnAddPickupNo5Action() {
+	}
+	
+	@FXML
+	private void btnRemoveProbillAction() {
+		if(probillDropDownList.size() == 1) {
+			return;
+		}
+		if(ddlProbill.getSelectionModel().getSelectedItem() != null) {
+			probillDropDownList.remove(ddlProbill.getSelectionModel().getSelectedIndex());
+			ddlProbill.getItems().remove(ddlProbill.getSelectionModel().getSelectedIndex());
+			ddlProbill.getItems().clear();
+			ObservableList<Integer> data = FXCollections.observableArrayList(probillDropDownList);
+			for(Integer i : data) {
+				ddlProbill.getItems().add(i + "");
+			}
+			ddlProbill.getSelectionModel().select(0);
+			ddlProbill.setVisibleRowCount(probillDropDownList.size());
+		}
+	}
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		hidePickupComponents();
+		probillDropDownList.add(1);
+		ddlProbill.getItems().add(1 + "");
+		ddlProbill.getSelectionModel().select(0);
 		ddlCustomer.valueProperty().addListener(new ChangeListener<String>() {
 	        
 			@SuppressWarnings("rawtypes")
@@ -251,6 +320,69 @@ public class OrderAddController extends Application implements Initializable {
 			}
 			
 	    });
+		ddlShipper.valueProperty().addListener(new ChangeListener<String>() {
+	        
+			@SuppressWarnings("rawtypes")
+			@Override public void changed(ObservableValue ov, String t, String t1) {
+				Platform.runLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						try {
+							Long shipperId = shipperList.get(ddlShipper.getSelectionModel().getSelectedIndex()).getShipperId();
+							String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_SHIPPER_API + "/" + shipperId, null);
+							Shipper shipperResponse = mapper.readValue(response, Shipper.class);
+							if(shipperResponse != null) {
+								if(shipperResponse.getAddress() != null) {
+									lblAddressShipper.setText(shipperResponse.getAddress());
+								}
+								if(shipperResponse.getFax() != null) {
+									lblFaxShipper.setText(shipperResponse.getFax());
+								}
+								if(shipperResponse.getAddress() != null) {
+									lblPhoneShipper.setText(shipperResponse.getPhone());
+								}
+							}
+						} catch (Exception e) {
+							JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+						}
+					}
+				});
+			}
+	    });
+		ddlConsignee.valueProperty().addListener(new ChangeListener<String>() {
+	        
+			@SuppressWarnings("rawtypes")
+			@Override public void changed(ObservableValue ov, String t, String t1) {
+				Platform.runLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						try {
+							Long consigneeId = consigneeList.get(ddlConsignee.getSelectionModel().getSelectedIndex()).getShipperId();
+							String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_SHIPPER_API + "/" + consigneeId, null);
+							Shipper shipperResponse = mapper.readValue(response, Shipper.class);
+							if(shipperResponse != null) {
+								if(shipperResponse.getAddress() != null) {
+									lblAddressConsginee.setText(shipperResponse.getAddress());
+								}
+								if(shipperResponse.getFax() != null) {
+									lblFaxConsignee.setText(shipperResponse.getFax());
+								}
+								if(shipperResponse.getAddress() != null) {
+									lblPhoneConsignee.setText(shipperResponse.getPhone());
+								}
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+							JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+						}
+					}
+				});
+			}
+			
+	    });
+		
 		fetchMasterDataForDropDowns();
 	}
 

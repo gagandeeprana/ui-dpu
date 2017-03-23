@@ -2,7 +2,7 @@ package com.dpu.constants;
 
 public class Iconstants {
 
-	public static final String URL_SERVER = "http://localhost:8080/DPUWebProject/";
+	public static final String URL_SERVER = "http://localhost:8082/DPUWebProject/";
 //	public static final String URL_SERVER = "http://35.154.6.180:8080/DPUWebProject/";
 
 	public static final String COMMON_BASE_PACKAGE = "com/dpu/common/xml/";
@@ -109,7 +109,7 @@ public class Iconstants {
 	public static final String URL_ORDER_API = "order";
 	public static final String ORDER_BASE_PACKAGE = "com/dpu/order/xml/";
 	public static final String XML_ORDER_SCREEN = "ListOrders.fxml";
-	public static final String XML_ORDER_ADD_SCREEN = "AddOrder.fxml";
+	public static final String XML_ORDER_ADD_SCREEN = "AddOrder1.fxml";
 	public static final String XML_TEMPERATURE_SCREEN = "TemperatureOrder.fxml";
 	
 	public static final String URL_HANDLING_API = "handling";
