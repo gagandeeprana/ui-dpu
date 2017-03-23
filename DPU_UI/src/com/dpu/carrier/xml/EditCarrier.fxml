@@ -141,7 +141,7 @@
 				</Tab>
 			</tabs>
 		</TabPane>
-		<Button fx:id="btnSaveCarrier" layoutX="547.0" layoutY="602.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Save">
+		<Button fx:id="btnSaveCarrier" layoutX="547.0" layoutY="602.0" mnemonicParsing="false" prefHeight="25.0" onAction="#btnSaveCarrierAction" prefWidth="65.0" text="Save">
 			<font>
 				<Font size="14.0" />
 			</font>

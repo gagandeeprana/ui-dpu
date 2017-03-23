@@ -14,6 +14,7 @@ import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.AddtionalCarrierContact;
 import com.dpu.model.CarrierModel;
+import com.dpu.request.CompanyModel;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -272,11 +273,15 @@ public class CarrierController extends Application implements Initializable {
 		}
 	}
 
+	public static Long carrierId = 0l;
+
 	@FXML
 	private void btnEditCarrierAction() {
 		CarrierEditController.listOfAdditionalContact = new ArrayList<AddtionalCarrierContact>();
 		CarrierEditController.carrierModel = new CarrierModel();
 		CarrierEditController.selectedTabValue = 1;
+		CarrierModel carrierModel1 = cList.get(tblCarrier.getSelectionModel().getSelectedIndex());
+		carrierId = carrierModel1.getCarrierId();
 		CarrierModel carrierModel = cList.get(tblCarrier.getSelectionModel().getSelectedIndex());
 		if (carrierModel != null) {
 			Platform.runLater(new Runnable() {

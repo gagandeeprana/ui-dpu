@@ -150,19 +150,21 @@ public class AdditionCaarierContactAddController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		if (CarrierAddController.additionalContactModel != null) {
-			txtBrokerContact.setText(CarrierAddController.additionalContactModel.getBrokerContact());
-			txtBrokerFax.setText(CarrierAddController.additionalContactModel.getBrokerFax());
-			txtBrokerPhone.setText(CarrierAddController.additionalContactModel.getBrokerPhone());
-			txtCongCoverage.setText(CarrierAddController.additionalContactModel.getCongCoverage());
-			txtEmail.setText(CarrierAddController.additionalContactModel.getEmail());
-			txtExt.setText(CarrierAddController.additionalContactModel.getExt());
-			txtIncBroker.setText(CarrierAddController.additionalContactModel.getIncBroker());
-			txtIncCompany.setText(CarrierAddController.additionalContactModel.getIncCompany());
-			txtLibilityCoverage.setText(CarrierAddController.additionalContactModel.getLibilityCoverage());
-			txtPolicyNumber.setText(CarrierAddController.additionalContactModel.getPolicyNumber());
-		}
+		if (CarrierAddController.addAddtionalContact != 1) {
+			if (CarrierAddController.additionalContactModel != null) {
+				txtBrokerContact.setText(CarrierAddController.additionalContactModel.getBrokerContact());
+				txtBrokerFax.setText(CarrierAddController.additionalContactModel.getBrokerFax());
+				txtBrokerPhone.setText(CarrierAddController.additionalContactModel.getBrokerPhone());
+				txtCongCoverage.setText(CarrierAddController.additionalContactModel.getCongCoverage());
+				txtEmail.setText(CarrierAddController.additionalContactModel.getEmail());
+				txtExt.setText(CarrierAddController.additionalContactModel.getExt());
+				txtIncBroker.setText(CarrierAddController.additionalContactModel.getIncBroker());
+				txtIncCompany.setText(CarrierAddController.additionalContactModel.getIncCompany());
+				txtLibilityCoverage.setText(CarrierAddController.additionalContactModel.getLibilityCoverage());
+				txtPolicyNumber.setText(CarrierAddController.additionalContactModel.getPolicyNumber());
+			}
 
+		}
 	}
 
 }

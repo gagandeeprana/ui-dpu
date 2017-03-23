@@ -66,7 +66,7 @@ public class AdditionCaarierContactEditController implements Initializable {
 		try {
 
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-					.getResource(Iconstants.CARRIER_BASE_PACKAGE + Iconstants.XML_CARRIER_ADD_SCREEN));
+					.getResource(Iconstants.CARRIER_BASE_PACKAGE + Iconstants.XML_CARRIER_Edit_SCREEN));
 			Parent root = (Parent) fxmlLoader.load();
 
 			Stage stage = new Stage();
@@ -127,17 +127,19 @@ public class AdditionCaarierContactEditController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
-		if (CarrierEditController.additionalContactModel != null) {
-			txtBrokerContact.setText(CarrierAddController.additionalContactModel.getBrokerContact());
-			txtBrokerFax.setText(CarrierAddController.additionalContactModel.getBrokerFax());
-			txtBrokerPhone.setText(CarrierAddController.additionalContactModel.getBrokerPhone());
-			txtCongCoverage.setText(CarrierAddController.additionalContactModel.getCongCoverage());
-			txtEmail.setText(CarrierAddController.additionalContactModel.getEmail());
-			txtExt.setText(CarrierAddController.additionalContactModel.getExt());
-			txtIncBroker.setText(CarrierAddController.additionalContactModel.getIncBroker());
-			txtIncCompany.setText(CarrierAddController.additionalContactModel.getIncCompany());
-			txtLibilityCoverage.setText(CarrierAddController.additionalContactModel.getLibilityCoverage());
-			txtPolicyNumber.setText(CarrierAddController.additionalContactModel.getPolicyNumber());
+		if (CarrierEditController.addAddtionalContact != 1) {
+			if (CarrierEditController.additionalContactModel != null) {
+				txtBrokerContact.setText(CarrierEditController.additionalContactModel.getBrokerContact());
+				txtBrokerFax.setText(CarrierEditController.additionalContactModel.getBrokerFax());
+				txtBrokerPhone.setText(CarrierEditController.additionalContactModel.getBrokerPhone());
+				txtCongCoverage.setText(CarrierEditController.additionalContactModel.getCongCoverage());
+				txtEmail.setText(CarrierEditController.additionalContactModel.getEmail());
+				txtExt.setText(CarrierEditController.additionalContactModel.getExt());
+				txtIncBroker.setText(CarrierEditController.additionalContactModel.getIncBroker());
+				txtIncCompany.setText(CarrierEditController.additionalContactModel.getIncCompany());
+				txtLibilityCoverage.setText(CarrierEditController.additionalContactModel.getLibilityCoverage());
+				txtPolicyNumber.setText(CarrierEditController.additionalContactModel.getPolicyNumber());
+			}
 		}
 
 	}

@@ -5,10 +5,14 @@ package com.dpu.controller;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
+import org.codehaus.jackson.map.ObjectMapper;
+
+import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.AddtionalCarrierContact;
 import com.dpu.model.CarrierModel;
@@ -32,9 +36,9 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -148,6 +152,7 @@ public class CarrierEditController extends Application implements Initializable 
 	public static CarrierModel carrierModel = new CarrierModel();
 
 	public void initData(CarrierModel c) {
+		CarrierEditController.carrierModel = c;
 		carrierId = c.getCarrierId();
 		txtAddress.setText(c.getAddress());
 		txtCarrier.setText(c.getName());
@@ -354,7 +359,7 @@ public class CarrierEditController extends Application implements Initializable 
 
 				try {
 					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-							.getResource(Iconstants.CARRIER_BASE_PACKAGE + Iconstants.XML_CARRIER_ADD_SCREEN));
+							.getResource(Iconstants.CARRIER_BASE_PACKAGE + Iconstants.XML_CARRIER_Edit_SCREEN));
 					Parent root = (Parent) fxmlLoader.load();
 					Stage stage = new Stage();
 					stage.initModality(Modality.APPLICATION_MODAL);
@@ -385,6 +390,8 @@ public class CarrierEditController extends Application implements Initializable 
 	}
 
 	private CarrierModel setCarrierValue() {
+		// List<AddtionalCarrierContact> addtionalCarrierContacts = new
+		// ArrayList<AddtionalCarrierContact>();
 		carrierModel.setAddress(txtAddress.getText());
 		carrierModel.setCellular("cellular");
 		carrierModel.setCity(txtCity.getText());
@@ -412,14 +419,69 @@ public class CarrierEditController extends Application implements Initializable 
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		System.out.println("::::initialize:::::");
 		tabPane.getSelectionModel().select(1);
 		fetchAdditionalCarrierContacts();
+		txtAddress.setText(carrierModel.getAddress());
+		txtCarrier.setText(carrierModel.getName());
+		txtCell.setText(carrierModel.getCellular());
+		txtCity.setText(carrierModel.getCity());
+		txtContact.setText(carrierModel.getContact());
+		txtEmail.setText(carrierModel.getEmail());
+		txtExt.setText(carrierModel.getExt());
+		txtFax.setText(carrierModel.getFax());
+		txtPCZe.setText("null");
+		txtPhone.setText(carrierModel.getPhone());
+		txtPosition.setText(carrierModel.getPosition());
+		txtPrefix.setText(carrierModel.getPrefix());
+		txtPS.setText(carrierModel.getProvinceState());
+		txtTollFree.setText(carrierModel.getTollfree());
+		txtUnit.setText(carrierModel.getUnitNo());
+		txtWebsite.setText(carrierModel.getWebsite());
+
+	}
+
+	private void editCarrier() {
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+
+					ObjectMapper mapper = new ObjectMapper();
+					CarrierModel carrierModel = setCarrierValue();
+					String payload = mapper.writeValueAsString(carrierModel);
+
+					String response = PutAPIClient.callPutAPI(
+							Iconstants.URL_SERVER + Iconstants.URL_CARRIER_API + "/" + carrierId, null, payload);
+
+					if (response != null) {
+						JOptionPane.showMessageDialog(null, "Carrier Updated Successfully.", "Info", 1);
+					} else {
+						JOptionPane.showMessageDialog(null, "Failed to Updated Carrier.", "Info", 1);
+					}
+
+					closeEditCarrierScreen(btnSaveCarrier);
+					MainScreen.carrierController.fetchCarriers();
+				} catch (Exception e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+				}
+			}
+		});
 	}
 
 	@Override
 	public void start(Stage arg0) throws Exception {
 		// TODO Auto-generated method stub
 
+	}
+
+	@FXML
+	private void btnSaveCarrierAction() {
+		carrierId = CarrierController.carrierId;
+		editCarrier();
+		closeEditCarrierScreen(btnSaveCarrier);
 	}
 
 	@FXML
