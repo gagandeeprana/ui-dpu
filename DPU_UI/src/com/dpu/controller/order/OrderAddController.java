@@ -35,6 +35,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -243,10 +244,16 @@ public class OrderAddController extends Application implements Initializable {
 	Button btnAddPickupNo2, btnAddPickupNo3, btnAddPickupNo4, btnAddPickupNo5;
 	
 	@FXML
-	AnchorPane root;
+	AnchorPane root, anchorPanePickupNo;
+
+	@FXML
+	StackPane stackPanePickupNos;
 	
 	private void hidePickupComponents() {
-		root.getChildren().removeAll(txtPickupNo2, txtPickupNo3, txtPickupNo4, txtPickupNo5, btnAddPickupNo2, btnAddPickupNo3, btnAddPickupNo4, btnAddPickupNo5);
+		
+//		root.getChildren()
+//		root.getChildren().removeAll(txtPickupNo2, txtPickupNo3, txtPickupNo4, txtPickupNo5, btnAddPickupNo2, btnAddPickupNo3, btnAddPickupNo4, btnAddPickupNo5);
+//		root.clearConstraints(stackPanePickupNos);
 	}
 	
 	@FXML

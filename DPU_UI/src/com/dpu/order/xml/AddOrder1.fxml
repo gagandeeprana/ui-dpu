@@ -170,15 +170,43 @@
             <Label layoutX="143.0" layoutY="40.0" text="Fax : " textFill="#1337e8" />
          </children>
       </AnchorPane>
-      <Button fx:id="btnAddPickupNo" layoutX="334.0" layoutY="247.0" mnemonicParsing="false" onAction="#btnAddPickupNoAction" prefHeight="25.0" prefWidth="21.0" text="+">
+      <Button fx:id="btnAddPickupNo" layoutX="337.0" layoutY="247.0" mnemonicParsing="false" onAction="#btnAddPickupNoAction" prefHeight="25.0" prefWidth="24.0" text="+">
          <font>
             <Font size="11.0" />
          </font>
       </Button>
-      <AnchorPane layoutX="369.0" layoutY="316.0" prefHeight="70.0" prefWidth="372.0">
+      <StackPane fx:id="stackPanePickupNos" layoutX="66.0" layoutY="278.0" prefHeight="123.0" prefWidth="293.0">
          <children>
-            <StackPane layoutY="-47.0" prefHeight="150.0" prefWidth="200.0" />
-         </children></AnchorPane>
+            <AnchorPane fx:id="anchorPanePickupNo" prefHeight="128.0" prefWidth="291.0">
+               <children>
+                  <Button fx:id="btnAddPickupNo2" layoutX="270.0" layoutY="2.0" mnemonicParsing="false" onAction="#btnAddPickupNo2Action" prefHeight="25.0" prefWidth="21.0" text="+">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Button>
+                  <TextField fx:id="txtPickupNo2" layoutX="22.0" layoutY="2.0" prefHeight="25.0" prefWidth="240.0" />
+                  <TextField fx:id="txtPickupNo3" layoutX="22.0" layoutY="33.0" prefHeight="25.0" prefWidth="240.0" />
+                  <Button fx:id="btnAddPickupNo3" layoutX="270.0" layoutY="33.0" mnemonicParsing="false" onAction="#btnAddPickupNo3Action" prefHeight="25.0" prefWidth="21.0" text="+">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnAddPickupNo4" layoutX="270.0" layoutY="63.0" mnemonicParsing="false" onAction="#btnAddPickupNo4Action" prefHeight="25.0" prefWidth="21.0" text="+">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Button>
+                  <TextField fx:id="txtPickupNo4" layoutX="22.0" layoutY="63.0" prefHeight="25.0" prefWidth="240.0" />
+                  <TextField fx:id="txtPickupNo5" layoutX="22.0" layoutY="93.0" prefHeight="25.0" prefWidth="240.0" />
+                  <Button fx:id="btnAddPickupNo5" layoutX="270.0" layoutY="93.0" mnemonicParsing="false" onAction="#btnAddPickupNo5Action" prefHeight="25.0" prefWidth="21.0" text="+">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </StackPane>
       <AnchorPane layoutX="442.0" layoutY="278.0" prefHeight="3.0" prefWidth="270.0" />
       <Button layoutX="712.0" layoutY="247.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="21.0" text="+">
          <font>
@@ -418,33 +446,5 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <AnchorPane layoutX="67.0" layoutY="280.0" prefHeight="150.0" prefWidth="332.0">
-         <children>
-            <Button fx:id="btnAddPickupNo2" layoutX="270.0" layoutY="2.0" mnemonicParsing="false" onAction="#btnAddPickupNo2Action" prefHeight="25.0" prefWidth="21.0" text="+">
-               <font>
-                  <Font size="11.0" />
-               </font>
-            </Button>
-            <TextField fx:id="txtPickupNo2" layoutX="22.0" layoutY="2.0" prefHeight="25.0" prefWidth="240.0" />
-            <TextField fx:id="txtPickupNo3" layoutX="6.0" layoutY="33.0" prefHeight="25.0" prefWidth="240.0" />
-            <Button fx:id="btnAddPickupNo3" layoutX="246.0" layoutY="33.0" mnemonicParsing="false" onAction="#btnAddPickupNo3Action" prefHeight="25.0" prefWidth="21.0" text="+">
-               <font>
-                  <Font size="11.0" />
-               </font>
-            </Button>
-            <Button fx:id="btnAddPickupNo4" layoutX="246.0" layoutY="69.0" mnemonicParsing="false" onAction="#btnAddPickupNo4Action" prefHeight="25.0" prefWidth="21.0" text="+">
-               <font>
-                  <Font size="11.0" />
-               </font>
-            </Button>
-            <TextField fx:id="txtPickupNo4" layoutX="6.0" layoutY="69.0" prefHeight="25.0" prefWidth="240.0" />
-            <TextField fx:id="txtPickupNo5" layoutX="6.0" layoutY="106.0" prefHeight="25.0" prefWidth="240.0" />
-            <Button fx:id="btnAddPickupNo5" layoutX="246.0" layoutY="106.0" mnemonicParsing="false" onAction="#btnAddPickupNo5Action" prefHeight="25.0" prefWidth="21.0" text="+">
-               <font>
-                  <Font size="11.0" />
-               </font>
-            </Button>
-         </children>
-      </AnchorPane>
    </children>
 </AnchorPane>
