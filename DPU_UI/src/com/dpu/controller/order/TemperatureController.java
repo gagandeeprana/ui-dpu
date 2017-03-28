@@ -4,21 +4,10 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.swing.JOptionPane;
-
-import org.codehaus.jackson.map.ObjectMapper;
-
-import com.dpu.client.GetAPIClient;
-import com.dpu.constants.Iconstants;
-import com.dpu.model.AdditionalContact;
-import com.dpu.model.Company;
-import com.dpu.model.OrderModel;
-import com.dpu.model.Shipper;
 import com.dpu.model.Type;
 import com.dpu.util.Validate;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -30,6 +19,9 @@ public class TemperatureController extends Application implements Initializable 
 
 	@FXML
 	ComboBox<String> ddlTemperature, ddlTemperatureType;
+	
+	@FXML
+	TextField txtTemperature;
 	
 	Validate validate = new Validate();
 
@@ -113,12 +105,22 @@ public class TemperatureController extends Application implements Initializable 
 		});
 	}*/
 
+	@FXML
+	Button btnUpdateTemperature;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		fillDropDown(ddlTemperature, OrderAddController.temperatureList);
 		fillDropDown(ddlTemperatureType, OrderAddController.temperatureTypeList);
 	}
 
+	@FXML
+	private void btnUpdateTemperatureAction() {
+		OrderAddController.orderModel.setTemperatureId(OrderAddController.temperatureList.get(ddlTemperature.getSelectionModel().getSelectedIndex()).getTypeId());
+		OrderAddController.orderModel.setTemperatureTypeId(OrderAddController.temperatureTypeList.get(ddlTemperatureType.getSelectionModel().getSelectedIndex()).getTypeId());
+		OrderAddController.orderModel.setTemperatureValue(Double.parseDouble(txtTemperature.getText()));
+	}
+	
 	@Override
 	public void start(Stage primaryStage) {
 	}

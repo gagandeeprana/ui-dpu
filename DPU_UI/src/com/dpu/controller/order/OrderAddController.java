@@ -10,12 +10,19 @@ import javax.swing.JOptionPane;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.dpu.client.GetAPIClient;
+import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.controller.MainScreen;
 import com.dpu.model.AdditionalContact;
 import com.dpu.model.BillingControllerModel;
+import com.dpu.model.Category;
 import com.dpu.model.Company;
+import com.dpu.model.Equipment;
+import com.dpu.model.Failed;
 import com.dpu.model.OrderModel;
+import com.dpu.model.ProbilModel;
 import com.dpu.model.Shipper;
+import com.dpu.model.Success;
 import com.dpu.model.Type;
 import com.dpu.util.Validate;
 
@@ -52,6 +59,8 @@ public class OrderAddController extends Application implements Initializable {
 	ddlPickup, ddlProbill;
 	
 	Validate validate = new Validate();
+	
+	public static OrderModel orderModel = new OrderModel();
 
 	/*@FXML
 	private void txtNameKeyTyped() {
@@ -90,7 +99,7 @@ public class OrderAddController extends Application implements Initializable {
 	private void btnSaveOrderAction() {
 //		boolean result = validateAddEquipmentScreen();
 //		if(result) {
-//			addOrder();
+			addOrder();
 			closeAddOrderScreen(btnSaveOrder);
 //		}
 	}
@@ -104,6 +113,7 @@ public class OrderAddController extends Application implements Initializable {
 	List<Shipper> shipperList = null;
 	List<Shipper> consigneeList = null;
 	List<AdditionalContact> additionalContactsList = null;
+	List<BillingControllerModel> billingLocations = null;
 	List<Type> currencyList = null, deliveryList = null, pickupList = null;
 	static public List<Type> temperatureList = null, temperatureTypeList = null;
 	
@@ -186,7 +196,7 @@ public class OrderAddController extends Application implements Initializable {
 		}
 	}
 	
-	/*private void addOrder() {
+	private void addOrder() {
 		
 		Platform.runLater(new Runnable() {
 			
@@ -195,35 +205,46 @@ public class OrderAddController extends Application implements Initializable {
 			public void run() {
 				try {
 					ObjectMapper mapper = new ObjectMapper();
-					Equipment equipment = setEquipmentValue();
-					String payload = mapper.writeValueAsString(equipment);
-					System.out.println("Add Payload: " + payload);
-					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_EQUIPMENT_API, null, payload);
+					OrderModel orderModel = setOrderValue();
+					String payload = mapper.writeValueAsString(orderModel);
+					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_ORDER_API, null, payload);
 					System.out.println(response);
 					try {
 						Success success = mapper.readValue(response, Success.class);
-						List<Equipment> equipmentList = (List<Equipment>) success.getResultList();
-						String res = mapper.writeValueAsString(equipmentList);
+						List<OrderModel> orderModelList = (List<OrderModel>) success.getResultList();
+						String res = mapper.writeValueAsString(orderModelList);
 						JOptionPane.showMessageDialog(null, success.getMessage());
-						MainScreen.equipmentController.fillEquipments(res);
+						MainScreen.orderController.fillOrders(res);
 					} catch (Exception e) {
 						Failed failed = mapper.readValue(response, Failed.class);
 						JOptionPane.showMessageDialog(null, failed.getMessage());
-					}
-
-					if(response != null && response.contains("message")) {
-						Success success = mapper.readValue(response, Success.class);
-						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
-					} else {
-						Failed failed = mapper.readValue(response, Failed.class);
-						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
 					}
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
 				}
 			}
 		});
-	}*/
+	}
+	
+	@FXML
+	TextField txtPickpupScheduledDate,
+	
+	private OrderModel setOrderValue() {
+		orderModel.setCompanyId(companyList.get(ddlCustomer.getSelectionModel().getSelectedIndex()).getCompanyId());
+		orderModel.setBillingLocationId(billingLocations.get(ddlBillingLocation.getSelectionModel().getSelectedIndex()).getBillingLocationId());
+		orderModel.setContactId(additionalContactsList.get(ddlAdditionalContacts.getSelectionModel().getSelectedIndex()).getAdditionalContactId());
+		orderModel.setCurrencyId(currencyList.get(ddlCurrency.getSelectionModel().getSelectedIndex()).getTypeId());
+		List<ProbilModel> probilModelList = new ArrayList<>();
+		for(Integer probill : probillDropDownList) {
+			ProbilModel probilModel = new ProbilModel();
+			probilModel.setShipperId(shipperList.get(ddlShipper.getSelectionModel().getSelectedIndex()).getShipperId());
+			probilModel.setConsineeId(consigneeList.get(ddlConsignee.getSelectionModel().getSelectedIndex()).getShipperId());
+			probilModel.setPickupId(pickupList.get(ddlPickup.getSelectionModel().getSelectedIndex()).getTypeId());
+			probilModel.setDeliveryId(deliveryList.get(ddlDelivery.getSelectionModel().getSelectedIndex()).getTypeId());
+			probilModel.setPickupScheduledDate(txt);
+		}
+		return orderModel;
+	}
 
 	@FXML
 	Label lblFaxConsignee, lblFaxShipper, lblAddressShipper, lblPhoneShipper, lblAddressConsginee, lblPhoneConsignee;
@@ -315,7 +336,7 @@ public class OrderAddController extends Application implements Initializable {
 							if(additionalContacts != null && additionalContacts.size() > 0) {
 								fillDropDown(ddlAdditionalContacts, additionalContacts);
 							}
-							List<BillingControllerModel> billingLocations = companyResponse.getBillingLocations();
+							billingLocations = companyResponse.getBillingLocations();
 							if(billingLocations != null && billingLocations.size() > 0) {
 								fillDropDown(ddlBillingLocation, billingLocations);
 							}
