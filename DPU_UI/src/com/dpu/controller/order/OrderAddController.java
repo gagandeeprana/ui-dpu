@@ -227,7 +227,7 @@ public class OrderAddController extends Application implements Initializable {
 	}
 	
 	@FXML
-	TextField txtPickpupScheduledDate,
+	TextField txtPickpupScheduledDate;
 	
 	private OrderModel setOrderValue() {
 		orderModel.setCompanyId(companyList.get(ddlCustomer.getSelectionModel().getSelectedIndex()).getCompanyId());
@@ -241,7 +241,7 @@ public class OrderAddController extends Application implements Initializable {
 			probilModel.setConsineeId(consigneeList.get(ddlConsignee.getSelectionModel().getSelectedIndex()).getShipperId());
 			probilModel.setPickupId(pickupList.get(ddlPickup.getSelectionModel().getSelectedIndex()).getTypeId());
 			probilModel.setDeliveryId(deliveryList.get(ddlDelivery.getSelectionModel().getSelectedIndex()).getTypeId());
-			probilModel.setPickupScheduledDate(txt);
+			probilModel.setPickupScheduledDate(txtPickpupScheduledDate.getText());
 		}
 		return orderModel;
 	}
