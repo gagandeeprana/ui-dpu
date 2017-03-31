@@ -15,11 +15,10 @@ import com.dpu.constants.Iconstants;
 import com.dpu.controller.MainScreen;
 import com.dpu.model.AdditionalContact;
 import com.dpu.model.BillingControllerModel;
-import com.dpu.model.Category;
 import com.dpu.model.Company;
-import com.dpu.model.Equipment;
 import com.dpu.model.Failed;
 import com.dpu.model.OrderModel;
+import com.dpu.model.OrderPickUpDeliveryModel;
 import com.dpu.model.ProbilModel;
 import com.dpu.model.Shipper;
 import com.dpu.model.Success;
@@ -59,8 +58,43 @@ public class OrderAddController extends Application implements Initializable {
 	ddlPickup, ddlProbill;
 	
 	Validate validate = new Validate();
-	
 	public static OrderModel orderModel = new OrderModel();
+	List<Company> companyList = null;
+	List<Shipper> shipperList = null;
+	List<Shipper> consigneeList = null;
+	List<AdditionalContact> additionalContactsList = null;
+	List<BillingControllerModel> billingLocations = null;
+	List<Type> currencyList = null, deliveryList = null, pickupList = null;
+	static public List<Type> temperatureList = null, temperatureTypeList = null;
+	ObjectMapper mapper = new ObjectMapper();
+
+	@FXML
+	TextField txtPickpupScheduledDate, txtPickpupScheduledTime, txtPickpupMABDate, txtPickpupMABTime,
+	txtDeliverScheduledDate, txtDeliverScheduledTime, txtDeliverMABDate, txtDeliverMABTime, txtDelivery1, txtPickup1;
+	
+	@FXML
+	Label lblFaxConsignee, lblFaxShipper, lblAddressShipper, lblPhoneShipper, lblAddressConsginee, lblPhoneConsignee;
+	
+	List<Integer> probillDropDownList = new ArrayList<Integer>();
+
+	@FXML
+	private void btnAddProbillAction() {
+		Integer value = probillDropDownList.get(probillDropDownList.size() - 1);
+		ddlProbill.getItems().add((value + 1) + "");
+		probillDropDownList.add(value + 1);
+	}
+	
+	@FXML
+	TextField txtPickupNo2, txtPickupNo3, txtPickupNo4, txtPickupNo5;
+	
+	@FXML
+	Button btnAddPickupNo2, btnAddPickupNo3, btnAddPickupNo4, btnAddPickupNo5;
+	
+	@FXML
+	AnchorPane root, anchorPanePickupNo;
+	
+	@FXML
+	StackPane stackPanePickupNos;
 
 	/*@FXML
 	private void txtNameKeyTyped() {
@@ -109,15 +143,43 @@ public class OrderAddController extends Application implements Initializable {
         loginStage.close();
 	}
 	
-	List<Company> companyList = null;
-	List<Shipper> shipperList = null;
-	List<Shipper> consigneeList = null;
-	List<AdditionalContact> additionalContactsList = null;
-	List<BillingControllerModel> billingLocations = null;
-	List<Type> currencyList = null, deliveryList = null, pickupList = null;
-	static public List<Type> temperatureList = null, temperatureTypeList = null;
+	@FXML
+	private void btnAddPickupNoAction() {
+	}
+
+	@FXML
+	private void btnAddPickupNo2Action() {
+	}
 	
-	ObjectMapper mapper = new ObjectMapper();
+	@FXML
+	private void btnAddPickupNo3Action() {
+	}
+	
+	@FXML
+	private void btnAddPickupNo4Action() {
+	}
+	
+	@FXML
+	private void btnAddPickupNo5Action() {
+	}
+	
+	@FXML
+	private void btnRemoveProbillAction() {
+		if(probillDropDownList.size() == 1) {
+			return;
+		}
+		if(ddlProbill.getSelectionModel().getSelectedItem() != null) {
+			probillDropDownList.remove(ddlProbill.getSelectionModel().getSelectedIndex());
+			ddlProbill.getItems().remove(ddlProbill.getSelectionModel().getSelectedIndex());
+			ddlProbill.getItems().clear();
+			ObservableList<Integer> data = FXCollections.observableArrayList(probillDropDownList);
+			for(Integer i : data) {
+				ddlProbill.getItems().add(i + "");
+			}
+			ddlProbill.getSelectionModel().select(0);
+			ddlProbill.setVisibleRowCount(probillDropDownList.size());
+		}
+	}
 	
 	@FXML
 	private void btnTemperatureAction() {
@@ -207,8 +269,9 @@ public class OrderAddController extends Application implements Initializable {
 					ObjectMapper mapper = new ObjectMapper();
 					OrderModel orderModel = setOrderValue();
 					String payload = mapper.writeValueAsString(orderModel);
+					System.out.println("order add payload: " + payload);
 					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_ORDER_API, null, payload);
-					System.out.println(response);
+					System.out.println("order add response: " + response);
 					try {
 						Success success = mapper.readValue(response, Success.class);
 						List<OrderModel> orderModelList = (List<OrderModel>) success.getResultList();
@@ -226,9 +289,6 @@ public class OrderAddController extends Application implements Initializable {
 		});
 	}
 	
-	@FXML
-	TextField txtPickpupScheduledDate;
-	
 	private OrderModel setOrderValue() {
 		orderModel.setCompanyId(companyList.get(ddlCustomer.getSelectionModel().getSelectedIndex()).getCompanyId());
 		orderModel.setBillingLocationId(billingLocations.get(ddlBillingLocation.getSelectionModel().getSelectedIndex()).getBillingLocationId());
@@ -242,33 +302,30 @@ public class OrderAddController extends Application implements Initializable {
 			probilModel.setPickupId(pickupList.get(ddlPickup.getSelectionModel().getSelectedIndex()).getTypeId());
 			probilModel.setDeliveryId(deliveryList.get(ddlDelivery.getSelectionModel().getSelectedIndex()).getTypeId());
 			probilModel.setPickupScheduledDate(txtPickpupScheduledDate.getText());
+			probilModel.setPickupScheduledTime(txtPickpupScheduledTime.getText());
+			probilModel.setPickupMABDate(txtPickpupMABDate.getText());
+			probilModel.setPickupMABTime(txtPickpupMABTime.getText());
+			probilModel.setDeliverScheduledDate(txtDeliverScheduledDate.getText());
+			probilModel.setDeliverScheduledTime(txtDeliverScheduledTime.getText());
+			probilModel.setDeliveryMABDate(txtDeliverMABDate.getText());
+			probilModel.setDeliveryMABTime(txtDeliverMABTime.getText());
+			List<OrderPickUpDeliveryModel> orderPickupDeliveryModelList = new ArrayList<>();
+			OrderPickUpDeliveryModel orderPickUpDeliveryModel = new OrderPickUpDeliveryModel();
+			orderPickUpDeliveryModel.setPickupDeliveryNo(txtPickup1.getText());
+			orderPickUpDeliveryModel.setTypeId(1l);
+			OrderPickUpDeliveryModel orderPickUpDeliveryModel1 = new OrderPickUpDeliveryModel();
+			orderPickUpDeliveryModel1.setPickupDeliveryNo(txtDelivery1.getText());
+			orderPickUpDeliveryModel1.setTypeId(2l);
+			orderPickupDeliveryModelList.add(orderPickUpDeliveryModel);
+			orderPickupDeliveryModelList.add(orderPickUpDeliveryModel1);
+			probilModel.setOrderPickUpDeliveryList(orderPickupDeliveryModelList);
+			probilModelList.add(probilModel);
 		}
+		orderModel.setProbilList(probilModelList);
 		return orderModel;
 	}
 
-	@FXML
-	Label lblFaxConsignee, lblFaxShipper, lblAddressShipper, lblPhoneShipper, lblAddressConsginee, lblPhoneConsignee;
 	
-	List<Integer> probillDropDownList = new ArrayList<Integer>();
-	
-	@FXML
-	private void btnAddProbillAction() {
-		Integer value = probillDropDownList.get(probillDropDownList.size() - 1);
-		ddlProbill.getItems().add((value + 1) + "");
-		probillDropDownList.add(value + 1);
-	}
-	
-	@FXML
-	TextField txtPickupNo2, txtPickupNo3, txtPickupNo4, txtPickupNo5;
-	
-	@FXML
-	Button btnAddPickupNo2, btnAddPickupNo3, btnAddPickupNo4, btnAddPickupNo5;
-	
-	@FXML
-	AnchorPane root, anchorPanePickupNo;
-
-	@FXML
-	StackPane stackPanePickupNos;
 	
 	private void hidePickupComponents() {
 		
@@ -277,39 +334,6 @@ public class OrderAddController extends Application implements Initializable {
 //		root.clearConstraints(stackPanePickupNos);
 	}
 	
-	@FXML
-	private void btnAddPickupNoAction() {
-	}
-	@FXML
-	private void btnAddPickupNo2Action() {
-	}
-	@FXML
-	private void btnAddPickupNo3Action() {
-	}
-	@FXML
-	private void btnAddPickupNo4Action() {
-	}
-	@FXML
-	private void btnAddPickupNo5Action() {
-	}
-	
-	@FXML
-	private void btnRemoveProbillAction() {
-		if(probillDropDownList.size() == 1) {
-			return;
-		}
-		if(ddlProbill.getSelectionModel().getSelectedItem() != null) {
-			probillDropDownList.remove(ddlProbill.getSelectionModel().getSelectedIndex());
-			ddlProbill.getItems().remove(ddlProbill.getSelectionModel().getSelectedIndex());
-			ddlProbill.getItems().clear();
-			ObservableList<Integer> data = FXCollections.observableArrayList(probillDropDownList);
-			for(Integer i : data) {
-				ddlProbill.getItems().add(i + "");
-			}
-			ddlProbill.getSelectionModel().select(0);
-			ddlProbill.setVisibleRowCount(probillDropDownList.size());
-		}
-	}
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -329,12 +353,12 @@ public class OrderAddController extends Application implements Initializable {
 							Long companyId = companyList.get(ddlCustomer.getSelectionModel().getSelectedIndex()).getCompanyId();
 							String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_ORDER_API + "/" + companyId + "/getData", null);
 							Company companyResponse = mapper.readValue(response, Company.class);
-							List<AdditionalContact> additionalContacts = companyResponse.getAdditionalContacts();
+							additionalContactsList = companyResponse.getAdditionalContacts();
 							ddlAdditionalContacts.getItems().clear();
 							ddlBillingLocation.getItems().clear();
 
-							if(additionalContacts != null && additionalContacts.size() > 0) {
-								fillDropDown(ddlAdditionalContacts, additionalContacts);
+							if(additionalContactsList != null && additionalContactsList.size() > 0) {
+								fillDropDown(ddlAdditionalContacts, additionalContactsList);
 							}
 							billingLocations = companyResponse.getBillingLocations();
 							if(billingLocations != null && billingLocations.size() > 0) {

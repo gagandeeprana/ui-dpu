@@ -119,6 +119,12 @@ public class TemperatureController extends Application implements Initializable 
 		OrderAddController.orderModel.setTemperatureId(OrderAddController.temperatureList.get(ddlTemperature.getSelectionModel().getSelectedIndex()).getTypeId());
 		OrderAddController.orderModel.setTemperatureTypeId(OrderAddController.temperatureTypeList.get(ddlTemperatureType.getSelectionModel().getSelectedIndex()).getTypeId());
 		OrderAddController.orderModel.setTemperatureValue(Double.parseDouble(txtTemperature.getText()));
+		closeTemperatureScreen(btnUpdateTemperature);
+	}
+	
+	private void closeTemperatureScreen(Button clickedButton) {
+		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
+        loginStage.close();
 	}
 	
 	@Override

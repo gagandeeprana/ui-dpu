@@ -12,7 +12,9 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.controller.CategoryEditController;
 import com.dpu.controller.Login;
+import com.dpu.model.Category;
 import com.dpu.model.Failed;
 import com.dpu.model.OrderModel;
 import com.dpu.model.ProbilModel;
@@ -72,8 +74,46 @@ public class OrderController extends Application implements Initializable {
 		openAddOrderScreen();
 	}
 	
+	private Object openEditOrderScreen() {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.ORDER_BASE_PACKAGE + Iconstants.XML_ORDER_EDIT_SCREEN));
+	        Parent root = (Parent) fxmlLoader.load();
+	        Stage stage = new Stage();
+	        stage.initModality(Modality.APPLICATION_MODAL);
+	        stage.setTitle("Edit Order");
+	        stage.setScene(new Scene(root)); 
+	        stage.show();
+	        return fxmlLoader.getController();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	
 	@FXML
 	private void btnEditOrderAction() {
+		OrderModel orderModel = orders.get(tblOrder.getSelectionModel().getSelectedIndex());
+		if(orderModel != null) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_ORDER_API + "/" + orderModel.getId(), null);
+						System.out.println("OpenEditResponse: " + response);
+						if(response != null && response.length() > 0) {
+							OrderModel c = mapper.readValue(response, OrderModel.class);
+							OrderEditController orderEditController = (OrderEditController) openEditOrderScreen();
+							orderEditController.initData(c);
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+						JOptionPane.showMessageDialog(null, "Try Again.." + e , "Info", 1);
+					}
+				}
+			});
+		}
 	}
 	
 	@FXML

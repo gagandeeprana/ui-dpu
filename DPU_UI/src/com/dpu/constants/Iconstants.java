@@ -110,6 +110,7 @@ public class Iconstants {
 	public static final String ORDER_BASE_PACKAGE = "com/dpu/order/xml/";
 	public static final String XML_ORDER_SCREEN = "ListOrders.fxml";
 	public static final String XML_ORDER_ADD_SCREEN = "AddOrder1.fxml";
+	public static final String XML_ORDER_EDIT_SCREEN = "EditOrder.fxml";
 	public static final String XML_TEMPERATURE_SCREEN = "TemperatureOrder.fxml";
 	
 	public static final String URL_HANDLING_API = "handling";

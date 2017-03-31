@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="root" prefHeight="574.0" prefWidth="895.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.order.OrderAddController">
+<AnchorPane fx:id="root" prefHeight="574.0" prefWidth="895.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.order.OrderEditController">
    <children>
-      <Label layoutY="-1.0" prefHeight="29.0" prefWidth="895.0" style="-fx-background-color: lightgrey; -fx-border-color: black;" text="  Add Order">
+      <Label layoutY="-1.0" prefHeight="29.0" prefWidth="895.0" style="-fx-background-color: lightgrey; -fx-border-color: black;" text="  Edit Order">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -290,7 +290,7 @@
             <Font size="13.0" />
          </font>
       </Button>
-      <Button fx:id="btnSaveOrder" layoutX="740.0" layoutY="531.0" mnemonicParsing="false" onAction="#btnSaveOrderAction" prefHeight="25.0" prefWidth="65.0" text="Save">
+      <Button fx:id="btnUpdateOrder" layoutX="740.0" layoutY="531.0" mnemonicParsing="false" onAction="#btnUpdateOrderAction" prefHeight="25.0" prefWidth="65.0" text="Update">
          <font>
             <Font size="13.0" />
          </font>
