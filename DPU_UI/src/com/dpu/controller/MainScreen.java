@@ -7,6 +7,7 @@ import com.dpu.constants.Iconstants;
 import com.dpu.controller.database.CustomBrokerController;
 import com.dpu.controller.database.HandlingController;
 import com.dpu.controller.order.OrderController;
+import com.dpu.controller.planner.PlannerController;
 
 import javafx.application.Application;
 import javafx.collections.ObservableList;
@@ -61,6 +62,7 @@ public class MainScreen extends Application implements Initializable {
 	public static CarrierController carrierController;
 	
 	public static OrderController orderController;
+	public static PlannerController plannerController;
 
 	
 	@FXML
@@ -130,6 +132,11 @@ public class MainScreen extends Application implements Initializable {
 	@FXML
 	private void lblOrderAction() {
 		orderController = (OrderController) showPanel(Iconstants.ORDER_BASE_PACKAGE, Iconstants.XML_ORDER_SCREEN);
+	}
+	
+	@FXML
+	private void lblPlannerAction() {
+		plannerController = (PlannerController) showPanel(Iconstants.PLANNER_BASE_PACKAGE, Iconstants.XML_PLANNER_SCREEN);
 	}
 	
 	@FXML

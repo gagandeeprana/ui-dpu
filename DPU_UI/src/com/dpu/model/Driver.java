@@ -47,6 +47,7 @@ public class Driver implements Serializable{
 	private List<Type> driverClassList;
 	private String createdBy;
 	private Date createdOn;
+		private String fullName;
 	
 	public List<Division> getDivisionList() {
 		return divisionList;
@@ -318,5 +319,12 @@ public class Driver implements Serializable{
 
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
+	}
+public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 }

@@ -20,6 +20,7 @@ public class Iconstants {
 	public static final String XML_DRIVER_SCREEN = "DriverMainPage.fxml";
 	public static final String XML_DRIVER_ADD_SCREEN = "AddDriverScreen2.fxml";
 	public static final String URL_DRIVER_API = "driver";
+	public static final String URL_DRIVER_SPECIFIC_API = "driver/specificData";
 	public static final String XML_DRIVER_EDIT_SCREEN = "EditDriverScreen1.fxml";
 
 	public static final String COMPANY_BASE_PACKAGE = "com/dpu/company/xml/";
@@ -34,12 +35,14 @@ public class Iconstants {
 	public static final String URL_TRUCK_API = "truck";
 	public static final String XML_TRUCK_ADD_SCREEN = "TruckAddScreen1.fxml";
 	public static final String XML_TRUCK_EDIT_SCREEN = "TruckEditScreen.fxml";
+	public static final String URL_TRUCK_SPECIFIC_API = "truck/specificData";
 
 	public static final String TRAILER_BASE_PACKAGE = "com/dpu/trailer/xml/";
 	public static final String XML_TRAILER_SCREEN = "TrailerMainScreen1.fxml";
 	public static final String URL_TRAILER_API = "trailer";
 	public static final String XML_TRAILER_ADD_SCREEN = "Add Trailer.fxml";
 	public static final String XML_TRAILER_EDIT_SCREEN = "Edit Trailer.fxml";
+	public static final String URL_TRAILER_SPECIFIC_API = "trailer/specificData";
 
 	public static final String SHIPPER_BASE_PACKAGE = "com/dpu/shipper/xml/";
 	public static final String XML_SHIPPER_SCREEN = "ShipperListingScreen.fxml";
@@ -127,6 +130,9 @@ public class Iconstants {
 	public static final String XML_CARRIER_Edit_SCREEN = "EditCarrier.fxml";
 	public static final String XML_ADD_CARRIER_ADDITIONAL_CONTACT_SCREEN ="AdditionalCarrierContactAddScreen.fxml";
 	public static final String XML_EDIT_CARRIER_ADDITIONAL_CONTACT_SCREEN ="AdditionalCarrierContactEditScreen.fxml";
+
+	public static final String PLANNER_BASE_PACKAGE = "com/dpu/planner/xml/";
+	public static final String XML_PLANNER_SCREEN = "Planner.fxml";
 
 
 }
