@@ -1,3 +1,4 @@
+
 package com.dpu.model;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;

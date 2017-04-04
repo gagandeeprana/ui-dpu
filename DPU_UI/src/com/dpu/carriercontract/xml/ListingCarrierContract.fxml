@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1346.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.CarrierContractController">
+   <children>
+      <Pane prefHeight="49.0" prefWidth="1343.0" style="-fx-background-color: lightgrey;" />
+      <TableView fx:id="tableCarrierContract" layoutY="42.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="584.0" prefWidth="1343.0">
+         <columns>
+            <TableColumn fx:id="contractNo" prefWidth="81.0" text="ContractNo" />
+            <TableColumn fx:id="contractRate" prefWidth="85.0" text="Contract Rate" />
+            <TableColumn fx:id="hours" prefWidth="41.0" text="Hours" />
+            <TableColumn fx:id="miles" prefWidth="44.0" text="Miles" />
+            <TableColumn fx:id="dispatched" prefWidth="75.0" text="Dispatched" />
+            <TableColumn fx:id="insExpires" prefWidth="68.0" text="InsExpires" />
+            <TableColumn fx:id="cargo" prefWidth="41.0" text="Cargo" />
+            <TableColumn fx:id="liabity" prefWidth="57.0" text="Liability" />
+            <TableColumn fx:id="transDoc" prefWidth="63.0" text="Trans Doc" />
+            <TableColumn fx:id="mCno" prefWidth="45.0" text="MC No" />
+            <TableColumn fx:id="carrierName" prefWidth="65.0" text="Carrier Name" />
+            <TableColumn fx:id="arrangedWithName" prefWidth="75.0" text="ArrangedWithName" />
+            <TableColumn fx:id="driverName" prefWidth="75.0" text="Driver Name" />
+            <TableColumn fx:id="currencyName" prefWidth="75.0" text="Currency Name" />
+            <TableColumn fx:id="categoryName" prefWidth="75.0" text="Category Name" />
+            <TableColumn fx:id="roleName" prefWidth="75.0" text="Role Name" />
+            <TableColumn fx:id="equipmentName" prefWidth="75.0" text="Equipment Name" />
+            <TableColumn fx:id="commodityName" prefWidth="75.0" text="Commodity Name" />
+            <TableColumn fx:id="divisionName" prefWidth="75.0" text="Division Name" />
+            <TableColumn fx:id="dispatcherName" prefWidth="75.0" text="Dispatcher Name" />
+         </columns>
+      </TableView>
+      <Label layoutX="15.0" layoutY="15.0" text="Quick Filter">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnDelete" layoutX="523.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnDeleteCarrierContractAction" prefHeight="25.0" prefWidth="55.0" text="Delete" />
+      <Button fx:id="btnEdit" layoutX="463.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnEditCarrierContractAction" prefHeight="25.0" prefWidth="55.0" text="  Edit  " />
+      <Button fx:id="btnGo" layoutX="287.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnGoCarrierContractAction" prefHeight="25.0" prefWidth="32.0" text="Go" />
+      <TextField fx:id="txtGo" layoutX="82.0" layoutY="11.0" prefHeight="25.0" prefWidth="200.0" />
+      <Button fx:id="btnAdd" layoutX="402.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnAddCarrierContractAction" prefHeight="25.0" prefWidth="55.0" text="Add" />
+      <CheckBox layoutX="327.0" layoutY="15.0" mnemonicParsing="false" text="Show All" />
+   </children>
+</Pane>
