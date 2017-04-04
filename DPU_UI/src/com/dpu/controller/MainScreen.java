@@ -41,36 +41,41 @@ public class MainScreen extends Application implements Initializable {
 	static ShipperController shipperController;
 
 	static CompanyController companyController;
-	
+
 	static TerminalPanelController terminalController;
-	
+
 	static DivisionController divisionController;
 
 	static ServiceController serviceController;
 
-	
 	static DriverController driverController;
-	
+
 	static CategoryController categoryController;
-	
+
 	static EquipmentController equipmentController;
 
 	public static HandlingController handlingController;
-	
+
 	public static CustomBrokerController customBrokerController;
-	
+
 	public static CarrierController carrierController;
-	
+
 	public static OrderController orderController;
 	public static PlannerController plannerController;
+	public static CarrierContractController carrierContractController;
 
-	
 	@FXML
-	private void lblOutsideCarrierAction() {
-		carrierController = (CarrierController) showPanel(Iconstants.CARRIER_BASE_PACKAGE, Iconstants.XML_CARRIER_SCREEN);
+	private void lblCarrierContractAction() {
+		carrierContractController = (CarrierContractController) showPanel(Iconstants.CARRIER_CONTRACT_BASE_PACKAGE,
+				Iconstants.XML_CARRIER_CONTRACT_SCREEN);
 	}
 
-	
+	@FXML
+	private void lblOutsideCarrierAction() {
+		carrierController = (CarrierController) showPanel(Iconstants.CARRIER_BASE_PACKAGE,
+				Iconstants.XML_CARRIER_SCREEN);
+	}
+
 	@FXML
 	private void miDriverAction() {
 		driverController = (DriverController) showPanel(Iconstants.DRIVER_BASE_PACKAGE, Iconstants.XML_DRIVER_SCREEN);
@@ -78,32 +83,38 @@ public class MainScreen extends Application implements Initializable {
 
 	@FXML
 	private void miDivisionAction() {
-		divisionController = (DivisionController) showPanel(Iconstants.DIVISION_BASE_PACKAGE, Iconstants.XML_DIVISION_SCREEN);
+		divisionController = (DivisionController) showPanel(Iconstants.DIVISION_BASE_PACKAGE,
+				Iconstants.XML_DIVISION_SCREEN);
 	}
 
 	@FXML
 	private void miCategoryAction() {
-		categoryController = (CategoryController)showPanel(Iconstants.CATEGORY_BASE_PACKAGE, Iconstants.XML_CATEGORY_SCREEN);
+		categoryController = (CategoryController) showPanel(Iconstants.CATEGORY_BASE_PACKAGE,
+				Iconstants.XML_CATEGORY_SCREEN);
 	}
 
 	@FXML
 	private void miEquipmentAction() {
-		equipmentController = (EquipmentController) showPanel(Iconstants.EQUIPMENT_BASE_PACKAGE, Iconstants.XML_EQUIPMENT_SCREEN);
+		equipmentController = (EquipmentController) showPanel(Iconstants.EQUIPMENT_BASE_PACKAGE,
+				Iconstants.XML_EQUIPMENT_SCREEN);
 	}
 
 	@FXML
 	private void miServiceAction() {
-		serviceController = (ServiceController) showPanel(Iconstants.SERVICE_BASE_PACKAGE, Iconstants.XML_SERVICE_SCREEN);
+		serviceController = (ServiceController) showPanel(Iconstants.SERVICE_BASE_PACKAGE,
+				Iconstants.XML_SERVICE_SCREEN);
 	}
 
 	@FXML
 	private void miTrailersAction() {
-		trailerController = (TrailerController) showPanel(Iconstants.TRAILER_BASE_PACKAGE, Iconstants.XML_TRAILER_SCREEN);
+		trailerController = (TrailerController) showPanel(Iconstants.TRAILER_BASE_PACKAGE,
+				Iconstants.XML_TRAILER_SCREEN);
 	}
 
 	@FXML
 	private void lblLocationsHeaderAction() {
-		shipperController = (ShipperController) showPanel(Iconstants.SHIPPER_BASE_PACKAGE, Iconstants.XML_SHIPPER_SCREEN);
+		shipperController = (ShipperController) showPanel(Iconstants.SHIPPER_BASE_PACKAGE,
+				Iconstants.XML_SHIPPER_SCREEN);
 	}
 
 	@FXML
@@ -120,38 +131,42 @@ public class MainScreen extends Application implements Initializable {
 	@FXML
 	private void lblDAction() {
 		ObservableList<Node> nodes = mainScreenVBox.getChildren();
-		if(nodes != null && nodes.size() >= 3 && nodes.get(2) != null) {
+		if (nodes != null && nodes.size() >= 3 && nodes.get(2) != null) {
 			Node node = nodes.get(2);
-			if(node instanceof StackPane) {
+			if (node instanceof StackPane) {
 				nodes.add(2, mnuBarDatamaintenance);
 			}
 			mnuBarDatamaintenance.setVisible(true);
 		}
 	}
-	
+
 	@FXML
 	private void lblOrderAction() {
 		orderController = (OrderController) showPanel(Iconstants.ORDER_BASE_PACKAGE, Iconstants.XML_ORDER_SCREEN);
 	}
-	
+
 	@FXML
 	private void lblPlannerAction() {
-		plannerController = (PlannerController) showPanel(Iconstants.PLANNER_BASE_PACKAGE, Iconstants.XML_PLANNER_SCREEN);
+		plannerController = (PlannerController) showPanel(Iconstants.PLANNER_BASE_PACKAGE,
+				Iconstants.XML_PLANNER_SCREEN);
 	}
-	
+
 	@FXML
 	private void miTerminalAction() {
-		terminalController = (TerminalPanelController)showPanel(Iconstants.TERMINAL_BASE_PACKAGE, Iconstants.XML_TERMINAL_SCREEN);
+		terminalController = (TerminalPanelController) showPanel(Iconstants.TERMINAL_BASE_PACKAGE,
+				Iconstants.XML_TERMINAL_SCREEN);
 	}
-	
+
 	@FXML
 	private void miHandlingAction() {
-		handlingController = (HandlingController) showPanel(Iconstants.HANDLING_BASE_PACKAGE, Iconstants.XML_HANDLING_SCREEN);
+		handlingController = (HandlingController) showPanel(Iconstants.HANDLING_BASE_PACKAGE,
+				Iconstants.XML_HANDLING_SCREEN);
 	}
-	
+
 	@FXML
 	private void lblCustomBrokerAction() {
-		customBrokerController = (CustomBrokerController) showPanel(Iconstants.CUSTOM_BROKER_BASE_PACKAGE, Iconstants.XML_CUSTOM_BROKER_SCREEN);
+		customBrokerController = (CustomBrokerController) showPanel(Iconstants.CUSTOM_BROKER_BASE_PACKAGE,
+				Iconstants.XML_CUSTOM_BROKER_SCREEN);
 	}
 
 	@Override
@@ -177,25 +192,25 @@ public class MainScreen extends Application implements Initializable {
 			ObservableList<Node> nodes = mainScreenVBox.getChildren();
 
 			if (nodes != null && nodes.size() >= 4 && nodes.get(3) != null) {
-//				ProgressIndicator pi = new ProgressIndicator();
-//				VBox box = new VBox(pi);
-//				box.setAlignment(Pos.CENTER);
-//				// Grey Background
-//				pane.setDisable(true);
-//				stackPane.getChildren().add(box);
+				// ProgressIndicator pi = new ProgressIndicator();
+				// VBox box = new VBox(pi);
+				// box.setAlignment(Pos.CENTER);
+				// // Grey Background
+				// pane.setDisable(true);
+				// stackPane.getChildren().add(box);
 				nodes.remove(3);
 				nodes.add(3, stackPane);
-				
+
 			} else {
-				if(!mnuBarDatamaintenance.isVisible()) {
+				if (!mnuBarDatamaintenance.isVisible()) {
 					nodes.remove(2);
 				}
-//				ProgressIndicator pi = new ProgressIndicator();
-//				VBox box = new VBox(pi);
-//				box.setAlignment(Pos.CENTER);
-//				// Grey Background
-//				pane.setDisable(true);
-//				stackPane.getChildren().add(box);
+				// ProgressIndicator pi = new ProgressIndicator();
+				// VBox box = new VBox(pi);
+				// box.setAlignment(Pos.CENTER);
+				// // Grey Background
+				// pane.setDisable(true);
+				// stackPane.getChildren().add(box);
 				nodes.add(stackPane);
 			}
 			return fxmlLoader.getController();
