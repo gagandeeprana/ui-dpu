@@ -150,6 +150,7 @@ public class CarrierContractEditController extends Application implements Initia
 	}
 
 	public void initData(CarrierContractModel carrierContractModel) {
+
 		carrierContractId = carrierContractModel.getContractNoId();
 		txtCargo.setText(carrierContractModel.getCargo());
 		txtContractRate.setText(String.valueOf(carrierContractModel.getContractRate()));

@@ -324,7 +324,7 @@ public class CarrierContractController extends Application implements Initializa
 			stage.show();
 			return fxmlLoader.getController();
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 		return null;
 	}
@@ -339,16 +339,17 @@ public class CarrierContractController extends Application implements Initializa
 				public void run() {
 					try {
 						ObjectMapper mapper = new ObjectMapper();
-						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_DRIVER_API
-								+ "/" + carrierContractModel.getContractNoId(), null);
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER
+								+ Iconstants.URL_CARRIER_CONTRACT_API + "/" + carrierContractModel.getContractNoId(),
+								null);
 						if (response != null && response.length() > 0) {
-							CarrierContractModel carrierContractModel = mapper.readValue(response,
-									CarrierContractModel.class);
+							CarrierContractModel c = mapper.readValue(response, CarrierContractModel.class);
 							CarrierContractEditController carrierContractEditController = (CarrierContractEditController) openEditCarrierContractScreen();
-							carrierContractEditController.initData(carrierContractModel);
+							carrierContractEditController.initData(c);
 						}
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+						e.printStackTrace();
 					}
 				}
 			});
