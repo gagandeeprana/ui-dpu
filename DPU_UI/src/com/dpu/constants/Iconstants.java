@@ -2,7 +2,7 @@ package com.dpu.constants;
 
 public class Iconstants {
 
-	public static final String URL_SERVER = "http://localhost:8080/DPUWebProject/";
+	public static final String URL_SERVER = "http://localhost:8082/DPUWebProject/";
 //	public static final String URL_SERVER = "http://35.154.6.180:8080/DPUWebProject/";
 
 	public static final String COMMON_BASE_PACKAGE = "com/dpu/common/xml/";
@@ -20,6 +20,7 @@ public class Iconstants {
 	public static final String XML_DRIVER_SCREEN = "DriverMainPage.fxml";
 	public static final String XML_DRIVER_ADD_SCREEN = "AddDriverScreen2.fxml";
 	public static final String URL_DRIVER_API = "driver";
+	public static final String URL_DRIVER_SPECIFIC_API = "driver/specificData";
 	public static final String XML_DRIVER_EDIT_SCREEN = "EditDriverScreen1.fxml";
 
 	public static final String COMPANY_BASE_PACKAGE = "com/dpu/company/xml/";
@@ -34,12 +35,14 @@ public class Iconstants {
 	public static final String URL_TRUCK_API = "truck";
 	public static final String XML_TRUCK_ADD_SCREEN = "TruckAddScreen1.fxml";
 	public static final String XML_TRUCK_EDIT_SCREEN = "TruckEditScreen.fxml";
+	public static final String URL_TRUCK_SPECIFIC_API = "truck/specificData";
 
 	public static final String TRAILER_BASE_PACKAGE = "com/dpu/trailer/xml/";
 	public static final String XML_TRAILER_SCREEN = "TrailerMainScreen1.fxml";
 	public static final String URL_TRAILER_API = "trailer";
 	public static final String XML_TRAILER_ADD_SCREEN = "Add Trailer.fxml";
 	public static final String XML_TRAILER_EDIT_SCREEN = "Edit Trailer.fxml";
+	public static final String URL_TRAILER_SPECIFIC_API = "trailer/specificData";
 
 	public static final String SHIPPER_BASE_PACKAGE = "com/dpu/shipper/xml/";
 	public static final String XML_SHIPPER_SCREEN = "ShipperListingScreen.fxml";
@@ -109,7 +112,8 @@ public class Iconstants {
 	public static final String URL_ORDER_API = "order";
 	public static final String ORDER_BASE_PACKAGE = "com/dpu/order/xml/";
 	public static final String XML_ORDER_SCREEN = "ListOrders.fxml";
-	public static final String XML_ORDER_ADD_SCREEN = "AddOrder.fxml";
+	public static final String XML_ORDER_ADD_SCREEN = "AddOrder1.fxml";
+	public static final String XML_ORDER_EDIT_SCREEN = "EditOrder.fxml";
 	public static final String XML_TEMPERATURE_SCREEN = "TemperatureOrder.fxml";
 	
 	public static final String URL_HANDLING_API = "handling";
@@ -127,10 +131,16 @@ public class Iconstants {
 	public static final String XML_ADD_CARRIER_ADDITIONAL_CONTACT_SCREEN ="AdditionalCarrierContactAddScreen.fxml";
 	public static final String XML_EDIT_CARRIER_ADDITIONAL_CONTACT_SCREEN ="AdditionalCarrierContactEditScreen.fxml";
 
+<<<<<<< HEAD
 	public static final String URL_CARRIER_CONTRACT_API = "carrierContract";
 	public static final String CARRIER_CONTRACT_BASE_PACKAGE = "com/dpu/carriercontract/xml/";
 	public static final String XML_CARRIER_CONTRACT_SCREEN = "ListingCarrierContract.fxml";
 	public static final String XML_CARRIER_CONTRACT_ADD_SCREEN = "AddCarrierContract.fxml";
 	public static final String XML_CARRIER_CONTRACT_EDIT_SCREEN = "";
+=======
+	public static final String PLANNER_BASE_PACKAGE = "com/dpu/planner/xml/";
+	public static final String XML_PLANNER_SCREEN = "Planner.fxml";
+
+>>>>>>> 42a5b1b77c015069387336a3d4fd668a9a88bf28
 
 }

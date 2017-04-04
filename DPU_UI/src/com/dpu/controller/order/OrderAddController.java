@@ -1,6 +1,7 @@
 package com.dpu.controller.order;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -9,12 +10,18 @@ import javax.swing.JOptionPane;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.dpu.client.GetAPIClient;
+import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.controller.MainScreen;
 import com.dpu.model.AdditionalContact;
 import com.dpu.model.BillingControllerModel;
 import com.dpu.model.Company;
+import com.dpu.model.Failed;
 import com.dpu.model.OrderModel;
+import com.dpu.model.OrderPickUpDeliveryModel;
+import com.dpu.model.ProbilModel;
 import com.dpu.model.Shipper;
+import com.dpu.model.Success;
 import com.dpu.model.Type;
 import com.dpu.util.Validate;
 
@@ -22,6 +29,8 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -29,7 +38,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -42,9 +54,47 @@ public class OrderAddController extends Application implements Initializable {
 	TextField txtCallerName, txtPONo;
 	
 	@FXML
-	ComboBox<String> ddlCustomer, ddlAdditionalContacts, ddlBillingLocation, ddlShipper, ddlConsignee, ddlCurrency, ddlDelivery, ddlPickup;
+	ComboBox<String> ddlCustomer, ddlAdditionalContacts, ddlBillingLocation, ddlShipper, ddlConsignee, ddlCurrency, ddlDelivery, 
+	ddlPickup, ddlProbill;
 	
 	Validate validate = new Validate();
+	public static OrderModel orderModel = new OrderModel();
+	List<Company> companyList = null;
+	List<Shipper> shipperList = null;
+	List<Shipper> consigneeList = null;
+	List<AdditionalContact> additionalContactsList = null;
+	List<BillingControllerModel> billingLocations = null;
+	List<Type> currencyList = null, deliveryList = null, pickupList = null;
+	static public List<Type> temperatureList = null, temperatureTypeList = null;
+	ObjectMapper mapper = new ObjectMapper();
+
+	@FXML
+	TextField txtPickpupScheduledDate, txtPickpupScheduledTime, txtPickpupMABDate, txtPickpupMABTime,
+	txtDeliverScheduledDate, txtDeliverScheduledTime, txtDeliverMABDate, txtDeliverMABTime, txtDelivery1, txtPickup1;
+	
+	@FXML
+	Label lblFaxConsignee, lblFaxShipper, lblAddressShipper, lblPhoneShipper, lblAddressConsginee, lblPhoneConsignee;
+	
+	List<Integer> probillDropDownList = new ArrayList<Integer>();
+
+	@FXML
+	private void btnAddProbillAction() {
+		Integer value = probillDropDownList.get(probillDropDownList.size() - 1);
+		ddlProbill.getItems().add((value + 1) + "");
+		probillDropDownList.add(value + 1);
+	}
+	
+	@FXML
+	TextField txtPickupNo2, txtPickupNo3, txtPickupNo4, txtPickupNo5;
+	
+	@FXML
+	Button btnAddPickupNo2, btnAddPickupNo3, btnAddPickupNo4, btnAddPickupNo5;
+	
+	@FXML
+	AnchorPane root, anchorPanePickupNo;
+	
+	@FXML
+	StackPane stackPanePickupNos;
 
 	/*@FXML
 	private void txtNameKeyTyped() {
@@ -83,7 +133,7 @@ public class OrderAddController extends Application implements Initializable {
 	private void btnSaveOrderAction() {
 //		boolean result = validateAddEquipmentScreen();
 //		if(result) {
-//			addOrder();
+			addOrder();
 			closeAddOrderScreen(btnSaveOrder);
 //		}
 	}
@@ -93,14 +143,43 @@ public class OrderAddController extends Application implements Initializable {
         loginStage.close();
 	}
 	
-	List<Company> companyList = null;
-	List<Shipper> shipperList = null;
-	List<Shipper> consigneeList = null;
-	List<AdditionalContact> additionalContactsList = null;
-	List<Type> currencyList = null, deliveryList = null, pickupList = null;
-	static public List<Type> temperatureList = null, temperatureTypeList = null;
+	@FXML
+	private void btnAddPickupNoAction() {
+	}
+
+	@FXML
+	private void btnAddPickupNo2Action() {
+	}
 	
-	ObjectMapper mapper = new ObjectMapper();
+	@FXML
+	private void btnAddPickupNo3Action() {
+	}
+	
+	@FXML
+	private void btnAddPickupNo4Action() {
+	}
+	
+	@FXML
+	private void btnAddPickupNo5Action() {
+	}
+	
+	@FXML
+	private void btnRemoveProbillAction() {
+		if(probillDropDownList.size() == 1) {
+			return;
+		}
+		if(ddlProbill.getSelectionModel().getSelectedItem() != null) {
+			probillDropDownList.remove(ddlProbill.getSelectionModel().getSelectedIndex());
+			ddlProbill.getItems().remove(ddlProbill.getSelectionModel().getSelectedIndex());
+			ddlProbill.getItems().clear();
+			ObservableList<Integer> data = FXCollections.observableArrayList(probillDropDownList);
+			for(Integer i : data) {
+				ddlProbill.getItems().add(i + "");
+			}
+			ddlProbill.getSelectionModel().select(0);
+			ddlProbill.setVisibleRowCount(probillDropDownList.size());
+		}
+	}
 	
 	@FXML
 	private void btnTemperatureAction() {
@@ -179,7 +258,7 @@ public class OrderAddController extends Application implements Initializable {
 		}
 	}
 	
-	/*private void addOrder() {
+	private void addOrder() {
 		
 		Platform.runLater(new Runnable() {
 			
@@ -188,38 +267,80 @@ public class OrderAddController extends Application implements Initializable {
 			public void run() {
 				try {
 					ObjectMapper mapper = new ObjectMapper();
-					Equipment equipment = setEquipmentValue();
-					String payload = mapper.writeValueAsString(equipment);
-					System.out.println("Add Payload: " + payload);
-					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_EQUIPMENT_API, null, payload);
-					System.out.println(response);
+					OrderModel orderModel = setOrderValue();
+					String payload = mapper.writeValueAsString(orderModel);
+					System.out.println("order add payload: " + payload);
+					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_ORDER_API, null, payload);
+					System.out.println("order add response: " + response);
 					try {
 						Success success = mapper.readValue(response, Success.class);
-						List<Equipment> equipmentList = (List<Equipment>) success.getResultList();
-						String res = mapper.writeValueAsString(equipmentList);
+						List<OrderModel> orderModelList = (List<OrderModel>) success.getResultList();
+						String res = mapper.writeValueAsString(orderModelList);
 						JOptionPane.showMessageDialog(null, success.getMessage());
-						MainScreen.equipmentController.fillEquipments(res);
+						MainScreen.orderController.fillOrders(res);
 					} catch (Exception e) {
 						Failed failed = mapper.readValue(response, Failed.class);
 						JOptionPane.showMessageDialog(null, failed.getMessage());
-					}
-
-					if(response != null && response.contains("message")) {
-						Success success = mapper.readValue(response, Success.class);
-						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
-					} else {
-						Failed failed = mapper.readValue(response, Failed.class);
-						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
 					}
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
 				}
 			}
 		});
-	}*/
+	}
+	
+	private OrderModel setOrderValue() {
+		orderModel.setCompanyId(companyList.get(ddlCustomer.getSelectionModel().getSelectedIndex()).getCompanyId());
+		orderModel.setBillingLocationId(billingLocations.get(ddlBillingLocation.getSelectionModel().getSelectedIndex()).getBillingLocationId());
+		orderModel.setContactId(additionalContactsList.get(ddlAdditionalContacts.getSelectionModel().getSelectedIndex()).getAdditionalContactId());
+		orderModel.setCurrencyId(currencyList.get(ddlCurrency.getSelectionModel().getSelectedIndex()).getTypeId());
+		List<ProbilModel> probilModelList = new ArrayList<>();
+		for(Integer probill : probillDropDownList) {
+			ProbilModel probilModel = new ProbilModel();
+			probilModel.setShipperId(shipperList.get(ddlShipper.getSelectionModel().getSelectedIndex()).getShipperId());
+			probilModel.setConsineeId(consigneeList.get(ddlConsignee.getSelectionModel().getSelectedIndex()).getShipperId());
+			probilModel.setPickupId(pickupList.get(ddlPickup.getSelectionModel().getSelectedIndex()).getTypeId());
+			probilModel.setDeliveryId(deliveryList.get(ddlDelivery.getSelectionModel().getSelectedIndex()).getTypeId());
+			probilModel.setPickupScheduledDate(txtPickpupScheduledDate.getText());
+			probilModel.setPickupScheduledTime(txtPickpupScheduledTime.getText());
+			probilModel.setPickupMABDate(txtPickpupMABDate.getText());
+			probilModel.setPickupMABTime(txtPickpupMABTime.getText());
+			probilModel.setDeliverScheduledDate(txtDeliverScheduledDate.getText());
+			probilModel.setDeliverScheduledTime(txtDeliverScheduledTime.getText());
+			probilModel.setDeliveryMABDate(txtDeliverMABDate.getText());
+			probilModel.setDeliveryMABTime(txtDeliverMABTime.getText());
+			List<OrderPickUpDeliveryModel> orderPickupDeliveryModelList = new ArrayList<>();
+			OrderPickUpDeliveryModel orderPickUpDeliveryModel = new OrderPickUpDeliveryModel();
+			orderPickUpDeliveryModel.setPickupDeliveryNo(txtPickup1.getText());
+			orderPickUpDeliveryModel.setTypeId(1l);
+			OrderPickUpDeliveryModel orderPickUpDeliveryModel1 = new OrderPickUpDeliveryModel();
+			orderPickUpDeliveryModel1.setPickupDeliveryNo(txtDelivery1.getText());
+			orderPickUpDeliveryModel1.setTypeId(2l);
+			orderPickupDeliveryModelList.add(orderPickUpDeliveryModel);
+			orderPickupDeliveryModelList.add(orderPickUpDeliveryModel1);
+			probilModel.setOrderPickUpDeliveryList(orderPickupDeliveryModelList);
+			probilModelList.add(probilModel);
+		}
+		orderModel.setProbilList(probilModelList);
+		return orderModel;
+	}
 
+	
+	
+	private void hidePickupComponents() {
+		
+//		root.getChildren()
+//		root.getChildren().removeAll(txtPickupNo2, txtPickupNo3, txtPickupNo4, txtPickupNo5, btnAddPickupNo2, btnAddPickupNo3, btnAddPickupNo4, btnAddPickupNo5);
+//		root.clearConstraints(stackPanePickupNos);
+	}
+	
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		hidePickupComponents();
+		probillDropDownList.add(1);
+		ddlProbill.getItems().add(1 + "");
+		ddlProbill.getSelectionModel().select(0);
 		ddlCustomer.valueProperty().addListener(new ChangeListener<String>() {
 	        
 			@SuppressWarnings("rawtypes")
@@ -232,14 +353,14 @@ public class OrderAddController extends Application implements Initializable {
 							Long companyId = companyList.get(ddlCustomer.getSelectionModel().getSelectedIndex()).getCompanyId();
 							String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_ORDER_API + "/" + companyId + "/getData", null);
 							Company companyResponse = mapper.readValue(response, Company.class);
-							List<AdditionalContact> additionalContacts = companyResponse.getAdditionalContacts();
+							additionalContactsList = companyResponse.getAdditionalContacts();
 							ddlAdditionalContacts.getItems().clear();
 							ddlBillingLocation.getItems().clear();
 
-							if(additionalContacts != null && additionalContacts.size() > 0) {
-								fillDropDown(ddlAdditionalContacts, additionalContacts);
+							if(additionalContactsList != null && additionalContactsList.size() > 0) {
+								fillDropDown(ddlAdditionalContacts, additionalContactsList);
 							}
-							List<BillingControllerModel> billingLocations = companyResponse.getBillingLocations();
+							billingLocations = companyResponse.getBillingLocations();
 							if(billingLocations != null && billingLocations.size() > 0) {
 								fillDropDown(ddlBillingLocation, billingLocations);
 							}
@@ -251,6 +372,69 @@ public class OrderAddController extends Application implements Initializable {
 			}
 			
 	    });
+		ddlShipper.valueProperty().addListener(new ChangeListener<String>() {
+	        
+			@SuppressWarnings("rawtypes")
+			@Override public void changed(ObservableValue ov, String t, String t1) {
+				Platform.runLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						try {
+							Long shipperId = shipperList.get(ddlShipper.getSelectionModel().getSelectedIndex()).getShipperId();
+							String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_SHIPPER_API + "/" + shipperId, null);
+							Shipper shipperResponse = mapper.readValue(response, Shipper.class);
+							if(shipperResponse != null) {
+								if(shipperResponse.getAddress() != null) {
+									lblAddressShipper.setText(shipperResponse.getAddress());
+								}
+								if(shipperResponse.getFax() != null) {
+									lblFaxShipper.setText(shipperResponse.getFax());
+								}
+								if(shipperResponse.getAddress() != null) {
+									lblPhoneShipper.setText(shipperResponse.getPhone());
+								}
+							}
+						} catch (Exception e) {
+							JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+						}
+					}
+				});
+			}
+	    });
+		ddlConsignee.valueProperty().addListener(new ChangeListener<String>() {
+	        
+			@SuppressWarnings("rawtypes")
+			@Override public void changed(ObservableValue ov, String t, String t1) {
+				Platform.runLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						try {
+							Long consigneeId = consigneeList.get(ddlConsignee.getSelectionModel().getSelectedIndex()).getShipperId();
+							String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_SHIPPER_API + "/" + consigneeId, null);
+							Shipper shipperResponse = mapper.readValue(response, Shipper.class);
+							if(shipperResponse != null) {
+								if(shipperResponse.getAddress() != null) {
+									lblAddressConsginee.setText(shipperResponse.getAddress());
+								}
+								if(shipperResponse.getFax() != null) {
+									lblFaxConsignee.setText(shipperResponse.getFax());
+								}
+								if(shipperResponse.getAddress() != null) {
+									lblPhoneConsignee.setText(shipperResponse.getPhone());
+								}
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+							JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+						}
+					}
+				});
+			}
+			
+	    });
+		
 		fetchMasterDataForDropDowns();
 	}
 
