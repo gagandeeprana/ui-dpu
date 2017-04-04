@@ -131,16 +131,16 @@ public class Iconstants {
 	public static final String XML_ADD_CARRIER_ADDITIONAL_CONTACT_SCREEN ="AdditionalCarrierContactAddScreen.fxml";
 	public static final String XML_EDIT_CARRIER_ADDITIONAL_CONTACT_SCREEN ="AdditionalCarrierContactEditScreen.fxml";
 
-<<<<<<< HEAD
+
 	public static final String URL_CARRIER_CONTRACT_API = "carrierContract";
 	public static final String CARRIER_CONTRACT_BASE_PACKAGE = "com/dpu/carriercontract/xml/";
 	public static final String XML_CARRIER_CONTRACT_SCREEN = "ListingCarrierContract.fxml";
 	public static final String XML_CARRIER_CONTRACT_ADD_SCREEN = "AddCarrierContract.fxml";
 	public static final String XML_CARRIER_CONTRACT_EDIT_SCREEN = "";
-=======
+
 	public static final String PLANNER_BASE_PACKAGE = "com/dpu/planner/xml/";
 	public static final String XML_PLANNER_SCREEN = "Planner.fxml";
 
->>>>>>> 42a5b1b77c015069387336a3d4fd668a9a88bf28
+
 
 }
