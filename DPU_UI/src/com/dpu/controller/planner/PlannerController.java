@@ -62,7 +62,9 @@ public class PlannerController<T> extends Application implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		fetchLists(0);
-		createTableColumns();
+		LocalDate localDate = LocalDate.now();
+//		int start
+//		createTableColumns(
 	}
 	
 	@SuppressWarnings("unchecked")
