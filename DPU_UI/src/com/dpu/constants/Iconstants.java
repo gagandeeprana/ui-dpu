@@ -9,6 +9,8 @@ public class Iconstants {
 
 	public static final String XML_LOGIN_SCREEN = "Login.fxml";
 	public static final String XML_MAIN_SCREEN = "MainScreen1.fxml";
+	
+	public static final String XML_VALIDATION_SCREEN = "ValidationScreen.fxml";
 
 	public static final String TERMINAL_BASE_PACKAGE = "com/dpu/terminal/xml/";
 	public static final String XML_TERMINAL_SCREEN = "ListTerminal.fxml";
