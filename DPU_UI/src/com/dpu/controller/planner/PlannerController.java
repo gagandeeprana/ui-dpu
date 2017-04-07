@@ -2,6 +2,7 @@ package com.dpu.controller.planner;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -29,10 +30,10 @@ import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-public class PlannerController<T> extends Application implements Initializable {
+public class PlannerController extends Application implements Initializable {
 
 	@FXML
-	TableColumn<T, String> list;
+	TableColumn<Object, String> list;
 	
 	@FXML
 	Tab tabPaneTrucks;
@@ -61,16 +62,23 @@ public class PlannerController<T> extends Application implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		System.out.println("12121");
 		fetchLists(0);
 		LocalDate localDate = LocalDate.now();
-//		int start
-//		createTableColumns(
+		int start = localDate.getDayOfYear();
+		int month = localDate.getMonthValue();
+		int year = localDate.getYear();
+		LocalDate localDateTimeAfterOnWeek = localDate.plus(1, ChronoUnit.WEEKS);
+		int endDate = localDateTimeAfterOnWeek.getDayOfYear();
+		int endMonth = localDateTimeAfterOnWeek.getMonthValue();
+		int endYear = localDateTimeAfterOnWeek.getYear();
+		createTableColumns(year, start, month, endYear, endDate, endMonth);
 	}
 	
 	@SuppressWarnings("unchecked")
 	private void fetchColumns() {
 		try {
-			list = (TableColumn<T, String>) tblLists.getColumns().get(0);
+			list = (TableColumn<Object, String>) tblLists.getColumns().get(0);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -138,7 +146,7 @@ public class PlannerController<T> extends Application implements Initializable {
 	public void fillLists(String response, Integer value) {
 		
 		try {
-			ObservableList<T> data = null;
+			ObservableList<Object> data = null;
 			switch (value) {
 				case 0:
 					drivers = new ArrayList<Driver>();
@@ -148,9 +156,9 @@ public class PlannerController<T> extends Application implements Initializable {
 						for(Driver ccl : c) {
 							drivers.add(ccl);
 						}
-						data = (ObservableList<T>) FXCollections.observableArrayList(drivers);
+						data = FXCollections.observableArrayList(drivers);
 					} else {
-						data = (ObservableList<T>) FXCollections.observableArrayList(drivers);
+						data = FXCollections.observableArrayList(drivers);
 					}
 					tblLists.setItems(data);
 					tblLists.setVisible(true);
@@ -164,9 +172,9 @@ public class PlannerController<T> extends Application implements Initializable {
 						for(Truck ccl : c) {
 							trucks.add(ccl);
 						}
-						data = (ObservableList<T>) FXCollections.observableArrayList(trucks);
+						data = FXCollections.observableArrayList(trucks);
 					} else {
-						data = (ObservableList<T>) FXCollections.observableArrayList(trucks);
+						data = FXCollections.observableArrayList(trucks);
 					}
 					tblLists.setItems(data);
 					tblLists.setVisible(true);
@@ -179,9 +187,9 @@ public class PlannerController<T> extends Application implements Initializable {
 						for(Trailer ccl : c) {
 							trailers.add(ccl);
 						}
-						data = (ObservableList<T>) FXCollections.observableArrayList(trailers);
+						data = FXCollections.observableArrayList(trailers);
 					} else {
-						data = (ObservableList<T>) FXCollections.observableArrayList(trailers);
+						data = FXCollections.observableArrayList(trailers);
 					}
 					tblLists.setItems(data);
 					tblLists.setVisible(true);
@@ -196,12 +204,12 @@ public class PlannerController<T> extends Application implements Initializable {
 			
 		switch (value) {
 		case 0:
-			list.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<T, String>, ObservableValue<String>>() {
+			list.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Object, String>, ObservableValue<String>>() {
 				
 				@Override
-				public ObservableValue<String> call(CellDataFeatures<T, String> param) {
-					CellDataFeatures<Driver, String> paramDriver = (CellDataFeatures<Driver, String>) param;
-					return new SimpleStringProperty(paramDriver.getValue().getFullName() + "");
+				public ObservableValue<String> call(CellDataFeatures<Object, String> param) {
+					Driver paramDriver = (Driver) param.getValue();
+					return new SimpleStringProperty(paramDriver.getFullName() + "");
 				}
 			});
 			break;
@@ -209,23 +217,23 @@ public class PlannerController<T> extends Application implements Initializable {
 			/*if(drivers != null && drivers.size() > 0) {
 				list.getColumns().removeAll(drivers);
 			}*/
-			list.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<T, String>, ObservableValue<String>>() {
+			list.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Object, String>, ObservableValue<String>>() {
 				
 				@Override
-				public ObservableValue<String> call(CellDataFeatures<T, String> param) {
-					CellDataFeatures<Truck, String> paramTruck = (CellDataFeatures<Truck, String>) param;
-					return new SimpleStringProperty(paramTruck.getValue().getOwner() + "");
+				public ObservableValue<String> call(CellDataFeatures<Object, String> param) {
+					Truck paramTruck = (Truck) param.getValue();
+					return new SimpleStringProperty(paramTruck.getOwner() + "");
 				}
 			});
 			break;
 
 		case 2:
-			list.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<T, String>, ObservableValue<String>>() {
+			list.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Object, String>, ObservableValue<String>>() {
 				
 				@Override
-				public ObservableValue<String> call(CellDataFeatures<T, String> param) {
-					CellDataFeatures<Trailer, String> paramTrailer = (CellDataFeatures<Trailer, String>) param;
-					return new SimpleStringProperty(paramTrailer.getValue().getOwner() + "");
+				public ObservableValue<String> call(CellDataFeatures<Object, String> param) {
+					Trailer paramTrailer = (Trailer) param.getValue();
+					return new SimpleStringProperty(paramTrailer.getOwner() + "");
 				}
 			});
 			break;
