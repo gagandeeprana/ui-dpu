@@ -44,7 +44,7 @@
             </Menu>
             <Menu mnemonicParsing="false">
                <graphic>
-                  <Label>
+                  <Label fx:id="lblPlanner" onMouseClicked="#lblPlannerAction">
                      <graphic>
                         <ImageView fx:id="ivPlanner" fitHeight="20.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>

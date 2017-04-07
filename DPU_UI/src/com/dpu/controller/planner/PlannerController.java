@@ -40,7 +40,7 @@ public class PlannerController extends Application implements Initializable {
 	
 	@FXML
 	private void tabPaneTrucksSelection() {
-		fetchLists(1);
+//		fetchLists(1);
 	}
 	
 	@FXML
@@ -63,7 +63,7 @@ public class PlannerController extends Application implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		System.out.println("12121");
-		fetchLists(0);
+//		fetchLists(0);
 		LocalDate localDate = LocalDate.now();
 		int start = localDate.getDayOfYear();
 		int month = localDate.getMonthValue();
