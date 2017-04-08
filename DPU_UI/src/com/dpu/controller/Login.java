@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import com.dpu.constants.Iconstants;
 
 import javafx.application.Application;
+import javafx.beans.property.DoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -52,6 +53,22 @@ public class Login extends Application implements Initializable{
 			if(tableView != null)
 				tableView.prefWidthProperty().bind(stage.widthProperty());
 		}
+		if(tableView != null)
+			tableView.prefWidthProperty().bind(stage.widthProperty());
+	}
+	
+	public static double setWidthForAllInPlanner(Object obj, TableView<?> tableView) {
+		if(obj != null && obj instanceof Pane) {
+			Pane pane = (Pane) obj;
+			pane.prefWidthProperty().bind(stage.widthProperty());
+			if(tableView != null)
+				tableView.prefWidthProperty().bind(stage.widthProperty());
+		}
+		if(tableView != null)
+			tableView.prefWidthProperty().bind(stage.widthProperty());
+		
+		return tableView.getPrefWidth();
+				
 	}
 	
 	@FXML
