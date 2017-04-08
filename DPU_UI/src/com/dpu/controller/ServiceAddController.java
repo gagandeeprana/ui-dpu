@@ -119,6 +119,7 @@ public class ServiceAddController<T> extends Application implements Initializabl
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
 					.getResource(Iconstants.COMMON_BASE_PACKAGE + Iconstants.XML_VALIDATION_SCREEN));
 
+			
 			Parent root = (Parent) fxmlLoader.load();
 
 			Stage stage = new Stage();
