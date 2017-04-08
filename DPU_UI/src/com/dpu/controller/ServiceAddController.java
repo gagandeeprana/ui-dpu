@@ -60,6 +60,7 @@ public class ServiceAddController<T> extends Application implements Initializabl
 		}
 	}
 
+	
 	private void closeAddServiceScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
 		loginStage.close();
