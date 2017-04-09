@@ -21,102 +21,153 @@ import com.dpu.util.Validate;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class EquipmentAddController extends Application implements Initializable{
+public class EquipmentAddController extends Application implements Initializable {
 
 	@FXML
 	Button btnSaveEquipment;
-	
+
 	@FXML
 	TextField txtName, txtDescription;
-	
+
 	@FXML
 	ComboBox<String> ddlType;
-	
+
 	Validate validate = new Validate();
 
 	@FXML
 	private void txtNameKeyTyped() {
 		txtName.setStyle("-fx-focus-color: #87CEEB;");
 	}
-	
+
 	@FXML
 	private void ddlTypeAction() {
 		ddlType.setStyle("-fx-focus-color: #87CEEB;");
 	}
-	
+
 	private boolean validateAddEquipmentScreen() {
 		String name = txtName.getText();
+		String description = txtDescription.getText();
 		String type = ddlType.getSelectionModel().getSelectedItem();
-		
+
 		boolean result = validate.validateEmptyness(name);
-		if(!result) {
-			txtName.setTooltip(new Tooltip("Equipment Name is Mandatory"));
+		if (!result) {
+			ValidationController.str = validsteFields();
+			openValidationScreen();
 			txtName.setStyle("-fx-focus-color: red;");
-			txtName.requestFocus();
+			txtDescription.requestFocus();
+			return result;
+		}
+		result = validate.validateEmptyness(description);
+		if (!result) {
+			ValidationController.str = validsteFields();
+			openValidationScreen();
+			txtName.setStyle("-fx-focus-color: red;");
+			txtDescription.requestFocus();
 			return result;
 		}
 		result = validate.validateEmptyness(type);
-		if(!result) {
-			ddlType.setTooltip(new Tooltip("Type is Mandatory"));
+		if (!result) {
+			ValidationController.str = validsteFields();
+			openValidationScreen();
 			ddlType.setStyle("-fx-focus-color: red;");
 			ddlType.requestFocus();
 			return result;
 		}
 		return result;
 	}
-	
+
+	public StringBuffer validsteFields() {
+		StringBuffer strBuff = new StringBuffer();
+		String name = txtName.getText();
+		String description = txtDescription.getText();
+		String type = ddlType.getSelectionModel().getSelectedItem();
+		if (name.equals("")) {
+			strBuff.append("Equipment Name is Mandatory\n");
+		}
+		if (description.equals("")) {
+			strBuff.append("Descriptionis Mandatory\n");
+		}
+		if (type == null) {
+			strBuff.append("Type is Mandatory\n");
+		}
+		return strBuff;
+	}
+
+	private Object openValidationScreen() {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
+					.getResource(Iconstants.COMMON_BASE_PACKAGE + Iconstants.XML_VALIDATION_SCREEN));
+
+			Parent root = (Parent) fxmlLoader.load();
+
+			Stage stage = new Stage();
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setTitle("Warning");
+			stage.setScene(new Scene(root));
+			stage.show();
+			return fxmlLoader.getController();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	@FXML
 	private void btnSaveEquipmentAction() {
 		boolean result = validateAddEquipmentScreen();
-		if(result) {
+		if (result) {
 			addEquipment();
 			closeAddEquipmentScreen(btnSaveEquipment);
 		}
 	}
-	
+
 	private void closeAddEquipmentScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
-        loginStage.close();
+		loginStage.close();
 	}
-	
+
 	List<Type> cList = null;
-	
+
 	public void fetchTypes() {
-		
+
 		Platform.runLater(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				try {
 					ObjectMapper mapper = new ObjectMapper();
 					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_TYPE_API, null);
 					System.out.println(response);
-					if(response != null && response.length() > 0) {
+					if (response != null && response.length() > 0) {
 						Type c[] = mapper.readValue(response, Type[].class);
 						cList = new ArrayList<Type>();
-						for(Type ccl : c) {
+						for (Type ccl : c) {
 							ddlType.getItems().add(ccl.getTypeName());
 							cList.add(ccl);
 						}
 					}
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "Try Again..  " + e , "Info", 1);
+					JOptionPane.showMessageDialog(null, "Try Again..  " + e, "Info", 1);
 				}
 			}
 		});
 	}
-	
+
 	private void addEquipment() {
-		
+
 		Platform.runLater(new Runnable() {
-			
+
 			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
@@ -125,7 +176,8 @@ public class EquipmentAddController extends Application implements Initializable
 					Equipment equipment = setEquipmentValue();
 					String payload = mapper.writeValueAsString(equipment);
 					System.out.println("Add Payload: " + payload);
-					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_EQUIPMENT_API, null, payload);
+					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_EQUIPMENT_API,
+							null, payload);
 					System.out.println(response);
 					try {
 						Success success = mapper.readValue(response, Success.class);
@@ -138,13 +190,15 @@ public class EquipmentAddController extends Application implements Initializable
 						JOptionPane.showMessageDialog(null, failed.getMessage());
 					}
 
-/*					if(response != null && response.contains("message")) {
-						Success success = mapper.readValue(response, Success.class);
-						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
-					} else {
-						Failed failed = mapper.readValue(response, Failed.class);
-						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-					}*/
+					/*
+					 * if(response != null && response.contains("message")) {
+					 * Success success = mapper.readValue(response,
+					 * Success.class); JOptionPane.showMessageDialog(null,
+					 * success.getMessage() , "Info", 1); } else { Failed failed
+					 * = mapper.readValue(response, Failed.class);
+					 * JOptionPane.showMessageDialog(null, failed.getMessage(),
+					 * "Info", 1); }
+					 */
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
 				}

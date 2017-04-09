@@ -51,10 +51,10 @@ public class ServiceEditController extends Application implements Initializable 
 		String textField = ddlTextField.getSelectionModel().getSelectedItem();
 		String association = ddlAssociationWith.getSelectionModel().getSelectedItem();
 		String status = ddlStatus.getSelectionModel().getSelectedItem();
-
 		boolean result = validate.validateEmptyness(name);
+
 		if (!result) {
-			ValidationController.str = "Service Name is Mandatory....";
+			ValidationController.str = validsteFields();
 			openValidationScreen();
 			txtService.setStyle("-fx-focus-color: red;");
 			txtService.requestFocus();
@@ -62,7 +62,6 @@ public class ServiceEditController extends Application implements Initializable 
 		}
 		result = validate.validateLength(name, 5, 25);
 		if (!result) {
-			ValidationController.str = "Service Length is not Correct....";
 			openValidationScreen();
 			txtService.setStyle("-fx-focus-color: red;");
 			txtService.requestFocus();
@@ -70,15 +69,16 @@ public class ServiceEditController extends Application implements Initializable 
 		}
 		result = validate.validateEmptyness(textField);
 		if (!result) {
-			ValidationController.str = "Text Field is Mandatory....";
+			ValidationController.str = validsteFields();
 			openValidationScreen();
 			ddlTextField.setStyle("-fx-focus-color: red;");
+			txtService.setStyle("-fx-focus-color: red;");
 			ddlTextField.requestFocus();
 			return result;
 		}
 		result = validate.validateEmptyness(association);
 		if (!result) {
-			ValidationController.str = "Association is Mandatory....";
+			ValidationController.str = validsteFields();
 			openValidationScreen();
 			ddlAssociationWith.setStyle("-fx-focus-color: red;");
 			ddlAssociationWith.requestFocus();
@@ -86,13 +86,34 @@ public class ServiceEditController extends Application implements Initializable 
 		}
 		result = validate.validateEmptyness(status);
 		if (!result) {
-			ValidationController.str = "Status  is Mandatory....";
+			ValidationController.str = validsteFields();
 			openValidationScreen();
 			ddlStatus.setStyle("-fx-focus-color: red;");
 			ddlStatus.requestFocus();
 			return result;
 		}
 		return result;
+	}
+
+	public StringBuffer validsteFields() {
+		StringBuffer strBuff = new StringBuffer();
+		String name = txtService.getText();
+		String textField = ddlTextField.getSelectionModel().getSelectedItem();
+		String association = ddlAssociationWith.getSelectionModel().getSelectedItem();
+		String status = ddlStatus.getSelectionModel().getSelectedItem();
+		if (name.equals("")) {
+			strBuff.append("Srvice Name is Mandatory,\n");
+		}
+		if (textField == null) {
+			strBuff.append("TextField Name is Mandatory,\n");
+		}
+		if (association == null) {
+			strBuff.append("Association Name is Mandatory,\n");
+		}
+		if (status == null) {
+			strBuff.append("Status Name is Mandatory\n");
+		}
+		return strBuff;
 	}
 
 	private Object openValidationScreen() {

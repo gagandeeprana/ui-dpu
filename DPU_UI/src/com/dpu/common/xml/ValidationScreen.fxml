@@ -5,9 +5,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="164.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.ValidationController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="282.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.ValidationController">
    <children>
-      <Text fx:id="txtMsg" layoutX="9.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="311.13671875" />
-      <Button fx:id="btnGotIt" layoutX="140.0" layoutY="119.0" mnemonicParsing="false" onAction="#btnGotItAction" text="GotIt" />
+      <Button fx:id="btnGotIt" layoutX="141.0" layoutY="233.0" mnemonicParsing="false" onAction="#btnGotItAction" text="GotIt" />
+      <TextArea fx:id="taMsg" layoutX="8.0" layoutY="10.0" prefHeight="217.0" prefWidth="310.0" />
    </children>
 </Pane>
