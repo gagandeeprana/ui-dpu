@@ -28,7 +28,8 @@
                            </image>
                         </ImageView>
                      </graphic></Label>
-               </graphic></Menu>
+               </graphic>
+               </Menu>
             <Menu mnemonicParsing="false">
                <graphic>
                   <Label fx:id="lblOrder" onMouseClicked="#lblOrderAction">

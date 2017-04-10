@@ -9,12 +9,14 @@ import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.dpu.client.GetAPIClient;
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.controller.MainScreen;
 import com.dpu.model.AdditionalContact;
 import com.dpu.model.BillingControllerModel;
 import com.dpu.model.Company;
+import com.dpu.model.CompanyAdditionalContacts;
 import com.dpu.model.Failed;
 import com.dpu.model.OrderModel;
 import com.dpu.model.OrderPickUpDeliveryModel;
@@ -23,6 +25,7 @@ import com.dpu.model.Shipper;
 import com.dpu.model.Status;
 import com.dpu.model.Success;
 import com.dpu.model.Type;
+import com.dpu.request.BillingLocation;
 import com.dpu.util.Validate;
 
 import javafx.application.Application;
@@ -36,6 +39,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -58,7 +62,7 @@ public class OrderEditController extends Application implements Initializable{
 	Long orderId = 0l;
 	Validate validate = new Validate();
 	List<Status> statusList;
-	private OrderModel orderModel;
+	public static OrderModel orderModel;
 	List<Company> companyList = null;
 	List<Shipper> shipperList = null;
 	List<Shipper> consigneeList = null;
@@ -80,6 +84,7 @@ public class OrderEditController extends Application implements Initializable{
 	@FXML
 	private void btnTemperatureAction() {
 		try {
+			
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.ORDER_BASE_PACKAGE + Iconstants.XML_TEMPERATURE_SCREEN));
 			
 	        Parent root = (Parent) fxmlLoader.load();
@@ -185,15 +190,19 @@ public class OrderEditController extends Application implements Initializable{
 	
 	List<Integer> probillDropDownList = new ArrayList<Integer>();
 	
+	List<ProbilModel> probils = null;
+	
 	@FXML
 	TextField txtPickpupScheduledDate, txtPickpupScheduledTime, txtPickpupMABDate, txtPickpupMABTime,
 	txtDeliverScheduledDate, txtDeliverScheduledTime, txtDeliverMABDate, txtDeliverMABTime, txtDelivery1, txtPickup1;
 	
+	public static OrderModel updateOrderModel = new OrderModel();
+	
 	private OrderModel setOrderValue() {
-		orderModel.setCompanyId(companyList.get(ddlCustomer.getSelectionModel().getSelectedIndex()).getCompanyId());
-		orderModel.setBillingLocationId(billingLocations.get(ddlBillingLocation.getSelectionModel().getSelectedIndex()).getBillingLocationId());
-		orderModel.setContactId(additionalContactsList.get(ddlAdditionalContacts.getSelectionModel().getSelectedIndex()).getAdditionalContactId());
-		orderModel.setCurrencyId(currencyList.get(ddlCurrency.getSelectionModel().getSelectedIndex()).getTypeId());
+		updateOrderModel.setCompanyId(companyList.get(ddlCustomer.getSelectionModel().getSelectedIndex()).getCompanyId());
+		updateOrderModel.setBillingLocationId(billingLocations.get(ddlBillingLocation.getSelectionModel().getSelectedIndex()).getBillingLocationId());
+		updateOrderModel.setContactId(additionalContactsList.get(ddlAdditionalContacts.getSelectionModel().getSelectedIndex()).getAdditionalContactId());
+		updateOrderModel.setCurrencyId(currencyList.get(ddlCurrency.getSelectionModel().getSelectedIndex()).getTypeId());
 		List<ProbilModel> probilModelList = new ArrayList<>();
 		for(Integer probill : probillDropDownList) {
 			ProbilModel probilModel = new ProbilModel();
@@ -221,8 +230,8 @@ public class OrderEditController extends Application implements Initializable{
 			probilModel.setOrderPickUpDeliveryList(orderPickupDeliveryModelList);
 			probilModelList.add(probilModel);
 		}
-		orderModel.setProbilList(probilModelList);
-		return orderModel;
+		updateOrderModel.setProbilList(probilModelList);
+		return updateOrderModel;
 	}
 	
 	@Override
@@ -232,10 +241,178 @@ public class OrderEditController extends Application implements Initializable{
 	@Override
 	public void start(Stage primaryStage) {
 	}
+	
+	@FXML
+	Label lblFaxConsignee, lblFaxShipper, lblAddressShipper, lblPhoneShipper, lblAddressConsginee, lblPhoneConsignee;
+
+	public static Double temperatureValue;
+	public static Long temperatureId, temperatureTypeId;
 
 	public void initData(OrderModel orderModel) {
 		orderId = orderModel.getId();
+		companyList = orderModel.getCompanyList();
+		for(int i = 0; i< companyList.size();i++) {
+			Company company = companyList.get(i);
+			ddlCustomer.getItems().add(company.getName());
+			if(company.getCompanyId() == orderModel.getCompanyId()) {
+				ddlCustomer.getSelectionModel().select(i);
+			}
+		}
 		
+		additionalContactsList = orderModel.getCompanyResponse().getAdditionalContacts();
+		for(int i = 0; i< additionalContactsList.size();i++) {
+			AdditionalContact additionalContacts = additionalContactsList.get(i);
+			ddlAdditionalContacts.getItems().add(additionalContacts.getCustomerName());
+			if(additionalContacts.getAdditionalContactId() == orderModel.getContactId()) {
+				ddlAdditionalContacts.getSelectionModel().select(i);
+			}
+		}
+		
+		billingLocations = orderModel.getCompanyResponse().getBillingLocations();
+		for(int i = 0; i < billingLocations.size();i++) {
+			BillingControllerModel billingLocation = billingLocations.get(i);
+			ddlBillingLocation.getItems().add(billingLocation.getName());
+			if(billingLocation.getBillingLocationId() == orderModel.getBillingLocationId()) {
+				ddlBillingLocation.getSelectionModel().select(i);
+			}
+		}
+		
+//		txtPONo.setText(orderModel.getPoNo() + "");
+		
+		probils = orderModel.getProbilList();
+		for(int i = 0; i < probils.size();i++) {
+			ProbilModel probilModel = probils.get(i);
+			ddlProbill.getItems().add(probilModel.getId() + "");
+			ddlProbill.getSelectionModel().select(0);
+		}
+		
+		shipperList = orderModel.getShipperConsineeList();
+		for(int i = 0; i < shipperList.size();i++) {
+			Shipper shipper = shipperList.get(i);
+			ddlShipper.getItems().add(shipper.getLocationName());
+			if(shipper.getShipperId() == probils.get(0).getShipperId()) {
+				ddlShipper.getSelectionModel().select(i);
+//				Platform.runLater(new Runnable() {
+//					
+//					@Override
+//					public void run() {
+//						try {
+//							Long shipperId = shipperList.get(ddlShipper.getSelectionModel().getSelectedIndex()).getShipperId();
+//							String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_SHIPPER_API + "/" + shipperId, null);
+//							Shipper shipperResponse = mapper.readValue(response, Shipper.class);
+//							if(shipperResponse != null) {
+//								if(shipperResponse.getAddress() != null) {
+//									lblAddressShipper.setText(shipperResponse.getAddress());
+//								}
+//								if(shipperResponse.getFax() != null) {
+//									lblFaxShipper.setText(shipperResponse.getFax());
+//								}
+//								if(shipperResponse.getAddress() != null) {
+//									lblPhoneShipper.setText(shipperResponse.getPhone());
+//								}
+//							}
+//						} catch (Exception e) {
+//							JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+//						}
+//					}
+//				});
+			}
+		}
+		
+		consigneeList = orderModel.getShipperConsineeList();
+		for(int i = 0; i < consigneeList.size();i++) {
+			Shipper consginee = consigneeList.get(i);
+			ddlConsignee.getItems().add(consginee.getLocationName());
+			if(consginee.getShipperId() == probils.get(0).getShipperId()) {
+				ddlConsignee.getSelectionModel().select(i);
+//				Platform.runLater(new Runnable() {
+//					
+//					@Override
+//					public void run() {
+//						try {
+//							Long consigneeId = consigneeList.get(ddlConsignee.getSelectionModel().getSelectedIndex()).getShipperId();
+//							String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_SHIPPER_API + "/" + consigneeId, null);
+//							Shipper shipperResponse = mapper.readValue(response, Shipper.class);
+//							if(shipperResponse != null) {
+//								if(shipperResponse.getAddress() != null) {
+//									lblAddressConsginee.setText(shipperResponse.getAddress());
+//								}
+//								if(shipperResponse.getFax() != null) {
+//									lblFaxConsignee.setText(shipperResponse.getFax());
+//								}
+//								if(shipperResponse.getAddress() != null) {
+//									lblPhoneConsignee.setText(shipperResponse.getPhone());
+//								}
+//							}
+//						} catch (Exception e) {
+//							e.printStackTrace();
+//							JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+//						}
+//					}
+//				});
+			}
+		}
+		List<OrderPickUpDeliveryModel> orderPickUpDeliveryList = probils.get(0).getOrderPickUpDeliveryList();
+		if(orderPickUpDeliveryList != null && orderPickUpDeliveryList.size() > 0) {
+			for(OrderPickUpDeliveryModel orderPickUpDeliveryModel : orderPickUpDeliveryList) {
+				if(orderPickUpDeliveryModel.getTypeId() == 1) {
+					txtPickup1.setText(orderPickUpDeliveryModel.getPickupDeliveryNo());
+				}
+				if(orderPickUpDeliveryModel.getTypeId() == 2) {
+					txtDelivery1.setText(orderPickUpDeliveryModel.getPickupDeliveryNo());
+				}
+			}
+		}
+		
+		List<Type> pickUpList = orderModel.getPickupList();
+		if(pickUpList != null && pickUpList.size() > 0) {
+			for(int i=0;i<pickUpList.size();i++) {
+				Type type = pickUpList.get(i);
+				ddlPickup.getItems().add(type.getTypeName());
+				if(type.getTypeId() == probils.get(0).getPickupId()) {
+					ddlPickup.getSelectionModel().select(i);
+				}
+			}
+		}
+		
+		List<Type> deliveryList = orderModel.getDeliveryList();
+		if(deliveryList != null && deliveryList.size() > 0) {
+			for(int i=0;i<deliveryList.size();i++) {
+				Type type = deliveryList.get(i);
+				ddlDelivery.getItems().add(type.getTypeName());
+				if(type.getTypeId() == probils.get(0).getDeliveryId()) {
+					ddlDelivery.getSelectionModel().select(i);
+				}
+			}
+		}
+		
+		txtPickpupScheduledDate.setText(probils.get(0).getPickupScheduledDate());
+		txtPickpupScheduledTime.setText(probils.get(0).getPickupScheduledTime());
+		
+		txtPickpupMABDate.setText(probils.get(0).getPickupMABDate());
+		txtPickpupMABTime.setText(probils.get(0).getPickupMABTime());
+		
+		txtDeliverScheduledDate.setText(probils.get(0).getDeliverScheduledDate());
+		txtDeliverScheduledTime.setText(probils.get(0).getDeliverScheduledTime());
+		
+		txtDeliverMABDate.setText(probils.get(0).getDeliveryMABDate());
+		txtDeliverMABTime.setText(probils.get(0).getDeliveryMABTime());
+		
+		currencyList = orderModel.getCurrencyList();
+		if(currencyList != null && currencyList.size() > 0) {
+			for(int i=0;i<currencyList.size();i++) {
+				Type type = currencyList.get(i);
+				ddlCurrency.getItems().add(type.getTypeName());
+				if(type.getTypeId() == orderModel.getCurrencyId()) {
+					ddlCurrency.getSelectionModel().select(i);
+				}
+			}
+		}
+		
+		temperatureList = orderModel.getTemperatureList();
+		temperatureTypeList = orderModel.getTemperatureTypeList();
+		temperatureId = orderModel.getTemperatureId();
+		temperatureTypeId = orderModel.getTemperatureTypeId();
+		temperatureValue = orderModel.getTemperatureValue();
 	}
-	
 }

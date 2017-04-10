@@ -110,15 +110,76 @@ public class TemperatureController extends Application implements Initializable 
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		fillDropDown(ddlTemperature, OrderAddController.temperatureList);
-		fillDropDown(ddlTemperatureType, OrderAddController.temperatureTypeList);
+		try {
+			if(OrderAddController.temperatureList != null && OrderAddController.temperatureList.size() > 0) {
+				fillDropDown(ddlTemperature, OrderAddController.temperatureList);
+				fillDropDown(ddlTemperatureType, OrderAddController.temperatureTypeList);
+			} else if(OrderEditController.updateOrderModel.getTemperatureId() != null) {
+				List<Type> temperatureList = OrderEditController.temperatureList;
+				List<Type> temperatureTypeList = OrderEditController.temperatureTypeList;
+				if(temperatureList != null && temperatureList.size() > 0) {
+					for(int i=0;i<temperatureList.size();i++) {
+						Type type = temperatureList.get(i);
+						ddlTemperature.getItems().add(type.getTypeName());
+						if(type.getTypeId() == OrderEditController.updateOrderModel.getTemperatureId()) {
+							ddlTemperature.getSelectionModel().select(i);
+						}
+					}
+				}
+				
+				if(temperatureTypeList != null && temperatureTypeList.size() > 0) {
+					for(int i=0;i<temperatureTypeList.size();i++) {
+						Type type = temperatureTypeList.get(i);
+						ddlTemperatureType.getItems().add(type.getTypeName());
+						if(type.getTypeId() == OrderEditController.updateOrderModel.getTemperatureTypeId()) {
+							ddlTemperatureType.getSelectionModel().select(i);
+						}
+					}
+				}
+				
+				if(OrderEditController.updateOrderModel.getTemperatureValue() != null) {
+					txtTemperature.setText(OrderEditController.updateOrderModel.getTemperatureValue() + "");
+				}
+			} else {
+				List<Type> temperatureList = OrderEditController.temperatureList;
+				List<Type> temperatureTypeList = OrderEditController.temperatureTypeList;
+				if(temperatureList != null && temperatureList.size() > 0) {
+					for(int i=0;i<temperatureList.size();i++) {
+						Type type = temperatureList.get(i);
+						ddlTemperature.getItems().add(type.getTypeName());
+						if(type.getTypeId() == OrderEditController.temperatureId) {
+							ddlTemperature.getSelectionModel().select(i);
+						}
+					}
+				}
+				
+				if(temperatureTypeList != null && temperatureTypeList.size() > 0) {
+					for(int i=0;i<temperatureTypeList.size();i++) {
+						Type type = temperatureTypeList.get(i);
+						ddlTemperatureType.getItems().add(type.getTypeName());
+						if(type.getTypeId() == OrderEditController.temperatureTypeId) {
+							ddlTemperatureType.getSelectionModel().select(i);
+						}
+					}
+				}
+				txtTemperature.setText(OrderEditController.temperatureValue + "");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
 	private void btnUpdateTemperatureAction() {
-		OrderAddController.orderModel.setTemperatureId(OrderAddController.temperatureList.get(ddlTemperature.getSelectionModel().getSelectedIndex()).getTypeId());
-		OrderAddController.orderModel.setTemperatureTypeId(OrderAddController.temperatureTypeList.get(ddlTemperatureType.getSelectionModel().getSelectedIndex()).getTypeId());
-		OrderAddController.orderModel.setTemperatureValue(Double.parseDouble(txtTemperature.getText()));
+		if(OrderAddController.orderModel != null && OrderAddController.orderModel.getBillingLocationId() != null) {
+			OrderAddController.orderModel.setTemperatureId(OrderAddController.temperatureList.get(ddlTemperature.getSelectionModel().getSelectedIndex()).getTypeId());
+			OrderAddController.orderModel.setTemperatureTypeId(OrderAddController.temperatureTypeList.get(ddlTemperatureType.getSelectionModel().getSelectedIndex()).getTypeId());
+			OrderAddController.orderModel.setTemperatureValue(Double.parseDouble(txtTemperature.getText()));
+		} else {
+			OrderEditController.updateOrderModel.setTemperatureId(OrderEditController.temperatureList.get(ddlTemperature.getSelectionModel().getSelectedIndex()).getTypeId());
+			OrderEditController.updateOrderModel.setTemperatureTypeId(OrderEditController.temperatureTypeList.get(ddlTemperatureType.getSelectionModel().getSelectedIndex()).getTypeId());
+			OrderEditController.updateOrderModel.setTemperatureValue(Double.parseDouble(txtTemperature.getText()));
+		}
 		closeTemperatureScreen(btnUpdateTemperature);
 	}
 	

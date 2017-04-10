@@ -44,9 +44,20 @@ public class Login extends Application implements Initializable{
 	@FXML
 	MenuBar mnuBarDatamaintenance;
 	
-	static double width = 0.0;
+	public static double width = 0.0;
 
 	public static void setWidthForAll(Object obj, TableView<?> tableView) {
+		if(obj != null && obj instanceof Pane) {
+			Pane pane = (Pane) obj;
+			pane.prefWidthProperty().bind(stage.widthProperty());
+			if(tableView != null)
+				tableView.prefWidthProperty().bind(stage.widthProperty());
+		}
+		if(tableView != null)
+			tableView.prefWidthProperty().bind(stage.widthProperty());
+	}
+	
+	public static void setWidthForAllForPlannerBorderPane(Object obj, TableView<?> tableView) {
 		if(obj != null && obj instanceof Pane) {
 			Pane pane = (Pane) obj;
 			pane.prefWidthProperty().bind(stage.widthProperty());
@@ -148,8 +159,11 @@ public class Login extends Application implements Initializable{
 	//        stage.initStyle(StageStyle.UNDECORATED);
 	        stage.setTitle("Dashboard");
 	        stage.setScene(new Scene(root)); 
-	        stage.setMaximized(true);
+//	        stage.setMaximized(true);
 	        width = primaryScreenBounds.getWidth();
+	        double height = primaryScreenBounds.getHeight();
+	        stage.setMinWidth(width);
+	        stage.setMinHeight(height);
 	        this.stage = stage;
 	        mnuBar.prefWidthProperty().bind(stage.widthProperty());
 	//        fxmlLoader.setController(MainScreen.class);
