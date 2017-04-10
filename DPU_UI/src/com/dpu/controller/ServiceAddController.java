@@ -50,6 +50,7 @@ public class ServiceAddController<T> extends Application implements Initializabl
 	List<Status> statusList;
 
 	Validate validate = new Validate();
+	public static boolean isStart = true;
 
 	@FXML
 	private void btnSaveServiceAction() {
@@ -60,7 +61,6 @@ public class ServiceAddController<T> extends Application implements Initializabl
 		}
 	}
 
-	
 	private void closeAddServiceScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
 		loginStage.close();
@@ -71,10 +71,10 @@ public class ServiceAddController<T> extends Application implements Initializabl
 		String textField = ddlTextField.getSelectionModel().getSelectedItem();
 		String association = ddlAssociationWith.getSelectionModel().getSelectedItem();
 		String status = ddlStatus.getSelectionModel().getSelectedItem();
-
 		boolean result = validate.validateEmptyness(name);
+
 		if (!result) {
-			ValidationController.str = "Service Name is Mandatory....";
+			ValidationController.str = validsteFields();
 			openValidationScreen();
 			txtService.setStyle("-fx-focus-color: red;");
 			txtService.requestFocus();
@@ -82,7 +82,6 @@ public class ServiceAddController<T> extends Application implements Initializabl
 		}
 		result = validate.validateLength(name, 5, 25);
 		if (!result) {
-			ValidationController.str = "Service Length is not Correct....";
 			openValidationScreen();
 			txtService.setStyle("-fx-focus-color: red;");
 			txtService.requestFocus();
@@ -90,15 +89,16 @@ public class ServiceAddController<T> extends Application implements Initializabl
 		}
 		result = validate.validateEmptyness(textField);
 		if (!result) {
-			ValidationController.str = "Text Field is Mandatory....";
+			ValidationController.str = validsteFields();
 			openValidationScreen();
 			ddlTextField.setStyle("-fx-focus-color: red;");
+			txtService.setStyle("-fx-focus-color: red;");
 			ddlTextField.requestFocus();
 			return result;
 		}
 		result = validate.validateEmptyness(association);
 		if (!result) {
-			ValidationController.str = "Association is Mandatory....";
+			ValidationController.str = validsteFields();
 			openValidationScreen();
 			ddlAssociationWith.setStyle("-fx-focus-color: red;");
 			ddlAssociationWith.requestFocus();
@@ -106,7 +106,7 @@ public class ServiceAddController<T> extends Application implements Initializabl
 		}
 		result = validate.validateEmptyness(status);
 		if (!result) {
-			ValidationController.str = "Status  is Mandatory....";
+			ValidationController.str = validsteFields();
 			openValidationScreen();
 			ddlStatus.setStyle("-fx-focus-color: red;");
 			ddlStatus.requestFocus();
@@ -115,12 +115,32 @@ public class ServiceAddController<T> extends Application implements Initializabl
 		return result;
 	}
 
+	public StringBuffer validsteFields() {
+		StringBuffer strBuff = new StringBuffer();
+		String name = txtService.getText();
+		String textField = ddlTextField.getSelectionModel().getSelectedItem();
+		String association = ddlAssociationWith.getSelectionModel().getSelectedItem();
+		String status = ddlStatus.getSelectionModel().getSelectedItem();
+		if (name.equals("")) {
+			strBuff.append("Srvice Name is Mandatory\n");
+		}
+		if (textField == null) {
+			strBuff.append("TextField Name is Mandatory\n");
+		}
+		if (association == null) {
+			strBuff.append("Association Name is Mandatory\n");
+		}
+		if (status == null) {
+			strBuff.append("Status Name is Mandatory\n");
+		}
+		return strBuff;
+	}
+
 	private Object openValidationScreen() {
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
 					.getResource(Iconstants.COMMON_BASE_PACKAGE + Iconstants.XML_VALIDATION_SCREEN));
 
-			
 			Parent root = (Parent) fxmlLoader.load();
 
 			Stage stage = new Stage();
@@ -238,4 +258,5 @@ public class ServiceAddController<T> extends Application implements Initializabl
 		dPUService.setStatusId(statusList.get(ddlStatus.getSelectionModel().getSelectedIndex()).getId());
 		return dPUService;
 	}
+
 }

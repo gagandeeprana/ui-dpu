@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -14,11 +15,13 @@ public class ValidationController extends Application implements Initializable {
 
 	@FXML
 	public Text txtMsg;
+	@FXML
+	public TextArea taMsg;
 
 	@FXML
 	Button btnGotIt;
 
-	public static String str = "";
+	public static StringBuffer str = new StringBuffer();
 
 	@FXML
 	private void btnGotItAction() {
@@ -28,11 +31,13 @@ public class ValidationController extends Application implements Initializable {
 	private void closeAddServiceScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
 		loginStage.close();
+		str = null;
 	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		txtMsg.setText(str);
+		// txtMsg.setText(str.toString());
+		taMsg.appendText(str.toString());
 	}
 
 	@Override
