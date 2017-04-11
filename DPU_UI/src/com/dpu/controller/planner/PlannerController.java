@@ -24,11 +24,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -67,13 +70,25 @@ public class PlannerController extends Application implements Initializable {
 	@FXML
 	DatePicker datePicker;
 	
+	@FXML
+	AnchorPane rightAnchorPane;
+	
+	@FXML
+	BorderPane borderPane;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		System.out.println("12121");
+
 		fetchLists(0);
 		datePicker.setEditable(false);
 //		tblPlanner.getColumns().remo
+		Login.setWidthForAll(rightAnchorPane, null);
 		widthForTable = Login.setWidthForAllInPlanner(null, tblPlanner);
+		/**
+		 * For future reference.
+		 */
+		//this shifts datepicker to the right.
+		datePicker.setLayoutX(Login.width - 370);
 		LocalDate localDate = LocalDate.now();
 		int start = localDate.getDayOfMonth();
 		int month = localDate.getMonthValue();

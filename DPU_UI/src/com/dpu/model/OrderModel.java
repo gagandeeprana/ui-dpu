@@ -260,4 +260,14 @@ public class OrderModel implements Serializable{
 		this.deliveryList = deliveryList;
 	}
 	
+	private Company companyResponse;
+
+	public Company getCompanyResponse() {
+		return companyResponse;
+	}
+
+	public void setCompanyResponse(Company companyResponse) {
+		this.companyResponse = companyResponse;
+	}
+	
 }
