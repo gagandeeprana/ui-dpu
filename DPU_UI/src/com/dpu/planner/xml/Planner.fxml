@@ -26,17 +26,17 @@
          <children>
             <ImageView fx:id="btnLeft" fitHeight="32.0" fitWidth="32.0" layoutX="1.0" layoutY="2.0" onMouseClicked="#btnLeftAction">
                <image>
-                  <Image url="@../../common/xml/left-arrow.png" />
+                  <Image url="com/dpu/common/xml/left-arrow.png" />
                </image>
             </ImageView>
             <ImageView fx:id="btnRight" fitHeight="32.0" fitWidth="32.0" layoutX="42.0" layoutY="2.0" onMouseClicked="#btnRightAction">
                <image>
-                  <Image url="@../../common/xml/right-arrow.png" />
+                  <Image url="com/dpu/common/xml/right-arrow.png" />
                </image>
             </ImageView>
             <ImageView fx:id="btnToday" fitHeight="32.0" fitWidth="32.0" layoutX="81.0" layoutY="3.0" onMouseClicked="#btnTodayAction">
                <image>
-                  <Image url="@../../common/xml/calendar.png" />
+                  <Image url="com/dpu/common/xml/calendar.png" />
                </image>
             </ImageView>
             <DatePicker fx:id="datePicker" layoutX="398.0" layoutY="3.0" onAction="#datePickerAction" prefHeight="32.0" prefWidth="181.0">
