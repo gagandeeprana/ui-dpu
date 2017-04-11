@@ -11,7 +11,6 @@ public class Validate {
 		return false;
 	}
 
-	
 	public boolean validateEmptyness(String str) {
 		if (str != null && str.length() > 0) {
 			return true;
@@ -43,4 +42,14 @@ public class Validate {
 		return m.matches();
 	}
 
+	public static boolean containsWhiteSpace(final String str) {
+		if (str != null) {
+			for (int i = 0; i < str.length(); i++) {
+				if (Character.isWhitespace(str.charAt(i))) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 }

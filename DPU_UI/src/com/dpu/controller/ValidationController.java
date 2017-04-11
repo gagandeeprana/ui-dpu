@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -36,8 +38,9 @@ public class ValidationController extends Application implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// txtMsg.setText(str.toString());
 		taMsg.appendText(str.toString());
+		taMsg.setStyle("-fx-text-fill: red; -fx-font-size: 12;");
+
 	}
 
 	@Override
