@@ -16,6 +16,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -33,34 +35,46 @@ public class AdditionCaarierContactEditController implements Initializable {
 	private Button btnSaveAdditionalContact;
 
 	@FXML
-	private TextField txtIncCompany;
+	private CheckBox chkActualDelivery;
 
 	@FXML
-	private TextField txtPolicyNumber;
+	private CheckBox chkActualPickupDetails;
 
 	@FXML
-	private TextField txtIncBroker;
+	private CheckBox chkETADeliveryDetails;
 
 	@FXML
-	private TextField txtBrokerContact;
+	private CheckBox chkETAPickupDetails;
 
 	@FXML
-	private TextField txtBrokerPhone;
+	private CheckBox chkOrderConfirmation;
+
+	@FXML
+	private ComboBox<String> ddlStatus;
+
+	@FXML
+	private TextField txtAdditionalContact;
+
+	@FXML
+	private TextField txtCellular;
 
 	@FXML
 	private TextField txtEmail;
 
 	@FXML
-	private TextField txtExt;
+	private TextField txtExtension;
 
 	@FXML
-	private TextField txtBrokerFax;
+	private TextField txtFax;
 
 	@FXML
-	private TextField txtCongCoverage;
+	private TextField txtPager;
 
 	@FXML
-	private TextField txtLibilityCoverage;
+	private TextField txtPhone;
+
+	@FXML
+	private TextField txtPosition;
 
 	private void openAddCarrierScree() {
 		try {
@@ -84,19 +98,18 @@ public class AdditionCaarierContactEditController implements Initializable {
 	void btnSaveAdditionalContactAction(ActionEvent event) {
 		try {
 
-			String brokerContact = txtBrokerContact.getText();
-			String brokerFax = txtBrokerFax.getText();
-			String brokerPhone = txtBrokerPhone.getText();
-			String congCoverage = txtCongCoverage.getText();
+			String additionalContact = txtAdditionalContact.getText();
+			String position = txtPosition.getText();
+			String phone = txtPhone.getText();
+			String extension = txtExtension.getText();
+			String fax = txtFax.getText();
+			String pager = txtPager.getText();
+			String cellular = txtCellular.getText();
+			String status = ddlStatus.getSelectionModel().getSelectedItem();
 			String email = txtEmail.getText();
-			String ext = txtExt.getText();
-			String incBroker = txtIncBroker.getText();
-			String company = txtIncCompany.getText();
-			String libilityCoverage = txtLibilityCoverage.getText();
-			String policyNumber = txtPolicyNumber.getText();
 
-			AddtionalCarrierContact addtionalCarrierContact = new AddtionalCarrierContact(company, policyNumber,
-					incBroker, brokerContact, brokerPhone, ext, congCoverage, libilityCoverage, brokerFax, email);
+			AddtionalCarrierContact addtionalCarrierContact = new AddtionalCarrierContact(additionalContact, position,
+					phone, extension, fax, pager, cellular, status, email);
 			if (CarrierEditController.addAddtionalContact == 0) {
 				CarrierEditController.listOfAdditionalContact.set(CarrierAddController.addEditIndex,
 						addtionalCarrierContact);
@@ -129,16 +142,14 @@ public class AdditionCaarierContactEditController implements Initializable {
 		// TODO Auto-generated method stub
 		if (CarrierEditController.addAddtionalContact != 1) {
 			if (CarrierEditController.additionalContactModel != null) {
-				txtBrokerContact.setText(CarrierEditController.additionalContactModel.getBrokerContact());
-				txtBrokerFax.setText(CarrierEditController.additionalContactModel.getBrokerFax());
-				txtBrokerPhone.setText(CarrierEditController.additionalContactModel.getBrokerPhone());
-				txtCongCoverage.setText(CarrierEditController.additionalContactModel.getCongCoverage());
-				txtEmail.setText(CarrierEditController.additionalContactModel.getEmail());
-				txtExt.setText(CarrierEditController.additionalContactModel.getExt());
-				txtIncBroker.setText(CarrierEditController.additionalContactModel.getIncBroker());
-				txtIncCompany.setText(CarrierEditController.additionalContactModel.getIncCompany());
-				txtLibilityCoverage.setText(CarrierEditController.additionalContactModel.getLibilityCoverage());
-				txtPolicyNumber.setText(CarrierEditController.additionalContactModel.getPolicyNumber());
+				txtAdditionalContact.setText(CarrierAddController.additionalContactModel.getCustomerName());
+				txtPosition.setText(CarrierAddController.additionalContactModel.getPosition());
+				txtExtension.setText(CarrierAddController.additionalContactModel.getExt());
+				txtFax.setText(CarrierAddController.additionalContactModel.getFax());
+				txtCellular.setText(CarrierAddController.additionalContactModel.getCellular());
+				txtEmail.setText(CarrierAddController.additionalContactModel.getEmail());
+				txtPager.setText(CarrierAddController.additionalContactModel.getPrefix());
+				txtPhone.setText(CarrierAddController.additionalContactModel.getPhone());
 			}
 		}
 

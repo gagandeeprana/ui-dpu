@@ -295,32 +295,31 @@ public class CarrierController extends Application implements Initializable {
 						if (response != null && response.length() > 1) {
 							CarrierModel carrierModel = mapper.readValue(response, CarrierModel.class);
 
-							if (carrierModel.getAdditionalContacts() != null) {
-								int addtionalContactSize = carrierModel.getAdditionalContacts().size();
+							if (carrierModel.getCarrierAdditionalContactModel() != null) {
+								int addtionalContactSize = carrierModel.getCarrierAdditionalContactModel().size();
 								for (int j = 0; j < addtionalContactSize; j++) {
 									AddtionalCarrierContact additionalContact = new AddtionalCarrierContact();
 
 									additionalContact.setCarrierId(carrierModel.getCarrierId());
-									additionalContact.setAdditionalContactId(
-											carrierModel.getAdditionalContacts().get(j).getAdditionalContactId());
-									additionalContact.setBrokerContact(
-											carrierModel.getAdditionalContacts().get(j).getBrokerContact());
+									additionalContact.setAdditionalContactId(carrierModel
+											.getCarrierAdditionalContactModel().get(j).getAdditionalContactId());
+									additionalContact.setCustomerName(
+											carrierModel.getCarrierAdditionalContactModel().get(j).getCustomerName());
+									additionalContact.setCellular(
+											carrierModel.getCarrierAdditionalContactModel().get(j).getCellular());
+									additionalContact.setEmail(
+											carrierModel.getCarrierAdditionalContactModel().get(j).getEmail());
 									additionalContact
-											.setBrokerFax(carrierModel.getAdditionalContacts().get(j).getBrokerFax());
-									additionalContact.setBrokerPhone(
-											carrierModel.getAdditionalContacts().get(j).getBrokerPhone());
-									additionalContact.setCongCoverage(
-											carrierModel.getAdditionalContacts().get(j).getCongCoverage());
-									additionalContact.setEmail(carrierModel.getAdditionalContacts().get(j).getEmail());
-									additionalContact.setExt(carrierModel.getAdditionalContacts().get(j).getExt());
+											.setExt(carrierModel.getCarrierAdditionalContactModel().get(j).getExt());
 									additionalContact
-											.setIncBroker(carrierModel.getAdditionalContacts().get(j).getIncBroker());
-									additionalContact
-											.setIncCompany(carrierModel.getAdditionalContacts().get(j).getIncCompany());
-									additionalContact.setLibilityCoverage(
-											carrierModel.getAdditionalContacts().get(j).getLibilityCoverage());
-									additionalContact.setPolicyNumber(
-											carrierModel.getAdditionalContacts().get(j).getPolicyNumber());
+											.setFax(carrierModel.getCarrierAdditionalContactModel().get(j).getFax());
+									additionalContact.setPrefix(
+											carrierModel.getCarrierAdditionalContactModel().get(j).getCellular());
+									additionalContact.setPhone(
+											carrierModel.getCarrierAdditionalContactModel().get(j).getPhone());
+									additionalContact.setPosition(
+											carrierModel.getCarrierAdditionalContactModel().get(j).getPosition());
+									additionalContact.setStatusId("Active");
 
 									CarrierEditController.listOfAdditionalContact.add(additionalContact);
 								}

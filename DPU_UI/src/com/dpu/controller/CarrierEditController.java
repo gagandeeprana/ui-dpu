@@ -56,31 +56,31 @@ public class CarrierEditController extends Application implements Initializable 
 	private Pane addCarrierPane;
 
 	@FXML
-	private TableColumn<AddtionalCarrierContact, String> incCompany;
+	private TableColumn<AddtionalCarrierContact, String> additionalContact;
 
 	@FXML
-	private TableColumn<AddtionalCarrierContact, String> policyNumber;
+	private TableColumn<AddtionalCarrierContact, String> position;
 
 	@FXML
-	private TableColumn<AddtionalCarrierContact, String> incBroker;
+	private TableColumn<AddtionalCarrierContact, String> phoneNo;
 
 	@FXML
-	private TableColumn<AddtionalCarrierContact, String> brokerContact;
+	private TableColumn<AddtionalCarrierContact, String> faxNo;
 
 	@FXML
-	private TableColumn<AddtionalCarrierContact, String> brokerPhone;
-
-	@FXML
-	private TableColumn<AddtionalCarrierContact, String> ext;
-
-	@FXML
-	private TableColumn<AddtionalCarrierContact, String> congCoverage;
+	private TableColumn<AddtionalCarrierContact, String> cellular;
 
 	@FXML
 	private TableColumn<AddtionalCarrierContact, String> email;
 
 	@FXML
-	private TableColumn<AddtionalCarrierContact, String> brokerFax;
+	private TableColumn<AddtionalCarrierContact, String> extension;
+
+	@FXML
+	private TableColumn<AddtionalCarrierContact, String> pager;
+
+	@FXML
+	private TableColumn<AddtionalCarrierContact, String> status;
 
 	@FXML
 	private TableView<AddtionalCarrierContact> tableAdditionalContact;
@@ -175,62 +175,50 @@ public class CarrierEditController extends Application implements Initializable 
 
 	private void setAdditionalContactColumnValues() {
 
-		incCompany.setCellValueFactory(
+		additionalContact.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<AddtionalCarrierContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getIncCompany() + "");
+						return new SimpleStringProperty(param.getValue().getCustomerName() + "");
 					}
 				});
-		policyNumber.setCellValueFactory(
+		position.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<AddtionalCarrierContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getPolicyNumber() + "");
+						return new SimpleStringProperty(param.getValue().getPosition() + "");
 					}
 				});
-		incBroker.setCellValueFactory(
+
+		phoneNo.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<AddtionalCarrierContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getIncBroker() + "");
+						return new SimpleStringProperty(param.getValue().getPhone() + "");
 					}
 				});
-		brokerContact.setCellValueFactory(
+
+		faxNo.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<AddtionalCarrierContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getBrokerContact() + "");
+						return new SimpleStringProperty(param.getValue().getFax() + "");
 					}
 				});
-		brokerPhone.setCellValueFactory(
+
+		cellular.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<AddtionalCarrierContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getBrokerPhone() + "");
+						return new SimpleStringProperty(param.getValue().getCellular() + "");
 					}
 				});
-		ext.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
 
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<AddtionalCarrierContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getExt() + "");
-					}
-				});
-		congCoverage.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
-
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<AddtionalCarrierContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getCongCoverage() + "");
-					}
-				});
 		email.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
 
@@ -239,12 +227,28 @@ public class CarrierEditController extends Application implements Initializable 
 						return new SimpleStringProperty(param.getValue().getEmail() + "");
 					}
 				});
-		brokerFax.setCellValueFactory(
+		extension.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<AddtionalCarrierContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getBrokerFax() + "");
+						return new SimpleStringProperty(param.getValue().getExt() + "");
+					}
+				});
+		pager.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<AddtionalCarrierContact, String> param) {
+						return new SimpleStringProperty(param.getValue().getPrefix() + "");
+					}
+				});
+		status.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<AddtionalCarrierContact, String> param) {
+						return new SimpleStringProperty(param.getValue().getStatusId() + "");
 					}
 				});
 
@@ -390,6 +394,8 @@ public class CarrierEditController extends Application implements Initializable 
 	}
 
 	private CarrierModel setCarrierValue() {
+		List<com.dpu.request.AdditionalContact> additionalContacts = new ArrayList<com.dpu.request.AdditionalContact>();
+
 		// List<AddtionalCarrierContact> addtionalCarrierContacts = new
 		// ArrayList<AddtionalCarrierContact>();
 		carrierModel.setAddress(txtAddress.getText());
@@ -408,7 +414,30 @@ public class CarrierEditController extends Application implements Initializable 
 		carrierModel.setWebsite(txtWebsite.getText());
 		carrierModel.setName(txtCarrier.getText());
 		// carrierModel.setZip("null");
-		carrierModel.setAdditionalContacts(listOfAdditionalContact);
+
+		if (CarrierEditController.listOfAdditionalContact != null) {
+			int sizeOfAdditionalContact = CarrierEditController.listOfAdditionalContact.size();
+			for (int i = 0; i < sizeOfAdditionalContact; i++) {
+
+				AddtionalCarrierContact additionalContactModel = CarrierEditController.listOfAdditionalContact.get(i);
+				com.dpu.request.AdditionalContact additionalContact = new com.dpu.request.AdditionalContact();
+				additionalContact.setCustomerName(additionalContactModel.getCustomerName());
+				additionalContact.setPosition(additionalContactModel.getPosition());
+				additionalContact.setPhone(additionalContactModel.getPhone());
+				additionalContact.setExt(additionalContactModel.getExt());
+				additionalContact.setFax(additionalContactModel.getFax());
+				// set Pager in prefix.. chnage it
+				additionalContact.setPrefix(additionalContactModel.getPrefix());
+				additionalContact.setCellular(additionalContactModel.getCellular());
+				// need to set Status here
+				additionalContact.setStatus(0l);
+				additionalContact.setEmail(additionalContactModel.getEmail());
+
+				additionalContacts.add(additionalContact);
+			}
+		}
+
+		carrierModel.setCarrierAdditionalContactModel(additionalContacts);
 		return carrierModel;
 	}
 

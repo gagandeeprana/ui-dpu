@@ -1,52 +1,52 @@
 
 package com.dpu.model;
 
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
-//@JsonSerialize(include = Inclusion.NON_NULL)
-//@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonSerialize(include = Inclusion.NON_NULL)
 public class AddtionalCarrierContact {
 
-	// @JsonProperty("additionalContactId")
+	private Long carrierId;
 	private Long additionalContactId;
 
-	private Long carrierId;
+	private String customerName;
 
-	// @JsonProperty("incCompany")
-	private String incCompany;
+	private String position;
 
-	// @JsonProperty("policyNumber")
-	private String policyNumber;
+	private String phone;
 
-	// @JsonProperty("incBroker")
-	private String incBroker;
-
-	// @JsonProperty("brokerContact")
-	private String brokerContact;
-
-	// @JsonProperty("brokerPhone")
-	private String brokerPhone;
-
-	// @JsonProperty("ext")
 	private String ext;
 
-	// @JsonProperty("expiryDate")
-	private Integer expiryDate;
+	private String fax;
 
-	// @JsonProperty("congCoverage")
-	private String congCoverage;
+	private String prefix;
 
-	// @JsonProperty("libilityCoverage")
-	private String libilityCoverage;
+	private String cellular;
 
-	// @JsonProperty("brokerFax")
-	private String brokerFax;
+	private String statusId;
 
-	// @JsonProperty("email")
+	private String statusName;
+
 	private String email;
+
+	public AddtionalCarrierContact() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public AddtionalCarrierContact(String customerName, String position, String phone, String ext, String fax,
+			String prefix, String cellular, String statusId, String email) {
+		super();
+		this.customerName = customerName;
+		this.position = position;
+		this.phone = phone;
+		this.ext = ext;
+		this.fax = fax;
+		this.prefix = prefix;
+		this.cellular = cellular;
+		this.statusId = statusId;
+		this.email = email;
+	}
 
 	public Long getCarrierId() {
 		return carrierId;
@@ -54,26 +54,6 @@ public class AddtionalCarrierContact {
 
 	public void setCarrierId(Long carrierId) {
 		this.carrierId = carrierId;
-	}
-
-	public AddtionalCarrierContact() {
-		super();
-	}
-
-	public AddtionalCarrierContact(String incCompany, String policyNumber, String incBroker, String brokerContact,
-			String brokerPhone, String ext, String congCoverage, String libilityCoverage, String brokerFax,
-			String email) {
-		super();
-		this.incCompany = incCompany;
-		this.policyNumber = policyNumber;
-		this.incBroker = incBroker;
-		this.brokerContact = brokerContact;
-		this.brokerPhone = brokerPhone;
-		this.ext = ext;
-		this.congCoverage = congCoverage;
-		this.libilityCoverage = libilityCoverage;
-		this.brokerFax = brokerFax;
-		this.email = email;
 	}
 
 	public Long getAdditionalContactId() {
@@ -84,44 +64,28 @@ public class AddtionalCarrierContact {
 		this.additionalContactId = additionalContactId;
 	}
 
-	public String getIncCompany() {
-		return incCompany;
+	public String getCustomerName() {
+		return customerName;
 	}
 
-	public void setIncCompany(String incCompany) {
-		this.incCompany = incCompany;
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
 
-	public String getPolicyNumber() {
-		return policyNumber;
+	public String getPosition() {
+		return position;
 	}
 
-	public void setPolicyNumber(String policyNumber) {
-		this.policyNumber = policyNumber;
+	public void setPosition(String position) {
+		this.position = position;
 	}
 
-	public String getIncBroker() {
-		return incBroker;
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setIncBroker(String incBroker) {
-		this.incBroker = incBroker;
-	}
-
-	public String getBrokerContact() {
-		return brokerContact;
-	}
-
-	public void setBrokerContact(String brokerContact) {
-		this.brokerContact = brokerContact;
-	}
-
-	public String getBrokerPhone() {
-		return brokerPhone;
-	}
-
-	public void setBrokerPhone(String brokerPhone) {
-		this.brokerPhone = brokerPhone;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public String getExt() {
@@ -132,43 +96,51 @@ public class AddtionalCarrierContact {
 		this.ext = ext;
 	}
 
-	public Integer getExpiryDate() {
-		return expiryDate;
+	public String getFax() {
+		return fax;
 	}
 
-	public void setExpiryDate(Integer expiryDate) {
-		this.expiryDate = expiryDate;
+	public void setFax(String fax) {
+		this.fax = fax;
 	}
 
-	public String getCongCoverage() {
-		return congCoverage;
+	public String getPrefix() {
+		return prefix;
 	}
 
-	public void setCongCoverage(String congCoverage) {
-		this.congCoverage = congCoverage;
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
 	}
 
-	public String getLibilityCoverage() {
-		return libilityCoverage;
+	public String getCellular() {
+		return cellular;
 	}
 
-	public void setLibilityCoverage(String libilityCoverage) {
-		this.libilityCoverage = libilityCoverage;
+	public void setCellular(String cellular) {
+		this.cellular = cellular;
 	}
 
-	public String getBrokerFax() {
-		return brokerFax;
+
+	public String getStatusId() {
+		return statusId;
 	}
 
-	public void setBrokerFax(String brokerFax) {
-		this.brokerFax = brokerFax;
+	public void setStatusId(String statusId) {
+		this.statusId = statusId;
+	}
+
+	public String getStatusName() {
+		return statusName;
+	}
+
+	public void setStatusName(String statusName) {
+		this.statusName = statusName;
 	}
 
 	public String getEmail() {
 		return email;
 	}
 
-	@JsonProperty("email")
 	public void setEmail(String email) {
 		this.email = email;
 	}

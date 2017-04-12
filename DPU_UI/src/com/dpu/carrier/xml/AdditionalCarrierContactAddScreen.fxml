@@ -13,27 +13,27 @@
       <BorderPane layoutX="9.0" layoutY="36.0" prefHeight="332.0" prefWidth="445.0" style="-fx-border-color: lightgray;" />
     <Pane prefHeight="407.0" prefWidth="465.0">
       <children>
-        <Label layoutX="17.0" layoutY="50.0" text="IncCompany">
+        <Label layoutX="17.0" layoutY="50.0" text="Additional Contact">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-        <Label layoutX="17.0" layoutY="82.0" text="Policy Number">
+        <Label layoutX="17.0" layoutY="82.0" text="Position">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-        <Label layoutX="17.0" layoutY="112.0" text="Inc Broker">
+        <Label layoutX="17.0" layoutY="112.0" text="Phone Number">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-         <Label layoutX="17.0" layoutY="146.0" text="Broker Contact">
+         <Label layoutX="17.0" layoutY="146.0" text="Fax Number">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-         <Label layoutX="17.0" layoutY="177.0" text="Broker Phone">
+         <Label layoutX="17.0" layoutY="177.0" text="Cellular Number">
                <font>
                   <Font size="14.0" />
                </font>
@@ -48,21 +48,56 @@
                   <Font size="14.0" />
                </font>
             </Label>
-        <Label layoutX="249.0" layoutY="143.0" text="Broker Fax">
+        <Label layoutX="249.0" layoutY="143.0" text="Pager Number">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+        <Label layoutX="250.0" layoutY="177.0" text="Status">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
         
                     
-        <TextField fx:id="txtIncCompany" layoutX="136.0" layoutY="47.0" prefHeight="25.0" prefWidth="311.0" />
-        <TextField fx:id="txtPolicyNumber" layoutX="136.0" layoutY="79.0" prefHeight="25.0" prefWidth="311.0" />
-        <TextField fx:id="txtIncBroker" layoutX="136.0" layoutY="111.0" prefHeight="25.0" prefWidth="105.0" />
-        <TextField fx:id="txtBrokerContact" layoutX="136.0" layoutY="143.0" prefHeight="25.0" prefWidth="105.0" />
-        <TextField fx:id="txtBrokerPhone" layoutX="136.0" layoutY="174.0" prefHeight="25.0" prefWidth="311.0" />
+        <TextField fx:id="txtAdditionalContact" layoutX="136.0" layoutY="47.0" prefHeight="25.0" prefWidth="311.0" />
+        <TextField fx:id="txtPosition" layoutX="136.0" layoutY="79.0" prefHeight="25.0" prefWidth="311.0" />
+        <TextField fx:id="txtPhone" layoutX="136.0" layoutY="111.0" prefHeight="25.0" prefWidth="105.0" />
+        <TextField fx:id="txtFax" layoutX="136.0" layoutY="143.0" prefHeight="25.0" prefWidth="105.0" />
+        <TextField fx:id="txtCellular" layoutX="136.0" layoutY="174.0" prefHeight="25.0" prefWidth="105.0" />
         <TextField fx:id="txtEmail" layoutX="136.0" layoutY="206.0" prefHeight="25.0" prefWidth="311.0" />
-        <TextField fx:id="txtExt" layoutX="342.0" layoutY="111.0" prefHeight="25.0" prefWidth="105.0" />
-        <TextField fx:id="txtBrokerFax" layoutX="342.0" layoutY="143.0" prefHeight="25.0" prefWidth="105.0" />
+        <TextField fx:id="txtExtension" layoutX="342.0" layoutY="111.0" prefHeight="25.0" prefWidth="105.0" />
+        <TextField fx:id="txtPager" layoutX="342.0" layoutY="143.0" prefHeight="25.0" prefWidth="105.0" />
+        <ComboBox fx:id="ddlStatus" layoutX="342.0" layoutY="175.0" prefHeight="25.0" prefWidth="105.0">
+          <items>
+            <FXCollections fx:factory="observableArrayList"/>
+          </items>
+        </ComboBox>
+        <CheckBox fx:id="chkOrderConfirmation" layoutX="136.0" layoutY="239.0" mnemonicParsing="false" text="Send Order confirmation via Email by default.">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </CheckBox>
+        <CheckBox fx:id="chkActualPickupDetails" layoutX="136.0" layoutY="263.0" mnemonicParsing="false" text="send Actual pickup details via Email by default.">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </CheckBox>
+        <CheckBox fx:id="chkActualDelivery" layoutX="136.0" layoutY="286.0" mnemonicParsing="false" text="send Actual delivery details via Email by default.">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </CheckBox>
+        <CheckBox fx:id="chkETAPickupDetails" layoutX="136.0" layoutY="310.0" mnemonicParsing="false" text="Send ETA to Pickup details via Email by default.">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </CheckBox>
+        <CheckBox fx:id="chkETADeliveryDetails" layoutX="136.0" layoutY="334.0" mnemonicParsing="false" text="Send Eta to Deliver details via Email by default.">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </CheckBox>
         <Button fx:id="btnSaveAdditionalContact" layoutX="317.0" layoutY="373.0" mnemonicParsing="false" onAction="#btnSaveAdditionalContactAction" prefHeight="25.0" prefWidth="65.0" text="Save">
                <font>
                   <Font size="13.0" />
@@ -73,22 +108,10 @@
                   <Font size="13.0" />
                </font>
             </Button>
-            <TextField fx:id="txtCongCoverage" layoutX="136.0" layoutY="242.0" prefHeight="25.0" prefWidth="311.0" />
-            <Label layoutX="15.0" layoutY="244.0" text="Cong Coverage">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="17.0" layoutY="276.0" text="Libility Coverage">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <TextField fx:id="txtLibilityCoverage" layoutX="134.0" layoutY="274.0" prefHeight="25.0" prefWidth="311.0" />
         
                   </children>
     </Pane>
-      <Label layoutX="-1.0" layoutY="-1.0" prefHeight="27.0" prefWidth="468.0" style="-fx-background-color: lightgrey; -fx-border-color: black;" text="   Add Carrier Additional Contacts">
+      <Label layoutX="-1.0" layoutY="-1.0" prefHeight="27.0" prefWidth="468.0" style="-fx-background-color: lightgrey; -fx-border-color: black;" text="   Add Additional Contacts">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
