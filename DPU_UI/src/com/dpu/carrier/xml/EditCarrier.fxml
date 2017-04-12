@@ -93,27 +93,27 @@
 						<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="294.0" prefWidth="661.0" />
 					</content>
 				</Tab>
-				<Tab text="Contact">
-					<content>
-						<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-							<children>
-								<TableView fx:id="tableAdditionalContact" layoutX="1.0"  onMouseClicked="#handleAddContMouseClick" prefHeight="296.0" prefWidth="661.0">
-									<columns>
-										<TableColumn fx:id="incCompany" prefWidth="79.0" text="Inc Company" />
-										<TableColumn fx:id="policyNumber" prefWidth="90.0" text="Policy Number" />
-										<TableColumn fx:id="incBroker" prefWidth="62.0" text="Inc Broker" />
-										<TableColumn fx:id="brokerContact" prefWidth="75.0" text="Broker Contact" />
-										<TableColumn fx:id="brokerPhone" prefWidth="73.0" text="Broker Phone" />
-										<TableColumn fx:id="ext" prefWidth="39.0" text="Ext" />
-										<TableColumn fx:id="congCoverage" prefWidth="86.0" text="Cong Coverage" />
-										<TableColumn fx:id="email" prefWidth="81.0" text="Email" />
-										<TableColumn fx:id="brokerFax" prefWidth="75.0" text="Broker Fax" />
-									</columns>
-								</TableView>
-							</children>
-						</AnchorPane>
-					</content>
-				</Tab>
+				 <Tab text="Additional Contacts">
+          <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <TableView fx:id="tableAdditionalContact" layoutX="0.0" layoutY="0.0" onMouseClicked="#handleAddContMouseClick" prefHeight="283.0" prefWidth="955.0">
+                  <columns>
+                    <TableColumn fx:id="additionalContact" maxWidth="5000.0" minWidth="10.0" prefWidth="111.0" text="Additional Contact" />
+                    <TableColumn fx:id="position" prefWidth="101.0" text="Position" />
+                    <TableColumn fx:id="phoneNo" prefWidth="106.0" text="Phone No" />
+                    <TableColumn fx:id="faxNo" prefWidth="106.0" text="Fax No" />
+                    <TableColumn fx:id="cellular" prefWidth="106.0" text="Cellullar" />
+                    <TableColumn fx:id="email" prefWidth="106.0" text="Email" />
+                    <TableColumn fx:id="extension" prefWidth="106.0" text="Extension" />
+                    <TableColumn fx:id="pager" maxWidth="5000.0" minWidth="10.0" prefWidth="106.0" text="Pager" />
+                    <TableColumn fx:id="status" prefWidth="106.0" text="Status" />
+                  </columns>
+                </TableView>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
 				<Tab text="Accounting">
 					<content>
 						<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />

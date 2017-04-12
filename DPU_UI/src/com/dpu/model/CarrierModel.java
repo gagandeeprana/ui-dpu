@@ -47,7 +47,17 @@ public class CarrierModel {
 	private String email;
 
 	@JsonProperty("carrierAdditionalContactModel")
-	private List<AddtionalCarrierContact> carrierAdditionalContactModel = null;
+	private List<com.dpu.request.AdditionalContact> carrierAdditionalContactModel = null;
+		
+	
+
+	public List<com.dpu.request.AdditionalContact> getCarrierAdditionalContactModel() {
+		return carrierAdditionalContactModel;
+	}
+
+	public void setCarrierAdditionalContactModel(List<com.dpu.request.AdditionalContact> carrierAdditionalContactModel) {
+		this.carrierAdditionalContactModel = carrierAdditionalContactModel;
+	}
 
 	public String getName() {
 		return name;
@@ -57,13 +67,6 @@ public class CarrierModel {
 		this.name = name;
 	}
 
-	public List<AddtionalCarrierContact> getAdditionalContacts() {
-		return carrierAdditionalContactModel;
-	}
-
-	public void setAdditionalContacts(List<AddtionalCarrierContact> additionalContacts) {
-		this.carrierAdditionalContactModel = additionalContacts;
-	}
 
 	public Long getCarrierId() {
 		return carrierId;

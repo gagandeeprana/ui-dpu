@@ -200,8 +200,6 @@ public class AdditionalContactAddController implements Initializable {
 
 	}
 
-	  
-
 	private void fetchMasterDataForDropDowns() {
 
 		Platform.runLater(new Runnable() {
