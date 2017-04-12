@@ -30,6 +30,8 @@ import com.dpu.util.Validate;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -58,7 +60,7 @@ public class OrderEditController extends Application implements Initializable{
 	
 	@FXML
 	ComboBox<String> ddlStatus;
-
+	
 	Long orderId = 0l;
 	Validate validate = new Validate();
 	List<Status> statusList;
@@ -199,13 +201,16 @@ public class OrderEditController extends Application implements Initializable{
 	public static OrderModel updateOrderModel = new OrderModel();
 	
 	private OrderModel setOrderValue() {
+		updateOrderModel.setId(orderId);
 		updateOrderModel.setCompanyId(companyList.get(ddlCustomer.getSelectionModel().getSelectedIndex()).getCompanyId());
 		updateOrderModel.setBillingLocationId(billingLocations.get(ddlBillingLocation.getSelectionModel().getSelectedIndex()).getBillingLocationId());
 		updateOrderModel.setContactId(additionalContactsList.get(ddlAdditionalContacts.getSelectionModel().getSelectedIndex()).getAdditionalContactId());
 		updateOrderModel.setCurrencyId(currencyList.get(ddlCurrency.getSelectionModel().getSelectedIndex()).getTypeId());
 		List<ProbilModel> probilModelList = new ArrayList<>();
-		for(Integer probill : probillDropDownList) {
+		for(int i=0;i<probils.size();i++) {
 			ProbilModel probilModel = new ProbilModel();
+			probilModel.setId(probils.get(i).getId());
+			probilModel.setProbilNo(probils.get(i).getProbilNo());
 			probilModel.setShipperId(shipperList.get(ddlShipper.getSelectionModel().getSelectedIndex()).getShipperId());
 			probilModel.setConsineeId(consigneeList.get(ddlConsignee.getSelectionModel().getSelectedIndex()).getShipperId());
 			probilModel.setPickupId(pickupList.get(ddlPickup.getSelectionModel().getSelectedIndex()).getTypeId());
@@ -220,9 +225,11 @@ public class OrderEditController extends Application implements Initializable{
 			probilModel.setDeliveryMABTime(txtDeliverMABTime.getText());
 			List<OrderPickUpDeliveryModel> orderPickupDeliveryModelList = new ArrayList<>();
 			OrderPickUpDeliveryModel orderPickUpDeliveryModel = new OrderPickUpDeliveryModel();
+			orderPickUpDeliveryModel.setId(probils.get(i).getOrderPickUpDeliveryList().get(0).getId());
 			orderPickUpDeliveryModel.setPickupDeliveryNo(txtPickup1.getText());
 			orderPickUpDeliveryModel.setTypeId(1l);
 			OrderPickUpDeliveryModel orderPickUpDeliveryModel1 = new OrderPickUpDeliveryModel();
+			orderPickUpDeliveryModel1.setId(probils.get(i).getOrderPickUpDeliveryList().get(1).getId());
 			orderPickUpDeliveryModel1.setPickupDeliveryNo(txtDelivery1.getText());
 			orderPickUpDeliveryModel1.setTypeId(2l);
 			orderPickupDeliveryModelList.add(orderPickUpDeliveryModel);
@@ -231,7 +238,40 @@ public class OrderEditController extends Application implements Initializable{
 			probilModelList.add(probilModel);
 		}
 		updateOrderModel.setProbilList(probilModelList);
+		if(updateOrderModel.getTemperatureValue() == null) {
+			updateOrderModel.setTemperatureId(temperatureId);
+			updateOrderModel.setTemperatureTypeId(temperatureTypeId);
+			updateOrderModel.setTemperatureValue(temperatureValue);
+		}
 		return updateOrderModel;
+	}
+	
+	private void fillDropDown(ComboBox<String> comboBox, List<?> list) {
+		for(int i=0;i<list.size();i++) {
+			Object object = list.get(i);
+			if(object != null && object instanceof Company) {
+				Company company = (Company) object;
+				comboBox.getItems().add(company.getName());
+			}
+			if(object != null && object instanceof Shipper) {
+				Shipper shipper = (Shipper) object;
+				comboBox.getItems().add(shipper.getLocationName());
+			}
+			if(object != null && object instanceof Type) {
+				Type type = (Type) object;
+				comboBox.getItems().add(type.getTypeName());
+			}
+			if(object != null && object instanceof AdditionalContact) {
+
+				AdditionalContact additionalContact = (AdditionalContact) object;
+				comboBox.getItems().add(additionalContact.getCustomerName());
+			}
+			if(object != null && object instanceof BillingControllerModel) {
+				
+				BillingControllerModel billingLocation = (BillingControllerModel) object;
+				comboBox.getItems().add(billingLocation.getName());
+			}
+		}
 	}
 	
 	@Override
@@ -249,21 +289,26 @@ public class OrderEditController extends Application implements Initializable{
 	public static Long temperatureId, temperatureTypeId;
 
 	public void initData(OrderModel orderModel) {
+		ddlAdditionalContacts.getItems().clear();
+		ddlBillingLocation.getItems().clear();
+		ddlCustomer.getItems().clear();
 		orderId = orderModel.getId();
 		companyList = orderModel.getCompanyList();
 		for(int i = 0; i< companyList.size();i++) {
 			Company company = companyList.get(i);
 			ddlCustomer.getItems().add(company.getName());
-			if(company.getCompanyId() == orderModel.getCompanyId()) {
+			if(company.getCompanyId().equals(orderModel.getCompanyId())) {
 				ddlCustomer.getSelectionModel().select(i);
 			}
 		}
+		
+		
 		
 		additionalContactsList = orderModel.getCompanyResponse().getAdditionalContacts();
 		for(int i = 0; i< additionalContactsList.size();i++) {
 			AdditionalContact additionalContacts = additionalContactsList.get(i);
 			ddlAdditionalContacts.getItems().add(additionalContacts.getCustomerName());
-			if(additionalContacts.getAdditionalContactId() == orderModel.getContactId()) {
+			if(additionalContacts.getAdditionalContactId().equals(orderModel.getContactId())) {
 				ddlAdditionalContacts.getSelectionModel().select(i);
 			}
 		}
@@ -272,7 +317,7 @@ public class OrderEditController extends Application implements Initializable{
 		for(int i = 0; i < billingLocations.size();i++) {
 			BillingControllerModel billingLocation = billingLocations.get(i);
 			ddlBillingLocation.getItems().add(billingLocation.getName());
-			if(billingLocation.getBillingLocationId() == orderModel.getBillingLocationId()) {
+			if(billingLocation.getBillingLocationId().equals(orderModel.getBillingLocationId())) {
 				ddlBillingLocation.getSelectionModel().select(i);
 			}
 		}
@@ -290,32 +335,8 @@ public class OrderEditController extends Application implements Initializable{
 		for(int i = 0; i < shipperList.size();i++) {
 			Shipper shipper = shipperList.get(i);
 			ddlShipper.getItems().add(shipper.getLocationName());
-			if(shipper.getShipperId() == probils.get(0).getShipperId()) {
+			if(shipper.getShipperId().equals(probils.get(0).getShipperId())) {
 				ddlShipper.getSelectionModel().select(i);
-//				Platform.runLater(new Runnable() {
-//					
-//					@Override
-//					public void run() {
-//						try {
-//							Long shipperId = shipperList.get(ddlShipper.getSelectionModel().getSelectedIndex()).getShipperId();
-//							String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_SHIPPER_API + "/" + shipperId, null);
-//							Shipper shipperResponse = mapper.readValue(response, Shipper.class);
-//							if(shipperResponse != null) {
-//								if(shipperResponse.getAddress() != null) {
-//									lblAddressShipper.setText(shipperResponse.getAddress());
-//								}
-//								if(shipperResponse.getFax() != null) {
-//									lblFaxShipper.setText(shipperResponse.getFax());
-//								}
-//								if(shipperResponse.getAddress() != null) {
-//									lblPhoneShipper.setText(shipperResponse.getPhone());
-//								}
-//							}
-//						} catch (Exception e) {
-//							JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
-//						}
-//					}
-//				});
 			}
 		}
 		
@@ -323,68 +344,51 @@ public class OrderEditController extends Application implements Initializable{
 		for(int i = 0; i < consigneeList.size();i++) {
 			Shipper consginee = consigneeList.get(i);
 			ddlConsignee.getItems().add(consginee.getLocationName());
-			if(consginee.getShipperId() == probils.get(0).getShipperId()) {
+			if(consginee.getShipperId().equals(probils.get(0).getShipperId())) {
 				ddlConsignee.getSelectionModel().select(i);
-//				Platform.runLater(new Runnable() {
-//					
-//					@Override
-//					public void run() {
-//						try {
-//							Long consigneeId = consigneeList.get(ddlConsignee.getSelectionModel().getSelectedIndex()).getShipperId();
-//							String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_SHIPPER_API + "/" + consigneeId, null);
-//							Shipper shipperResponse = mapper.readValue(response, Shipper.class);
-//							if(shipperResponse != null) {
-//								if(shipperResponse.getAddress() != null) {
-//									lblAddressConsginee.setText(shipperResponse.getAddress());
-//								}
-//								if(shipperResponse.getFax() != null) {
-//									lblFaxConsignee.setText(shipperResponse.getFax());
-//								}
-//								if(shipperResponse.getAddress() != null) {
-//									lblPhoneConsignee.setText(shipperResponse.getPhone());
-//								}
-//							}
-//						} catch (Exception e) {
-//							e.printStackTrace();
-//							JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
-//						}
-//					}
-//				});
 			}
 		}
 		List<OrderPickUpDeliveryModel> orderPickUpDeliveryList = probils.get(0).getOrderPickUpDeliveryList();
 		if(orderPickUpDeliveryList != null && orderPickUpDeliveryList.size() > 0) {
 			for(OrderPickUpDeliveryModel orderPickUpDeliveryModel : orderPickUpDeliveryList) {
-				if(orderPickUpDeliveryModel.getTypeId() == 1) {
+				if(orderPickUpDeliveryModel.getTypeId().equals(1l)) {
 					txtPickup1.setText(orderPickUpDeliveryModel.getPickupDeliveryNo());
 				}
-				if(orderPickUpDeliveryModel.getTypeId() == 2) {
+				if(orderPickUpDeliveryModel.getTypeId().equals(2l)) {
 					txtDelivery1.setText(orderPickUpDeliveryModel.getPickupDeliveryNo());
 				}
 			}
 		}
 		
-		List<Type> pickUpList = orderModel.getPickupList();
-		if(pickUpList != null && pickUpList.size() > 0) {
-			for(int i=0;i<pickUpList.size();i++) {
-				Type type = pickUpList.get(i);
+		pickupList= orderModel.getPickupList();
+		if(pickupList != null && pickupList.size() > 0) {
+			for(int i=0;i<pickupList.size();i++) {
+				Type type = pickupList.get(i);
 				ddlPickup.getItems().add(type.getTypeName());
-				if(type.getTypeId() == probils.get(0).getPickupId()) {
+				if(type.getTypeId().equals(probils.get(0).getPickupId())) {
 					ddlPickup.getSelectionModel().select(i);
 				}
 			}
 		}
 		
-		List<Type> deliveryList = orderModel.getDeliveryList();
+		deliveryList = orderModel.getDeliveryList();
 		if(deliveryList != null && deliveryList.size() > 0) {
 			for(int i=0;i<deliveryList.size();i++) {
 				Type type = deliveryList.get(i);
 				ddlDelivery.getItems().add(type.getTypeName());
-				if(type.getTypeId() == probils.get(0).getDeliveryId()) {
+				if(type.getTypeId().equals(probils.get(0).getDeliveryId())){
 					ddlDelivery.getSelectionModel().select(i);
 				}
 			}
 		}
+		
+		lblAddressShipper.setText(probils.get(0).getShipperList().get(0).getAddress());
+		lblPhoneShipper.setText(probils.get(0).getShipperList().get(0).getPhone());
+		lblFaxShipper.setText(probils.get(0).getShipperList().get(0).getFax());
+		
+		lblAddressConsginee.setText(probils.get(0).getConsineeList().get(0).getAddress());
+		lblPhoneConsignee.setText(probils.get(0).getConsineeList().get(0).getPhone());
+		lblFaxConsignee.setText(probils.get(0).getConsineeList().get(0).getFax());
 		
 		txtPickpupScheduledDate.setText(probils.get(0).getPickupScheduledDate());
 		txtPickpupScheduledTime.setText(probils.get(0).getPickupScheduledTime());
@@ -403,7 +407,7 @@ public class OrderEditController extends Application implements Initializable{
 			for(int i=0;i<currencyList.size();i++) {
 				Type type = currencyList.get(i);
 				ddlCurrency.getItems().add(type.getTypeName());
-				if(type.getTypeId() == orderModel.getCurrencyId()) {
+				if(type.getTypeId().equals(orderModel.getCurrencyId())) {
 					ddlCurrency.getSelectionModel().select(i);
 				}
 			}
@@ -414,5 +418,99 @@ public class OrderEditController extends Application implements Initializable{
 		temperatureId = orderModel.getTemperatureId();
 		temperatureTypeId = orderModel.getTemperatureTypeId();
 		temperatureValue = orderModel.getTemperatureValue();
+		
+		ddlCustomer.valueProperty().addListener(new ChangeListener<String>() {
+	        
+			@SuppressWarnings("rawtypes")
+			@Override public void changed(ObservableValue ov, String t, String t1) {
+				Platform.runLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						try {
+							Long companyId = companyList.get(ddlCustomer.getSelectionModel().getSelectedIndex()).getCompanyId();
+							String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_ORDER_API + "/" + companyId + "/getData", null);
+							Company companyResponse = mapper.readValue(response, Company.class);
+							additionalContactsList = companyResponse.getAdditionalContacts();
+							ddlAdditionalContacts.getItems().clear();
+							ddlBillingLocation.getItems().clear();
+
+							if(additionalContactsList != null && additionalContactsList.size() > 0) {
+								fillDropDown(ddlAdditionalContacts, additionalContactsList);
+							}
+							billingLocations = companyResponse.getBillingLocations();
+							if(billingLocations != null && billingLocations.size() > 0) {
+								fillDropDown(ddlBillingLocation, billingLocations);
+							}
+						} catch (Exception e) {
+							JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+						}
+					}
+				});
+			}
+			
+	    });
+		ddlShipper.valueProperty().addListener(new ChangeListener<String>() {
+	        
+			@SuppressWarnings("rawtypes")
+			@Override public void changed(ObservableValue ov, String t, String t1) {
+				Platform.runLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						try {
+							Long shipperId = shipperList.get(ddlShipper.getSelectionModel().getSelectedIndex()).getShipperId();
+							String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_SHIPPER_API + "/" + shipperId, null);
+							Shipper shipperResponse = mapper.readValue(response, Shipper.class);
+							if(shipperResponse != null) {
+								if(shipperResponse.getAddress() != null) {
+									lblAddressShipper.setText(shipperResponse.getAddress());
+								}
+								if(shipperResponse.getFax() != null) {
+									lblFaxShipper.setText(shipperResponse.getFax());
+								}
+								if(shipperResponse.getAddress() != null) {
+									lblPhoneShipper.setText(shipperResponse.getPhone());
+								}
+							}
+						} catch (Exception e) {
+							JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+						}
+					}
+				});
+			}
+	    });
+		ddlConsignee.valueProperty().addListener(new ChangeListener<String>() {
+	        
+			@SuppressWarnings("rawtypes")
+			@Override public void changed(ObservableValue ov, String t, String t1) {
+				Platform.runLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						try {
+							Long consigneeId = consigneeList.get(ddlConsignee.getSelectionModel().getSelectedIndex()).getShipperId();
+							String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_SHIPPER_API + "/" + consigneeId, null);
+							Shipper shipperResponse = mapper.readValue(response, Shipper.class);
+							if(shipperResponse != null) {
+								if(shipperResponse.getAddress() != null) {
+									lblAddressConsginee.setText(shipperResponse.getAddress());
+								}
+								if(shipperResponse.getFax() != null) {
+									lblFaxConsignee.setText(shipperResponse.getFax());
+								}
+								if(shipperResponse.getAddress() != null) {
+									lblPhoneConsignee.setText(shipperResponse.getPhone());
+								}
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+							JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+						}
+					}
+				});
+			}
+			
+	    });
 	}
 }

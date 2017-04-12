@@ -17,6 +17,7 @@ import com.dpu.model.Failed;
 import com.dpu.model.Success;
 import com.dpu.request.BillingLocation;
 import com.dpu.request.CompanyModel;
+import com.dpu.util.Validate;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -58,6 +59,74 @@ public class CompanyAddController extends Application implements Initializable {
 	@FXML
 	private Pane addCompanyPane;
 
+	/*@FXML
+	private void txtNameKeyTyped() {
+		txtCompany.setStyle("-fx-focus-color: #87CEEB;");
+		 
+	}*/
+
+	Validate validate = new Validate();
+
+	public StringBuffer validsteFields() {
+		StringBuffer strBuff = new StringBuffer();
+		String customerName = txtCompany.getText();
+		String email = txtEmail.getText();
+
+		if (customerName == null || customerName.trim().equals("")) {
+			txtCompany.setStyle("-fx-focus-color: #87CEEB;");
+			strBuff.append("Company Name is Mandatory\n");
+		}
+		if (email == null || email.trim().equals("")) {
+			txtEmail.setStyle("-fx-focus-color: #87CEEB;");
+			strBuff.append("Email is Mandatory\n");
+		}
+
+		return strBuff;
+	}
+
+	private Object openValidationScreen() {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
+					.getResource(Iconstants.COMMON_BASE_PACKAGE + Iconstants.XML_VALIDATION_SCREEN));
+
+			Parent root = (Parent) fxmlLoader.load();
+
+			Stage stage = new Stage();
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setTitle("Warning");
+			stage.setScene(new Scene(root));
+			stage.show();
+			return fxmlLoader.getController();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private boolean validateAddEquipmentScreen() {
+		String customerName = txtCompany.getText();
+		String email = txtEmail.getText();
+
+		boolean result = validate.validateEmptyness(customerName);
+		if (!result) {
+			ValidationController.str = validsteFields();
+			openValidationScreen();
+			txtCompany.setStyle("-fx-focus-color: red;");
+			txtCompany.requestFocus();
+			return result;
+		}
+		result = validate.validateEmptyness(email);
+		if (!result) {
+			ValidationController.str = validsteFields();
+			openValidationScreen();
+			txtEmail.setStyle("-fx-focus-color: red;");
+			txtEmail.requestFocus();
+			return result;
+		}
+
+		return result;
+	}
+
 	@FXML
 	private TableColumn<AdditionalContact, String> additionalContact;
 
@@ -84,7 +153,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 	@FXML
 	private TableColumn<AdditionalContact, String> status;
- 
+
 	@FXML
 	private TableColumn<BillingControllerModel, String> address;
 
@@ -168,25 +237,25 @@ public class CompanyAddController extends Application implements Initializable {
 
 	@FXML
 	public TextField txtZip;
-	
+
 	@FXML
 	private TabPane tabPane;
 
 	@FXML
 	public TableColumn<BillingControllerModel, String> zip;
 
-	public static  int addEditIndex = -1;
-	//public static  int editIndex = -1;
+	public static int addEditIndex = -1;
+	// public static int editIndex = -1;
 	public static int add = 0;
 	public static int addAddtionalContact = 0;
 	public static BillingControllerModel billingControllerModel = new BillingControllerModel();
-	public static AdditionalContact additionalContactModel = new  AdditionalContact();
+	public static AdditionalContact additionalContactModel = new AdditionalContact();
 	public static ArrayList<BillingControllerModel> listOfBilling = new ArrayList<BillingControllerModel>();
 	public static ArrayList<AdditionalContact> listOfAdditionalContact = new ArrayList<AdditionalContact>();
 	public static CompanyModel company = new CompanyModel();
-	
-	
-	int additionalContactCountMenu =0;
+
+	int additionalContactCountMenu = 0;
+
 	@FXML
 	void handleAddContMouseClick(MouseEvent event) {
 
@@ -240,34 +309,33 @@ public class CompanyAddController extends Application implements Initializable {
 				selectedTabValue = 1;
 				addAddtionalContact = 0;
 				addEditIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
-				additionalContactModel =  tableAdditionalContact.getSelectionModel().getSelectedItem();
+				additionalContactModel = tableAdditionalContact.getSelectionModel().getSelectedItem();
 				openAddAdditionalContactScreen();
 				closeAddCompanyScreen(btnSaveCompany);
-				
 
 			}
 		});
 
 		MenuItem item3 = new MenuItem("DELETE");
 		item3.setOnAction(new EventHandler<ActionEvent>() {
-			
+
 			@Override
 			public void handle(ActionEvent event) {
-				selectedTabValue = 1 ;
+				selectedTabValue = 1;
 				addEditIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
 				CompanyEditController.listOfAdditionalContact.remove(addEditIndex);
 				addEditIndex = -1;
-				
-				try{
+
+				try {
 					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-						.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_ADD_SCREEN));
+							.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_ADD_SCREEN));
 					Parent root = (Parent) fxmlLoader.load();
 					Stage stage = new Stage();
 					stage.initModality(Modality.APPLICATION_MODAL);
 					stage.setTitle("Add New Company");
 					stage.setScene(new Scene(root));
 					stage.show();
-				}catch(Exception e){
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				closeAddCompanyScreen(btnSaveCompany);
@@ -277,7 +345,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 		// Add MenuItem to ContextMenu
 		contextMenu.getItems().addAll(item1, item2, item3);
-		
+
 		if (additionalContactCountMenu == 0) {
 			additionalContactCountMenu++;
 			// When user right-click on Table
@@ -289,7 +357,7 @@ public class CompanyAddController extends Application implements Initializable {
 				}
 
 			});
-			 
+
 		}
 
 	}
@@ -348,11 +416,9 @@ public class CompanyAddController extends Application implements Initializable {
 
 	}
 
-	/*public static void main(String[] args) {
-		launch(args);
-	}*/
-
-	
+	/*
+	 * public static void main(String[] args) { launch(args); }
+	 */
 
 	// new added
 	public void fetchBillingLocations() {
@@ -364,8 +430,10 @@ public class CompanyAddController extends Application implements Initializable {
 			public void run() {
 				try {
 
-					if (CompanyEditController.listOfBilling != null & !(CompanyEditController.listOfBilling.isEmpty())) {
-						ObservableList<BillingControllerModel> data = FXCollections.observableArrayList(CompanyEditController.listOfBilling);
+					if (CompanyEditController.listOfBilling != null
+							& !(CompanyEditController.listOfBilling.isEmpty())) {
+						ObservableList<BillingControllerModel> data = FXCollections
+								.observableArrayList(CompanyEditController.listOfBilling);
 						setColumnValues();
 						tableBillingLocations.setItems(data);
 						tableBillingLocations.setVisible(true);
@@ -448,7 +516,8 @@ public class CompanyAddController extends Application implements Initializable {
 			public void run() {
 				try {
 
-					if (CompanyEditController.listOfAdditionalContact != null & !(CompanyEditController.listOfAdditionalContact.isEmpty())) {
+					if (CompanyEditController.listOfAdditionalContact != null
+							& !(CompanyEditController.listOfAdditionalContact.isEmpty())) {
 						ObservableList<AdditionalContact> data = FXCollections
 								.observableArrayList(CompanyEditController.listOfAdditionalContact);
 						setAdditionalContactColumnValues();
@@ -540,8 +609,8 @@ public class CompanyAddController extends Application implements Initializable {
 				});
 	}
 
-	public static int selectedTabValue = 0 ;
-	
+	public static int selectedTabValue = 0;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -566,13 +635,14 @@ public class CompanyAddController extends Application implements Initializable {
 		txtPager.setText(company.getPager());
 		txtAfterHours.setText(company.getAfterHours());
 		tabPane.getSelectionModel().select(selectedTabValue);
-		 
+
 	}
 
 	int billingLocationCountMenu = 0;
+
 	@FXML
 	public void handleMouseClick(MouseEvent arg0) {
- 
+
 		// Create ContextMenu
 		ContextMenu contextMenu = new ContextMenu();
 
@@ -583,7 +653,7 @@ public class CompanyAddController extends Application implements Initializable {
 			public void handle(ActionEvent event) {
 
 				add = 1;
-				selectedTabValue = 0 ;
+				selectedTabValue = 0;
 				company.setName(txtCompany.getText());
 				company.setAddress(txtAddress.getText());
 				company.setUnitNo(txtUnitNo.getText());
@@ -620,13 +690,13 @@ public class CompanyAddController extends Application implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				selectedTabValue = 0 ;
+				selectedTabValue = 0;
 				add = 0;
 				addEditIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
-				billingControllerModel =  tableBillingLocations.getSelectionModel().getSelectedItem();
+				billingControllerModel = tableBillingLocations.getSelectionModel().getSelectedItem();
 				openAddBillingLocationScreen();
 				closeAddCompanyScreen(btnSaveCompany);
-				
+
 			}
 		});
 
@@ -635,29 +705,26 @@ public class CompanyAddController extends Application implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				selectedTabValue = 0 ;
+				selectedTabValue = 0;
 				addEditIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
 				CompanyEditController.listOfBilling.remove(addEditIndex);
 				addEditIndex = -1;
-				
-				
-				try{
+
+				try {
 					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-						.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_ADD_SCREEN));
+							.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_ADD_SCREEN));
 					Parent root = (Parent) fxmlLoader.load();
 					Stage stage = new Stage();
 					stage.initModality(Modality.APPLICATION_MODAL);
 					stage.setTitle("Add New Company");
 					stage.setScene(new Scene(root));
 					stage.show();
-				}catch(Exception e){
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				closeAddCompanyScreen(btnSaveCompany);
 			}
 		});
-		
-		
 
 		// Add MenuItem to ContextMenu
 		contextMenu.getItems().addAll(item1, item2, item3);
@@ -672,19 +739,19 @@ public class CompanyAddController extends Application implements Initializable {
 				}
 
 			});
-			 
+
 		}
 
 	}
 
 	private void openAddBillingLocationScreen() {
-		
+
 		try {
-			
+
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
 					.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_ADD_BILLING_LOCATION_SCREEN));
 			Parent root = (Parent) fxmlLoader.load();
-			
+
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.setTitle("Add Billing Location");
@@ -715,8 +782,12 @@ public class CompanyAddController extends Application implements Initializable {
 	@FXML
 	private void btnSaveCompanyAction() {
 
-		addCompany();
-		closeAddCompanyScreen(btnSaveCompany);
+		boolean result = validateAddEquipmentScreen();
+		if (result) {
+			addCompany();
+			closeAddCompanyScreen(btnSaveCompany);
+		}
+
 	}
 
 	@FXML
@@ -760,7 +831,7 @@ public class CompanyAddController extends Application implements Initializable {
 			}
 		});
 	}
-	
+
 	public void addCompany(String reponse) {
 
 		Platform.runLater(new Runnable() {
@@ -790,13 +861,11 @@ public class CompanyAddController extends Application implements Initializable {
 		});
 	}
 
-
 	private CompanyModel setCompanyValue() {
 
 		List<BillingLocation> billingLocations = new ArrayList<BillingLocation>();
 		List<com.dpu.request.AdditionalContact> additionalContacts = new ArrayList<com.dpu.request.AdditionalContact>();
 
-		
 		company.setName(txtCompany.getText());
 		company.setAddress(txtAddress.getText());
 		company.setUnitNo(txtUnitNo.getText());
@@ -818,7 +887,6 @@ public class CompanyAddController extends Application implements Initializable {
 
 		// need to use for loop here
 
-		
 		if (CompanyEditController.listOfBilling != null) {
 			int sizeOfBilling = CompanyEditController.listOfBilling.size();
 			for (int i = 0; i < sizeOfBilling; i++) {
@@ -903,10 +971,10 @@ public class CompanyAddController extends Application implements Initializable {
 		}
 		return null;
 	}
-	 
+
 	public void initData(CompanyModel c) {
-		//fetchBillingLocations();
-		//fetchAdditionalContacts();
+		// fetchBillingLocations();
+		// fetchAdditionalContacts();
 		txtCompany.setText(c.getName());
 		txtContact.setText(c.getContact());
 		txtAddress.setText(c.getAddress());
