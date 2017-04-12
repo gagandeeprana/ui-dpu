@@ -14,6 +14,15 @@ public class AdditionalContact {
 	private String email;
 	public Long companyId;
 	public Long additionalContactId = null;
+	private Long status;
+
+	public Long getStatus() {
+		return status;
+	}
+
+	public void setStatus(Long status) {
+		this.status = status;
+	}
 
 	public AdditionalContact(String additionalContact, String position2, String phone2, String fax2, String cellular2,
 			String email2, String extension, String pager, String status) {

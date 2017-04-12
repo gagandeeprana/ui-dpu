@@ -56,6 +56,32 @@
                   </Label>
                </graphic>
             </Menu>
+            <Menu mnemonicParsing="false">
+               <graphic>
+                  <Label fx:id="lblVendor" onMouseClicked="#lblVendorAction">
+                     <graphic>
+                        <ImageView fx:id="ivVendor" fitHeight="20.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="com/dpu/common/xml/market-store.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+               </graphic>
+            </Menu>
+            <Menu mnemonicParsing="false">
+               <graphic>
+                  <Label fx:id="lblVendorInvoice" onMouseClicked="#lblVendorInvoiceAction">
+                     <graphic>
+                        <ImageView fx:id="ivVendorInvoice" fitHeight="20.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="com/dpu/common/xml/approve.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+               </graphic>
+            </Menu>
         </menus>
       </MenuBar>
       <MenuBar fx:id="mnuBarDatamaintenance" style="-fx-background-color: #d6eaf8;" stylesheets="@style.css">

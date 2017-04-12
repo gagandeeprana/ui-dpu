@@ -30,6 +30,11 @@ public class Iconstants {
 	public static final String URL_COMPANY_API = "company";
 	public static final String XML_COMPANY_ADD_SCREEN = "AddCompany.fxml";
 	public static final String XML_COMPANY_PERSONALIZE_SCREEN = "companyPersonlize.fxml";
+	public static final String XML_EDIT_ADDITIONAL_CONTACT_SCREEN ="AdditionalContactEditScreen.fxml";
+	public static final String XML_EDIT_BILLING_LOCATION_SCREEN = "EditBillingLocationScreen.fxml";
+	public static final String XML_COMPANY_EDIT_SCREEN = "EditCompanyOld.fxml";
+	public static final String XML_ADD_BILLING_LOCATION_SCREEN = "AddBillingLocationScreen.fxml";
+	public static final String URL_DELETE_BILLING_LOCATION_API= "company";
 	//public static final String XML_COMPANY_EDIT_SCREEN = "EditCompany.fxml";
 
 	public static final String TRUCK_BASE_PACKAGE = "com/dpu/truck/xml/";
@@ -90,19 +95,12 @@ public class Iconstants {
 	
 	public static final String URL_TYPE_API = "masterData/type";
 	
-	public static final String XML_ADD_BILLING_LOCATION_SCREEN = "AddBillingLocationScreen.fxml";
-	public static final String URL_DELETE_BILLING_LOCATION_API= "company";
-	 
 	public static int val = 0;
 	
 	public static final String XML_ADD_ADDITIONAL_CONTACT_SCREEN ="AdditionalContactAddScreen.fxml";
 
 	public static final String URL_STATUS_API = "status";
 	
-	public static final String XML_EDIT_ADDITIONAL_CONTACT_SCREEN ="AdditionalContactEditScreen.fxml";
-	public static final String XML_EDIT_BILLING_LOCATION_SCREEN = "EditBillingLocationScreen.fxml";
-	public static final String XML_COMPANY_EDIT_SCREEN = "EditCompanyOld.fxml";
-
 	// status 
 	public static final String STATUS_ACTIVE = "Active";
 	public static final String STATUS_INACTIVE = "InActive";
@@ -141,5 +139,11 @@ public class Iconstants {
 
 	public static final String PLANNER_BASE_PACKAGE = "com/dpu/planner/xml/";
 	public static final String XML_PLANNER_SCREEN = "Planner.fxml";
+
+	public static final String URL_VENDOR_API = "vendor";
+	public static final String VENDOR_BASE_PACKAGE = "com/dpu/vendor/xml/";
+	public static final String XML_VENDOR_ADD_SCREEN = "AddVendor.fxml";
+	public static final String XML_VENDOR_EDIT_SCREEN = "EditVendor.fxml";
+	public static final String XML_VENDOR_SCREEN = "VendorListing.fxml";
 
 }
