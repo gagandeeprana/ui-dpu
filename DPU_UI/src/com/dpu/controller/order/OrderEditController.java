@@ -289,21 +289,26 @@ public class OrderEditController extends Application implements Initializable{
 	public static Long temperatureId, temperatureTypeId;
 
 	public void initData(OrderModel orderModel) {
+		ddlAdditionalContacts.getItems().clear();
+		ddlBillingLocation.getItems().clear();
+		ddlCustomer.getItems().clear();
 		orderId = orderModel.getId();
 		companyList = orderModel.getCompanyList();
 		for(int i = 0; i< companyList.size();i++) {
 			Company company = companyList.get(i);
 			ddlCustomer.getItems().add(company.getName());
-			if(company.getCompanyId() == orderModel.getCompanyId()) {
+			if(company.getCompanyId().equals(orderModel.getCompanyId())) {
 				ddlCustomer.getSelectionModel().select(i);
 			}
 		}
+		
+		
 		
 		additionalContactsList = orderModel.getCompanyResponse().getAdditionalContacts();
 		for(int i = 0; i< additionalContactsList.size();i++) {
 			AdditionalContact additionalContacts = additionalContactsList.get(i);
 			ddlAdditionalContacts.getItems().add(additionalContacts.getCustomerName());
-			if(additionalContacts.getAdditionalContactId() == orderModel.getContactId()) {
+			if(additionalContacts.getAdditionalContactId().equals(orderModel.getContactId())) {
 				ddlAdditionalContacts.getSelectionModel().select(i);
 			}
 		}
@@ -312,7 +317,7 @@ public class OrderEditController extends Application implements Initializable{
 		for(int i = 0; i < billingLocations.size();i++) {
 			BillingControllerModel billingLocation = billingLocations.get(i);
 			ddlBillingLocation.getItems().add(billingLocation.getName());
-			if(billingLocation.getBillingLocationId() == orderModel.getBillingLocationId()) {
+			if(billingLocation.getBillingLocationId().equals(orderModel.getBillingLocationId())) {
 				ddlBillingLocation.getSelectionModel().select(i);
 			}
 		}
@@ -330,7 +335,7 @@ public class OrderEditController extends Application implements Initializable{
 		for(int i = 0; i < shipperList.size();i++) {
 			Shipper shipper = shipperList.get(i);
 			ddlShipper.getItems().add(shipper.getLocationName());
-			if(shipper.getShipperId() == probils.get(0).getShipperId()) {
+			if(shipper.getShipperId().equals(probils.get(0).getShipperId())) {
 				ddlShipper.getSelectionModel().select(i);
 			}
 		}
@@ -339,17 +344,17 @@ public class OrderEditController extends Application implements Initializable{
 		for(int i = 0; i < consigneeList.size();i++) {
 			Shipper consginee = consigneeList.get(i);
 			ddlConsignee.getItems().add(consginee.getLocationName());
-			if(consginee.getShipperId() == probils.get(0).getShipperId()) {
+			if(consginee.getShipperId().equals(probils.get(0).getShipperId())) {
 				ddlConsignee.getSelectionModel().select(i);
 			}
 		}
 		List<OrderPickUpDeliveryModel> orderPickUpDeliveryList = probils.get(0).getOrderPickUpDeliveryList();
 		if(orderPickUpDeliveryList != null && orderPickUpDeliveryList.size() > 0) {
 			for(OrderPickUpDeliveryModel orderPickUpDeliveryModel : orderPickUpDeliveryList) {
-				if(orderPickUpDeliveryModel.getTypeId() == 1) {
+				if(orderPickUpDeliveryModel.getTypeId().equals(1l)) {
 					txtPickup1.setText(orderPickUpDeliveryModel.getPickupDeliveryNo());
 				}
-				if(orderPickUpDeliveryModel.getTypeId() == 2) {
+				if(orderPickUpDeliveryModel.getTypeId().equals(2l)) {
 					txtDelivery1.setText(orderPickUpDeliveryModel.getPickupDeliveryNo());
 				}
 			}
@@ -360,7 +365,7 @@ public class OrderEditController extends Application implements Initializable{
 			for(int i=0;i<pickupList.size();i++) {
 				Type type = pickupList.get(i);
 				ddlPickup.getItems().add(type.getTypeName());
-				if(type.getTypeId() == probils.get(0).getPickupId()) {
+				if(type.getTypeId().equals(probils.get(0).getPickupId())) {
 					ddlPickup.getSelectionModel().select(i);
 				}
 			}
@@ -371,7 +376,7 @@ public class OrderEditController extends Application implements Initializable{
 			for(int i=0;i<deliveryList.size();i++) {
 				Type type = deliveryList.get(i);
 				ddlDelivery.getItems().add(type.getTypeName());
-				if(type.getTypeId() == probils.get(0).getDeliveryId()) {
+				if(type.getTypeId().equals(probils.get(0).getDeliveryId())){
 					ddlDelivery.getSelectionModel().select(i);
 				}
 			}
@@ -402,7 +407,7 @@ public class OrderEditController extends Application implements Initializable{
 			for(int i=0;i<currencyList.size();i++) {
 				Type type = currencyList.get(i);
 				ddlCurrency.getItems().add(type.getTypeName());
-				if(type.getTypeId() == orderModel.getCurrencyId()) {
+				if(type.getTypeId().equals(orderModel.getCurrencyId())) {
 					ddlCurrency.getSelectionModel().select(i);
 				}
 			}
@@ -413,6 +418,7 @@ public class OrderEditController extends Application implements Initializable{
 		temperatureId = orderModel.getTemperatureId();
 		temperatureTypeId = orderModel.getTemperatureTypeId();
 		temperatureValue = orderModel.getTemperatureValue();
+		
 		ddlCustomer.valueProperty().addListener(new ChangeListener<String>() {
 	        
 			@SuppressWarnings("rawtypes")
