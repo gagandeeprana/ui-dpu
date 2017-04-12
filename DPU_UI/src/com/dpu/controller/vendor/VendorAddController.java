@@ -14,7 +14,7 @@ import com.dpu.constants.Iconstants;
 import com.dpu.controller.MainScreen;
 import com.dpu.controller.ValidationController;
 import com.dpu.model.AdditionalContact;
-import com.dpu.model.BillingControllerModel;
+import com.dpu.model.VendorBillingLocation;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
 import com.dpu.model.Vendor;
@@ -28,6 +28,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -35,11 +37,16 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -56,13 +63,45 @@ public class VendorAddController extends Application implements Initializable {
 	@FXML
 	private Pane addVendorPane;
 
-	/*@FXML
-	private void txtNameKeyTyped() {
-		txtCompany.setStyle("-fx-focus-color: #87CEEB;");
-		 
-	}*/
+	@FXML
+	private TableColumn<AdditionalContact, String> additionalContact, position, phoneNo, faxNo, cellular, email, 
+	extension, pager, status;
+
+	@FXML
+	private Button btnSaveVendor, btnCancelVendor;
+
+	@FXML
+	private TableColumn<VendorBillingLocation, String> address, city, contact, fax, name, phone, zip;
+
+	@FXML
+	public TableView<VendorBillingLocation> tableBillingLocations;
+
+	@FXML
+	private TableView<AdditionalContact> tableAdditionalContact;
+
+	@FXML
+	public TextField txtAddress, txtAfterHours, txtCellular, txtCity, txtCompany, txtContact, txtEmail, txtExt, txtFax, txtPager, 
+	txtPhone, txtPosition, txtPrefix, txtProvince, txtTollFree, txtUnitNo, txtWebsite, txtZip;
+
+	@FXML
+	private TabPane tabPane;
 
 	Validate validate = new Validate();
+	public static int addAddtionalContact = 0;
+	public static VendorBillingLocation VendorBillingLocation = new VendorBillingLocation();
+	public static AdditionalContact additionalContactModel = new AdditionalContact();
+	public static ArrayList<VendorBillingLocation> listOfBilling = new ArrayList<VendorBillingLocation>();
+	public static ArrayList<AdditionalContact> listOfAdditionalContact = new ArrayList<AdditionalContact>();
+	public static Vendor vendor = new Vendor();
+	int additionalContactCountMenu = 0;
+	public int tblBillingMenuCount = 0;
+	public static int selectedTabValue = 0;
+	ContextMenu contextMenu = new ContextMenu();
+	int billingLocationCountMenu = 0;
+	public static int addEditIndex = -1;
+	// public static int editIndex = -1;
+	public static int add = 0;
+	MouseEvent me;
 
 	public StringBuffer validsteFields() {
 		StringBuffer strBuff = new StringBuffer();
@@ -123,234 +162,43 @@ public class VendorAddController extends Application implements Initializable {
 
 		return result;
 	}
-
+	
+	
+	
 	@FXML
-	private TableColumn<AdditionalContact, String> additionalContact;
-
-	@FXML
-	private TableColumn<AdditionalContact, String> position;
-
-	@FXML
-	private TableColumn<AdditionalContact, String> phoneNo;
-
-	@FXML
-	private TableColumn<AdditionalContact, String> faxNo;
-
-	@FXML
-	private TableColumn<AdditionalContact, String> cellular;
-
-	@FXML
-	private TableColumn<AdditionalContact, String> email;
-
-	@FXML
-	private TableColumn<AdditionalContact, String> extension;
-
-	@FXML
-	private TableColumn<AdditionalContact, String> pager;
-
-	@FXML
-	private TableColumn<AdditionalContact, String> status;
-
-	@FXML
-	private TableColumn<BillingControllerModel, String> address;
-
-	@FXML
-	private Button btnSaveVendor;
-
-	@FXML
-	private Button btnCancelVendor;
-
-	@FXML
-	private TableColumn<BillingControllerModel, String> city;
-
-	@FXML
-	private TableColumn<BillingControllerModel, String> contact;
-
-	@FXML
-	private TableColumn<BillingControllerModel, String> fax;
-
-	@FXML
-	private TableColumn<BillingControllerModel, String> name;
-
-	@FXML
-	private TableColumn<BillingControllerModel, String> phone;
-
-	@FXML
-	private TableView<AdditionalContact> tableAdditionalContact;
-
-	@FXML
-	public TableView<BillingControllerModel> tableBillingLocations;
-
-	@FXML
-	public TextField txtAddress;
-
-	@FXML
-	public TextField txtAfterHours;
-
-	@FXML
-	public TextField txtCellular;
-
-	@FXML
-	public TextField txtCity;
-
-	@FXML
-	public TextField txtCompany;
-
-	@FXML
-	public TextField txtContact;
-
-	@FXML
-	public TextField txtEmail;
-
-	@FXML
-	public TextField txtExt;
-
-	@FXML
-	public TextField txtFax;
-
-	@FXML
-	public TextField txtPager;
-
-	@FXML
-	public TextField txtPhone;
-
-	@FXML
-	public TextField txtPosition;
-
-	@FXML
-	public TextField txtPrefix;
-
-	@FXML
-	public TextField txtProvince;
-
-	@FXML
-	public TextField txtTollFree;
-
-	@FXML
-	public TextField txtUnitNo;
-
-	@FXML
-	public TextField txtWebsite;
-
-	@FXML
-	public TextField txtZip;
-
-	@FXML
-	private TabPane tabPane;
-
-	@FXML
-	public TableColumn<BillingControllerModel, String> zip;
-
-	public static int addEditIndex = -1;
-	// public static int editIndex = -1;
-	public static int add = 0;
-	public static int addAddtionalContact = 0;
-	public static BillingControllerModel billingControllerModel = new BillingControllerModel();
-	public static AdditionalContact additionalContactModel = new AdditionalContact();
-	public static ArrayList<BillingControllerModel> listOfBilling = new ArrayList<BillingControllerModel>();
-	public static ArrayList<AdditionalContact> listOfAdditionalContact = new ArrayList<AdditionalContact>();
-	public static Vendor vendor = new Vendor();
-
-	int additionalContactCountMenu = 0;
-
-	/*@FXML
-	void handleAddContMouseClick(MouseEvent event) {
-
-		// Create ContextMenu
-		ContextMenu contextMenu = new ContextMenu();
-
-		MenuItem item1 = new MenuItem("ADD");
-		item1.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				add = 1;
-				selectedTabValue = 1;
-				addAddtionalContact = 1;
-				company.setName(txtCompany.getText());
-				company.setAddress(txtAddress.getText());
-				company.setUnitNo(txtUnitNo.getText());
-				company.setCity(txtCity.getText());
-				company.setProvinceState(txtProvince.getText());
-				company.setZip(txtZip.getText());
-				company.setEmail(txtEmail.getText());
-				company.setWebsite(txtWebsite.getText());
-				company.setContact(txtContact.getText());
-				company.setPosition(txtPosition.getText());
-				company.setPhone(txtPhone.getText());
-				company.setExt(txtExt.getText());
-				company.setFax(txtFax.getText());
-				company.setCompanyPrefix(txtPrefix.getText());
-				company.setTollfree(txtTollFree.getText());
-				company.setCellular(txtCellular.getText());
-				company.setPager(txtPager.getText());
-				company.setAfterHours(txtAfterHours.getText());
-
-				openAddAdditionalContactScreen();
-
-				try {
-					closeAddCompanyScreen(btnSaveCompany);
-				} catch (Exception e) {
-					e.printStackTrace();
-					System.exit(0);
-				}
-
-			}
-		});
-		MenuItem item2 = new MenuItem("EDIT");
-		item2.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				add = 0;
-				selectedTabValue = 1;
-				addAddtionalContact = 0;
-				addEditIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
-				additionalContactModel = tableAdditionalContact.getSelectionModel().getSelectedItem();
-				openAddAdditionalContactScreen();
-				closeAddCompanyScreen(btnSaveCompany);
-
-			}
-		});
-
-		MenuItem item3 = new MenuItem("DELETE");
-		item3.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				selectedTabValue = 1;
-				addEditIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
-				VendorEditController.listOfAdditionalContact.remove(addEditIndex);
-				addEditIndex = -1;
-
-				try {
-					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-							.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_ADD_SCREEN));
-					Parent root = (Parent) fxmlLoader.load();
-					Stage stage = new Stage();
-					stage.initModality(Modality.APPLICATION_MODAL);
-					stage.setTitle("Add New Company");
-					stage.setScene(new Scene(root));
-					stage.show();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				closeAddCompanyScreen(btnSaveCompany);
-
-			}
-		});
+	public void handleAddContMouseClick(MouseEvent arg0) {
+		me = arg0;
+		contextMenu = new ContextMenu();
+		MenuItem add = new MenuItem("Add");
+		MenuItem edit = new MenuItem("Edit");
+		MenuItem delete = new MenuItem("Delete");
+		MenuItem duplicate = new MenuItem("Duplicate");
+		MenuItem personalize = new MenuItem("Personalize");
+		MenuItem filterBy = new MenuItem("Filter By");
+		MenuItem filterByExclude = new MenuItem("Filter By Exclude");
+		MenuItem clearAllFilters = new MenuItem("Clear All Filters");
 
 		// Add MenuItem to ContextMenu
-		contextMenu.getItems().addAll(item1, item2, item3);
-
-		if (additionalContactCountMenu == 0) {
-			additionalContactCountMenu++;
+		contextMenu.getItems().addAll(add, edit, delete, duplicate, personalize, filterBy, filterByExclude,
+				clearAllFilters);
+		if (tblBillingMenuCount == 0) {
+			tblBillingMenuCount++;
 			// When user right-click on Table
-			tableAdditionalContact.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
-				@Override
-				public void handle(ContextMenuEvent event) {
-					contextMenu.show(tableAdditionalContact, event.getScreenX(), event.getScreenY());
+			tableBillingLocations.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
+				@Override
+				public void handle(MouseEvent mouseEvent) {
+
+					if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
+						if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.SECONDARY)) {
+							contextMenu.show(tableBillingLocations, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+							//textfield.setVisible(false);
+							// contextMenu1 = new ContextMenu();
+							// contextMenu1.hide();
+						} else {
+							contextMenu.hide();
+						}
+					}
 				}
 
 			});
@@ -358,62 +206,7 @@ public class VendorAddController extends Application implements Initializable {
 		}
 
 	}
-*/
-	@FXML
-	void initialize() {
-		/*assert addCompanyPane != null : "fx:id=\"addCompanyPane\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert address != null : "fx:id=\"address\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert btnSaveCompany != null : "fx:id=\"btnSaveCompany\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert city != null : "fx:id=\"city\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert contact != null : "fx:id=\"contact\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert fax != null : "fx:id=\"fax\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert name != null : "fx:id=\"name\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert phone != null : "fx:id=\"phone\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert tableAdditionalContact != null : "fx:id=\"tableAdditionalContact\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert tableBillingLocations != null : "fx:id=\"tableBillingLocations\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtAddress != null : "fx:id=\"txtAddress\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtAfterHours != null : "fx:id=\"txtAfterHours\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtCellular != null : "fx:id=\"txtCellular\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtCity != null : "fx:id=\"txtCity\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtCompany != null : "fx:id=\"txtCompany\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtContact != null : "fx:id=\"txtContact\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtEmail != null : "fx:id=\"txtEmail\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtExt != null : "fx:id=\"txtExt\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtFax != null : "fx:id=\"txtFax\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtPager != null : "fx:id=\"txtPager\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtPhone != null : "fx:id=\"txtPhone\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtPosition != null : "fx:id=\"txtPosition\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtPrefix != null : "fx:id=\"txtPrefix\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtProvince != null : "fx:id=\"txtProvince\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtTollFree != null : "fx:id=\"txtTollFree\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtUnitNo != null : "fx:id=\"txtUnitNo\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtWebsite != null : "fx:id=\"txtWebsite\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert txtZip != null : "fx:id=\"txtZip\" was not injected: check your FXML file 'AddCompany.fxml'.";
-		assert zip != null : "fx:id=\"zip\" was not injected: check your FXML file 'AddCompany.fxml'.";*/
-
-	}
-
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		/*try {
-
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-					.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_ADD_SCREEN));
-			Parent root = (Parent) fxmlLoader.load();
-
-			Stage stage = new Stage();
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add New Company");
-			stage.setScene(new Scene(root));
-			stage.show();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}*/
-
-	}
-
-	// new added
+	
 	public void fetchBillingLocations() {
 		// fetchColumns();
 
@@ -423,10 +216,8 @@ public class VendorAddController extends Application implements Initializable {
 			public void run() {
 				try {
 
-					if (VendorEditController.listOfBilling != null
-							& !(VendorEditController.listOfBilling.isEmpty())) {
-						ObservableList<BillingControllerModel> data = FXCollections
-								.observableArrayList(VendorEditController.listOfBilling);
+					if (VendorEditController.listOfBilling != null & !(VendorEditController.listOfBilling.isEmpty())) {
+						ObservableList<VendorBillingLocation> data = FXCollections.observableArrayList(VendorEditController.listOfBilling);
 						setColumnValues();
 						tableBillingLocations.setItems(data);
 						tableBillingLocations.setVisible(true);
@@ -443,58 +234,58 @@ public class VendorAddController extends Application implements Initializable {
 	private void setColumnValues() {
 
 		name.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<BillingControllerModel, String>, ObservableValue<String>>() {
+				new Callback<TableColumn.CellDataFeatures<VendorBillingLocation, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<BillingControllerModel, String> param) {
+					public ObservableValue<String> call(CellDataFeatures<VendorBillingLocation, String> param) {
 						return new SimpleStringProperty(param.getValue().getName() + "");
 					}
 				});
 		address.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<BillingControllerModel, String>, ObservableValue<String>>() {
+				new Callback<TableColumn.CellDataFeatures<VendorBillingLocation, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<BillingControllerModel, String> param) {
+					public ObservableValue<String> call(CellDataFeatures<VendorBillingLocation, String> param) {
 						return new SimpleStringProperty(param.getValue().getAddress() + "");
 					}
 				});
 		city.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<BillingControllerModel, String>, ObservableValue<String>>() {
+				new Callback<TableColumn.CellDataFeatures<VendorBillingLocation, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<BillingControllerModel, String> param) {
+					public ObservableValue<String> call(CellDataFeatures<VendorBillingLocation, String> param) {
 						return new SimpleStringProperty(param.getValue().getCity() + "");
 					}
 				});
 		phone.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<BillingControllerModel, String>, ObservableValue<String>>() {
+				new Callback<TableColumn.CellDataFeatures<VendorBillingLocation, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<BillingControllerModel, String> param) {
+					public ObservableValue<String> call(CellDataFeatures<VendorBillingLocation, String> param) {
 						return new SimpleStringProperty(param.getValue().getPhone() + "");
 					}
 				});
 		contact.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<BillingControllerModel, String>, ObservableValue<String>>() {
+				new Callback<TableColumn.CellDataFeatures<VendorBillingLocation, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<BillingControllerModel, String> param) {
+					public ObservableValue<String> call(CellDataFeatures<VendorBillingLocation, String> param) {
 						return new SimpleStringProperty(param.getValue().getContact() + "");
 					}
 				});
 		zip.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<BillingControllerModel, String>, ObservableValue<String>>() {
+				new Callback<TableColumn.CellDataFeatures<VendorBillingLocation, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<BillingControllerModel, String> param) {
+					public ObservableValue<String> call(CellDataFeatures<VendorBillingLocation, String> param) {
 						return new SimpleStringProperty(param.getValue().getZip() + "");
 					}
 				});
 		fax.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<BillingControllerModel, String>, ObservableValue<String>>() {
+				new Callback<TableColumn.CellDataFeatures<VendorBillingLocation, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<BillingControllerModel, String> param) {
+					public ObservableValue<String> call(CellDataFeatures<VendorBillingLocation, String> param) {
 						return new SimpleStringProperty(param.getValue().getFax() + "");
 					}
 				});
@@ -602,38 +393,14 @@ public class VendorAddController extends Application implements Initializable {
 				});
 	}
 
-	public static int selectedTabValue = 0;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
-	/*	fetchBillingLocations();
-		fetchAdditionalContacts();
-		txtCompany.setText(company.getName());
-		txtAddress.setText(company.getAddress());
-		txtUnitNo.setText(company.getUnitNo());
-		txtCity.setText(company.getCity());
-		txtProvince.setText(company.getProvinceState());
-		txtZip.setText(company.getZip());
-		txtEmail.setText(company.getEmail());
-		txtWebsite.setText(company.getWebsite());
-		txtContact.setText(company.getContact());
-		txtPosition.setText(company.getPosition());
-		txtPhone.setText(company.getPhone());
-		txtExt.setText(company.getExt());
-		txtFax.setText(company.getFax());
-		txtPrefix.setText(company.getCompanyPrefix());
-		txtTollFree.setText(company.getTollfree());
-		txtCellular.setText(company.getCellular());
-		txtPager.setText(company.getPager());
-		txtAfterHours.setText(company.getAfterHours());
-		tabPane.getSelectionModel().select(selectedTabValue);*/
-
 	}
+	
 
-	int billingLocationCountMenu = 0;
-
-	/*@FXML
+	// Create ContextMenu
+	@FXML
 	public void handleMouseClick(MouseEvent arg0) {
 
 		// Create ContextMenu
@@ -647,29 +414,29 @@ public class VendorAddController extends Application implements Initializable {
 
 				add = 1;
 				selectedTabValue = 0;
-				company.setName(txtCompany.getText());
-				company.setAddress(txtAddress.getText());
-				company.setUnitNo(txtUnitNo.getText());
-				company.setCity(txtCity.getText());
-				company.setProvinceState(txtProvince.getText());
-				company.setZip(txtZip.getText());
-				company.setEmail(txtEmail.getText());
-				company.setWebsite(txtWebsite.getText());
-				company.setContact(txtContact.getText());
-				company.setPosition(txtPosition.getText());
-				company.setPhone(txtPhone.getText());
-				company.setExt(txtExt.getText());
-				company.setFax(txtFax.getText());
-				company.setCompanyPrefix(txtPrefix.getText());
-				company.setTollfree(txtTollFree.getText());
-				company.setCellular(txtCellular.getText());
-				company.setPager(txtPager.getText());
-				company.setAfterHours(txtAfterHours.getText());
+				vendor.setName(txtCompany.getText());
+				vendor.setAddress(txtAddress.getText());
+				vendor.setUnitNo(txtUnitNo.getText());
+				vendor.setCity(txtCity.getText());
+				vendor.setProvinceState(txtProvince.getText());
+				vendor.setZip(txtZip.getText());
+				vendor.setEmail(txtEmail.getText());
+				vendor.setWebsite(txtWebsite.getText());
+				vendor.setContact(txtContact.getText());
+				vendor.setPosition(txtPosition.getText());
+				vendor.setPhone(txtPhone.getText());
+				vendor.setExt(txtExt.getText());
+				vendor.setFax(txtFax.getText());
+				vendor.setVendorPrefix(txtPrefix.getText());
+				vendor.setTollfree(txtTollFree.getText());
+				vendor.setCellular(txtCellular.getText());
+				vendor.setPager(txtPager.getText());
+				vendor.setAfterHours(txtAfterHours.getText());
 
 				openAddBillingLocationScreen();
 
 				try {
-					closeAddCompanyScreen(btnSaveCompany);
+					closeAddVendorScreen(btnSaveVendor);
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -686,9 +453,9 @@ public class VendorAddController extends Application implements Initializable {
 				selectedTabValue = 0;
 				add = 0;
 				addEditIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
-				billingControllerModel = tableBillingLocations.getSelectionModel().getSelectedItem();
+				VendorBillingLocation = tableBillingLocations.getSelectionModel().getSelectedItem();
 				openAddBillingLocationScreen();
-				closeAddCompanyScreen(btnSaveCompany);
+				closeAddVendorScreen(btnSaveVendor);
 
 			}
 		});
@@ -715,7 +482,7 @@ public class VendorAddController extends Application implements Initializable {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				closeAddCompanyScreen(btnSaveCompany);
+				closeAddVendorScreen(btnSaveVendor);
 			}
 		});
 
@@ -728,15 +495,11 @@ public class VendorAddController extends Application implements Initializable {
 				@Override
 				public void handle(ContextMenuEvent event) {
 					contextMenu.show(tableBillingLocations, event.getScreenX(), event.getScreenY());
-
 				}
-
 			});
-
 		}
-
 	}
-*/
+
 	private void openAddBillingLocationScreen() {
 
 		try {
@@ -773,7 +536,7 @@ public class VendorAddController extends Application implements Initializable {
 	}
 
 	@FXML
-	private void btnSaveCompanyAction() {
+	private void btnSaveVendorAction() {
 
 //		boolean result = validateAddEquipmentScreen();
 //		if (result) {
@@ -785,7 +548,7 @@ public class VendorAddController extends Application implements Initializable {
 
 	@FXML
 	private void btnCancelVendorAction() {
-		VendorEditController.listOfBilling = new ArrayList<BillingControllerModel>();
+		VendorEditController.listOfBilling = new ArrayList<VendorBillingLocation>();
 		VendorEditController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
 		vendor = new Vendor();
 		closeAddVendorScreen(btnCancelVendor);
@@ -884,13 +647,13 @@ public class VendorAddController extends Application implements Initializable {
 			int sizeOfBilling = VendorEditController.listOfBilling.size();
 			for (int i = 0; i < sizeOfBilling; i++) {
 				VendorBillingLocation billingLocation = new VendorBillingLocation();
-				BillingControllerModel billingModel = VendorEditController.listOfBilling.get(i);
+				VendorBillingLocation billingModel = VendorEditController.listOfBilling.get(i);
 				billingLocation.setName(billingModel.getName());
 				billingLocation.setAddress(billingModel.getAddress());
 				billingLocation.setCity(billingModel.getCity());
 				billingLocation.setZip(billingModel.getZip());
 				// need to get Status
-				billingLocation.setStatus(1);
+				billingLocation.setStatus(1l);
 				billingLocation.setContact(billingModel.getContact());
 				billingLocation.setPosition(txtPosition.getText());
 				billingLocation.setEmail(txtEmail.getText());
@@ -934,13 +697,13 @@ public class VendorAddController extends Application implements Initializable {
 
 	@SuppressWarnings("unchecked")
 	private void fetchColumns() {
-		name = (TableColumn<BillingControllerModel, String>) tableBillingLocations.getColumns().get(0);
-		address = (TableColumn<BillingControllerModel, String>) tableBillingLocations.getColumns().get(1);
-		city = (TableColumn<BillingControllerModel, String>) tableBillingLocations.getColumns().get(2);
-		phone = (TableColumn<BillingControllerModel, String>) tableBillingLocations.getColumns().get(3);
-		contact = (TableColumn<BillingControllerModel, String>) tableBillingLocations.getColumns().get(4);
-		zip = (TableColumn<BillingControllerModel, String>) tableBillingLocations.getColumns().get(5);
-		fax = (TableColumn<BillingControllerModel, String>) tableBillingLocations.getColumns().get(6);
+		name = (TableColumn<VendorBillingLocation, String>) tableBillingLocations.getColumns().get(0);
+		address = (TableColumn<VendorBillingLocation, String>) tableBillingLocations.getColumns().get(1);
+		city = (TableColumn<VendorBillingLocation, String>) tableBillingLocations.getColumns().get(2);
+		phone = (TableColumn<VendorBillingLocation, String>) tableBillingLocations.getColumns().get(3);
+		contact = (TableColumn<VendorBillingLocation, String>) tableBillingLocations.getColumns().get(4);
+		zip = (TableColumn<VendorBillingLocation, String>) tableBillingLocations.getColumns().get(5);
+		fax = (TableColumn<VendorBillingLocation, String>) tableBillingLocations.getColumns().get(6);
 
 	}
 
@@ -986,6 +749,12 @@ public class VendorAddController extends Application implements Initializable {
 		txtWebsite.setText(c.getWebsite());
 		txtCellular.setText(c.getCellular());
 		txtPager.setText(c.getPager());
+	}
+
+	@Override
+	public void start(Stage arg0) throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

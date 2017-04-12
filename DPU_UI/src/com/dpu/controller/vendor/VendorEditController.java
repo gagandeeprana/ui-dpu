@@ -14,7 +14,7 @@ import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.controller.MainScreen;
 import com.dpu.model.AdditionalContact;
-import com.dpu.model.BillingControllerModel;
+import com.dpu.model.VendorBillingLocation;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
 import com.dpu.model.Vendor;
@@ -91,7 +91,7 @@ public class VendorEditController extends Application implements Initializable {
 	private TableColumn<AdditionalContact, String> status;
 
 	@FXML
-	private TableColumn<BillingControllerModel, String> address;
+	private TableColumn<VendorBillingLocation, String> address;
 
 	@FXML
 	private Button btnSaveVendor;
@@ -100,25 +100,25 @@ public class VendorEditController extends Application implements Initializable {
 	private Button btnCancelVendor;
 
 	@FXML
-	private TableColumn<BillingControllerModel, String> city;
+	private TableColumn<VendorBillingLocation, String> city;
 
 	@FXML
-	private TableColumn<BillingControllerModel, String> contact;
+	private TableColumn<VendorBillingLocation, String> contact;
 
 	@FXML
-	private TableColumn<BillingControllerModel, String> fax;
+	private TableColumn<VendorBillingLocation, String> fax;
 
 	@FXML
-	private TableColumn<BillingControllerModel, String> name;
+	private TableColumn<VendorBillingLocation, String> name;
 
 	@FXML
-	private TableColumn<BillingControllerModel, String> phone;
+	private TableColumn<VendorBillingLocation, String> phone;
 
 	@FXML
 	private TableView<AdditionalContact> tableAdditionalContact;
 
 	@FXML
-	public TableView<BillingControllerModel> tableBillingLocations;
+	public TableView<VendorBillingLocation> tableBillingLocations;
 
 	@FXML
 	public TextField txtAddress;
@@ -183,9 +183,9 @@ public class VendorEditController extends Application implements Initializable {
 	public static int editIndex = -1;
 	public static int addBillingLocation = 0;
 	public static int addAddtionalContact = 0;
-	public static BillingControllerModel billingControllerModel = new BillingControllerModel();
+	public static VendorBillingLocation VendorBillingLocation = new VendorBillingLocation();
 	public static AdditionalContact additionalContactModel = new AdditionalContact();
-	public static ArrayList<BillingControllerModel> listOfBilling = new ArrayList<BillingControllerModel>(); 
+	public static ArrayList<VendorBillingLocation> listOfBilling = new ArrayList<VendorBillingLocation>(); 
 	public static ArrayList<AdditionalContact> listOfAdditionalContact = new ArrayList<AdditionalContact>();
 
 	public static Vendor vendor = new Vendor();
@@ -302,7 +302,7 @@ public class VendorEditController extends Application implements Initializable {
 			int sizeOfBilling = listOfBilling.size();
 			for (int i = 0; i < sizeOfBilling; i++) {
 				VendorBillingLocation billingLocation = new VendorBillingLocation();
-				BillingControllerModel billingModel = listOfBilling.get(i);
+				VendorBillingLocation billingModel = listOfBilling.get(i);
 				if (billingModel.getBillingLocationId() != null)
 					billingLocation.setBillingLocationId(billingModel.getBillingLocationId());
 				billingLocation.setName(billingModel.getName());
@@ -310,7 +310,7 @@ public class VendorEditController extends Application implements Initializable {
 				billingLocation.setCity(billingModel.getCity());
 				billingLocation.setZip(billingModel.getZip());
 				// need to get Status
-				billingLocation.setStatus(1);
+				billingLocation.setStatus(1l);
 				billingLocation.setContact(billingModel.getContact());
 				billingLocation.setPosition(txtPosition.getText());
 				billingLocation.setEmail(txtEmail.getText());
@@ -376,7 +376,7 @@ public class VendorEditController extends Application implements Initializable {
 
 	@FXML
 	private void btnCancelVendorAction() {
-		listOfBilling = new ArrayList<BillingControllerModel>();
+		listOfBilling = new ArrayList<VendorBillingLocation>();
 		listOfAdditionalContact = new ArrayList<AdditionalContact>();
 		vendor = new Vendor();
 		closeAddVendorScreen(btnCancelVendor);
@@ -394,7 +394,7 @@ public class VendorEditController extends Application implements Initializable {
 		 * i=0;i<billingSize;i++){
 		 * 
 		 * if(listOfBilling.get(index).getBillingLocationId() != null){
-		 * BillingControllerModel bcm = listOfBilling.get(index);
+		 * VendorBillingLocation bcm = listOfBilling.get(index);
 		 * listOfBilling.remove(bcm); }else{ index++; } } }
 		 */
 		// remove from listOfAdditionalContact if available in db
@@ -413,7 +413,7 @@ public class VendorEditController extends Application implements Initializable {
 		 * }else{ index++; } } }
 		 */
 
-		// listOfBilling = new ArrayList<BillingControllerModel>();
+		// listOfBilling = new ArrayList<VendorBillingLocation>();
 		// listOfAdditionalContact = new ArrayList<AdditionalContact>();
 		addVendor();
 		closeAddVendorScreen(btnSaveVendor);
@@ -659,10 +659,10 @@ public class VendorEditController extends Application implements Initializable {
 				setValuesToCmpanyTextField();
 				addBillingLocation = 0;
 				editIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
-				billingControllerModel = tableBillingLocations.getSelectionModel().getSelectedItem();
+				VendorBillingLocation = tableBillingLocations.getSelectionModel().getSelectedItem();
 
-				if (billingControllerModel.getBillingLocationId() != null)
-					billingLocationIdPri = billingControllerModel.getBillingLocationId();
+				if (VendorBillingLocation.getBillingLocationId() != null)
+					billingLocationIdPri = VendorBillingLocation.getBillingLocationId();
 
 				openAddBillingLocationScreen();
 				closeAddCompanyScreen(btnSaveCompany);
@@ -781,7 +781,7 @@ public class VendorEditController extends Application implements Initializable {
 				try {
 
 					if (listOfBilling != null & !(listOfBilling.isEmpty())) {
-						ObservableList<BillingControllerModel> data = FXCollections.observableArrayList(listOfBilling);
+						ObservableList<VendorBillingLocation> data = FXCollections.observableArrayList(listOfBilling);
 						setColumnValues();
 						tableBillingLocations.setItems(data);
 						tableBillingLocations.setVisible(true);
@@ -899,42 +899,42 @@ public class VendorEditController extends Application implements Initializable {
 	private void setColumnValues() {
 
 		name.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<BillingControllerModel, String>, ObservableValue<String>>() {
+				new Callback<TableColumn.CellDataFeatures<VendorBillingLocation, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<BillingControllerModel, String> param) {
+					public ObservableValue<String> call(CellDataFeatures<VendorBillingLocation, String> param) {
 						return new SimpleStringProperty(param.getValue().getName() + "");
 					}
 				});
 		address.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<BillingControllerModel, String>, ObservableValue<String>>() {
+				new Callback<TableColumn.CellDataFeatures<VendorBillingLocation, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<BillingControllerModel, String> param) {
+					public ObservableValue<String> call(CellDataFeatures<VendorBillingLocation, String> param) {
 						return new SimpleStringProperty(param.getValue().getAddress() + "");
 					}
 				});
 		city.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<BillingControllerModel, String>, ObservableValue<String>>() {
+				new Callback<TableColumn.CellDataFeatures<VendorBillingLocation, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<BillingControllerModel, String> param) {
+					public ObservableValue<String> call(CellDataFeatures<VendorBillingLocation, String> param) {
 						return new SimpleStringProperty(param.getValue().getCity() + "");
 					}
 				});
 		phone.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<BillingControllerModel, String>, ObservableValue<String>>() {
+				new Callback<TableColumn.CellDataFeatures<VendorBillingLocation, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<BillingControllerModel, String> param) {
+					public ObservableValue<String> call(CellDataFeatures<VendorBillingLocation, String> param) {
 						return new SimpleStringProperty(param.getValue().getPhone() + "");
 					}
 				});
 		contact.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<BillingControllerModel, String>, ObservableValue<String>>() {
+				new Callback<TableColumn.CellDataFeatures<VendorBillingLocation, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<BillingControllerModel, String> param) {
+					public ObservableValue<String> call(CellDataFeatures<VendorBillingLocation, String> param) {
 						return new SimpleStringProperty(param.getValue().getContact() + "");
 					}
 				});
@@ -947,10 +947,10 @@ public class VendorEditController extends Application implements Initializable {
 					}
 				});
 		fax.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<BillingControllerModel, String>, ObservableValue<String>>() {
+				new Callback<TableColumn.CellDataFeatures<VendorBillingLocation, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<BillingControllerModel, String> param) {
+					public ObservableValue<String> call(CellDataFeatures<VendorBillingLocation, String> param) {
 						return new SimpleStringProperty(param.getValue().getFax() + "");
 					}
 				});

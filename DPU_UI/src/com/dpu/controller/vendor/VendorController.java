@@ -18,6 +18,7 @@ import com.dpu.model.AdditionalContact;
 import com.dpu.model.BillingControllerModel;
 import com.dpu.model.Driver;
 import com.dpu.model.Vendor;
+import com.dpu.model.VendorBillingLocation;
 import com.dpu.request.CompanyModel;
 import com.dpu.request.CompanyResponse;
 
@@ -161,7 +162,7 @@ public class VendorController extends Application implements Initializable {
 	@FXML
 	private void btnAddVendorAction() {
 		VendorEditController.selectedTabValue = 0;
-		VendorAddController.listOfBilling = new ArrayList<BillingControllerModel>();
+		VendorAddController.listOfBilling = new ArrayList<VendorBillingLocation>();
 		VendorAddController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
 		VendorAddController.vendor = new Vendor();
 		openAddVendorScreen();
@@ -172,7 +173,7 @@ public class VendorController extends Application implements Initializable {
 
 	@FXML
 	private void btnEditVendorAction() {
-		VendorEditController.listOfBilling = new ArrayList<BillingControllerModel>();
+		VendorEditController.listOfBilling = new ArrayList<VendorBillingLocation>();
 		VendorEditController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
 		VendorEditController.vendor = new Vendor();
 
@@ -202,8 +203,8 @@ public class VendorController extends Application implements Initializable {
 								int billingSize = c.getBillingLocations().size();
 								for (int i = 0; i < billingSize; i++) {
 
-									BillingControllerModel bcm = new BillingControllerModel();
-									bcm.setCompanyId(c.getVendorId());
+									VendorBillingLocation bcm = new VendorBillingLocation();
+//									bcm.set(c.getVendorId());
 									bcm.setBillingLocationId(c.getBillingLocations().get(i).getBillingLocationId());
 									bcm.setAddress(c.getBillingLocations().get(i).getAddress());
 									bcm.setCity(c.getBillingLocations().get(i).getCity());

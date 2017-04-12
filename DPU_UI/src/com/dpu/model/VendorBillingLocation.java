@@ -39,7 +39,7 @@ public class VendorBillingLocation {
     @JsonProperty("zip")
     private String zip;
     @JsonProperty("statusId")
-    private Integer status;
+    private Long status;
     @JsonProperty("contact")
     private String contact;
     @JsonProperty("position")
@@ -57,8 +57,24 @@ public class VendorBillingLocation {
     @JsonProperty("tollfree")
     private String tollfree;
     
+	public VendorBillingLocation() {
+		super();
+	}
 
-    @JsonProperty("billingLocationId")
+	public VendorBillingLocation(String name, String address, String city, String zip, String contact,
+			String phone, String fax, Long status) {
+		super();
+		this.name = name;
+		this.address = address;
+		this.city = city;
+		this.zip = zip;
+		this.status = status;
+		this.contact = contact;
+		this.phone = phone;
+		this.fax = fax;
+	}
+
+	@JsonProperty("billingLocationId")
     public Long getBillingLocationId() {
         return billingLocationId;
     }
@@ -108,17 +124,15 @@ public class VendorBillingLocation {
         this.zip = zip;
     }
 
-    @JsonProperty("statusId")
-    public Integer getStatus() {
-        return status;
-    }
+    public Long getStatus() {
+		return status;
+	}
 
-    @JsonProperty("statusId")
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
+	public void setStatus(Long status) {
+		this.status = status;
+	}
 
-    @JsonProperty("contact")
+	@JsonProperty("contact")
     public String getContact() {
         return contact;
     }
