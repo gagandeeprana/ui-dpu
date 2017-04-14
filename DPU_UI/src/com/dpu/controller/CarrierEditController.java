@@ -12,11 +12,11 @@ import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.dpu.client.GetAPIClient;
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.AddtionalCarrierContact;
 import com.dpu.model.CarrierModel;
-import com.dpu.request.CompanyModel;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -446,10 +446,33 @@ public class CarrierEditController extends Application implements Initializable 
 		loginStage.close();
 	}
 
+	ObjectMapper mapper = new ObjectMapper();
+
+	private void fetchAdditionalContacts() {
+
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					String response = GetAPIClient.callGetAPI(
+							Iconstants.URL_SERVER + Iconstants.URL_CARRIER_CONTACTS + "/" + carrierModel.getCarrierId(),
+							null);
+					List addtionalCarrierContact = mapper.readValue(response, List.class);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+
+				}
+			}
+		});
+	}
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		System.out.println("::::initialize:::::");
-		tabPane.getSelectionModel().select(1);
+		// tabPane.getSelectionModel().select(1);
 		fetchAdditionalCarrierContacts();
 		txtAddress.setText(carrierModel.getAddress());
 		txtCarrier.setText(carrierModel.getName());
