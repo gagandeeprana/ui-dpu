@@ -174,7 +174,7 @@ public class VendorController extends Application implements Initializable {
 	@FXML
 	private void btnEditVendorAction() {
 		VendorEditController.listOfBilling = new ArrayList<VendorBillingLocation>();
-		VendorEditController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
+//		VendorEditController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
 		VendorEditController.vendor = new Vendor();
 
 		VendorEditController.selectedTabValue = 0;
@@ -217,7 +217,7 @@ public class VendorController extends Application implements Initializable {
 								}
 							}
 
-							if (c.getAdditionalContacts() != null) {
+							/*if (c.getAdditionalContacts() != null) {
 								int addtionalContactSize = c.getAdditionalContacts().size();
 								for (int j = 0; j < addtionalContactSize; j++) {
 									AdditionalContact additionalContact = new AdditionalContact();
@@ -226,7 +226,7 @@ public class VendorController extends Application implements Initializable {
 									additionalContact.setAdditionalContactId(
 											c.getAdditionalContacts().get(j).getAdditionalContactId());
 									additionalContact
-											.setCustomerName(c.getAdditionalContacts().get(j).getCustomerName());
+											.setCustomerName(c.getAdditionalContacts().get(j).getVendorName());
 									additionalContact.setCellular(c.getAdditionalContacts().get(j).getCellular());
 									additionalContact.setEmail(c.getAdditionalContacts().get(j).getEmail());
 									additionalContact.setExt(c.getAdditionalContacts().get(j).getExt());
@@ -238,7 +238,7 @@ public class VendorController extends Application implements Initializable {
 
 									VendorEditController.listOfAdditionalContact.add(additionalContact);
 								}
-							}
+							}*/
 
 							// -----------------------------------------------------
 							VendorEditController vendorEditController = (VendorEditController) openEditVendorScreen();

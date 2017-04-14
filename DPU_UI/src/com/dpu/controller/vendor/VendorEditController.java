@@ -9,17 +9,16 @@ import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-import com.dpu.client.DeleteAPIClient;
+import com.dpu.client.GetAPIClient;
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.controller.MainScreen;
 import com.dpu.model.AdditionalContact;
-import com.dpu.model.VendorBillingLocation;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
 import com.dpu.model.Vendor;
+import com.dpu.model.VendorAdditionalContacts;
 import com.dpu.model.VendorBillingLocation;
-import com.dpu.request.CompanyModel;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -27,22 +26,17 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
@@ -238,9 +232,9 @@ public class VendorEditController extends Application implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		fetchBillingLocations();
-		fetchAdditionalContacts();
+//		fetchAdditionalContacts();
 
-		txtCompany.setText(vendor.getName());
+		/*txtCompany.setText(vendor.getName());
 		txtAddress.setText(vendor.getAddress());
 		txtUnitNo.setText(vendor.getUnitNo());
 		txtCity.setText(vendor.getCity());
@@ -258,7 +252,7 @@ public class VendorEditController extends Application implements Initializable {
 		txtCellular.setText(vendor.getCellular());
 		txtPager.setText(vendor.getPager());
 		txtAfterHours.setText(vendor.getAfterHours());
-		tabPane.getSelectionModel().select(selectedTabValue);
+		tabPane.getSelectionModel().select(selectedTabValue);*/
 
 	}
 
@@ -274,7 +268,7 @@ public class VendorEditController extends Application implements Initializable {
 	private Vendor setVendorValue() {
 
 		List<VendorBillingLocation> billingLocations = new ArrayList<VendorBillingLocation>();
-		List<AdditionalContact> additionalContacts = new ArrayList<AdditionalContact>();
+		List<VendorAdditionalContacts> additionalContacts = new ArrayList<VendorAdditionalContacts>();
 
 		// company.setCompanyId(companyId.toString());
 		vendor.setName(txtCompany.getText());
@@ -331,18 +325,18 @@ public class VendorEditController extends Application implements Initializable {
 			for (int i = 0; i < sizeOfAdditionalContact; i++) {
 
 				AdditionalContact additionalContactModel = listOfAdditionalContact.get(i);
-				AdditionalContact additionalContact = new AdditionalContact();
+				VendorAdditionalContacts additionalContact = new VendorAdditionalContacts();
 
 				if (additionalContactModel.getAdditionalContactId() != null)
 					additionalContact.setAdditionalContactId(additionalContactModel.getAdditionalContactId());
-				additionalContact.setCustomerName(additionalContactModel.getCustomerName());
+				additionalContact.setVendorName(additionalContactModel.getCustomerName());
 				additionalContact.setPosition(additionalContactModel.getPosition());
 				additionalContact.setPhone(additionalContactModel.getPhone());
 				additionalContact.setExt(additionalContactModel.getExt());
 				additionalContact.setFax(additionalContactModel.getFax());
 				additionalContact.setPrefix(additionalContactModel.getPrefix());
 				additionalContact.setCellular(additionalContactModel.getCellular());
-				additionalContact.setStatus(1l);
+				additionalContact.setStatusId(1l);
 				additionalContact.setEmail(additionalContactModel.getEmail());
 				additionalContacts.add(additionalContact);
 			}
@@ -421,11 +415,11 @@ public class VendorEditController extends Application implements Initializable {
 
 	int additionalContactMenuCount = 0;
 
-	/*@FXML
+	@FXML
 	void handleAddContMouseClick(MouseEvent event) {
 
 		// Create ContextMenu
-		ContextMenu contextMenu = new ContextMenu();
+		/*ContextMenu contextMenu = new ContextMenu();
 
 		MenuItem item1 = new MenuItem("ADD");
 		item1.setOnAction(new EventHandler<ActionEvent>() {
@@ -560,8 +554,57 @@ public class VendorEditController extends Application implements Initializable {
 			});
 
 		}
+	*/
+	}
+	
+	@FXML
+	private void additionalContactsSelectionChanged() {
+		Platform.runLater(new Runnable() {
 
-	}*/
+			@Override
+			public void run() {
+				try {
+					ObjectMapper mapper = new ObjectMapper();
+					String response = GetAPIClient.callGetAPI(
+							Iconstants.URL_SERVER + Iconstants.URL_VENDOR_API + "/" + vendor.getVendorId() + "/additionalContacts",
+							null);
+
+					if (response != null && response.length() > 0) {
+						Vendor c = mapper.readValue(response, Vendor.class);
+
+						// ----------------------------------------------
+
+						if (c.getAdditionalContacts() != null) {
+							int addtionalContactSize = c.getAdditionalContacts().size();
+							for (int j = 0; j < addtionalContactSize; j++) {
+								AdditionalContact additionalContact = new AdditionalContact();
+
+								additionalContact.setCompanyId(c.getVendorId());
+								additionalContact.setAdditionalContactId(
+										c.getAdditionalContacts().get(j).getAdditionalContactId());
+								additionalContact
+										.setCustomerName(c.getAdditionalContacts().get(j).getVendorName());
+								additionalContact.setCellular(c.getAdditionalContacts().get(j).getCellular());
+								additionalContact.setEmail(c.getAdditionalContacts().get(j).getEmail());
+								additionalContact.setExt(c.getAdditionalContacts().get(j).getExt());
+								additionalContact.setFax(c.getAdditionalContacts().get(j).getFax());
+								additionalContact.setPrefix(c.getAdditionalContacts().get(j).getCellular());
+								additionalContact.setPhone(c.getAdditionalContacts().get(j).getPhone());
+								additionalContact.setPosition(c.getAdditionalContacts().get(j).getPosition());
+								additionalContact.setStatusId("Active");
+
+								VendorEditController.listOfAdditionalContact.add(additionalContact);
+							}
+						}
+
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+				}
+			}
+		});
+	}
 
 	private void openAddAdditionalContactScreen() {
 		try {
@@ -623,11 +666,11 @@ public class VendorEditController extends Application implements Initializable {
 	public static Long billingLocationIdPri = 0l;
 	public static Long additionalContactIdPri = 0l;
 
-	/*@FXML
+	@FXML
 	public void handleMouseClick(MouseEvent arg0) {
 
 		// Create ContextMenu
-		ContextMenu contextMenu = new ContextMenu();
+	/*	ContextMenu contextMenu = new ContextMenu();
 
 		MenuItem item1 = new MenuItem("ADD");
 		item1.setOnAction(new EventHandler<ActionEvent>() {
@@ -749,8 +792,8 @@ public class VendorEditController extends Application implements Initializable {
 				}
 
 			});
-		}
-	}*/
+		}*/
+	}
 
 	private void openAddBillingLocationScreen() {
 
