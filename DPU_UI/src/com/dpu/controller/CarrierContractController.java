@@ -338,13 +338,13 @@ public class CarrierContractController extends Application implements Initializa
 				@Override
 				public void run() {
 					try {
+						System.out.println("id   " + carrierContractModel.getContractNoId());
 						ObjectMapper mapper = new ObjectMapper();
 						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER
 								+ Iconstants.URL_CARRIER_CONTRACT_API + "/" + carrierContractModel.getContractNoId(),
 								null);
 						if (response != null && response.length() > 0) {
 							CarrierContractModel c = mapper.readValue(response, CarrierContractModel.class);
-
 							CarrierContractEditController carrierContractEditController = (CarrierContractEditController) openEditCarrierContractScreen();
 							carrierContractEditController.initData(c);
 						}

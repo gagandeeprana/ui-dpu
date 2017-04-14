@@ -86,7 +86,7 @@
 				<Font size="14.0" />
 			</font>
 		</Label>
-		<TabPane fx:id="tabPane" layoutX="6.0" layoutY="245.0" prefHeight="338.0" prefWidth="669.0" tabClosingPolicy="UNAVAILABLE">
+		<TabPane fx:id="tabPane" layoutX="6.0" layoutY="245.0"  prefHeight="338.0" prefWidth="669.0" tabClosingPolicy="UNAVAILABLE">
 			<tabs>
 				<Tab text="Insurance">
 					<content>

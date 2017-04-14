@@ -12,7 +12,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.model.AdditionalContact;
 import com.dpu.model.AddtionalCarrierContact;
 import com.dpu.model.CarrierModel;
 import com.dpu.model.Failed;
