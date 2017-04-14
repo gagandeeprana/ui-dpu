@@ -8,6 +8,7 @@ import com.dpu.controller.database.CustomBrokerController;
 import com.dpu.controller.database.HandlingController;
 import com.dpu.controller.order.OrderController;
 import com.dpu.controller.planner.PlannerController;
+import com.dpu.controller.vendor.VendorController;
 
 import javafx.application.Application;
 import javafx.collections.ObservableList;
@@ -63,6 +64,8 @@ public class MainScreen extends Application implements Initializable {
 	public static OrderController orderController;
 	public static PlannerController plannerController;
 	public static CarrierContractController carrierContractController;
+	
+	public static VendorController vendorController;
 
 	@FXML
 	private void lblCarrierContractAction() {
@@ -127,6 +130,10 @@ public class MainScreen extends Application implements Initializable {
 		companyController = (CompanyController) showPanel(Iconstants.COMPANY_BASE_PACKAGE,
 				Iconstants.XML_COMPANY_SCREEN);
 	}
+	
+	@FXML
+	private void lblVendorInvoiceAction() {
+	}
 
 	@FXML
 	private void lblDAction() {
@@ -167,6 +174,12 @@ public class MainScreen extends Application implements Initializable {
 	private void lblCustomBrokerAction() {
 		customBrokerController = (CustomBrokerController) showPanel(Iconstants.CUSTOM_BROKER_BASE_PACKAGE,
 				Iconstants.XML_CUSTOM_BROKER_SCREEN);
+	}
+	
+	@FXML
+	private void lblVendorAction() {
+		vendorController = (VendorController) showPanel(Iconstants.VENDOR_BASE_PACKAGE,
+				Iconstants.XML_VENDOR_SCREEN);
 	}
 
 	@Override

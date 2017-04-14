@@ -27,8 +27,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.layout.Border;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -66,7 +70,85 @@ public class ServiceAddController<T> extends Application implements Initializabl
 		loginStage.close();
 	}
 
+	@FXML
+	Label lblService, lblTextField, lblAssociationWith, lblStatus;
+	
+	@FXML
+	private void serviceNameKeyPressed() {
+		String name = txtService.getText();
+		boolean result = validate.validateEmptyness(name);
+		if(result) {
+			lblService.setText("");
+			txtService.setStyle("-fx-focus-color: skyblue;");
+			lblService.setVisible(false);
+		} else {
+			txtService.setStyle("-fx-focus-color: red;");
+			txtService.requestFocus();
+			lblService.setVisible(true);
+			lblService.setText("Service Name is Mandatory");
+			lblService.setTextFill(Color.RED);
+		}
+	}
+	
+	@FXML
+	private void ddlTextFieldAction() {
+		String textField = ddlTextField.getSelectionModel().getSelectedItem();
+		boolean result = validate.validateEmptyness(textField);
+		if (result) {
+			lblTextField.setText("");
+			ddlTextField.setStyle("-fx-focus-color: skyblue;");
+			lblTextField.setVisible(false);
+		} else {
+//			ValidationController.str = validsteFields();
+//			openValidationScreen();
+//			ddlTextField.setStyle("-fx-focus-color: red;");
+			ddlTextField.setStyle("-fx-border-color: red;");
+			lblTextField.setVisible(true);
+			lblTextField.setText("TextField is Mandatory");
+			lblTextField.setTextFill(Color.RED);
+		}
+	}
+	
+	@FXML
+	private void ddlAssociationWithAction() {
+		String association = ddlAssociationWith.getSelectionModel().getSelectedItem();
+		boolean result = validate.validateEmptyness(association);
+		if (result) {
+			lblAssociationWith.setText("");
+			ddlAssociationWith.setStyle("-fx-focus-color: skyblue;");
+			lblAssociationWith.setVisible(false);
+		} else {
+//			ValidationController.str = validsteFields();
+//			openValidationScreen();
+//			ddlTextField.setStyle("-fx-focus-color: red;");
+			ddlAssociationWith.setStyle("-fx-border-color: red;");
+			lblAssociationWith.setVisible(true);
+			lblAssociationWith.setText("AssociationWith is Mandatory");
+			lblAssociationWith.setTextFill(Color.RED);
+		}
+	}
+	
+	@FXML
+	private void ddlStatusAction() {
+		String status = ddlStatus.getSelectionModel().getSelectedItem();
+		boolean result = validate.validateEmptyness(status);
+		if (result) {
+			lblStatus.setText("");
+			ddlStatus.setStyle("-fx-focus-color: skyblue;");
+			lblStatus.setVisible(false);
+		} else {
+//			ValidationController.str = validsteFields();
+//			openValidationScreen();
+//			ddlTextField.setStyle("-fx-focus-color: red;");
+			ddlStatus.setStyle("-fx-border-color: red;");
+			lblStatus.setVisible(true);
+			lblStatus.setText("Status is Mandatory");
+			lblStatus.setTextFill(Color.RED);
+		}
+	}
+	
 	private boolean validateAddServiceScreen() {
+		boolean response = true;
 		String name = txtService.getText();
 		String textField = ddlTextField.getSelectionModel().getSelectedItem();
 		String association = ddlAssociationWith.getSelectionModel().getSelectedItem();
@@ -74,45 +156,62 @@ public class ServiceAddController<T> extends Application implements Initializabl
 		boolean result = validate.validateEmptyness(name);
 
 		if (!result) {
-			ValidationController.str = validsteFields();
-			openValidationScreen();
-			txtService.setStyle("-fx-focus-color: red;");
-			txtService.requestFocus();
-			return result;
-		}
-		result = validate.validateLength(name, 5, 25);
-		if (!result) {
-			openValidationScreen();
-			txtService.setStyle("-fx-focus-color: red;");
-			txtService.requestFocus();
+			
+			response = false;
+//			ValidationController.str = validsteFields();
+//			openValidationScreen();
+//			txtService.setStyle("-fx-focus-color: red;");
+			txtService.setStyle("-fx-text-box-border: red;");
+			lblService.setVisible(true);
+			lblService.setText("Service Name is Mandatory");
+			lblService.setTextFill(Color.RED);
+			
+		} else if (!validate.validateLength(name, 5, 25)) {
+			
+			response = false;
+//			openValidationScreen();
+//			txtService.requestFocus();
+//			txtService.setStyle("-fx-focus-color: red;");
+			txtService.setStyle("-fx-text-box-border: red;");
+			lblService.setVisible(true);
+			lblService.setText("Min. length 5 and Max. length 25");
+			lblService.setTextFill(Color.RED);
 			return result;
 		}
 		result = validate.validateEmptyness(textField);
 		if (!result) {
-			ValidationController.str = validsteFields();
-			openValidationScreen();
-			ddlTextField.setStyle("-fx-focus-color: red;");
-			txtService.setStyle("-fx-focus-color: red;");
-			ddlTextField.requestFocus();
-			return result;
+//			ValidationController.str = validsteFields();
+//			openValidationScreen();
+			response = false;
+//			ddlTextField.setStyle("-fx-focus-color: red;");
+			ddlTextField.setStyle("-fx-border-color: red;");
+			lblTextField.setVisible(true);
+			lblTextField.setText("TextField is Mandatory");
+			lblTextField.setTextFill(Color.RED);
 		}
 		result = validate.validateEmptyness(association);
 		if (!result) {
-			ValidationController.str = validsteFields();
-			openValidationScreen();
-			ddlAssociationWith.setStyle("-fx-focus-color: red;");
-			ddlAssociationWith.requestFocus();
-			return result;
+//			ValidationController.str = validsteFields();
+//			openValidationScreen();
+			response = false;
+//			ddlAssociationWith.setStyle("-fx-focus-color: red;");
+			ddlAssociationWith.setStyle("-fx-border-color: red;");
+			lblAssociationWith.setVisible(true);
+			lblAssociationWith.setText("AssociationWith is Mandatory");
+			lblAssociationWith.setTextFill(Color.RED);
 		}
 		result = validate.validateEmptyness(status);
 		if (!result) {
-			ValidationController.str = validsteFields();
-			openValidationScreen();
-			ddlStatus.setStyle("-fx-focus-color: red;");
-			ddlStatus.requestFocus();
-			return result;
+			response = false;
+//			ValidationController.str = validsteFields();
+//			openValidationScreen();
+//			ddlStatus.setStyle("-fx-focus-color: red;");
+			ddlStatus.setStyle("-fx-border-color: red;");
+			lblStatus.setVisible(true);
+			lblStatus.setText("Status is Mandatory");
+			lblStatus.setTextFill(Color.RED);
 		}
-		return result;
+		return response;
 	}
 
 	public StringBuffer validsteFields() {
