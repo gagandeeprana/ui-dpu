@@ -102,7 +102,7 @@ public class VendorBillingAddController implements Initializable {
 	
 	@FXML
 	void btnCancelBillingLocationAction(ActionEvent event) {
-		try {
+	/*	try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
 					.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_ADD_SCREEN));
 			Parent root = (Parent) fxmlLoader.load();
@@ -114,7 +114,7 @@ public class VendorBillingAddController implements Initializable {
 			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 		closeAddBillingScreen(btnCancelBillingLocation);
 	}
 	

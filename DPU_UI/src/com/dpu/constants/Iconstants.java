@@ -145,5 +145,9 @@ public class Iconstants {
 	public static final String XML_VENDOR_ADD_SCREEN = "AddVendor.fxml";
 	public static final String XML_VENDOR_EDIT_SCREEN = "EditVendor.fxml";
 	public static final String XML_VENDOR_SCREEN = "VendorListing.fxml";
+	public static final String XML_VENDOR_BILLING_LOCATION_ADD_SCREEN = "AddVendorBillingLocation.fxml";
+	public static final String XML_VENDOR_ADDITIONAL_CONTACT_ADD_SCREEN = "AddVendorAdditionalContact.fxml";
+	public static final String XML_VENDOR_BILLING_LOCATION_EDIT_SCREEN = "EditVendorBillingLocation.fxml";
+	public static final String XML_VENDOR_ADDITIONAL_CONTACT_EDIT_SCREEN = "EditVendorAdditionalContact.fxml";
 
 }

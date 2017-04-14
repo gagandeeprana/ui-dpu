@@ -20,6 +20,7 @@ import com.dpu.model.Success;
 import com.dpu.model.Vendor;
 import com.dpu.model.VendorBillingLocation;
 import com.dpu.request.CompanyModel;
+import com.dpu.util.RightMenu;
 import com.dpu.util.Validate;
 
 import javafx.application.Application;
@@ -94,7 +95,6 @@ public class VendorAddController extends Application implements Initializable {
 	public static ArrayList<AdditionalContact> listOfAdditionalContact = new ArrayList<AdditionalContact>();
 	public static Vendor vendor = new Vendor();
 	int additionalContactCountMenu = 0;
-	public int tblBillingMenuCount = 0;
 	public static int selectedTabValue = 0;
 	ContextMenu contextMenu = new ContextMenu();
 	int billingLocationCountMenu = 0;
@@ -163,14 +163,14 @@ public class VendorAddController extends Application implements Initializable {
 		return result;
 	}
 	
-	
-	
 	@FXML
-	public void handleAddContMouseClick(MouseEvent arg0) {
+	public void billingLocationMouseClick(MouseEvent arg0) {
 		me = arg0;
 		contextMenu = new ContextMenu();
 		MenuItem add = new MenuItem("Add");
+		rightMenu.menuAdd(add, Iconstants.VENDOR_BASE_PACKAGE, Iconstants.XML_VENDOR_BILLING_LOCATION_ADD_SCREEN, "Add New Billing Location");
 		MenuItem edit = new MenuItem("Edit");
+		rightMenu.menuEdit(edit, Iconstants.VENDOR_BASE_PACKAGE, Iconstants.XML_VENDOR_BILLING_LOCATION_EDIT_SCREEN, "Edit Billing Location");
 		MenuItem delete = new MenuItem("Delete");
 		MenuItem duplicate = new MenuItem("Duplicate");
 		MenuItem personalize = new MenuItem("Personalize");
@@ -179,32 +179,58 @@ public class VendorAddController extends Application implements Initializable {
 		MenuItem clearAllFilters = new MenuItem("Clear All Filters");
 
 		// Add MenuItem to ContextMenu
-		contextMenu.getItems().addAll(add, edit, delete, duplicate, personalize, filterBy, filterByExclude,
-				clearAllFilters);
-		if (tblBillingMenuCount == 0) {
-			tblBillingMenuCount++;
+		contextMenu.getItems().addAll(add, edit, delete, duplicate, personalize, filterBy, filterByExclude, clearAllFilters);
 			// When user right-click on Table
-			tableBillingLocations.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		tableBillingLocations.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
-				@Override
-				public void handle(MouseEvent mouseEvent) {
+			@Override
+			public void handle(MouseEvent mouseEvent) {
 
-					if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
-						if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.SECONDARY)) {
-							contextMenu.show(tableBillingLocations, mouseEvent.getScreenX(), mouseEvent.getScreenY());
-							//textfield.setVisible(false);
-							// contextMenu1 = new ContextMenu();
-							// contextMenu1.hide();
-						} else {
-							contextMenu.hide();
-						}
+				if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
+					if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+						contextMenu.show(tableBillingLocations, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+					} else {
+						contextMenu.hide();
 					}
 				}
+			}
+		});
+	}
+	
+	RightMenu rightMenu = new RightMenu();
+	
+	@FXML
+	public void additionalContactMouseClick(MouseEvent arg0) {
+		me = arg0;
+		contextMenu = new ContextMenu();
+		MenuItem add = new MenuItem("Add");
+		rightMenu.menuAdd(add, Iconstants.VENDOR_BASE_PACKAGE, Iconstants.XML_VENDOR_ADDITIONAL_CONTACT_ADD_SCREEN, "Add New Additional Contact");
+		MenuItem edit = new MenuItem("Edit");
+		rightMenu.menuEdit(edit, Iconstants.VENDOR_BASE_PACKAGE, Iconstants.XML_VENDOR_ADDITIONAL_CONTACT_EDIT_SCREEN, "Edit Additional Contact");
+		MenuItem delete = new MenuItem("Delete");
+		MenuItem duplicate = new MenuItem("Duplicate");
+		MenuItem personalize = new MenuItem("Personalize");
+		MenuItem filterBy = new MenuItem("Filter By");
+		MenuItem filterByExclude = new MenuItem("Filter By Exclude");
+		MenuItem clearAllFilters = new MenuItem("Clear All Filters");
 
-			});
+		// Add MenuItem to ContextMenu
+		contextMenu.getItems().addAll(add, edit, delete, duplicate, personalize, filterBy, filterByExclude, clearAllFilters);
+			// When user right-click on Table
+		tableAdditionalContact.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
-		}
+			@Override
+			public void handle(MouseEvent mouseEvent) {
 
+				if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
+					if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+						contextMenu.show(tableAdditionalContact, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+					} else {
+						contextMenu.hide();
+					}
+				}
+			}
+		});
 	}
 	
 	public void fetchBillingLocations() {
@@ -403,7 +429,7 @@ public class VendorAddController extends Application implements Initializable {
 	@FXML
 	public void handleMouseClick(MouseEvent arg0) {
 
-		// Create ContextMenu
+	/*	// Create ContextMenu
 		ContextMenu contextMenu = new ContextMenu();
 
 		MenuItem item1 = new MenuItem("ADD");
@@ -497,7 +523,7 @@ public class VendorAddController extends Application implements Initializable {
 					contextMenu.show(tableBillingLocations, event.getScreenX(), event.getScreenY());
 				}
 			});
-		}
+		}*/
 	}
 
 	private void openAddBillingLocationScreen() {
