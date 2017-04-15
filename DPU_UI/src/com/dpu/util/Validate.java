@@ -1,5 +1,9 @@
 package com.dpu.util;
 
+import javafx.event.EventHandler;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
+
 public class Validate {
 
 	public boolean validateLength(String str, int minLength, int maxLength) {
@@ -12,11 +16,13 @@ public class Validate {
 	}
 
 	public boolean validateEmptyness(String str) {
-		if (str != null && str.length() > 0) {
+		if (str != null && str.trim().length() > 0) {
 			return true;
 		}
 		return false;
 	}
+
+ 
 
 	public boolean isNumeric(String str) {
 		for (char c : str.toCharArray()) {
@@ -51,5 +57,44 @@ public class Validate {
 			}
 		}
 		return true;
+	}
+
+	// Numeric Validation Limit the characters to maxLengh AND to ONLY DigitS
+	public static EventHandler<KeyEvent> numeric_Validation(final Integer max_Lengh) {
+		return new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent e) {
+				TextField txt_TextField = (TextField) e.getSource();
+				if (txt_TextField.getText().length() >= max_Lengh) {
+					e.consume();
+				}
+				if (e.getCharacter().matches("[0-9.]")) {
+					if (txt_TextField.getText().contains(".") && e.getCharacter().matches("[.]")) {
+						e.consume();
+					} else if (txt_TextField.getText().length() == 0 && e.getCharacter().matches("[.]")) {
+						e.consume();
+					}
+				} else {
+					e.consume();
+				}
+			}
+		};
+	}
+
+	// Letters Validation Limit the characters to maxLengh AND to ONLY Letters
+	public static EventHandler<KeyEvent> letter_Validation(final Integer max_Lengh) {
+		return new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent e) {
+				TextField txt_TextField = (TextField) e.getSource();
+				if (txt_TextField.getText().length() >= max_Lengh) {
+					e.consume();
+				}
+				if (e.getCharacter().matches("[A-Za-z]")) {
+				} else {
+					e.consume();
+				}
+			}
+		};
 	}
 }
