@@ -849,10 +849,7 @@ public class CompanyAddController extends Application implements Initializable {
 		}
 
 	}
-
-	/*
-	 * public static void main(String[] args) { launch(args); }
-	 */
+ 
 
 	// new added
 	public void fetchBillingLocations() {
@@ -1383,8 +1380,7 @@ public class CompanyAddController extends Application implements Initializable {
 	}
 
 	public void initData(CompanyModel c) {
-		// fetchBillingLocations();
-		// fetchAdditionalContacts();
+		 
 		txtCompany.setText(c.getName());
 		txtContact.setText(c.getContact());
 		txtAddress.setText(c.getAddress());
