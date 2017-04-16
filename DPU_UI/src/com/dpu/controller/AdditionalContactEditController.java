@@ -183,14 +183,12 @@ public class AdditionalContactEditController implements Initializable {
 				txtEmail.setText(CompanyEditController.additionalContactModel.getEmail());
 				txtPager.setText(CompanyEditController.additionalContactModel.getPrefix());
 				txtPhone.setText(CompanyEditController.additionalContactModel.getPhone());
-				//ddlStatus.getSelectionModel().getSelectedItem();
+				// ddlStatus.getSelectionModel().getSelectedItem();
 
 			}
 		}
 
 	}
-
-	// -------------------------------------------------------------------------------------------------
 
 	@FXML
 	Label lblAdditionalCOntact, lblPosition, lblPhone, lblFax, lblCellular, lblEmail, lblExt, lblPager, lblStatus;
