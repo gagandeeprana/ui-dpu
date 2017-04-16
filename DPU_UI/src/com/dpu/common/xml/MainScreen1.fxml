@@ -27,7 +27,10 @@
                               <Image url="com/dpu/common/xml/database-image.png" />
                            </image>
                         </ImageView>
-                     </graphic></Label>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="Datamaintenance" />
+                     </tooltip></Label>
                </graphic>
                </Menu>
             <Menu mnemonicParsing="false">
@@ -40,6 +43,9 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <tooltip>
+                        <Tooltip text="Order Entry" />
+                     </tooltip>
                   </Label>
                </graphic>
             </Menu>
@@ -53,6 +59,9 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <tooltip>
+                        <Tooltip text="Planner" />
+                     </tooltip>
                   </Label>
                </graphic>
             </Menu>
@@ -66,6 +75,9 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <tooltip>
+                        <Tooltip text="Vendor Management" />
+                     </tooltip>
                   </Label>
                </graphic>
             </Menu>
@@ -79,6 +91,9 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <tooltip>
+                        <Tooltip text="Vendor Invoice" />
+                     </tooltip>
                   </Label>
                </graphic>
             </Menu>

@@ -206,7 +206,7 @@ public class VendorAddController extends Application implements Initializable {
 	RightMenu rightMenu = new RightMenu();
 	
 	@FXML
-	private void txtVendorAction() {
+	private void vendorNameKeyPressed() {
 		String name = txtCompany.getText();
 		boolean result = validate.validateEmptyness(name);
 		if (result) {

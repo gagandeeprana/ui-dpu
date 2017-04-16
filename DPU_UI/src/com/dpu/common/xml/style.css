@@ -16,4 +16,7 @@
 #lblOutsideCarrier:hover{
 	-fx-text-fill:"#FFFFFF";
 }
+#lblCarrierContract:hover{
+	-fx-text-fill:"#FFFFFF";
+}
 
