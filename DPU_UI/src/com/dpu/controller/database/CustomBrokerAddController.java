@@ -56,7 +56,8 @@ public class CustomBrokerAddController<T> extends Application implements Initial
 	Validate validate = new Validate();
 	
 	@FXML
-	Label lblCustomBrokerName, lblContactNamePAPS;
+	Label lblCustomBrokerName, lblContactNamePAPS, lblOperationPAPS, lbl24HoursPAPS, lblStatusPAPS,
+	lblContactNamePARS, lblOperationPARS, lbl24HoursPARS, lblStatusPARS;
 	
 	@FXML
 	private void btnSaveCustomBrokerAction() {
@@ -72,7 +73,7 @@ public class CustomBrokerAddController<T> extends Application implements Initial
 		String name = txtCustomerBrokerName.getText();
 		boolean result = validate.validateEmptyness(name);
 
-		if (!result) {
+		if (!validate.validateEmptyness(name)) {
 			
 			response = false;
 			txtCustomerBrokerName.setStyle("-fx-text-box-border: red;");
@@ -80,7 +81,7 @@ public class CustomBrokerAddController<T> extends Application implements Initial
 			lblCustomBrokerName.setText("CustomBroker Name is Mandatory");
 			lblCustomBrokerName.setTextFill(Color.RED);
 			
-		} else if (!validate.validateLength(name, 5, 25)) {
+		} else if(!validate.validateLength(name, 5, 25)){
 			
 			response = false;
 			txtCustomerBrokerName.setStyle("-fx-text-box-border: red;");
@@ -88,6 +89,18 @@ public class CustomBrokerAddController<T> extends Application implements Initial
 			lblCustomBrokerName.setText("Min. length 5 and Max. length 25");
 			lblCustomBrokerName.setTextFill(Color.RED);
 		}
+		
+		String type = ddlType.getSelectionModel().getSelectedItem();
+		result = validate.validateEmptyness(type);
+		if (!result) {
+			
+			response = false;
+			ddlType.setStyle("-fx-border-color: red;");
+			lblType.setVisible(true);
+			lblType.setText("Choose any type");
+			lblType.setTextFill(Color.RED);
+			
+		} 
 		if(validatePAPS) {
 			String contactNamePAPS = txtContactNamePAPS.getText();
 			result = validate.validateEmptyness(contactNamePAPS);
@@ -102,10 +115,103 @@ public class CustomBrokerAddController<T> extends Application implements Initial
 			} else if (!validate.validateLength(name, 5, 25)) {
 				
 				response = false;
-				txtCustomerBrokerName.setStyle("-fx-text-box-border: red;");
+				txtContactNamePAPS.setStyle("-fx-text-box-border: red;");
 				lblContactNamePAPS.setVisible(true);
 				lblContactNamePAPS.setText("Min. length 5 and Max. length 25");
 				lblContactNamePAPS.setTextFill(Color.RED);
+			}
+			
+			String operationPAPS = ddlOperationPAPS.getSelectionModel().getSelectedItem();
+			result = validate.validateEmptyness(operationPAPS);
+			if (!result) {
+				
+				response = false;
+				ddlOperationPAPS.setStyle("-fx-border-color: red;");
+				lblOperationPAPS.setVisible(true);
+				lblOperationPAPS.setText("Operation is Mandatory");
+				lblOperationPAPS.setTextFill(Color.RED);
+				
+			}
+			
+			String twentyHoursPAPS = ddl24HoursPAPS.getSelectionModel().getSelectedItem();
+			result = validate.validateEmptyness(twentyHoursPAPS);
+			if (!result) {
+				
+				response = false;
+				ddl24HoursPAPS.setStyle("-fx-border-color: red;");
+				lbl24HoursPAPS.setVisible(true);
+				lbl24HoursPAPS.setText("Choose 24 Hours option");
+				lbl24HoursPAPS.setTextFill(Color.RED);
+				
+			}
+			
+			String statusPAPS = ddlStatusPAPS.getSelectionModel().getSelectedItem();
+			result = validate.validateEmptyness(statusPAPS);
+			if (!result) {
+				
+				response = false;
+				ddlStatusPAPS.setStyle("-fx-border-color: red;");
+				lblStatusPAPS.setVisible(true);
+				lblStatusPAPS.setText("Choose any status");
+				lblStatusPAPS.setTextFill(Color.RED);
+				
+			}
+		}
+		
+		if(validatePARS) {
+			String contactNamePARS = txtContactNamePARS.getText();
+			result = validate.validateEmptyness(contactNamePARS);
+			if (!result) {
+				
+				response = false;
+				txtContactNamePARS.setStyle("-fx-text-box-border: red;");
+				lblContactNamePARS.setVisible(true);
+				lblContactNamePARS.setText("Contact Name is Mandatory");
+				lblContactNamePARS.setTextFill(Color.RED);
+				
+			} else if (!validate.validateLength(name, 5, 25)) {
+				
+				response = false;
+				txtContactNamePARS.setStyle("-fx-text-box-border: red;");
+				lblContactNamePARS.setVisible(true);
+				lblContactNamePARS.setText("Min. length 5 and Max. length 25");
+				lblContactNamePARS.setTextFill(Color.RED);
+			}
+			
+			String operationPARS = ddlOperationPARS.getSelectionModel().getSelectedItem();
+			result = validate.validateEmptyness(operationPARS);
+			if (!result) {
+				
+				response = false;
+				ddlOperationPARS.setStyle("-fx-border-color: red;");
+				lblOperationPARS.setVisible(true);
+				lblOperationPARS.setText("Operation is Mandatory");
+				lblOperationPARS.setTextFill(Color.RED);
+				
+			}
+			
+			String twentyHoursPARS = ddl24HoursPARS.getSelectionModel().getSelectedItem();
+			result = validate.validateEmptyness(twentyHoursPARS);
+			if (!result) {
+				
+				response = false;
+				ddl24HoursPARS.setStyle("-fx-border-color: red;");
+				lbl24HoursPARS.setVisible(true);
+				lbl24HoursPARS.setText("Choose 24 Hours option");
+				lbl24HoursPARS.setTextFill(Color.RED);
+				
+			}
+			
+			String statusPARS = ddlStatusPARS.getSelectionModel().getSelectedItem();
+			result = validate.validateEmptyness(statusPARS);
+			if (!result) {
+				
+				response = false;
+				ddlStatusPARS.setStyle("-fx-border-color: red;");
+				lblStatusPARS.setVisible(true);
+				lblStatusPARS.setText("Choose any status");
+				lblStatusPARS.setTextFill(Color.RED);
+				
 			}
 		}
 		return response;
@@ -117,13 +223,20 @@ public class CustomBrokerAddController<T> extends Application implements Initial
 	}
 	
 	@FXML
-	private void customerBrokerNameKeyPressed() {
+	private void customerBrokerNameKeyReleased() {
 		String name = txtCustomerBrokerName.getText();
 		boolean result = validate.validateEmptyness(name);
 		if (result) {
 			lblCustomBrokerName.setText("");
 			txtCustomerBrokerName.setStyle("-fx-focus-color: skyblue;");
 			lblCustomBrokerName.setVisible(false);
+			if (!validate.validateLength(name, 5, 25)) {
+				
+				txtCustomerBrokerName.setStyle("-fx-border-color: red;");
+				lblCustomBrokerName.setVisible(true);
+				lblCustomBrokerName.setText("Min. length 5 and Max. length 25");
+				lblCustomBrokerName.setTextFill(Color.RED);
+			}
 		} else {
 			txtCustomerBrokerName.setStyle("-fx-border-color: red;");
 			lblCustomBrokerName.setVisible(true);
@@ -140,11 +253,156 @@ public class CustomBrokerAddController<T> extends Application implements Initial
 			lblContactNamePAPS.setText("");
 			txtContactNamePAPS.setStyle("-fx-focus-color: skyblue;");
 			lblContactNamePAPS.setVisible(false);
+			if (!validate.validateLength(name, 5, 25)) {
+				
+				txtContactNamePAPS.setStyle("-fx-border-color: red;");
+				lblContactNamePAPS.setVisible(true);
+				lblContactNamePAPS.setText("Min. length 5 and Max. length 25");
+				lblContactNamePAPS.setTextFill(Color.RED);
+			}
 		} else {
 			txtContactNamePAPS.setStyle("-fx-border-color: red;");
 			lblContactNamePAPS.setVisible(true);
 			lblContactNamePAPS.setText("Contact Name is Mandatory");
 			lblContactNamePAPS.setTextFill(Color.RED);
+		}
+	}
+	
+	@FXML
+	private void ddlOperationPAPSAction() {
+		String operationPAPS = ddlOperationPAPS.getSelectionModel().getSelectedItem();
+		boolean result = validate.validateEmptyness(operationPAPS);
+		if (result) {
+			lblOperationPAPS.setText("");
+			ddlOperationPAPS.setStyle("-fx-focus-color: skyblue;");
+			lblOperationPAPS.setVisible(false);
+		} else {
+			ddlOperationPAPS.setStyle("-fx-border-color: red;");
+			lblOperationPAPS.setVisible(true);
+			lblOperationPAPS.setText("Operation is Mandatory");
+			lblOperationPAPS.setTextFill(Color.RED);
+		}
+	}
+	
+	@FXML
+	private void ddl24HoursPAPSAction() {
+		String twentyFourHoursPAPS = ddl24HoursPAPS.getSelectionModel().getSelectedItem();
+		boolean result = validate.validateEmptyness(twentyFourHoursPAPS);
+		if (result) {
+			lbl24HoursPAPS.setText("");
+			ddl24HoursPAPS.setStyle("-fx-focus-color: skyblue;");
+			lbl24HoursPAPS.setVisible(false);
+		} else {
+			ddl24HoursPAPS.setStyle("-fx-border-color: red;");
+			lbl24HoursPAPS.setVisible(true);
+			lbl24HoursPAPS.setText("Choose 24 Hours option");
+			lbl24HoursPAPS.setTextFill(Color.RED);
+		}
+	}
+	
+	@FXML
+	private void ddlStatusPAPSAction() {
+		String twentyFourHoursPAPS = ddlStatusPAPS.getSelectionModel().getSelectedItem();
+		boolean result = validate.validateEmptyness(twentyFourHoursPAPS);
+		if (result) {
+			lblStatusPAPS.setText("");
+			ddlStatusPAPS.setStyle("-fx-focus-color: skyblue;");
+			lblStatusPAPS.setVisible(false);
+		} else {
+			ddlStatusPAPS.setStyle("-fx-border-color: red;");
+			lblStatusPAPS.setVisible(true);
+			lblStatusPAPS.setText("Choose any status");
+			lblStatusPAPS.setTextFill(Color.RED);
+		}
+	}
+	
+	@FXML
+	private void contactNamePARSKeyReleased() {
+		String name = txtContactNamePARS.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblContactNamePARS.setText("");
+			txtContactNamePARS.setStyle("-fx-focus-color: skyblue;");
+			lblContactNamePARS.setVisible(false);
+			if (!validate.validateLength(name, 5, 25)) {
+				
+				txtContactNamePARS.setStyle("-fx-border-color: red;");
+				lblContactNamePARS.setVisible(true);
+				lblContactNamePARS.setText("Min. length 5 and Max. length 25");
+				lblContactNamePARS.setTextFill(Color.RED);
+			}
+		} else {
+			txtContactNamePARS.setStyle("-fx-border-color: red;");
+			lblContactNamePARS.setVisible(true);
+			lblContactNamePARS.setText("Contact Name is Mandatory");
+			lblContactNamePARS.setTextFill(Color.RED);
+		}
+	}
+	
+	@FXML
+	private void ddlOperationPARSAction() {
+		String operationPAPS = ddlOperationPARS.getSelectionModel().getSelectedItem();
+		boolean result = validate.validateEmptyness(operationPAPS);
+		if (result) {
+			lblOperationPARS.setText("");
+			ddlOperationPARS.setStyle("-fx-focus-color: skyblue;");
+			lblOperationPARS.setVisible(false);
+		} else {
+			ddlOperationPARS.setStyle("-fx-border-color: red;");
+			lblOperationPARS.setVisible(true);
+			lblOperationPARS.setText("Operation is Mandatory");
+			lblOperationPARS.setTextFill(Color.RED);
+		}
+	}
+	
+	@FXML
+	private void ddl24HoursPARSAction() {
+		String twentyFourHoursPAPS = ddl24HoursPARS.getSelectionModel().getSelectedItem();
+		boolean result = validate.validateEmptyness(twentyFourHoursPAPS);
+		if (result) {
+			lbl24HoursPARS.setText("");
+			ddl24HoursPARS.setStyle("-fx-focus-color: skyblue;");
+			lbl24HoursPARS.setVisible(false);
+		} else {
+			ddl24HoursPARS.setStyle("-fx-border-color: red;");
+			lbl24HoursPARS.setVisible(true);
+			lbl24HoursPARS.setText("Choose 24 Hours option");
+			lbl24HoursPARS.setTextFill(Color.RED);
+		}
+	}
+	
+	@FXML
+	private void ddlStatusPARSAction() {
+		String twentyFourHoursPAPS = ddlStatusPARS.getSelectionModel().getSelectedItem();
+		boolean result = validate.validateEmptyness(twentyFourHoursPAPS);
+		if (result) {
+			lblStatusPARS.setText("");
+			ddlStatusPARS.setStyle("-fx-focus-color: skyblue;");
+			lblStatusPARS.setVisible(false);
+		} else {
+			ddlStatusPARS.setStyle("-fx-border-color: red;");
+			lblStatusPARS.setVisible(true);
+			lblStatusPARS.setText("Choose any status");
+			lblStatusPARS.setTextFill(Color.RED);
+		}
+	}
+	
+	@FXML
+	Label lblType;
+	
+	@FXML
+	private void ddlTypeAction() {
+		String type = ddlType.getSelectionModel().getSelectedItem();
+		boolean result = validate.validateEmptyness(type);
+		if (result) {
+			lblType.setText("");
+			ddlType.setStyle("-fx-focus-color: skyblue;");
+			lblType.setVisible(false);
+		} else {
+			ddlType.setStyle("-fx-border-color: red;");
+			lblType.setVisible(true);
+			lblType.setText("Choose any type");
+			lblType.setTextFill(Color.RED);
 		}
 	}
 	

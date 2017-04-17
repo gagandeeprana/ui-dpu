@@ -28,13 +28,13 @@
                               <Label layoutX="12.0" layoutY="279.0" text="Tracker Link" />
                               <TextField fx:id="txtContactNamePAPS" layoutX="115.0" layoutY="33.0" onKeyReleased="#contactNamePAPSKeyReleased" prefHeight="25.0" prefWidth="288.0" />
                               <Separator layoutX="416.0" layoutY="2.0" orientation="VERTICAL" prefHeight="355.0" prefWidth="14.0" />
-                              <ComboBox fx:id="ddlOperationPAPS" layoutX="114.0" layoutY="79.0" prefHeight="25.0" prefWidth="290.0" />
+                              <ComboBox fx:id="ddlOperationPAPS" layoutX="114.0" layoutY="79.0" onAction="#ddlOperationPAPSAction" prefHeight="25.0" prefWidth="290.0" />
                               <TextField fx:id="txtCentralPhonePAPS" layoutX="114.0" layoutY="129.0" prefHeight="25.0" prefWidth="114.0" />
                               <Label layoutX="236.0" layoutY="133.0" text="Extension" />
                               <TextField fx:id="txtExtensionPAPS" layoutX="296.0" layoutY="129.0" prefHeight="25.0" prefWidth="112.0" />
                               <TextField fx:id="txtCentralFaxPAPS" layoutX="114.0" layoutY="176.0" prefHeight="25.0" prefWidth="111.0" />
                               <Label layoutX="234.0" layoutY="180.0" text="24 Hours" />
-                              <ComboBox fx:id="ddl24HoursPAPS" layoutX="291.0" layoutY="176.0" prefHeight="25.0" prefWidth="116.0" />
+                              <ComboBox fx:id="ddl24HoursPAPS" layoutX="291.0" layoutY="176.0" onAction="#ddl24HoursPAPSAction" prefHeight="25.0" prefWidth="116.0" />
                               <TextField fx:id="txtEmailPAPS" layoutX="115.0" layoutY="224.0" prefHeight="25.0" prefWidth="293.0" />
                               <TextField fx:id="txtTrackerLinkPAPS" layoutX="115.0" layoutY="275.0" prefHeight="25.0" prefWidth="293.0" />
                               <Label layoutX="441.0" layoutY="10.0" text="PARS">
@@ -43,11 +43,11 @@
                                  </font>
                               </Label>
                               <Label layoutX="441.0" layoutY="37.0" text="Contact Name" />
-                              <TextField fx:id="txtContactNamePARS" layoutX="535.0" layoutY="33.0" prefHeight="25.0" prefWidth="288.0" />
-                              <ComboBox fx:id="ddlOperationPARS" layoutX="536.0" layoutY="79.0" prefHeight="25.0" prefWidth="289.0" />
+                              <TextField fx:id="txtContactNamePARS" layoutX="535.0" layoutY="33.0" onKeyReleased="#contactNamePARSKeyReleased" prefHeight="25.0" prefWidth="288.0" />
+                              <ComboBox fx:id="ddlOperationPARS" layoutX="536.0" layoutY="79.0" onAction="#ddlOperationPARSAction" prefHeight="25.0" prefWidth="289.0" />
                               <TextField fx:id="txtTrackerLinkPARS" layoutX="537.0" layoutY="275.0" prefHeight="25.0" prefWidth="293.0" />
                               <TextField fx:id="txtEmailPARS" layoutX="537.0" layoutY="224.0" prefHeight="25.0" prefWidth="293.0" />
-                              <ComboBox fx:id="ddl24HoursPARS" layoutX="716.0" layoutY="176.0" prefHeight="25.0" prefWidth="116.0" />
+                              <ComboBox fx:id="ddl24HoursPARS" layoutX="716.0" layoutY="176.0" onAction="#ddl24HoursPARSAction" prefHeight="25.0" prefWidth="116.0" />
                               <Label layoutX="656.0" layoutY="180.0" text="24 Hours" />
                               <TextField fx:id="txtCentralFaxPARS" layoutX="537.0" layoutY="176.0" prefHeight="25.0" prefWidth="111.0" />
                               <TextField fx:id="txtExtensionPARS" layoutX="718.0" layoutY="126.0" prefHeight="25.0" prefWidth="112.0" />
@@ -71,13 +71,13 @@
                         <Button fx:id="btnSaveCustomBroker" layoutX="729.0" layoutY="449.0" mnemonicParsing="false" onAction="#btnSaveCustomBrokerAction" prefHeight="25.0" prefWidth="53.0" text="Save" />
                         <Button fx:id="btnCancel" layoutX="792.0" layoutY="449.0" mnemonicParsing="false" text="Cancel" />
                         <Label layoutX="14.0" layoutY="14.0" text="Custom Broker Name" />
-                        <TextField fx:id="txtCustomerBrokerName" layoutX="152.0" layoutY="10.0" onKeyPressed="#customerBrokerNameKeyPressed" prefHeight="25.0" prefWidth="306.0" />
+                        <TextField fx:id="txtCustomerBrokerName" layoutX="152.0" layoutY="10.0" onKeyReleased="#customerBrokerNameKeyReleased" prefHeight="25.0" prefWidth="306.0" />
                         <Label layoutX="716.0" layoutY="14.0" text="Type" />
-                        <ComboBox fx:id="ddlType" layoutX="749.0" layoutY="10.0" prefHeight="25.0" prefWidth="104.0" />
+                        <ComboBox fx:id="ddlType" layoutX="749.0" layoutY="10.0" onAction="#ddlTypeAction" prefHeight="25.0" prefWidth="104.0" />
                         <Label fx:id="lblCustomBrokerName" layoutX="152.0" layoutY="35.0" prefHeight="17.0" prefWidth="304.0" />
                         <Label layoutX="18.0" layoutY="391.0" text="Status" />
-                        <ComboBox fx:id="ddlStatusPAPS" layoutX="125.0" layoutY="396.0" prefHeight="25.0" prefWidth="294.0" />
-                        <ComboBox fx:id="ddlStatusPARS" layoutX="550.0" layoutY="396.0" prefHeight="25.0" prefWidth="290.0" />
+                        <ComboBox fx:id="ddlStatusPAPS" layoutX="125.0" layoutY="396.0" onAction="#ddlStatusPAPSAction" prefHeight="25.0" prefWidth="294.0" />
+                        <ComboBox fx:id="ddlStatusPARS" layoutX="550.0" layoutY="396.0" onAction="#ddlStatusPARSAction" prefHeight="25.0" prefWidth="290.0" />
                         <Label layoutX="450.0" layoutY="400.0" text="Status" />
                         <Label fx:id="lblType" layoutX="749.0" layoutY="35.0" prefHeight="17.0" prefWidth="102.0" />
                      </children>

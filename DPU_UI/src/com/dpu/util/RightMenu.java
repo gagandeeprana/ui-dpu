@@ -1,5 +1,7 @@
 package com.dpu.util;
 
+import com.dpu.controller.vendor.VendorAddController;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +19,7 @@ public class RightMenu {
 
 			@Override
 			public void handle(ActionEvent event) {
-
+				VendorAddController.add = 1;
 //				CompanyEditController.selectedTabValue = 0;
 //				CompanyAddController.listOfBilling = new ArrayList<BillingControllerModel>();
 //				CompanyAddController.listOfAdditionalContact = new ArrayList<AdditionalContact>();

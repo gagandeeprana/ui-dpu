@@ -206,13 +206,20 @@ public class VendorAddController extends Application implements Initializable {
 	RightMenu rightMenu = new RightMenu();
 	
 	@FXML
-	private void vendorNameKeyPressed() {
+	private void vendorNameKeyReleased() {
 		String name = txtCompany.getText();
 		boolean result = validate.validateEmptyness(name);
 		if (result) {
 			lblVendorName.setText("");
 			txtCompany.setStyle("-fx-focus-color: skyblue;");
 			lblVendorName.setVisible(false);
+			if (!validate.validateLength(name, 5, 25)) {
+				
+				txtCompany.setStyle("-fx-border-color: red;");
+				lblVendorName.setVisible(true);
+				lblVendorName.setText("Min. length 5 and Max. length 25");
+				lblVendorName.setTextFill(Color.RED);
+			}
 		} else {
 			txtCompany.setStyle("-fx-border-color: red;");
 			lblVendorName.setVisible(true);

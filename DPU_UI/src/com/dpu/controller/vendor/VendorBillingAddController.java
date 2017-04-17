@@ -1,11 +1,22 @@
 package com.dpu.controller.vendor;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import com.dpu.constants.Iconstants;
-import com.dpu.model.VendorBillingLocation;
+import javax.swing.JOptionPane;
 
+import org.codehaus.jackson.map.ObjectMapper;
+
+import com.dpu.client.GetAPIClient;
+import com.dpu.constants.Iconstants;
+import com.dpu.model.Vendor;
+import com.dpu.model.VendorBillingLocation;
+import com.dpu.util.Validate;
+
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +24,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -53,44 +67,131 @@ public class VendorBillingAddController implements Initializable {
 	private TextField txtZip;
 
 	@FXML
-	void btnSaveBillingLocationAction(ActionEvent event) {
-		try {
- 
-			String company = txtCompany.getText();
-			String address = txtAddress.getText();
-			String city = txtCity.getText();
-			String phone = txtPhone.getText();
-			String contact = txtContact.getText();
-			String zip = txtZip.getText();
-			String fax = txtFax.getText();
-			Long statusId = Long.parseLong("1");
-			VendorBillingLocation bcm1 = new VendorBillingLocation(company, address, city, phone, contact, zip, fax,statusId);
-
-			if (VendorAddController.add == 0) {
-				VendorEditController.listOfBilling.set(VendorAddController.addEditIndex, bcm1);
-			} else if(VendorAddController.add == 1){
-				VendorEditController.listOfBilling.add(bcm1);
+	private void txtCompanyKeyReleased() {
+		String name = txtCompany.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblCompanyBillingLocation.setText("");
+			txtCompany.setStyle("-fx-focus-color: skyblue;");
+			lblCompanyBillingLocation.setVisible(false);
+			if (!validate.validateLength(name, 5, 25)) {
+				
+				txtCompany.setStyle("-fx-border-color: red;");
+				lblCompanyBillingLocation.setVisible(true);
+				lblCompanyBillingLocation.setText("Min. length 5 and Max. length 25");
+				lblCompanyBillingLocation.setTextFill(Color.RED);
 			}
-			/*if (CompanyAddController.add == 0) {
-				CompanyAddController.listOfBilling.set(CompanyAddController.addEditIndex, bcm1);
-			} else if(CompanyAddController.add == 1){
-				CompanyAddController.listOfBilling.add(bcm1);
-			}*/
-
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-					.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_ADD_SCREEN));
-			Parent root = (Parent) fxmlLoader.load();
-			Stage stage = new Stage();
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add New Company");
-			stage.setScene(new Scene(root));
-			stage.show();
-
-		} catch (Exception e) {
-			e.printStackTrace();
+		} else {
+			txtCompany.setStyle("-fx-border-color: red;");
+			lblCompanyBillingLocation.setVisible(true);
+			lblCompanyBillingLocation.setText("Company Name is Mandatory");
+			lblCompanyBillingLocation.setTextFill(Color.RED);
 		}
-		closeAddBillingScreen(btnSaveBillingLocation);
+	}
 
+	@FXML
+	void btnSaveBillingLocationAction(ActionEvent event) {
+			
+		boolean result = validateAddVendorBillingLocationScreen();
+		if (result) {
+			try {
+				String company = txtCompany.getText();
+				String address = txtAddress.getText();
+				String city = txtCity.getText();
+				String phone = txtPhone.getText();
+				String contact = txtContact.getText();
+				String zip = txtZip.getText();
+				String fax = txtFax.getText();
+				Long statusId = Long.parseLong("1");
+				VendorBillingLocation bcm1 = new VendorBillingLocation(company, address, city, phone, contact, zip, fax,statusId);
+
+				if (VendorAddController.add == 0) {
+					VendorEditController.listOfBilling.set(VendorAddController.addEditIndex, bcm1);
+				} else if(VendorAddController.add == 1){
+					VendorEditController.listOfBilling.add(bcm1);
+				}
+				/*if (CompanyAddController.add == 0) {
+					CompanyAddController.listOfBilling.set(CompanyAddController.addEditIndex, bcm1);
+				} else if(CompanyAddController.add == 1){
+					CompanyAddController.listOfBilling.add(bcm1);
+				}*/
+
+				/*FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
+						.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_ADD_SCREEN));
+				Parent root = (Parent) fxmlLoader.load();
+				Stage stage = new Stage();
+				stage.initModality(Modality.APPLICATION_MODAL);
+				stage.setTitle("Add New Company");
+				stage.setScene(new Scene(root));
+				stage.show();*/
+				closeAddBillingScreen(btnSaveBillingLocation);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/*public void fillLocations() {
+
+		fetchColumns();
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				ObservableList<Vendor> data = null;
+				try {
+					ObjectMapper mapper = new ObjectMapper();
+					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_VENDOR_API, null);
+					if (response != null && response.length() > 0) {
+						Vendor c[] = mapper.readValue(response, Vendor[].class);
+						cList = new ArrayList<Vendor>();
+						for (Vendor ccl : c) {
+							cList.add(ccl);
+						}
+						data = FXCollections.observableArrayList(cList);
+					} else {
+						data = FXCollections.observableArrayList(cList);
+					}
+					setColumnValues();
+					tblVendor.setItems(data);
+
+					tblVendor.setVisible(true);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+				}
+			}
+		});
+	}*/
+
+	Validate validate = new Validate();
+	
+	@FXML
+	Label lblCompanyBillingLocation;
+
+	private boolean validateAddVendorBillingLocationScreen() {
+		boolean response = true;
+		String name = txtCompany.getText();
+		boolean result = validate.validateEmptyness(name);
+
+		if (!result) {
+			
+			response = false;
+			txtCompany.setStyle("-fx-text-box-border: red;");
+			lblCompanyBillingLocation.setVisible(true);
+			lblCompanyBillingLocation.setText("Company Name is Mandatory");
+			lblCompanyBillingLocation.setTextFill(Color.RED);
+			
+		} else if (!validate.validateLength(name, 5, 25)) {
+			
+			response = false;
+			txtCompany.setStyle("-fx-text-box-border: red;");
+			lblCompanyBillingLocation.setVisible(true);
+			lblCompanyBillingLocation.setText("Min. length 5 and Max. length 25");
+			lblCompanyBillingLocation.setTextFill(Color.RED);
+		}
+		return response;
 	}
 
 	private void closeAddBillingScreen(Button clickedButton) {
