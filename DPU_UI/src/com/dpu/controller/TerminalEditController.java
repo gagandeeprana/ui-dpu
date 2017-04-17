@@ -16,6 +16,7 @@ import com.dpu.model.Failed;
 import com.dpu.model.Shipper;
 import com.dpu.model.Success;
 import com.dpu.model.Terminal;
+import com.dpu.util.Validate;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -23,7 +24,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class TerminalEditController extends Application implements Initializable {
@@ -37,12 +40,64 @@ public class TerminalEditController extends Application implements Initializable
 
 	@FXML
 	ComboBox<Object> ddlAvailableServices, ddlLocation;
+	@FXML
+	Label lblTerminalName, lblLocation, lblAvailableServices;
+	Validate validate = new Validate();
 
 	@FXML
 	private void btnUpdateTerminalAction() {
-		editTerminal();
-		closeEditTerminalScreen(btnUpdateTerminal);
+		boolean res = validateEditTerminalScreen();
+		if (res) {
+			editTerminal();
+			closeEditTerminalScreen(btnUpdateTerminal);
+		}
 
+	}
+
+	private boolean validateEditTerminalScreen() {
+		boolean response = true;
+		String name = txtTerminalName.getText();
+		String service = ddlAvailableServices.getSelectionModel().getSelectedItem().toString();
+		String location = ddlLocation.getSelectionModel().getSelectedItem().toString();
+
+		boolean result = validate.validateEmptyness(name);
+		if (!result) {
+			// ValidationController.str = validsteFields();
+			// openValidationScreen();
+			txtTerminalName.setStyle("-fx-focus-color: red;");
+			lblTerminalName.setVisible(true);
+			lblTerminalName.setText("Terminal Name is Mandatory");
+			lblTerminalName.setTextFill(Color.RED);
+
+		} else if (!validate.validateLength(name, 5, 25)) {
+			response = false;
+			txtTerminalName.setStyle("-fx-focus-color: red;");
+			lblTerminalName.setVisible(true);
+			lblTerminalName.setText("Min. length 5 and Max. length 25");
+			lblTerminalName.setTextFill(Color.RED);
+			return result;
+		}
+		result = validate.validateEmptyness(service);
+		if (!result) {
+			response = false;
+			// ValidationController.str = validsteFields();
+			// openValidationScreen();
+			ddlAvailableServices.setStyle("-fx-focus-color: red;");
+			lblAvailableServices.setVisible(true);
+			lblAvailableServices.setText("Service name is Mandatory");
+			lblAvailableServices.setTextFill(Color.RED);
+		}
+		result = validate.validateEmptyness(location);
+		if (!result) {
+			response = false;
+			// ValidationController.str = validsteFields();
+			// openValidationScreen();
+			ddlLocation.setStyle("-fx-focus-color: red;");
+			lblLocation.setVisible(true);
+			lblLocation.setText("Location name is Mandatory");
+			lblLocation.setTextFill(Color.RED);
+		}
+		return response;
 	}
 
 	private void closeEditTerminalScreen(Button clickedButton) {
@@ -74,14 +129,16 @@ public class TerminalEditController extends Application implements Initializable
 						Failed failed = mapper.readValue(response, Failed.class);
 						JOptionPane.showMessageDialog(null, failed.getMessage());
 					}
-					/*if (response != null && response.contains("message")) {
-						Success success = mapper.readValue(response, Success.class);
-						JOptionPane.showMessageDialog(null, success.getMessage(), "Info", 1);
-					} else {
-						Failed failed = mapper.readValue(response, Failed.class);
-						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-					}*/
-//					MainScreen.terminalController.fetchTerminals();
+					/*
+					 * if (response != null && response.contains("message")) {
+					 * Success success = mapper.readValue(response,
+					 * Success.class); JOptionPane.showMessageDialog(null,
+					 * success.getMessage(), "Info", 1); } else { Failed failed
+					 * = mapper.readValue(response, Failed.class);
+					 * JOptionPane.showMessageDialog(null, failed.getMessage(),
+					 * "Info", 1); }
+					 */
+					// MainScreen.terminalController.fetchTerminals();
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
 				}
@@ -110,26 +167,26 @@ public class TerminalEditController extends Application implements Initializable
 	}
 
 	List<Shipper> shipperList = null;
-	
+
 	List<DPUService> serviceList = null;
-	
+
 	public void initData(Terminal t) {
 		terminalId = t.getTerminalId();
 		txtTerminalName.setText(t.getTerminalName());
 		shipperList = t.getShipperList();
-		for(int i=0;i<t.getShipperList().size();i++) {
+		for (int i = 0; i < t.getShipperList().size(); i++) {
 			Shipper shipper = t.getShipperList().get(i);
 			ddlLocation.getItems().add(shipper.getLocationName());
-			if(shipper.getShipperId() == t.getShipperId()) {
+			if (shipper.getShipperId() == t.getShipperId()) {
 				ddlLocation.getSelectionModel().select(i);
 			}
 		}
 		serviceList = t.getServiceList();
-		for(int i=0;i<t.getServiceList().size();i++) {
+		for (int i = 0; i < t.getServiceList().size(); i++) {
 			DPUService service = t.getServiceList().get(i);
 			ddlAvailableServices.getItems().add(service.getServiceName());
-			for(int j=0;j<t.getServiceIds().size();j++) {
-				if(service.getServiceId() == t.getServiceIds().get(j)) {
+			for (int j = 0; j < t.getServiceIds().size(); j++) {
+				if (service.getServiceId() == t.getServiceIds().get(j)) {
 					ddlAvailableServices.getSelectionModel().select(i);
 				}
 			}

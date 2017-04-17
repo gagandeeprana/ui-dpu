@@ -6,27 +6,18 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="198.0" prefWidth="416.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.TerminalEditController">
-   <children>
-      <BorderPane layoutX="11.0" layoutY="35.0" prefHeight="118.0" prefWidth="396.0" style="-fx-border-color: lightgray;">
-         <center>
-            <ComboBox fx:id="ddlLocation" prefHeight="25.0" prefWidth="146.0" BorderPane.alignment="CENTER" />
-         </center></BorderPane>
-      <Text layoutX="15.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Terminal Name" wrappingWidth="107.759765625" AnchorPane.bottomAnchor="126.984375" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="361.240234375" AnchorPane.topAnchor="50.734375">
+  <children>
+      <Text layoutX="15.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Location" wrappingWidth="107.759765625">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <Text layoutX="15.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Location" wrappingWidth="107.759765625">
+      <Text layoutX="12.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available Services" wrappingWidth="114.759765625">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <Text layoutX="15.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available Services" wrappingWidth="131.759765625">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Text>
-      <TextField fx:id="txtTerminalName" layoutX="136.0" layoutY="50.0" prefHeight="25.0" prefWidth="240.0" />
+      <TextField fx:id="txtTerminalName" layoutX="135.0" layoutY="18.0" prefHeight="25.0" prefWidth="240.0" />
       <Button fx:id="btnUpdateTerminal" layoutX="274.0" layoutY="160.0" mnemonicParsing="false" onAction="#btnUpdateTerminalAction" prefHeight="30.0" prefWidth="65.0" text="Update">
          <font>
             <Font size="13.0" />
@@ -37,13 +28,17 @@
             <Font size="13.0" />
          </font>
       </Button>
-      <ComboBox fx:id="ddlAvailableServices" layoutX="135.0" layoutY="115.0" prefHeight="25.0" prefWidth="240.0" />
-      <Button fx:id="btnAddLocation" layoutX="378.0" layoutY="83.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="+" />
-      <Button fx:id="btnAddAvailableServices" layoutX="378.0" layoutY="115.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="+" />
-      <Label prefHeight="27.0" prefWidth="416.0" style="-fx-background-color: lightgrey; -fx-border-color: black;" text="   Edit Terminal">
+      <ComboBox fx:id="ddlAvailableServices" layoutX="135.0" layoutY="130.0" prefHeight="25.0" prefWidth="240.0" />
+      <Button fx:id="btnAddLocation" layoutX="378.0" layoutY="73.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="+" />
+      <Button fx:id="btnAddAvailableServices" layoutX="378.0" layoutY="130.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="+" />
+      <Text layoutX="16.0" layoutY="37.841796875" strokeType="OUTSIDE" strokeWidth="0.0" text="Terminal Name" wrappingWidth="107.759765625">
          <font>
-            <Font name="System Bold" size="16.0" />
+            <Font size="14.0" />
          </font>
-      </Label>
+      </Text>
+      <ComboBox id="ddlLocation" layoutX="135.0" layoutY="73.0" prefWidth="150.0" />
+      <Label fx:id="lblTerminalName" layoutX="135.0" layoutY="45.0" prefHeight="19.0" prefWidth="240.0" />
+      <Label fx:id="lblLocation" layoutX="135.0" layoutY="101.0" prefHeight="12.0" prefWidth="240.0" />
+      <Label fx:id="lblAvailableServices" layoutX="135.0" layoutY="162.0" prefHeight="17.0" prefWidth="240.0" />
    </children>
 </AnchorPane>

@@ -345,6 +345,7 @@ public class CarrierContractController extends Application implements Initializa
 								null);
 						if (response != null && response.length() > 0) {
 							CarrierContractModel c = mapper.readValue(response, CarrierContractModel.class);
+							System.out.println("muiles::  " + c.getMiles());
 							CarrierContractEditController carrierContractEditController = (CarrierContractEditController) openEditCarrierContractScreen();
 							carrierContractEditController.initData(c);
 						}

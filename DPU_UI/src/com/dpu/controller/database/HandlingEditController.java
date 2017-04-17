@@ -23,65 +23,76 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class HandlingEditController extends Application implements Initializable{
+public class HandlingEditController extends Application implements Initializable {
 
 	@FXML
 	Button btnUpdateHandling;
-	
+
 	Long handlingId = 0l;
-	
+
 	@FXML
 	TextField txtHandling;
-	
+	@FXML
+	Label lblHandling, lblStatus;
 	Validate validate = new Validate();
-	
+
 	@FXML
 	ComboBox<String> ddlStatus;
-	
+
 	private boolean validateEditHandlingScreen() {
+		boolean response = true;
 		String name = txtHandling.getText();
 		String status = ddlStatus.getSelectionModel().getSelectedItem();
 
-		
 		boolean result = validate.validateEmptyness(name);
-		if(!result) {
-			txtHandling.setTooltip(new Tooltip("Handling Name is Mandatory"));
+		if (!result) {
 			txtHandling.setStyle("-fx-focus-color: red;");
-			txtHandling.requestFocus();
+			lblHandling.setVisible(true);
+			lblHandling.setText("Handling Name is Mandatory");
+			lblHandling.setTextFill(Color.RED);
+		} else if (!validate.validateLength(name, 5, 25)) {
+			response = false;
+			txtHandling.setStyle("-fx-focus-color: red;");
+			lblHandling.setVisible(true);
+			lblHandling.setText("Min. length 5 and Max. length 25");
+			lblHandling.setTextFill(Color.RED);
 			return result;
 		}
 		result = validate.validateEmptyness(status);
-		if(!result) {
-			ddlStatus.setTooltip(new Tooltip("Status is Mandatory"));
+		if (!result) {
+			response = false;
 			ddlStatus.setStyle("-fx-focus-color: red;");
-			ddlStatus.requestFocus();
-			return result;
+			lblStatus.setVisible(true);
+			lblStatus.setText("Status is Mandatory");
+			lblStatus.setTextFill(Color.RED);
 		}
-		return result;
+		return response;
 	}
-	
+
 	@FXML
 	private void btnUpdateHandlingAction() {
 		boolean response = validateEditHandlingScreen();
-		if(response) {
+		if (response) {
 			editHandling();
 			closeEditHandlingScreen(btnUpdateHandling);
 		}
 	}
-	
+
 	private void closeEditHandlingScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
-        loginStage.close();
+		loginStage.close();
 	}
-	
+
 	private void editHandling() {
-		
+
 		Platform.runLater(new Runnable() {
-			
+
 			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
@@ -90,7 +101,8 @@ public class HandlingEditController extends Application implements Initializable
 					HandlingModel handling = setHandlingValue();
 					String payload = mapper.writeValueAsString(handling);
 
-					String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_HANDLING_API + "/" + handlingId, null, payload);
+					String response = PutAPIClient.callPutAPI(
+							Iconstants.URL_SERVER + Iconstants.URL_HANDLING_API + "/" + handlingId, null, payload);
 					try {
 						Success success = mapper.readValue(response, Success.class);
 						List<HandlingModel> handlingList = (List<HandlingModel>) success.getResultList();
@@ -108,7 +120,7 @@ public class HandlingEditController extends Application implements Initializable
 
 		});
 	}
-	
+
 	List<Status> statusList;
 
 	private HandlingModel setHandlingValue() {
@@ -130,10 +142,10 @@ public class HandlingEditController extends Application implements Initializable
 		handlingId = handling.getId();
 		txtHandling.setText(handling.getName());
 		statusList = handling.getStatusList();
-		for(int i = 0; i< handling.getStatusList().size();i++) {
+		for (int i = 0; i < handling.getStatusList().size(); i++) {
 			Status status = handling.getStatusList().get(i);
 			ddlStatus.getItems().add(status.getStatus());
-			if(status.getId() == handling.getStatusId()) {
+			if (status.getId() == handling.getStatusId()) {
 				ddlStatus.getSelectionModel().select(i);
 			}
 		}
