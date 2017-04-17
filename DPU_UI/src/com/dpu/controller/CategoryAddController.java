@@ -27,7 +27,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -42,6 +44,9 @@ public class CategoryAddController extends Application implements Initializable 
 
 	@FXML
 	ComboBox<String> ddlType, ddlStatus, ddlHighlight;
+
+	@FXML
+	Label lblType, lblCategory, lblStatus, lblHighlight;
 
 	ObjectMapper mapper = new ObjectMapper();
 
@@ -60,44 +65,62 @@ public class CategoryAddController extends Application implements Initializable 
 	}
 
 	private boolean validateAddCategoryScreen() {
+		boolean response = true;
 		String name = txtCategory.getText();
 		String textField = ddlType.getSelectionModel().getSelectedItem();
-		String association = ddlStatus.getSelectionModel().getSelectedItem();
-		String status = ddlHighlight.getSelectionModel().getSelectedItem();
-
+		String status = ddlStatus.getSelectionModel().getSelectedItem();
+		String highLight = ddlHighlight.getSelectionModel().getSelectedItem();
 		boolean result = validate.validateEmptyness(name);
+
 		if (!result) {
-			ValidationController.str = validsteFields();
-			openValidationScreen();
+			response = false;
+			// ValidationController.str = validsteFields();
+			// openValidationScreen();
 			txtCategory.setStyle("-fx-focus-color: red;");
-			txtCategory.requestFocus();
+			lblCategory.setVisible(true);
+			lblCategory.setText("Category Name is Mandatory");
+			lblCategory.setTextFill(Color.RED);
+			// return result;
+		} else if (!validate.validateLength(name, 5, 25)) {
+			response = false;
+			txtCategory.setStyle("-fx-focus-color: red;");
+			lblCategory.setVisible(true);
+			lblCategory.setText("Min. length 5 and Max. length 25");
+			lblCategory.setTextFill(Color.RED);
 			return result;
+
 		}
 		result = validate.validateEmptyness(textField);
 		if (!result) {
-			ValidationController.str = validsteFields();
-			openValidationScreen();
-			ddlHighlight.setStyle("-fx-focus-color: red;");
-			ddlHighlight.requestFocus();
-			return result;
-		}
-		result = validate.validateEmptyness(association);
-		if (!result) {
-			ValidationController.str = validsteFields();
-			openValidationScreen();
-			ddlStatus.setStyle("-fx-focus-color: red;");
-			ddlStatus.requestFocus();
-			return result;
+			response = false;
+			// ValidationController.str = validsteFields();
+			// openValidationScreen();
+			ddlType.setStyle("-fx-focus-color: red;");
+			lblType.setVisible(true);
+			lblType.setText("Type Name is Mandatory");
+			lblType.setTextFill(Color.RED);
 		}
 		result = validate.validateEmptyness(status);
 		if (!result) {
-			ValidationController.str = validsteFields();
-			openValidationScreen();
-			ddlType.setStyle("-fx-focus-color: red;");
-			ddlType.requestFocus();
-			return result;
+			response = false;
+			// ValidationController.str = validsteFields();
+			// openValidationScreen();
+			ddlStatus.setStyle("-fx-focus-color: red;");
+			lblStatus.setVisible(true);
+			lblStatus.setText("Status name is Mandatory");
+			lblStatus.setTextFill(Color.RED);
 		}
-		return result;
+		result = validate.validateEmptyness(highLight);
+		if (!result) {
+			response = false;
+//			ValidationController.str = validsteFields();
+//			openValidationScreen();
+			ddlType.setStyle("-fx-focus-color: red;");
+			lblHighlight.setVisible(true);
+			lblHighlight.setText("HighLight name is Mandatory");
+			lblHighlight.setTextFill(Color.RED);
+		}
+		return response;
 	}
 
 	public StringBuffer validsteFields() {

@@ -5,23 +5,22 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="190.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.EquipmentAddController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="225.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.EquipmentAddController">
    <children>
-      <BorderPane layoutX="10.0" layoutY="26.0" prefHeight="121.0" prefWidth="357.0" style="-fx-border-color: lightgray;" />
-      <AnchorPane layoutX="-5.0" layoutY="-9.0" prefHeight="199.0" prefWidth="386.0">
+      <AnchorPane layoutX="-5.0" layoutY="-9.0" prefHeight="229.0" prefWidth="386.0">
          <children>
-            <Button layoutX="307.0" layoutY="162.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Cancel">
+            <Button layoutX="297.0" layoutY="174.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Cancel">
                <font>
                   <Font size="13.0" />
                </font>
             </Button>
-            <Button fx:id="btnSaveEquipment" layoutX="236.0" layoutY="162.0" mnemonicParsing="false" onAction="#btnSaveEquipmentAction" prefHeight="25.0" prefWidth="65.0" text="Save">
+            <Button fx:id="btnSaveEquipment" layoutX="224.0" layoutY="174.0" mnemonicParsing="false" onAction="#btnSaveEquipmentAction" prefHeight="25.0" prefWidth="65.0" text="Save">
                <font>
                   <Font size="13.0" />
                </font>
             </Button>
-            <TextField fx:id="txtDescription" layoutX="120.0" layoutY="82.0" prefHeight="25.0" prefWidth="240.0" />
-            <Text layoutX="24.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description" wrappingWidth="79.2939453125">
+            <TextField fx:id="txtDescription" layoutX="120.0" layoutY="72.0" prefHeight="25.0" prefWidth="240.0" />
+            <Text layoutX="24.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description" wrappingWidth="79.2939453125">
                <font>
                   <Font size="14.0" />
                </font>
@@ -31,18 +30,16 @@
                   <Font size="14.0" />
                </font>
             </Text>
-            <Label layoutX="4.0" layoutY="1.0" prefHeight="27.0" prefWidth="382.0" style="-fx-background-color: lightgrey; -fx-border-color: black;" text=" Equipment Types">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-            </Label>
             <ComboBox fx:id="ddlType" layoutX="120.0" layoutY="117.0" onAction="#ddlTypeAction" prefHeight="25.0" prefWidth="240.0" />
-            <Text layoutX="24.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" wrappingWidth="79.2939453125">
+            <Text layoutX="24.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" wrappingWidth="79.2939453125">
                <font>
                   <Font size="14.0" />
                </font>
             </Text>
-            <TextField fx:id="txtName" layoutX="120.0" layoutY="47.0" onKeyTyped="#txtNameKeyTyped" prefHeight="25.0" prefWidth="240.0" />
+            <TextField fx:id="txtName" layoutX="120.0" layoutY="26.0" onKeyTyped="#txtNameKeyTyped" prefHeight="25.0" prefWidth="240.0" />
+            <Label fx:id="lblName" layoutX="120.0" layoutY="52.0" prefHeight="17.0" prefWidth="240.0" />
+            <Label fx:id="lblDescription" layoutX="120.0" layoutY="95.0" prefHeight="19.0" prefWidth="240.0" />
+            <Label fx:id="lblType" layoutX="120.0" layoutY="144.0" prefHeight="17.0" prefWidth="240.0" />
          </children>
       </AnchorPane>
    </children>

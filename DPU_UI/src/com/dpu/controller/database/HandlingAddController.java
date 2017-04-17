@@ -24,67 +24,78 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class HandlingAddController<T> extends Application implements Initializable{
+public class HandlingAddController<T> extends Application implements Initializable {
 
 	@FXML
 	Button btnSaveHandling;
-	
+
 	@FXML
 	TextField txtHandling;
-	
+
 	@FXML
 	ComboBox<String> ddlStatus;
-	
+	@FXML
+	Label lblHandling, lblStatus;
 	List<Status> statusList;
-	
+
 	ObjectMapper mapper = new ObjectMapper();
-	
+
 	Validate validate = new Validate();
-	
+
 	@FXML
 	private void btnSaveHandlingAction() {
 		boolean response = validateAddHandlingScreen();
-		if(response) {
+		if (response) {
 			addHandling();
 			closeAddHandlingScreen(btnSaveHandling);
 		}
 	}
-	
+
 	private void closeAddHandlingScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
-        loginStage.close();
+		loginStage.close();
 	}
-	
+
 	private boolean validateAddHandlingScreen() {
+		boolean response = true;
 		String name = txtHandling.getText();
 		String status = ddlStatus.getSelectionModel().getSelectedItem();
 
-		
 		boolean result = validate.validateEmptyness(name);
-		if(!result) {
-			txtHandling.setTooltip(new Tooltip("Handling Name is Mandatory"));
+		if (!result) {
 			txtHandling.setStyle("-fx-focus-color: red;");
-			txtHandling.requestFocus();
+			lblHandling.setVisible(true);
+			lblHandling.setText("Handling Name is Mandatory");
+			lblHandling.setTextFill(Color.RED);
+		} else if (!validate.validateLength(name, 5, 25)) {
+			response = false;
+			txtHandling.setStyle("-fx-focus-color: red;");
+			lblHandling.setVisible(true);
+			lblHandling.setText("Min. length 5 and Max. length 25");
+			lblHandling.setTextFill(Color.RED);
 			return result;
 		}
 		result = validate.validateEmptyness(status);
-		if(!result) {
-			ddlStatus.setTooltip(new Tooltip("Status is Mandatory"));
+		if (!result) {
+			response = false;
 			ddlStatus.setStyle("-fx-focus-color: red;");
-			ddlStatus.requestFocus();
-			return result;
+			lblStatus.setVisible(true);
+			lblStatus.setText("Status is Mandatory");
+			lblStatus.setTextFill(Color.RED);
 		}
-		return result;
+		return response;
 	}
-	
+
 	private void addHandling() {
-		
+
 		Platform.runLater(new Runnable() {
-			
+
 			@Override
 			@SuppressWarnings("unchecked")
 			public void run() {
@@ -92,8 +103,9 @@ public class HandlingAddController<T> extends Application implements Initializab
 					ObjectMapper mapper = new ObjectMapper();
 					HandlingModel service = setHandlingValue();
 					String payload = mapper.writeValueAsString(service);
-					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_HANDLING_API, null, payload);
-					if(MainScreen.handlingController != null) {
+					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_HANDLING_API,
+							null, payload);
+					if (MainScreen.handlingController != null) {
 						try {
 							Success success = mapper.readValue(response, Success.class);
 							List<HandlingModel> handlingList = (List<HandlingModel>) success.getResultList();
@@ -116,26 +128,26 @@ public class HandlingAddController<T> extends Application implements Initializab
 	public void initialize(URL location, ResourceBundle resources) {
 		fetchMasterDataForDropDowns();
 	}
-	
-	
+
 	private void fillDropDown(ComboBox<String> comboBox, List<?> list) {
-		for(int i=0;i<list.size();i++) {
+		for (int i = 0; i < list.size(); i++) {
 			Object object = list.get(i);
-			if(object != null && object instanceof Status) {
+			if (object != null && object instanceof Status) {
 				Status status = (Status) object;
 				comboBox.getItems().add(status.getStatus());
 			}
 		}
 	}
-	
+
 	private void fetchMasterDataForDropDowns() {
-		
+
 		Platform.runLater(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				try {
-					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_HANDLING_API + "/openAdd", null);
+					String response = GetAPIClient
+							.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_HANDLING_API + "/openAdd", null);
 					HandlingModel service = mapper.readValue(response, HandlingModel.class);
 					statusList = service.getStatusList();
 					fillDropDown(ddlStatus, statusList);
