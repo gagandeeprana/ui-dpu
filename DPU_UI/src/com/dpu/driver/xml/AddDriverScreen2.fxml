@@ -12,75 +12,75 @@
   <children>
     <Pane layoutX="0.0" layoutY="30.0" prefHeight="511.0" prefWidth="665.0">
       <children>
-        <Label layoutX="15.0" layoutY="10.0" text="Code">
+        <Label fx:id="lblCode" layoutX="15.0" layoutY="10.0" text="Code">
                <font>
                   <Font size="14.0" />
                </font></Label>
-        <Label layoutX="15.0" layoutY="42.0" text="First Name">
+        <Label fx:id="lblFirstName" layoutX="15.0" layoutY="42.0" text="First Name">
                <font>
                   <Font size="14.0" />
                </font></Label>
-        <Label layoutX="15.0" layoutY="74.0" text="Last Name">
+        <Label fx:id="lblLastName" layoutX="15.0" layoutY="74.0" text="Last Name">
                <font>
                   <Font size="14.0" />
                </font></Label>
-        <Label layoutX="15.0" layoutY="106.0" text="Address">
+        <Label fx:id="lblAddress" layoutX="15.0" layoutY="106.0" text="Address">
                <font>
                   <Font size="14.0" />
                </font></Label>
-        <Label layoutX="15.0" layoutY="138.0" text="Unit">
+        <Label fx:id="lblUnit" layoutX="15.0" layoutY="138.0" text="Unit">
                <font>
                   <Font size="14.0" />
                </font></Label>
-        <Label layoutX="15.0" layoutY="172.0" prefHeight="20.0" prefWidth="31.0" text="City">
+        <Label fx:id="lblCity" layoutX="15.0" layoutY="172.0" prefHeight="20.0" prefWidth="31.0" text="City">
                <font>
                   <Font size="14.0" />
                </font></Label>
-        <Label layoutX="15.0" layoutY="202.0" text="Postal/Zip">
+        <Label fx:id="lblZip" layoutX="15.0" layoutY="202.0" text="Postal/Zip">
                <font>
                   <Font size="14.0" />
                </font></Label>
-        <Label layoutX="344.0" layoutY="11.0" text="Email">
+        <Label fx:id="lblEmail" layoutX="344.0" layoutY="11.0" text="Email">
                <font>
                   <Font size="14.0" />
                </font></Label>
-        <Label layoutX="344.0" layoutY="42.0" text="Home">
+        <Label fx:id="lblHome" layoutX="344.0" layoutY="42.0" text="Home">
                <font>
                   <Font size="14.0" />
                </font></Label>
-        <Label layoutX="344.0" layoutY="75.0" text="Cellular">
+        <Label fx:id="lblCellular" layoutX="344.0" layoutY="75.0" text="Cellular">
                <font>
                   <Font size="14.0" />
                </font></Label>
-        <Label layoutX="344.0" layoutY="106.0" text="Division">
+        <Label fx:id="lblDivision" layoutX="344.0" layoutY="106.0" text="Division">
                <font>
                   <Font size="14.0" />
                </font></Label>
-        <Label layoutX="344.0" layoutY="138.0" text="Terminal">
+        <Label fx:id="lblTerminal" layoutX="344.0" layoutY="138.0" text="Terminal">
                <font>
                   <Font size="14.0" />
                </font></Label>
-        <Label layoutX="344.0" layoutY="170.0" text="Category">
+        <Label fx:id="lblCategory" layoutX="344.0" layoutY="170.0" text="Category">
                <font>
                   <Font size="14.0" />
                </font></Label>
-        <Label layoutX="344.0" layoutY="202.0" text="Status">
+        <Label fx:id="lblStatus" layoutX="344.0" layoutY="202.0" text="Status">
                <font>
                   <Font size="14.0" />
                </font></Label>
-        <Label layoutX="496.0" layoutY="42.0" text="FaxNo">
+        <Label fx:id="lblFax" layoutX="496.0" layoutY="42.0" text="FaxNo">
                <font>
                   <Font size="14.0" />
                </font></Label>
-        <Label layoutX="498.0" layoutY="74.0" text="Pager">
+        <Label fx:id="lblPager" layoutX="498.0" layoutY="74.0" text="Pager">
                <font>
                   <Font size="14.0" />
                </font></Label>
-        <Label layoutX="498.0" layoutY="170.0" text="Role">
+        <Label fx:id="lblRole" layoutX="498.0" layoutY="170.0" text="Role">
                <font>
                   <Font size="14.0" />
                </font></Label>
-        <Label layoutX="497.0" layoutY="202.0" text="Class">
+        <Label fx:id="lblDriverClass" layoutX="497.0" layoutY="202.0" text="Class">
                <font>
                   <Font size="14.0" />
                </font></Label>
@@ -98,39 +98,39 @@
             </Tab>
           </tabs>
         </TabPane>
-        <TextField fx:id="txtCode" layoutX="89.0" layoutY="7.0" prefHeight="25.0" prefWidth="240.0" />
-        <TextField fx:id="txtFirstName" layoutX="89.0" layoutY="39.0" prefHeight="25.0" prefWidth="240.0" />
-        <TextField fx:id="txtLastName" layoutX="89.0" layoutY="71.0" prefHeight="25.0" prefWidth="240.0" />
-        <TextField fx:id="txtAddress" layoutX="89.0" layoutY="103.0" prefHeight="25.0" prefWidth="240.0" />
-        <TextField fx:id="txtUnit" layoutX="89.0" layoutY="135.0" prefHeight="25.0" prefWidth="240.0" />
-        <TextField fx:id="txtCity" layoutX="89.0" layoutY="167.0" prefHeight="25.0" prefWidth="240.0" />
-        <TextField fx:id="txtPostal" layoutX="89.0" layoutY="199.0" prefHeight="25.0" prefWidth="240.0" />
-        <TextField fx:id="txtEmail" layoutX="409.0" layoutY="7.0" prefHeight="25.0" prefWidth="240.0" />
-        <TextField fx:id="txtHome" layoutX="409.0" layoutY="39.0" prefHeight="25.0" prefWidth="80.0" />
-        <TextField fx:id="txtCellular" layoutX="409.0" layoutY="71.0" prefHeight="25.0" prefWidth="80.0" />
-        <TextField fx:id="txtFaxNo" layoutX="539.0" layoutY="39.0" prefHeight="25.0" prefWidth="109.0" />
-        <TextField fx:id="txtPager" layoutX="539.0" layoutY="71.0" prefHeight="25.0" prefWidth="109.0" />
-        <ComboBox fx:id="ddlTerminal" layoutX="409.0" layoutY="136.0" prefHeight="25.0" prefWidth="240.0">
+        <TextField fx:id="txtCode" onKeyPressed="#driverCodeKeyPressed" layoutX="89.0" layoutY="7.0" prefHeight="25.0" prefWidth="240.0" />
+        <TextField fx:id="txtFirstName" onKeyPressed="#driverFirstNameKeyPressed" layoutX="89.0" layoutY="39.0" prefHeight="25.0" prefWidth="240.0" />
+        <TextField fx:id="txtLastName" onKeyPressed="#driverLastNameKeyPressed" layoutX="89.0" layoutY="71.0" prefHeight="25.0" prefWidth="240.0" />
+        <TextField fx:id="txtAddress" onKeyPressed="#driverAddressKeyPressed" layoutX="89.0" layoutY="103.0" prefHeight="25.0" prefWidth="240.0" />
+        <TextField fx:id="txtUnit" onKeyPressed="#driverUnitKeyPressed" layoutX="89.0" layoutY="135.0" prefHeight="25.0" prefWidth="240.0" />
+        <TextField fx:id="txtCity" onKeyPressed="#driverCityKeyPressed" layoutX="89.0" layoutY="167.0" prefHeight="25.0" prefWidth="240.0" />
+        <TextField fx:id="txtPostal" onKeyPressed="#driverPostalKeyPressed" layoutX="89.0" layoutY="199.0" prefHeight="25.0" prefWidth="240.0" />
+        <TextField fx:id="txtEmail" onKeyPressed="#driverEmailKeyPressed" layoutX="409.0" layoutY="7.0" prefHeight="25.0" prefWidth="240.0" />
+        <TextField fx:id="txtHome" onKeyPressed="#driverHomeKeyPressed" layoutX="409.0" layoutY="39.0" prefHeight="25.0" prefWidth="80.0" />
+        <TextField fx:id="txtCellular" onKeyPressed="#driverCellularKeyPressed" layoutX="409.0" layoutY="71.0" prefHeight="25.0" prefWidth="80.0" />
+        <TextField fx:id="txtFaxNo" onKeyPressed="#driverFaxKeyPressed" layoutX="539.0" layoutY="39.0" prefHeight="25.0" prefWidth="109.0" />
+        <TextField fx:id="txtPager" onKeyPressed="#driverPagerKeyPressed" layoutX="539.0" layoutY="71.0" prefHeight="25.0" prefWidth="109.0" />
+        <ComboBox fx:id="ddlTerminal" onKeyPressed="#driverTerminalKeyPressed" layoutX="409.0" layoutY="136.0" prefHeight="25.0" prefWidth="240.0">
           <items>
             <FXCollections fx:factory="observableArrayList" />
           </items>
         </ComboBox>
-        <ComboBox fx:id="ddlCategory" layoutX="409.0" layoutY="167.0" prefHeight="25.0" prefWidth="80.0">
+        <ComboBox fx:id="ddlCategory" onKeyPressed="#ddlCategoryKeyPressed" layoutX="409.0" layoutY="167.0" prefHeight="25.0" prefWidth="80.0">
           <items>
             <FXCollections fx:factory="observableArrayList" />
           </items>
         </ComboBox>
-        <ComboBox fx:id="ddlRole" layoutX="540.0" layoutY="167.0" prefHeight="25.0" prefWidth="109.0">
+        <ComboBox fx:id="ddlRole" onKeyPressed="#ddlRoleKeyPressed" layoutX="540.0" layoutY="167.0" prefHeight="25.0" prefWidth="109.0">
           <items>
             <FXCollections fx:factory="observableArrayList" />
           </items>
         </ComboBox>
-        <ComboBox fx:id="ddlStatus" layoutX="409.0" layoutY="199.0" prefHeight="25.0" prefWidth="80.0">
+        <ComboBox fx:id="ddlStatus" onKeyPressed="#ddlStatusKeyPressed" layoutX="409.0" layoutY="199.0" prefHeight="25.0" prefWidth="80.0">
           <items>
             <FXCollections fx:factory="observableArrayList" />
           </items>
         </ComboBox>
-        <ComboBox fx:id="ddlDriverClass" layoutX="540.0" layoutY="199.0" prefHeight="25.0" prefWidth="109.0">
+        <ComboBox fx:id="ddlDriverClass" onKeyPressed="#ddlDriverClassKeyPressed" layoutX="540.0" layoutY="199.0" prefHeight="25.0" prefWidth="109.0">
           <items>
             <FXCollections fx:factory="observableArrayList" />
           </items>
@@ -143,13 +143,13 @@
                <font>
                   <Font size="13.0" />
                </font></Button>
-            <ComboBox fx:id="ddlDivision" layoutX="409.0" layoutY="104.0" prefHeight="25.0" prefWidth="240.0">
+            <ComboBox fx:id="ddlDivision" onKeyPressed="#ddlDivisionKeyPressed" layoutX="409.0" layoutY="104.0" prefHeight="25.0" prefWidth="240.0">
                <items>
                   <FXCollections fx:factory="observableArrayList" />
                </items>
             </ComboBox>
-            <TextField fx:id="txtProvince" layoutX="89.0" layoutY="231.0" prefHeight="25.0" prefWidth="240.0" />
-            <Label layoutX="16.0" layoutY="234.0" text="Province">
+            <TextField fx:id="txtProvince" onKeyPressed="#driverProvinceKeyPressed" layoutX="89.0" layoutY="231.0" prefHeight="25.0" prefWidth="240.0" />
+            <Label fx:id="lblProvince" layoutX="16.0" layoutY="234.0" text="Province">
                <font>
                   <Font size="14.0" />
                </font></Label>

@@ -18,6 +18,7 @@ import com.dpu.model.VendorBillingLocation;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
 import com.dpu.model.Vendor;
+import com.dpu.model.VendorAdditionalContacts;
 import com.dpu.model.VendorBillingLocation;
 import com.dpu.request.CompanyModel;
 import com.dpu.util.RightMenu;
@@ -39,6 +40,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -49,6 +51,7 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -120,6 +123,9 @@ public class VendorAddController extends Application implements Initializable {
 		return strBuff;
 	}
 
+	@FXML
+	private Label lblVendorName;
+	
 	private Object openValidationScreen() {
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
@@ -139,28 +145,28 @@ public class VendorAddController extends Application implements Initializable {
 		return null;
 	}
 
-	private boolean validateAddEquipmentScreen() {
-		String customerName = txtCompany.getText();
-		String email = txtEmail.getText();
+	private boolean validateAddVendorScreen() {
+		boolean response = true;
+		String name = txtCompany.getText();
+		boolean result = validate.validateEmptyness(name);
 
-		boolean result = validate.validateEmptyness(customerName);
 		if (!result) {
-			ValidationController.str = validsteFields();
-			openValidationScreen();
-			txtCompany.setStyle("-fx-focus-color: red;");
-			txtCompany.requestFocus();
-			return result;
+			
+			response = false;
+			txtCompany.setStyle("-fx-text-box-border: red;");
+			lblVendorName.setVisible(true);
+			lblVendorName.setText("Vendor Name is Mandatory");
+			lblVendorName.setTextFill(Color.RED);
+			
+		} else if (!validate.validateLength(name, 5, 25)) {
+			
+			response = false;
+			txtCompany.setStyle("-fx-text-box-border: red;");
+			lblVendorName.setVisible(true);
+			lblVendorName.setText("Min. length 5 and Max. length 25");
+			lblVendorName.setTextFill(Color.RED);
 		}
-		result = validate.validateEmptyness(email);
-		if (!result) {
-			ValidationController.str = validsteFields();
-			openValidationScreen();
-			txtEmail.setStyle("-fx-focus-color: red;");
-			txtEmail.requestFocus();
-			return result;
-		}
-
-		return result;
+		return response;
 	}
 	
 	@FXML
@@ -198,6 +204,22 @@ public class VendorAddController extends Application implements Initializable {
 	}
 	
 	RightMenu rightMenu = new RightMenu();
+	
+	@FXML
+	private void vendorNameKeyPressed() {
+		String name = txtCompany.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblVendorName.setText("");
+			txtCompany.setStyle("-fx-focus-color: skyblue;");
+			lblVendorName.setVisible(false);
+		} else {
+			txtCompany.setStyle("-fx-border-color: red;");
+			lblVendorName.setVisible(true);
+			lblVendorName.setText("Vendor Name is Mandatory");
+			lblVendorName.setTextFill(Color.RED);
+		}
+	}
 	
 	@FXML
 	public void additionalContactMouseClick(MouseEvent arg0) {
@@ -564,11 +586,11 @@ public class VendorAddController extends Application implements Initializable {
 	@FXML
 	private void btnSaveVendorAction() {
 
-//		boolean result = validateAddEquipmentScreen();
-//		if (result) {
+		boolean result = validateAddVendorScreen();
+		if (result) {
 			addVendor();
 			closeAddVendorScreen(btnSaveVendor);
-//		}
+		}
 
 	}
 
@@ -646,7 +668,7 @@ public class VendorAddController extends Application implements Initializable {
 	private Vendor setVendorValue() {
 
 		List<VendorBillingLocation> billingLocations = new ArrayList<VendorBillingLocation>();
-		List<AdditionalContact> additionalContacts = new ArrayList<AdditionalContact>();
+		List<VendorAdditionalContacts> additionalContacts = new ArrayList<VendorAdditionalContacts>();
 
 		vendor.setName(txtCompany.getText());
 		vendor.setAddress(txtAddress.getText());
@@ -700,8 +722,8 @@ public class VendorAddController extends Application implements Initializable {
 			for (int i = 0; i < sizeOfAdditionalContact; i++) {
 
 				AdditionalContact additionalContactModel = VendorEditController.listOfAdditionalContact.get(i);
-				AdditionalContact additionalContact = new AdditionalContact();
-				additionalContact.setCustomerName(additionalContactModel.getCustomerName());
+				VendorAdditionalContacts additionalContact = new VendorAdditionalContacts();
+				additionalContact.setVendorName(additionalContactModel.getCustomerName());
 				additionalContact.setPosition(additionalContactModel.getPosition());
 				additionalContact.setPhone(additionalContactModel.getPhone());
 				additionalContact.setExt(additionalContactModel.getExt());
@@ -710,7 +732,7 @@ public class VendorAddController extends Application implements Initializable {
 				additionalContact.setPrefix(additionalContactModel.getPrefix());
 				additionalContact.setCellular(additionalContactModel.getCellular());
 				// need to set Status here
-				additionalContact.setStatus(0l);
+				additionalContact.setStatusId(0l);
 				additionalContact.setEmail(additionalContactModel.getEmail());
 
 				additionalContacts.add(additionalContact);

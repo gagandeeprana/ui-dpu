@@ -13,49 +13,48 @@
       <BorderPane layoutX="9.0" layoutY="35.0" prefHeight="147.0" prefWidth="639.0" style="-fx-border-color: lightgray;" />
     <Pane layoutY="26.0" prefHeight="190.0" prefWidth="657.0">
       <children>
-        <Label layoutX="15.0" layoutY="23.0" text="Company">
+        <Label fx:id="lblCompany" layoutX="15.0" layoutY="23.0" text="Company">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-        <Label layoutX="16.0" layoutY="56.0" text="Address">
+        <Label fx:id="lblAddress" layoutX="16.0" layoutY="56.0" text="Address">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-        <Label layoutX="17.0" layoutY="89.0" text="City">
+        <Label fx:id="lblCity" layoutX="17.0" layoutY="89.0" text="City">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-        <Label layoutX="17.0" layoutY="121.0" text="Phone">
+        <Label fx:id="lblPhone" layoutX="17.0" layoutY="121.0" text="Phone">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-        <Label layoutX="335.0" layoutY="23.0" text="Contact">
+        <Label fx:id="lblContact"  layoutX="335.0" layoutY="23.0" text="Contact">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-        <Label layoutX="335.0" layoutY="56.0" text="Zip">
+        <Label fx:id="lblZip" layoutX="335.0" layoutY="56.0" text="Zip">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-        <Label layoutX="335.0" layoutY="89.0" text="Fax No">
+        <Label  fx:id="lblFax" layoutX="335.0" layoutY="89.0" text="Fax No">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-        <TextField fx:id="txtCompany" layoutX="80.0" layoutY="20.0" prefHeight="25.0" prefWidth="240.0" />
-        <TextField fx:id="txtAddress" layoutX="80.0" layoutY="53.0" prefHeight="25.0" prefWidth="240.0" />
-        <TextField fx:id="txtCity" layoutX="80.0" layoutY="86.0" prefHeight="25.0" prefWidth="240.0" />
-        <TextField fx:id="txtPhone" layoutX="80.0" layoutY="118.0" prefHeight="25.0" prefWidth="240.0" />
-        
-                    <TextField fx:id="txtContact" layoutX="392.0" layoutY="21.0" prefHeight="25.0" prefWidth="240.0" />
-        <TextField fx:id="txtZip" layoutX="392.0" layoutY="53.0" prefHeight="25.0" prefWidth="240.0" />
-        <TextField fx:id="txtFax" layoutX="392.0" layoutY="86.0" prefHeight="25.0" prefWidth="240.0" />
+        <TextField fx:id="txtCompany"  onKeyPressed="#companyNameKeyPressed"  layoutX="80.0" layoutY="20.0" prefHeight="25.0" prefWidth="240.0" />
+        <TextField fx:id="txtAddress" onKeyPressed="#companyAdderssKeyPressed" layoutX="80.0" layoutY="53.0" prefHeight="25.0" prefWidth="240.0" />
+        <TextField fx:id="txtCity" onKeyPressed="#companyCityKeyPressed" layoutX="80.0" layoutY="86.0" prefHeight="25.0" prefWidth="240.0" />
+        <TextField fx:id="txtPhone" onKeyPressed="#companyPhoneKeyPressed" layoutX="80.0" layoutY="118.0" prefHeight="25.0" prefWidth="240.0" />
+        <TextField fx:id="txtContact" onKeyPressed="#companyContactKeyPressed"  layoutX="392.0" layoutY="21.0" prefHeight="25.0" prefWidth="240.0" />
+        <TextField fx:id="txtZip" onKeyPressed="#companyZipKeyPressed" layoutX="392.0" layoutY="53.0" prefHeight="25.0" prefWidth="240.0" />
+        <TextField fx:id="txtFax" onKeyPressed="#companyFaxKeyPressed" layoutX="392.0" layoutY="86.0" prefHeight="25.0" prefWidth="240.0" />
         <Button id="btnSaveDriver" fx:id="btnUpdateBillingLocation" layoutX="513.0" layoutY="160.0" mnemonicParsing="false" onAction="#btnUpdateBillingLocationAction" prefHeight="25.0" prefWidth="65.0" text="Save">
                <font>
                   <Font size="13.0" />

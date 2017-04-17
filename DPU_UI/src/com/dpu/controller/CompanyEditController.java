@@ -18,6 +18,7 @@ import com.dpu.model.Failed;
 import com.dpu.model.Success;
 import com.dpu.request.BillingLocation;
 import com.dpu.request.CompanyModel;
+import com.dpu.util.Validate;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -34,6 +35,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -41,8 +43,10 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -183,7 +187,7 @@ public class CompanyEditController extends Application implements Initializable 
 	public static int addAddtionalContact = 0;
 	public static BillingControllerModel billingControllerModel = new BillingControllerModel();
 	public static AdditionalContact additionalContactModel = new AdditionalContact();
-	public static ArrayList<BillingControllerModel> listOfBilling = new ArrayList<BillingControllerModel>(); 
+	public static ArrayList<BillingControllerModel> listOfBilling = new ArrayList<BillingControllerModel>();
 	public static ArrayList<AdditionalContact> listOfAdditionalContact = new ArrayList<AdditionalContact>();
 
 	public static CompanyModel company = new CompanyModel();
@@ -194,51 +198,38 @@ public class CompanyEditController extends Application implements Initializable 
 
 	@FXML
 	private void btnUpdateCompanyAction() {
-		editCompany();
-		closeEditCompanyScreen(btnUpdateCompany);
+
+		companyId = CompanyController.companyId;
+		boolean result = validateAddCompanyScreen();
+		if (result) {
+			editCompany();
+			closeEditCompanyScreen(btnSaveCompany);
+		}
 
 	}
 
-	private void closeEditCompanyScreen(Button clickedButton) {
-		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
-		loginStage.close();
-	}
-
-	private void editCompany() {
-
-		Platform.runLater(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					ObjectMapper mapper = new ObjectMapper();
-					CompanyModel company = setCompanyValue();
-					String payload = mapper.writeValueAsString(company);
-
-					String response = PutAPIClient.callPutAPI(
-							Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + companyId, null, payload);
-
-					if (response != null && response.contains("message")) {
-						Success success = mapper.readValue(response, Success.class);
-						JOptionPane.showMessageDialog(null, success.getMessage(), "Info", 1);
-					} else {
-						Failed failed = mapper.readValue(response, Failed.class);
-						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-					}
-					MainScreen.companyController.fetchCompanies();
-				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
-				}
-			}
-		});
-	}
+	/*
+	 * private void closeEditCompanyScreen(Button clickedButton) { Stage
+	 * loginStage = (Stage) clickedButton.getScene().getWindow();
+	 * loginStage.close(); }
+	 */
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+
 		fetchBillingLocations();
 		fetchAdditionalContacts();
 
-		txtCompany.setText(company.getName());
+		txtPhone.addEventFilter(KeyEvent.KEY_TYPED, Validate.numeric_Validation(10));
+		txtFax.addEventFilter(KeyEvent.KEY_TYPED, Validate.numeric_Validation(10));
+		txtCompany.addEventFilter(KeyEvent.KEY_TYPED, Validate.letter_Validation(10));
+
+		if (company.getName() != null) {
+			txtCompany.setText(company.getName());
+			txtPhone.setText(company.getPhone());
+			txtFax.setText(company.getFax());
+		}
+
 		txtAddress.setText(company.getAddress());
 		txtUnitNo.setText(company.getUnitNo());
 		txtCity.setText(company.getCity());
@@ -248,9 +239,7 @@ public class CompanyEditController extends Application implements Initializable 
 		txtWebsite.setText(company.getWebsite());
 		txtContact.setText(company.getContact());
 		txtPosition.setText(company.getPosition());
-		txtPhone.setText(company.getPhone());
 		txtExt.setText(company.getExt());
-		txtFax.setText(company.getFax());
 		txtPrefix.setText(company.getCompanyPrefix());
 		txtTollFree.setText(company.getTollfree());
 		txtCellular.setText(company.getCellular());
@@ -265,9 +254,9 @@ public class CompanyEditController extends Application implements Initializable 
 
 	}
 
-	/*public static void main(String[] args) {
-		launch(args);
-	}*/
+	/*
+	 * public static void main(String[] args) { launch(args); }
+	 */
 
 	private CompanyModel setCompanyValue() {
 
@@ -351,7 +340,7 @@ public class CompanyEditController extends Application implements Initializable 
 	}
 
 	public void initData(CompanyModel c) {
-		companyId =  c.getCompanyId();
+		companyId = c.getCompanyId();
 		txtCompany.setText(c.getName());
 		txtContact.setText(c.getContact());
 		txtAddress.setText(c.getAddress());
@@ -377,44 +366,15 @@ public class CompanyEditController extends Application implements Initializable 
 		listOfBilling = new ArrayList<BillingControllerModel>();
 		listOfAdditionalContact = new ArrayList<AdditionalContact>();
 		company = new CompanyModel();
-		closeAddCompanyScreen(btnCancelCompany);
+		closeEditCompanyScreen(btnCancelCompany);
 	}
 
 	@FXML
 	private void btnSaveCompanyAction() {
 
 		companyId = CompanyController.companyId;
-		// remove from listOfBilling if available in db
-
-		/*
-		 * if(listOfBilling != null && !(listOfBilling.isEmpty())){ int index =
-		 * 0 ; int billingSize = listOfBilling.size(); for(int
-		 * i=0;i<billingSize;i++){
-		 * 
-		 * if(listOfBilling.get(index).getBillingLocationId() != null){
-		 * BillingControllerModel bcm = listOfBilling.get(index);
-		 * listOfBilling.remove(bcm); }else{ index++; } } }
-		 */
-		// remove from listOfAdditionalContact if available in db
-
-		/*
-		 * if(listOfAdditionalContact != null &&
-		 * !(listOfAdditionalContact.isEmpty())){ int index = 0 ; int
-		 * additionalContactSize = listOfAdditionalContact.size(); for(int
-		 * i=0;i<additionalContactSize;i++){
-		 * 
-		 * if(listOfAdditionalContact.get(index).getAdditionalContactId() !=
-		 * null){ AdditionalContact additionalContact =
-		 * listOfAdditionalContact.get(index);
-		 * listOfAdditionalContact.remove(additionalContact);
-		 * 
-		 * }else{ index++; } } }
-		 */
-
-		// listOfBilling = new ArrayList<BillingControllerModel>();
-		// listOfAdditionalContact = new ArrayList<AdditionalContact>();
-		addCompany();
-		closeAddCompanyScreen(btnSaveCompany);
+		editCompany();
+		closeEditCompanyScreen(btnSaveCompany);
 	}
 
 	int additionalContactMenuCount = 0;
@@ -430,7 +390,7 @@ public class CompanyEditController extends Application implements Initializable 
 
 			@Override
 			public void handle(ActionEvent event) {
-				//add = 1;
+				// add = 1;
 				setValuesToCmpanyTextField();
 				addAddtionalContact = 1;
 				selectedTabValue = 1;
@@ -456,7 +416,7 @@ public class CompanyEditController extends Application implements Initializable 
 				openAddAdditionalContactScreen();
 
 				try {
-					closeAddCompanyScreen(btnSaveCompany);
+					closeEditCompanyScreen(btnSaveCompany);
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -479,7 +439,7 @@ public class CompanyEditController extends Application implements Initializable 
 				if (additionalContactModel.getAdditionalContactId() != null)
 					additionalContactIdPri = additionalContactModel.getAdditionalContactId();
 				openAddAdditionalContactScreen();
-				closeAddCompanyScreen(btnSaveCompany);
+				closeEditCompanyScreen(btnSaveCompany);
 
 			}
 		});
@@ -492,7 +452,7 @@ public class CompanyEditController extends Application implements Initializable 
 				selectedTabValue = 1;
 				setValuesToCmpanyTextField();
 				editIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
- 
+
 				Long additionalontactId = listOfAdditionalContact.get(editIndex).getAdditionalContactId();
 				Long companyId = listOfAdditionalContact.get(editIndex).getCompanyId();
 
@@ -538,7 +498,7 @@ public class CompanyEditController extends Application implements Initializable 
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				closeAddCompanyScreen(btnSaveCompany);
+				closeEditCompanyScreen(btnSaveCompany);
 
 			}
 		});
@@ -577,12 +537,12 @@ public class CompanyEditController extends Application implements Initializable 
 		}
 	}
 
-	private void closeAddCompanyScreen(Button clickedButton) {
+	private void closeEditCompanyScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
 		loginStage.close();
 	}
 
-	private void addCompany() {
+	private void editCompany() {
 		Platform.runLater(new Runnable() {
 
 			@Override
@@ -592,18 +552,13 @@ public class CompanyEditController extends Application implements Initializable 
 					ObjectMapper mapper = new ObjectMapper();
 					CompanyModel company = setCompanyValue();
 					String payload = mapper.writeValueAsString(company);
-					// companyId = Long.parseLong(company.getCompanyId());
 
 					String response = PutAPIClient.callPutAPI(
 							Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + companyId, null, payload);
 
 					if (response != null) {
-						// Success success = mapper.readValue(response,
-						// Success.class);
 						JOptionPane.showMessageDialog(null, "Company Updated Successfully.", "Info", 1);
 					} else {
-						// Failed failed = mapper.readValue(response,
-						// Failed.class);
 						JOptionPane.showMessageDialog(null, "Failed to Updated Company.", "Info", 1);
 					}
 
@@ -634,12 +589,12 @@ public class CompanyEditController extends Application implements Initializable 
 			public void handle(ActionEvent event) {
 				addBillingLocation = 1;
 				selectedTabValue = 0;
-				//add = 1;
+				// add = 1;
 				setValuesToCmpanyTextField();
 				openAddBillingLocationScreen();
 
 				try {
-					closeAddCompanyScreen(btnSaveCompany);
+					closeEditCompanyScreen(btnSaveCompany);
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -663,7 +618,7 @@ public class CompanyEditController extends Application implements Initializable 
 					billingLocationIdPri = billingControllerModel.getBillingLocationId();
 
 				openAddBillingLocationScreen();
-				closeAddCompanyScreen(btnSaveCompany);
+				closeEditCompanyScreen(btnSaveCompany);
 
 			}
 		});
@@ -728,7 +683,7 @@ public class CompanyEditController extends Application implements Initializable 
 					e.printStackTrace();
 				}
 
-				closeAddCompanyScreen(btnSaveCompany);
+				closeEditCompanyScreen(btnSaveCompany);
 
 			}
 		});
@@ -973,6 +928,508 @@ public class CompanyEditController extends Application implements Initializable 
 		company.setCellular(txtCellular.getText());
 		company.setPager(txtPager.getText());
 		company.setAfterHours(txtAfterHours.getText());
+
+	}
+
+	// ----------------------------------------------------------------------------
+	@FXML
+	Label lblCompany, lblAddress, lblUnitNo, lblCity, lblEmail, lblWebsite, lblProvince, lblZip, lblAfterHours,
+			lblCellular, lblTollFree, lblFax, lblPhone, lblPosition, lblContact, lblPager, lblExt, lblPrefix;
+
+	Validate validate = new Validate();
+
+	@FXML
+	private void companyNameKeyPressed() {
+
+		String name = txtCompany.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblCompany.setTextFill(Color.BLACK);
+			txtCompany.setStyle("-fx-focus-color: skyblue;");
+		} else {
+			txtCompany.setStyle("-fx-focus-color: red;");
+			txtCompany.requestFocus();
+			lblCompany.setVisible(true);
+			// lblCompany.setText("Company Name is Mandatory");
+			lblCompany.setTextFill(Color.RED);
+		}
+	}
+
+	@FXML
+	private void companyAddressKeyPressed() {
+
+		String name = txtAddress.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblAddress.setTextFill(Color.BLACK);
+			txtAddress.setStyle("-fx-focus-color: skyblue;");
+		} else {
+			txtAddress.setStyle("-fx-focus-color: red;");
+			txtAddress.requestFocus();
+			lblAddress.setVisible(true);
+			// lblCompany.setText("Company Name is Mandatory");
+			lblAddress.setTextFill(Color.RED);
+		}
+	}
+
+	@FXML
+	private void companyUnitNoKeyPressed() {
+
+		String name = txtUnitNo.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblUnitNo.setTextFill(Color.BLACK);
+			txtUnitNo.setStyle("-fx-focus-color: skyblue;");
+		} else {
+			txtUnitNo.setStyle("-fx-focus-color: red;");
+			txtUnitNo.requestFocus();
+			lblUnitNo.setVisible(true);
+			// lblCompany.setText("Company Name is Mandatory");
+			lblUnitNo.setTextFill(Color.RED);
+		}
+	}
+
+	@FXML
+	private void companyCityKeyPressed() {
+
+		String name = txtCity.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblCity.setTextFill(Color.BLACK);
+			txtCity.setStyle("-fx-focus-color: skyblue;");
+		} else {
+			txtCity.setStyle("-fx-focus-color: red;");
+			txtCity.requestFocus();
+			lblCity.setVisible(true);
+			// lblCompany.setText("Company Name is Mandatory");
+			lblCity.setTextFill(Color.RED);
+		}
+	}
+
+	@FXML
+	private void companyEmailKeyPressed() {
+
+		String name = txtEmail.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblEmail.setTextFill(Color.BLACK);
+			txtEmail.setStyle("-fx-focus-color: skyblue;");
+		} else {
+			txtEmail.setStyle("-fx-focus-color: red;");
+			txtEmail.requestFocus();
+			lblEmail.setVisible(true);
+			// lblCompany.setText("Company Name is Mandatory");
+			lblEmail.setTextFill(Color.RED);
+		}
+	}
+
+	@FXML
+	private void companyWebsiteKeyPressed() {
+
+		String name = txtWebsite.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblWebsite.setTextFill(Color.BLACK);
+			txtWebsite.setStyle("-fx-focus-color: skyblue;");
+		} else {
+			txtWebsite.setStyle("-fx-focus-color: red;");
+			txtWebsite.requestFocus();
+			lblWebsite.setVisible(true);
+			// lblCompany.setText("Company Name is Mandatory");
+			lblWebsite.setTextFill(Color.RED);
+		}
+	}
+
+	@FXML
+	private void companyProvinceKeyPressed() {
+
+		String name = txtProvince.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblProvince.setTextFill(Color.BLACK);
+			txtProvince.setStyle("-fx-focus-color: skyblue;");
+		} else {
+			txtProvince.setStyle("-fx-focus-color: red;");
+			txtProvince.requestFocus();
+			lblProvince.setVisible(true);
+			// lblCompany.setText("Company Name is Mandatory");
+			lblProvince.setTextFill(Color.RED);
+		}
+	}
+
+	@FXML
+	private void companyZipKeyPressed() {
+
+		String name = txtZip.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblZip.setTextFill(Color.BLACK);
+			txtZip.setStyle("-fx-focus-color: skyblue;");
+		} else {
+			txtZip.setStyle("-fx-focus-color: red;");
+			txtZip.requestFocus();
+			lblZip.setVisible(true);
+			// lblCompany.setText("Company Name is Mandatory");
+			lblZip.setTextFill(Color.RED);
+		}
+	}
+
+	@FXML
+	private void companyAfterHoursKeyPressed() {
+
+		String name = txtAfterHours.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblAfterHours.setTextFill(Color.BLACK);
+			txtAfterHours.setStyle("-fx-focus-color: skyblue;");
+		} else {
+			txtAfterHours.setStyle("-fx-focus-color: red;");
+			txtAfterHours.requestFocus();
+			lblAfterHours.setVisible(true);
+			// lblCompany.setText("Company Name is Mandatory");
+			lblAfterHours.setTextFill(Color.RED);
+		}
+	}
+
+	@FXML
+	private void companyCellularKeyPressed() {
+
+		String name = txtCellular.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblCellular.setTextFill(Color.BLACK);
+			txtCellular.setStyle("-fx-focus-color: skyblue;");
+		} else {
+			txtCellular.setStyle("-fx-focus-color: red;");
+			txtCellular.requestFocus();
+			lblCellular.setVisible(true);
+			// lblCompany.setText("Company Name is Mandatory");
+			lblCellular.setTextFill(Color.RED);
+		}
+	}
+
+	@FXML
+	private void companyTollFreeKeyPressed() {
+
+		String name = txtTollFree.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblTollFree.setTextFill(Color.BLACK);
+			txtTollFree.setStyle("-fx-focus-color: skyblue;");
+		} else {
+			txtTollFree.setStyle("-fx-focus-color: red;");
+			txtTollFree.requestFocus();
+			lblTollFree.setVisible(true);
+			// lblCompany.setText("Company Name is Mandatory");
+			lblTollFree.setTextFill(Color.RED);
+		}
+	}
+
+	@FXML
+	private void companyFaxKeyPressed() {
+
+		String name = txtFax.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblFax.setTextFill(Color.BLACK);
+			txtFax.setStyle("-fx-focus-color: skyblue;");
+		} else {
+			txtFax.setStyle("-fx-focus-color: red;");
+			txtFax.requestFocus();
+			lblFax.setVisible(true);
+			// lblCompany.setText("Company Name is Mandatory");
+			lblFax.setTextFill(Color.RED);
+		}
+	}
+
+	@FXML
+	private void companyPhoneKeyPressed() {
+
+		String name = txtPhone.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblPhone.setTextFill(Color.BLACK);
+			txtPhone.setStyle("-fx-focus-color: skyblue;");
+		} else {
+			txtPhone.setStyle("-fx-focus-color: red;");
+			txtPhone.requestFocus();
+			lblPhone.setVisible(true);
+			// lblCompany.setText("Company Name is Mandatory");
+			lblPhone.setTextFill(Color.RED);
+		}
+	}
+
+	@FXML
+	private void companyPositionKeyPressed() {
+
+		String name = txtPosition.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblPosition.setTextFill(Color.BLACK);
+			txtPosition.setStyle("-fx-focus-color: skyblue;");
+		} else {
+			txtPosition.setStyle("-fx-focus-color: red;");
+			txtPosition.requestFocus();
+			lblPosition.setVisible(true);
+			// lblCompany.setText("Company Name is Mandatory");
+			lblPosition.setTextFill(Color.RED);
+		}
+	}
+
+	@FXML
+	private void companyContactKeyPressed() {
+
+		String name = txtContact.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblContact.setTextFill(Color.BLACK);
+			txtContact.setStyle("-fx-focus-color: skyblue;");
+		} else {
+			txtContact.setStyle("-fx-focus-color: red;");
+			txtContact.requestFocus();
+			lblContact.setVisible(true);
+			// lblCompany.setText("Company Name is Mandatory");
+			lblContact.setTextFill(Color.RED);
+		}
+	}
+
+	@FXML
+	private void companyPagerKeyPressed() {
+
+		String name = txtPager.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblPager.setTextFill(Color.BLACK);
+			txtPager.setStyle("-fx-focus-color: skyblue;");
+		} else {
+			txtPager.setStyle("-fx-focus-color: red;");
+			txtPager.requestFocus();
+			lblPager.setVisible(true);
+			// lblCompany.setText("Company Name is Mandatory");
+			lblPager.setTextFill(Color.RED);
+		}
+	}
+
+	@FXML
+	private void companyExtKeyPressed() {
+
+		String name = txtExt.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblExt.setTextFill(Color.BLACK);
+			txtExt.setStyle("-fx-focus-color: skyblue;");
+		} else {
+			txtExt.setStyle("-fx-focus-color: red;");
+			txtExt.requestFocus();
+			lblExt.setVisible(true);
+			// lblCompany.setText("Company Name is Mandatory");
+			lblExt.setTextFill(Color.RED);
+		}
+	}
+
+	@FXML
+	private void companyPrefixKeyPressed() {
+
+		String name = txtPrefix.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblPrefix.setTextFill(Color.BLACK);
+			txtPrefix.setStyle("-fx-focus-color: skyblue;");
+		} else {
+			txtPrefix.setStyle("-fx-focus-color: red;");
+			txtPrefix.requestFocus();
+			lblPrefix.setVisible(true);
+			// lblCompany.setText("Company Name is Mandatory");
+			lblPrefix.setTextFill(Color.RED);
+		}
+	}
+
+	private boolean validateAddCompanyScreen() {
+
+		boolean result = true;
+		String customerName = txtCompany.getText();
+		String address = txtAddress.getText();
+		String email = txtEmail.getText();
+		String phone = txtPhone.getText();
+		String fax = txtFax.getText();
+		String unitNo = txtUnitNo.getText();
+		String city = txtCity.getText();
+		String province = txtProvince.getText();
+		String zip = txtZip.getText();
+		String website = txtWebsite.getText();
+		String contact = txtContact.getText();
+		String position = txtPosition.getText();
+		String afterHours = txtAfterHours.getText();
+		String tollFree = txtTollFree.getText();
+		String cellular = txtCellular.getText();
+		String pager = txtPager.getText();
+		String ext = txtExt.getText();
+		String prefix = txtPrefix.getText();
+
+		boolean blnName = validate.validateEmptyness(customerName);
+		if (!blnName) {
+			result = false;
+			txtCompany.setStyle("-fx-text-box-border: red;");
+			lblCompany.setVisible(true);
+			// lblCompany.setText("Company Name is Mandatory");
+			lblCompany.setTextFill(Color.RED);
+
+		}
+
+		boolean blnAddress = validate.validateEmptyness(address);
+		if (!blnAddress) {
+			result = false;
+			txtAddress.setStyle("-fx-text-box-border: red;");
+			lblAddress.setVisible(true);
+			// lblAddress.setText("Address is Mandatory");
+			lblAddress.setTextFill(Color.RED);
+		}
+
+		boolean blnEmail = validate.validateEmptyness(email);
+		if (!blnEmail) {
+			result = false;
+			txtEmail.setStyle("-fx-text-box-border: red;");
+			lblEmail.setVisible(true);
+			// lblEmail.setText("Email is Mandatory");
+			lblEmail.setTextFill(Color.RED);
+		}
+
+		boolean blnPhone = validate.validateEmptyness(phone);
+		if (!blnPhone) {
+			result = false;
+			txtPhone.setStyle("-fx-text-box-border: red;");
+			lblPhone.setVisible(true);
+			// lblPhone.setText("Phone Number is Mandatory");
+			lblPhone.setTextFill(Color.RED);
+		}
+
+		boolean blnFax = validate.validateEmptyness(fax);
+		if (!blnFax) {
+			result = false;
+			txtFax.setStyle("-fx-text-box-border: red;");
+			lblFax.setVisible(true);
+			// lblFax.setText("Fax Number is Mandatory");
+			lblFax.setTextFill(Color.RED);
+		}
+
+		boolean blnUnitNo = validate.validateEmptyness(unitNo);
+		if (!blnUnitNo) {
+			result = false;
+			txtUnitNo.setStyle("-fx-text-box-border: red;");
+			lblUnitNo.setVisible(true);
+			// lblFax.setText("Unit Number is Mandatory");
+			lblUnitNo.setTextFill(Color.RED);
+		}
+
+		boolean blnCity = validate.validateEmptyness(city);
+		if (!blnCity) {
+			result = false;
+			txtCity.setStyle("-fx-text-box-border: red;");
+			lblCity.setVisible(true);
+			// lblFax.setText("Fax Number is Mandatory");
+			lblCity.setTextFill(Color.RED);
+		}
+
+		boolean blnProvince = validate.validateEmptyness(province);
+		if (!blnProvince) {
+			result = false;
+			txtProvince.setStyle("-fx-text-box-border: red;");
+			lblProvince.setVisible(true);
+			// lblFax.setText("Unit Number is Mandatory");
+			lblProvince.setTextFill(Color.RED);
+		}
+
+		boolean blnZip = validate.validateEmptyness(zip);
+		if (!blnZip) {
+			result = false;
+			txtZip.setStyle("-fx-text-box-border: red;");
+			lblZip.setVisible(true);
+			// lblFax.setText("Fax Number is Mandatory");
+			lblZip.setTextFill(Color.RED);
+		}
+
+		boolean blnWebsite = validate.validateEmptyness(website);
+		if (!blnWebsite) {
+			result = false;
+			txtWebsite.setStyle("-fx-text-box-border: red;");
+			lblWebsite.setVisible(true);
+			// lblFax.setText("Unit Number is Mandatory");
+			lblWebsite.setTextFill(Color.RED);
+		}
+
+		boolean blnContact = validate.validateEmptyness(contact);
+		if (!blnContact) {
+			result = false;
+			txtContact.setStyle("-fx-text-box-border: red;");
+			lblContact.setVisible(true);
+			// lblFax.setText("Fax Number is Mandatory");
+			lblContact.setTextFill(Color.RED);
+		}
+
+		boolean blnPosition = validate.validateEmptyness(position);
+		if (!blnPosition) {
+			result = false;
+			txtPosition.setStyle("-fx-text-box-border: red;");
+			lblPosition.setVisible(true);
+			// lblFax.setText("Unit Number is Mandatory");
+			lblPosition.setTextFill(Color.RED);
+		}
+
+		boolean blnAfterHours = validate.validateEmptyness(afterHours);
+		if (!blnAfterHours) {
+			result = false;
+			txtAfterHours.setStyle("-fx-text-box-border: red;");
+			lblAfterHours.setVisible(true);
+			// lblFax.setText("Fax Number is Mandatory");
+			lblAfterHours.setTextFill(Color.RED);
+		}
+
+		boolean blnTollFree = validate.validateEmptyness(tollFree);
+		if (!blnTollFree) {
+			result = false;
+			txtTollFree.setStyle("-fx-text-box-border: red;");
+			lblTollFree.setVisible(true);
+			// lblFax.setText("Unit Number is Mandatory");
+			lblTollFree.setTextFill(Color.RED);
+		}
+
+		boolean blnCellular = validate.validateEmptyness(cellular);
+		if (!blnCellular) {
+			result = false;
+			txtCellular.setStyle("-fx-text-box-border: red;");
+			lblCellular.setVisible(true);
+			// lblFax.setText("Fax Number is Mandatory");
+			lblCellular.setTextFill(Color.RED);
+		}
+
+		boolean blnPager = validate.validateEmptyness(pager);
+		if (!blnPager) {
+			result = false;
+			txtPager.setStyle("-fx-text-box-border: red;");
+			lblPager.setVisible(true);
+			// lblFax.setText("Unit Number is Mandatory");
+			lblPager.setTextFill(Color.RED);
+		}
+
+		boolean blnExt = validate.validateEmptyness(ext);
+		if (!blnExt) {
+			result = false;
+			txtExt.setStyle("-fx-text-box-border: red;");
+			lblExt.setVisible(true);
+			// lblFax.setText("Fax Number is Mandatory");
+			lblExt.setTextFill(Color.RED);
+		}
+
+		boolean blnPrefix = validate.validateEmptyness(prefix);
+		if (!blnPrefix) {
+			result = false;
+			txtPrefix.setStyle("-fx-text-box-border: red;");
+			lblPrefix.setVisible(true);
+			// lblFax.setText("Unit Number is Mandatory");
+			lblPrefix.setTextFill(Color.RED);
+		}
+
+		return result;
 
 	}
 

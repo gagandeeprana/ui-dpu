@@ -16,6 +16,7 @@ import com.dpu.controller.MainScreen;
 import com.dpu.model.CustomBroker;
 import com.dpu.model.CustomBrokerTypeModel;
 import com.dpu.model.Failed;
+import com.dpu.model.Shipper;
 import com.dpu.model.Status;
 import com.dpu.model.Success;
 import com.dpu.model.Type;
@@ -23,11 +24,15 @@ import com.dpu.util.Validate;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class CustomBrokerAddController<T> extends Application implements Initializable{
@@ -51,17 +56,96 @@ public class CustomBrokerAddController<T> extends Application implements Initial
 	Validate validate = new Validate();
 	
 	@FXML
+	Label lblCustomBrokerName, lblContactNamePAPS;
+	
+	@FXML
 	private void btnSaveCustomBrokerAction() {
-//		boolean response = validateAddHandlingScreen();
-//		if(response) {
+		boolean response = validateAddCustomBrokerScreen();
+		if(response) {
 			addCustomBroker();
 			closeAddCustomBrokerScreen(btnSaveCustomBroker);
-//		}
+		}
+	}
+	
+	private boolean validateAddCustomBrokerScreen() {
+		boolean response = true;
+		String name = txtCustomerBrokerName.getText();
+		boolean result = validate.validateEmptyness(name);
+
+		if (!result) {
+			
+			response = false;
+			txtCustomerBrokerName.setStyle("-fx-text-box-border: red;");
+			lblCustomBrokerName.setVisible(true);
+			lblCustomBrokerName.setText("CustomBroker Name is Mandatory");
+			lblCustomBrokerName.setTextFill(Color.RED);
+			
+		} else if (!validate.validateLength(name, 5, 25)) {
+			
+			response = false;
+			txtCustomerBrokerName.setStyle("-fx-text-box-border: red;");
+			lblCustomBrokerName.setVisible(true);
+			lblCustomBrokerName.setText("Min. length 5 and Max. length 25");
+			lblCustomBrokerName.setTextFill(Color.RED);
+		}
+		if(validatePAPS) {
+			String contactNamePAPS = txtContactNamePAPS.getText();
+			result = validate.validateEmptyness(contactNamePAPS);
+			if (!result) {
+				
+				response = false;
+				txtContactNamePAPS.setStyle("-fx-text-box-border: red;");
+				lblContactNamePAPS.setVisible(true);
+				lblContactNamePAPS.setText("Contact Name is Mandatory");
+				lblContactNamePAPS.setTextFill(Color.RED);
+				
+			} else if (!validate.validateLength(name, 5, 25)) {
+				
+				response = false;
+				txtCustomerBrokerName.setStyle("-fx-text-box-border: red;");
+				lblContactNamePAPS.setVisible(true);
+				lblContactNamePAPS.setText("Min. length 5 and Max. length 25");
+				lblContactNamePAPS.setTextFill(Color.RED);
+			}
+		}
+		return response;
 	}
 	
 	private void closeAddCustomBrokerScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
         loginStage.close();
+	}
+	
+	@FXML
+	private void customerBrokerNameKeyPressed() {
+		String name = txtCustomerBrokerName.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblCustomBrokerName.setText("");
+			txtCustomerBrokerName.setStyle("-fx-focus-color: skyblue;");
+			lblCustomBrokerName.setVisible(false);
+		} else {
+			txtCustomerBrokerName.setStyle("-fx-border-color: red;");
+			lblCustomBrokerName.setVisible(true);
+			lblCustomBrokerName.setText("CustomBroker Name is Mandatory");
+			lblCustomBrokerName.setTextFill(Color.RED);
+		}
+	}
+	
+	@FXML
+	private void contactNamePAPSKeyReleased() {
+		String name = txtContactNamePAPS.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblContactNamePAPS.setText("");
+			txtContactNamePAPS.setStyle("-fx-focus-color: skyblue;");
+			lblContactNamePAPS.setVisible(false);
+		} else {
+			txtContactNamePAPS.setStyle("-fx-border-color: red;");
+			lblContactNamePAPS.setVisible(true);
+			lblContactNamePAPS.setText("Contact Name is Mandatory");
+			lblContactNamePAPS.setTextFill(Color.RED);
+		}
 	}
 	
 	/*private boolean validateAddHandlingScreen() {
@@ -119,9 +203,109 @@ public class CustomBrokerAddController<T> extends Application implements Initial
 		});
 	}
 
+	boolean validatePAPS, validatePARS;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		fetchMasterDataForDropDowns();
+		String typeDropDownValue = ddlType.getSelectionModel().getSelectedItem();
+		if(typeDropDownValue == null) {
+			setPAPSEditable(true);
+			setPARSEditable(true);
+		}
+		ddlType.valueProperty().addListener(new ChangeListener<String>() {
+	        
+			@SuppressWarnings("rawtypes")
+			@Override public void changed(ObservableValue ov, String t, String t1) {
+				Platform.runLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						try {
+							String typeValue = ddlType.getSelectionModel().getSelectedItem();
+							if(typeValue != null) {
+								switch (typeValue) {
+								case "PARS":
+									validatePARS = true;
+									validatePAPS = false;
+									clearPAPS();
+									setPARSEditable(false);
+									setPAPSEditable(true);
+									break;
+									
+								case "PAPS":
+									validatePARS = false;
+									validatePAPS = true;
+									clearPARS();
+									setPARSEditable(true);
+									setPAPSEditable(false);
+									break;
+
+								case "Both":
+									validatePAPS = true;
+									validatePARS = true;
+									setPAPSEditable(false);
+									setPARSEditable(false);
+									break;
+								}
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+							JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+						}
+					}
+				});
+			}
+			
+	    });
+	}
+	
+	private void setPAPSEditable(boolean val) {
+		txtContactNamePAPS.setDisable(val);
+		ddlOperationPAPS.setDisable(val);
+		txtCentralPhonePAPS.setDisable(val);
+		txtExtensionPAPS.setDisable(val);
+		txtCentralFaxPAPS.setDisable(val);
+		ddl24HoursPAPS.setDisable(val);
+		txtEmailPAPS.setDisable(val);
+		txtTrackerLinkPAPS.setDisable(val);
+		ddlStatusPAPS.setDisable(val);
+	}
+	
+	private void setPARSEditable(boolean val) {
+		txtContactNamePARS.setDisable(val);
+		ddlOperationPARS.setDisable(val);
+		txtCentralPhonePARS.setDisable(val);
+		txtExtensionPARS.setDisable(val);
+		txtCentralFaxPARS.setDisable(val);
+		ddl24HoursPARS.setDisable(val);
+		txtEmailPARS.setDisable(val);
+		txtTrackerLinkPARS.setDisable(val);
+		ddlStatusPARS.setDisable(val);
+	}
+	
+	private void clearPAPS() {
+		txtContactNamePAPS.setText("");
+//		ddlOperationPAPS.getSelectionModel().select(0);
+		txtCentralPhonePAPS.setText("");
+		txtExtensionPAPS.setText("");
+		txtCentralFaxPAPS.setText("");
+//		ddl24HoursPAPS.getSelectionModel().select(0);
+		txtEmailPAPS.setText("");
+		txtTrackerLinkPAPS.setText("");
+//		ddlStatusPAPS.getSelectionModel().select(0);
+	}
+	
+	private void clearPARS() {
+		txtContactNamePARS.setText("");
+//		ddlOperationPARS.getSelectionModel().select(0);
+		txtCentralPhonePARS.setText("");
+		txtExtensionPARS.setText("");
+		txtCentralFaxPARS.setText("");
+//		ddl24HoursPARS.getSelectionModel().select(0);
+		txtEmailPARS.setText("");
+		txtTrackerLinkPARS.setText("");
+//		ddlStatusPARS.getSelectionModel().select(0);
 	}
 	
 	
