@@ -9,40 +9,40 @@
   <children>
     <Label  fx:id="lblCompany" layoutX="14.0" layoutY="14.0" text="Customer" />
     <TextField fx:id="txtCompany" onKeyPressed="#companyNameKeyPressed" layoutX="72.0" layoutY="10.0" />
-    <TextField fx:id="txtAddress" onKeyPressed="#companyAddressKeyPressed" layoutX="72.0" layoutY="42.0" />
+    <TextField fx:id="txtAddress"   layoutX="72.0" layoutY="42.0" />
     <Label fx:id="lblAddress" layoutX="14.0" layoutY="46.0" text="Address" />
     <Label fx:id="lblUnitNo" layoutX="14.0" layoutY="77.0" text="Unit No" />
-    <TextField fx:id="txtUnitNo" onKeyPressed="#companyUnitNoKeyPressed" layoutX="72.0" layoutY="73.0" />
-    <TextField fx:id="txtCity" onKeyPressed="#companyCityKeyPressed" layoutX="72.0" layoutY="104.0" />
+    <TextField fx:id="txtUnitNo"   layoutX="72.0" layoutY="73.0" />
+    <TextField fx:id="txtCity"   layoutX="72.0" layoutY="104.0" />
     <Label fx:id="lblCity" layoutX="14.0" layoutY="108.0" text="City" />
-    <TextField fx:id="txtEmail" onKeyPressed="#companyEmailKeyPressed" layoutX="72.0" layoutY="176.0" />
+    <TextField fx:id="txtEmail"   layoutX="72.0" layoutY="176.0" />
     <Label fx:id="lblEmail" layoutX="14.0" layoutY="180.0" text="Email" />
-    <TextField fx:id="txtWebsite" onKeyPressed="#companyWebsiteKeyPressed" layoutX="72.0" layoutY="209.0" />
+    <TextField fx:id="txtWebsite"   layoutX="72.0" layoutY="209.0" />
     <Label fx:id="lblWebsite" layoutX="14.0" layoutY="213.0" text="Website" />
     <Label fx:id="lblProvince" layoutX="14.0" layoutY="140.0" text="Province" />
-    <TextField fx:id="txtProvince" onKeyPressed="#companyProvinceKeyPressed" layoutX="72.0" layoutY="136.0" prefHeight="25.0" prefWidth="58.0" />
-    <TextField fx:id="txtZip" onKeyPressed="#companyZipKeyPressed" layoutX="155.0" layoutY="136.0" prefHeight="25.0" prefWidth="66.0" />
+    <TextField fx:id="txtProvince"   layoutX="72.0" layoutY="136.0" prefHeight="25.0" prefWidth="58.0" />
+    <TextField fx:id="txtZip"   layoutX="155.0" layoutY="136.0" prefHeight="25.0" prefWidth="66.0" />
     <Label fx:id="lblZip" layoutX="133.0" layoutY="140.0" text="Zip" />
     <SplitPane layoutX="242.0" layoutY="8.0" prefHeight="247.0" prefWidth="1.0" />
-    <TextField fx:id="txtAfterHours" onKeyPressed="#companyAfterHoursKeyPressed" layoutX="327.0" layoutY="139.0" prefHeight="25.0" prefWidth="149.0" />
+    <TextField fx:id="txtAfterHours"   layoutX="327.0" layoutY="139.0" prefHeight="25.0" prefWidth="149.0" />
     <Label fx:id="lblAfterHours" layoutX="259.0" layoutY="143.0" text="After Hours" />
     <Label fx:id="lblCellular" layoutX="260.0" layoutY="210.0" text="Cellular" />
-    <TextField fx:id="txtCellular" onKeyPressed="#companyCellularKeyPressed" layoutX="327.0" layoutY="205.0" />
+    <TextField fx:id="txtCellular"   layoutX="327.0" layoutY="205.0" />
     <Label fx:id="lblTollFree" layoutX="257.0" layoutY="177.0" text="Toll Free" />
-    <TextField fx:id="txtTollFree" onKeyPressed="#companyTollFreeKeyPressed" layoutX="327.0" layoutY="172.0" />
+    <TextField fx:id="txtTollFree"   layoutX="327.0" layoutY="172.0" />
     <Label fx:id="lblFax" layoutX="259.0" layoutY="111.0" text="Fax" />
-    <TextField fx:id="txtFax" onKeyPressed="#companyFaxKeyPressed" layoutX="327.0" layoutY="108.0" />
-    <TextField fx:id="txtPhone" onKeyPressed="#companyPhoneKeyPressed" layoutX="327.0" layoutY="77.0" prefHeight="25.0" prefWidth="149.0" />
+    <TextField fx:id="txtFax"  layoutX="327.0" layoutY="108.0" />
+    <TextField fx:id="txtPhone"  layoutX="327.0" layoutY="77.0" prefHeight="25.0" prefWidth="149.0" />
     <Label fx:id="lblPhone" layoutX="259.0" layoutY="80.0" text="Phone" />
     <Label fx:id="lblPosition" layoutX="259.0" layoutY="49.0" text="Position" />
-    <TextField fx:id="txtPosition" onKeyPressed="#companyPositionKeyPressed" layoutX="327.0" layoutY="46.0" />
-    <TextField fx:id="txtContact"  onKeyPressed="#companyContactKeyPressed" layoutX="327.0" layoutY="14.0" />
+    <TextField fx:id="txtPosition"  layoutX="327.0" layoutY="46.0" />
+    <TextField fx:id="txtContact"   layoutX="327.0" layoutY="14.0" />
     <Label fx:id="lblContact" layoutX="259.0" layoutY="17.0" text="Contact" />
-    <TextField fx:id="txtPager" onKeyPressed="#companyPagerKeyPressed" layoutX="327.0" layoutY="236.0" />
+    <TextField fx:id="txtPager"   layoutX="327.0" layoutY="236.0" />
     <Label fx:id="lblPager" layoutX="260.0" layoutY="241.0" text="Pager" />
     <Label fx:id="lblExt" layoutX="479.0" layoutY="81.0" text="Ext" />
-    <TextField fx:id="txtExt" onKeyPressed="#companyExtKeyPressed" layoutX="515.0" layoutY="76.0" />
-    <TextField fx:id="txtPrefix"  onKeyPressed="#companyPrefixKeyPressed" layoutX="515.0" layoutY="108.0" />
+    <TextField fx:id="txtExt"   layoutX="515.0" layoutY="76.0" />
+    <TextField fx:id="txtPrefix"    layoutX="515.0" layoutY="108.0" />
     <Label fx:id="lblPrefix" layoutX="479.0" layoutY="112.0" text="Prefix" />
     <Label layoutX="479.0" layoutY="143.0" text="Email Notifications" />
     <CheckBox layoutX="487.0" layoutY="172.0" mnemonicParsing="false" text="Order" />

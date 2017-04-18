@@ -80,11 +80,11 @@ public class CompanyAddController extends Application implements Initializable {
 			txtCompany.requestFocus();
 			lblCompany.setVisible(true);
 			// lblCompany.setText("Company Name is Mandatory");
-			lblCompany.setTextFill(Color.RED);
+			//lblCompany.setTextFill(Color.RED);
 		}
 	}
 
-	@FXML
+	/*@FXML
 	private void companyAddressKeyPressed() {
 
 		String name = txtAddress.getText();
@@ -372,27 +372,27 @@ public class CompanyAddController extends Application implements Initializable {
 			lblPrefix.setTextFill(Color.RED);
 		}
 	}
-
+*/
 	private boolean validateAddCompanyScreen() {
 		boolean result = true;
 		String customerName = txtCompany.getText();
-		String address = txtAddress.getText();
-		String email = txtEmail.getText();
-		String phone = txtPhone.getText();
-		String fax = txtFax.getText();
-		String unitNo = txtUnitNo.getText();
-		String city = txtCity.getText();
-		String province = txtProvince.getText();
-		String zip = txtZip.getText();
-		String website = txtWebsite.getText();
-		String contact = txtContact.getText();
-		String position = txtPosition.getText();
-		String afterHours = txtAfterHours.getText();
-		String tollFree = txtTollFree.getText();
-		String cellular = txtCellular.getText();
-		String pager = txtPager.getText();
-		String ext = txtExt.getText();
-		String prefix = txtPrefix.getText();
+	//	String address = txtAddress.getText();
+	//	String email = txtEmail.getText();
+	//	String phone = txtPhone.getText();
+	//	String fax = txtFax.getText();
+	//	String unitNo = txtUnitNo.getText();
+	//	String city = txtCity.getText();
+	//	String province = txtProvince.getText();
+	//	String zip = txtZip.getText();
+	//	String website = txtWebsite.getText();
+	//	String contact = txtContact.getText();
+	//	String position = txtPosition.getText();
+	//	String afterHours = txtAfterHours.getText();
+	//	String tollFree = txtTollFree.getText();
+	//	String cellular = txtCellular.getText();
+	//	String pager = txtPager.getText();
+	//	String ext = txtExt.getText();
+	//	String prefix = txtPrefix.getText();
 
 		boolean blnName = validate.validateEmptyness(customerName);
 		if (!blnName) {
@@ -400,11 +400,11 @@ public class CompanyAddController extends Application implements Initializable {
 			txtCompany.setStyle("-fx-text-box-border: red;");
 			lblCompany.setVisible(true);
 			// lblCompany.setText("Company Name is Mandatory");
-			lblCompany.setTextFill(Color.RED);
+			//lblCompany.setTextFill(Color.RED);
 
 		}
 
-		boolean blnAddress = validate.validateEmptyness(address);
+	/*	boolean blnAddress = validate.validateEmptyness(address);
 		if (!blnAddress) {
 			result = false;
 			txtAddress.setStyle("-fx-text-box-border: red;");
@@ -555,7 +555,7 @@ public class CompanyAddController extends Application implements Initializable {
 			lblPrefix.setVisible(true);
 			// lblFax.setText("Unit Number is Mandatory");
 			lblPrefix.setTextFill(Color.RED);
-		}
+	}*/	
 
 		return result;
 
