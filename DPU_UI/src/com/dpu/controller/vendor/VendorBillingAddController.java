@@ -1,34 +1,18 @@
 package com.dpu.controller.vendor;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import javax.swing.JOptionPane;
-
-import org.codehaus.jackson.map.ObjectMapper;
-
-import com.dpu.client.GetAPIClient;
-import com.dpu.constants.Iconstants;
-import com.dpu.model.Vendor;
 import com.dpu.model.VendorBillingLocation;
 import com.dpu.util.Validate;
 
-import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class VendorBillingAddController implements Initializable {
@@ -97,8 +81,8 @@ public class VendorBillingAddController implements Initializable {
 			try {
 				String company = txtCompany.getText();
 				String address = txtAddress.getText();
-				String city = txtCity.getText();
 				String phone = txtPhone.getText();
+				String city = txtCity.getText();
 				String contact = txtContact.getText();
 				String zip = txtZip.getText();
 				String fax = txtFax.getText();
@@ -106,9 +90,9 @@ public class VendorBillingAddController implements Initializable {
 				VendorBillingLocation bcm1 = new VendorBillingLocation(company, address, city, phone, contact, zip, fax,statusId);
 
 				if (VendorAddController.add == 0) {
-					VendorEditController.listOfBilling.set(VendorAddController.addEditIndex, bcm1);
+					VendorAddController.listOfBilling.set(VendorAddController.addEditIndex, bcm1);
 				} else if(VendorAddController.add == 1){
-					VendorEditController.listOfBilling.add(bcm1);
+					VendorAddController.listOfBilling.add(bcm1);
 				}
 				/*if (CompanyAddController.add == 0) {
 					CompanyAddController.listOfBilling.set(CompanyAddController.addEditIndex, bcm1);
@@ -125,6 +109,7 @@ public class VendorBillingAddController implements Initializable {
 				stage.setScene(new Scene(root));
 				stage.show();*/
 				closeAddBillingScreen(btnSaveBillingLocation);
+				VendorAddController.fetchBillingLocationsUsingDuplicate();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

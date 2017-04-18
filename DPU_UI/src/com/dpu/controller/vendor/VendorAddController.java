@@ -21,7 +21,7 @@ import com.dpu.model.Vendor;
 import com.dpu.model.VendorAdditionalContacts;
 import com.dpu.model.VendorBillingLocation;
 import com.dpu.request.CompanyModel;
-import com.dpu.util.RightMenu;
+import com.dpu.util.VendorAddControllerBillingLocationRightMenu;
 import com.dpu.util.Validate;
 
 import javafx.application.Application;
@@ -79,10 +79,14 @@ public class VendorAddController extends Application implements Initializable {
 
 	@FXML
 	public TableView<VendorBillingLocation> tableBillingLocations;
+	
+	public static TableView<VendorBillingLocation> duplicateTableBillingLocations;
 
 	@FXML
 	private TableView<AdditionalContact> tableAdditionalContact;
 
+	public static TableView<AdditionalContact> duplicateTableAdditionalContact;
+	
 	@FXML
 	public TextField txtAddress, txtAfterHours, txtCellular, txtCity, txtCompany, txtContact, txtEmail, txtExt, txtFax, txtPager, 
 	txtPhone, txtPosition, txtPrefix, txtProvince, txtTollFree, txtUnitNo, txtWebsite, txtZip;
@@ -178,6 +182,7 @@ public class VendorAddController extends Application implements Initializable {
 		MenuItem edit = new MenuItem("Edit");
 		rightMenu.menuEdit(edit, Iconstants.VENDOR_BASE_PACKAGE, Iconstants.XML_VENDOR_BILLING_LOCATION_EDIT_SCREEN, "Edit Billing Location");
 		MenuItem delete = new MenuItem("Delete");
+		rightMenu.menuDelete(delete, null, null, null);
 		MenuItem duplicate = new MenuItem("Duplicate");
 		MenuItem personalize = new MenuItem("Personalize");
 		MenuItem filterBy = new MenuItem("Filter By");
@@ -203,7 +208,7 @@ public class VendorAddController extends Application implements Initializable {
 		});
 	}
 	
-	RightMenu rightMenu = new RightMenu();
+	VendorAddControllerBillingLocationRightMenu rightMenu = new VendorAddControllerBillingLocationRightMenu();
 	
 	@FXML
 	private void vendorNameKeyReleased() {
@@ -263,7 +268,7 @@ public class VendorAddController extends Application implements Initializable {
 	}
 	
 	public void fetchBillingLocations() {
-		// fetchColumns();
+//		 fetchColumns();
 
 		Platform.runLater(new Runnable() {
 
@@ -271,11 +276,38 @@ public class VendorAddController extends Application implements Initializable {
 			public void run() {
 				try {
 
-					if (VendorEditController.listOfBilling != null & !(VendorEditController.listOfBilling.isEmpty())) {
-						ObservableList<VendorBillingLocation> data = FXCollections.observableArrayList(VendorEditController.listOfBilling);
+					if (listOfBilling != null & !(listOfBilling.isEmpty())) {
+						ObservableList<VendorBillingLocation> data = FXCollections.observableArrayList(listOfBilling);
 						setColumnValues();
 						tableBillingLocations.setItems(data);
 						tableBillingLocations.setVisible(true);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Try Again..  " + e, "Info", 1);
+				}
+			}
+
+		});
+	}
+	
+	public static void fetchBillingLocationsUsingDuplicate() {
+
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+
+					if (listOfBilling != null & !(listOfBilling.isEmpty())) {
+						ObservableList<VendorBillingLocation> data = FXCollections.observableArrayList(listOfBilling);
+						duplicateTableBillingLocations.setItems(data);
+						duplicateTableBillingLocations.setVisible(true);
+					} else {
+						listOfBilling = new ArrayList<>();
+						ObservableList<VendorBillingLocation> data = FXCollections.observableArrayList(listOfBilling);
+						duplicateTableBillingLocations.setItems(data);
+						duplicateTableBillingLocations.setVisible(true);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -289,65 +321,90 @@ public class VendorAddController extends Application implements Initializable {
 	private void setColumnValues() {
 
 		name.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<VendorBillingLocation, String>, ObservableValue<String>>() {
+			new Callback<TableColumn.CellDataFeatures<VendorBillingLocation, String>, ObservableValue<String>>() {
 
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<VendorBillingLocation, String> param) {
-						return new SimpleStringProperty(param.getValue().getName() + "");
-					}
-				});
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<VendorBillingLocation, String> param) {
+					return new SimpleStringProperty(param.getValue().getName() + "");
+				}
+			});
 		address.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<VendorBillingLocation, String>, ObservableValue<String>>() {
+			new Callback<TableColumn.CellDataFeatures<VendorBillingLocation, String>, ObservableValue<String>>() {
 
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<VendorBillingLocation, String> param) {
-						return new SimpleStringProperty(param.getValue().getAddress() + "");
-					}
-				});
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<VendorBillingLocation, String> param) {
+					return new SimpleStringProperty(param.getValue().getAddress() + "");
+				}
+			});
 		city.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<VendorBillingLocation, String>, ObservableValue<String>>() {
+			new Callback<TableColumn.CellDataFeatures<VendorBillingLocation, String>, ObservableValue<String>>() {
 
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<VendorBillingLocation, String> param) {
-						return new SimpleStringProperty(param.getValue().getCity() + "");
-					}
-				});
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<VendorBillingLocation, String> param) {
+					return new SimpleStringProperty(param.getValue().getCity() + "");
+				}
+			});
 		phone.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<VendorBillingLocation, String>, ObservableValue<String>>() {
+			new Callback<TableColumn.CellDataFeatures<VendorBillingLocation, String>, ObservableValue<String>>() {
 
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<VendorBillingLocation, String> param) {
-						return new SimpleStringProperty(param.getValue().getPhone() + "");
-					}
-				});
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<VendorBillingLocation, String> param) {
+					return new SimpleStringProperty(param.getValue().getPhone() + "");
+				}
+			});
 		contact.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<VendorBillingLocation, String>, ObservableValue<String>>() {
+			new Callback<TableColumn.CellDataFeatures<VendorBillingLocation, String>, ObservableValue<String>>() {
 
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<VendorBillingLocation, String> param) {
-						return new SimpleStringProperty(param.getValue().getContact() + "");
-					}
-				});
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<VendorBillingLocation, String> param) {
+					return new SimpleStringProperty(param.getValue().getContact() + "");
+				}
+			});
 		zip.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<VendorBillingLocation, String>, ObservableValue<String>>() {
+			new Callback<TableColumn.CellDataFeatures<VendorBillingLocation, String>, ObservableValue<String>>() {
 
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<VendorBillingLocation, String> param) {
-						return new SimpleStringProperty(param.getValue().getZip() + "");
-					}
-				});
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<VendorBillingLocation, String> param) {
+					return new SimpleStringProperty(param.getValue().getZip() + "");
+				}
+			});
 		fax.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<VendorBillingLocation, String>, ObservableValue<String>>() {
+			new Callback<TableColumn.CellDataFeatures<VendorBillingLocation, String>, ObservableValue<String>>() {
 
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<VendorBillingLocation, String> param) {
-						return new SimpleStringProperty(param.getValue().getFax() + "");
-					}
-				});
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<VendorBillingLocation, String> param) {
+					return new SimpleStringProperty(param.getValue().getFax() + "");
+				}
+			});
 	}
 
 	public void fetchAdditionalContacts() {
 		// fetchColumns();
+
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+
+					if (VendorEditController.listOfAdditionalContact != null
+							& !(VendorEditController.listOfAdditionalContact.isEmpty())) {
+						ObservableList<AdditionalContact> data = FXCollections
+								.observableArrayList(VendorEditController.listOfAdditionalContact);
+						setAdditionalContactColumnValues();
+						tableAdditionalContact.setItems(data);
+						tableAdditionalContact.setVisible(true);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Try Again..  " + e, "Info", 1);
+				}
+			}
+
+		});
+	}
+	
+	public void fetchAdditionalContactsUsingDuplicate() {
 
 		Platform.runLater(new Runnable() {
 
@@ -451,6 +508,11 @@ public class VendorAddController extends Application implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		duplicateTableBillingLocations = tableBillingLocations;
+		duplicateTableAdditionalContact = tableAdditionalContact;
+//		fetchColumns();
+		setColumnValues();
+		setAdditionalContactColumnValues();
 	}
 	
 
@@ -750,7 +812,7 @@ public class VendorAddController extends Application implements Initializable {
 
 	}
 
-	@SuppressWarnings("unchecked")
+	/*@SuppressWarnings("unchecked")
 	private void fetchColumns() {
 		name = (TableColumn<VendorBillingLocation, String>) tableBillingLocations.getColumns().get(0);
 		address = (TableColumn<VendorBillingLocation, String>) tableBillingLocations.getColumns().get(1);
@@ -760,7 +822,7 @@ public class VendorAddController extends Application implements Initializable {
 		zip = (TableColumn<VendorBillingLocation, String>) tableBillingLocations.getColumns().get(5);
 		fax = (TableColumn<VendorBillingLocation, String>) tableBillingLocations.getColumns().get(6);
 
-	}
+	}*/
 
 	private Object showPanel(String basePackage, String screenName) {
 		try {

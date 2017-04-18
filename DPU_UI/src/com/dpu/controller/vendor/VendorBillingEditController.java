@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import com.dpu.constants.Iconstants;
 import com.dpu.model.BillingControllerModel;
+import com.dpu.model.VendorBillingLocation;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -63,33 +64,26 @@ public class VendorBillingEditController implements Initializable {
 			String zip = txtZip.getText();
 			String fax = txtFax.getText();
 			Long statusId =Long.parseLong("1");
-			BillingControllerModel bcm1 = new BillingControllerModel(company, address, city, phone, contact, zip, fax,statusId);
+			VendorBillingLocation bcm1 = new VendorBillingLocation(company, address, city, phone, contact, zip, fax,statusId);
 
-//			if (CompanyEditController.addBillingLocation == 0 ) {
-//				if (CompanyEditController.billingLocationIdPri != 0l
-//						|| CompanyEditController.billingLocationIdPri != null)
-//				bcm1.setBillingLocationId(CompanyEditController.billingLocationIdPri);
-//				CompanyEditController.listOfBilling.set(CompanyEditController.editIndex, bcm1);
-//				CompanyEditController.billingLocationIdPri = 0l;
-//
-//			} else if (CompanyEditController.addBillingLocation == 1) {
-//				CompanyEditController.listOfBilling.add(bcm1);
-//				
-//			}
+			if (VendorEditController.addBillingLocation == 0 ) {
+				if (VendorEditController.billingLocationIdPri != 0l
+						|| VendorEditController.billingLocationIdPri != null)
+				bcm1.setBillingLocationId(VendorEditController.billingLocationIdPri);
+				VendorAddController.listOfBilling.set(VendorEditController.editIndex, bcm1);
+				VendorEditController.billingLocationIdPri = 0l;
 
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-					.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_EDIT_SCREEN));
-			Parent root = (Parent) fxmlLoader.load();
-			Stage stage = new Stage();
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Update Company");
-			stage.setScene(new Scene(root));
-			stage.show();
+			} else if (VendorEditController.addBillingLocation == 1) {
+				VendorEditController.listOfBilling.add(bcm1);
+				
+			}
+			closeAddBillingScreen(btnUpdateBillingLocation);
+			VendorAddController.fetchBillingLocationsUsingDuplicate();
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		closeAddBillingScreen(btnUpdateBillingLocation);
+//		closeAddBillingScreen(btnUpdateBillingLocation);
 
 	}
 
@@ -116,7 +110,7 @@ public class VendorBillingEditController implements Initializable {
 		closeAddBillingScreen(btnCancelBillingLocation);
 	}
 
-	@FXML
+	/*@FXML
 	void initialize() {
 		assert btnUpdateBillingLocation != null : "fx:id=\"btnSaveBillingLocation\" was not injected: check your FXML file 'AddBillingLocationScreen.fxml'.";
 		assert txtAddress != null : "fx:id=\"txtAddress\" was not injected: check your FXML file 'AddBillingLocationScreen.fxml'.";
@@ -127,21 +121,21 @@ public class VendorBillingEditController implements Initializable {
 		assert txtPhone != null : "fx:id=\"txtPhone\" was not injected: check your FXML file 'AddBillingLocationScreen.fxml'.";
 		assert txtZip != null : "fx:id=\"txtZip\" was not injected: check your FXML file 'AddBillingLocationScreen.fxml'.";
 
-	}
+	}*/
 
 	public void initialize(URL location, ResourceBundle resources) {
 
-//		if (CompanyEditController.addBillingLocation != 1) {
-//			if (CompanyEditController.billingControllerModel != null) {
-//				txtCompany.setText(CompanyEditController.billingControllerModel.getName());
-//				txtAddress.setText(CompanyEditController.billingControllerModel.getAddress());
-//				txtCity.setText(CompanyEditController.billingControllerModel.getCity());
-//				txtPhone.setText(CompanyEditController.billingControllerModel.getPhone());
-//				txtContact.setText(CompanyEditController.billingControllerModel.getPhone());
-//				txtZip.setText(CompanyEditController.billingControllerModel.getZip());
-//				txtFax.setText(CompanyEditController.billingControllerModel.getFax());
-//			}
-//		}
+		if (VendorEditController.addBillingLocation != 1) {
+			if (VendorEditController.vendorBillingLocation != null) {
+				txtCompany.setText(VendorEditController.vendorBillingLocation.getName());
+				txtAddress.setText(VendorEditController.vendorBillingLocation.getAddress());
+				txtCity.setText(VendorEditController.vendorBillingLocation.getCity());
+				txtPhone.setText(VendorEditController.vendorBillingLocation.getPhone());
+				txtContact.setText(VendorEditController.vendorBillingLocation.getPhone());
+				txtZip.setText(VendorEditController.vendorBillingLocation.getZip());
+				txtFax.setText(VendorEditController.vendorBillingLocation.getFax());
+			}
+		}
 
 	}
 }

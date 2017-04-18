@@ -118,39 +118,22 @@ public class VendorAdditionalContactAddController implements Initializable {
 
 			String status = ddlStatus.getSelectionModel().getSelectedItem();
 			String email = txtEmail.getText();
-			AdditionalContact bcm1 = new AdditionalContact(additionalContact, position, phone, fax, cellular, email,
-					extension, pager, status);
-			/*CompanyAddController.selectedTabValue = 1;
-			// if(CompanyAddController.addEditIndex != -1){
-			if (CompanyAddController.addAddtionalContact == 0) {
-				CompanyEditController.listOfAdditionalContact.set(CompanyAddController.addEditIndex, bcm1);
-			} else if (CompanyAddController.addAddtionalContact == 1) {
-				CompanyEditController.listOfAdditionalContact.add(bcm1);
-			}*/
-			/*
-			 * if (CompanyAddController.addAddtionalContact == 0) {
-			 * CompanyAddController.listOfAdditionalContact.set(
-			 * CompanyAddController.addEditIndex, bcm1); } else
-			 * if(CompanyAddController.addAddtionalContact == 1){
-			 * CompanyAddController.listOfAdditionalContact.add(bcm1); }
-			 */
-			// }
+			AdditionalContact bcm1 = new AdditionalContact(additionalContact, position, phone, fax, cellular, email, extension, pager, status);
+			
+			VendorAddController.selectedTabValue = 1;
+			if (VendorAddController.addEditIndex != -1) {
+				if (VendorAddController.addAddtionalContact == 0) {
+					VendorAddController.listOfAdditionalContact.set(VendorAddController.addEditIndex, bcm1);
+				} else if (VendorAddController.addAddtionalContact == 1) {
+					VendorAddController.listOfAdditionalContact.add(bcm1);
+				}
+			}
 
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-					.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_ADD_SCREEN));
-			Parent root = (Parent) fxmlLoader.load();
-
-			Stage stage = new Stage();
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add New Company");
-			stage.setScene(new Scene(root));
-			stage.show();
-
+//			VendorAddController.selectedTabValue = 0;
+			closeAddAdditionalContactScreen(btnSaveAdditionalContact);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-//		CompanyAddController.selectedTabValue = 0;
-		closeAddAdditionalContactScreen(btnSaveAdditionalContact);
 	}
 
 	private void closeAddAdditionalContactScreen(Button clickedButton) {
@@ -158,30 +141,9 @@ public class VendorAdditionalContactAddController implements Initializable {
 		loginStage.close();
 	}
 
-	@FXML
-	void initialize() {
-//		assert btnCancelAdditionalContact != null : "fx:id=\"btnCancelAdditionalContact\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert btnSaveAdditionalContact != null : "fx:id=\"btnSaveAdditionalContact\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert chkActualDelivery != null : "fx:id=\"chkActualDelivery\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert chkActualPickupDetails != null : "fx:id=\"chkActualPickupDetails\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert chkETADeliveryDetails != null : "fx:id=\"chkETADeliveryDetails\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert chkETAPickupDetails != null : "fx:id=\"chkETAPickupDetails\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert chkOrderConfirmation != null : "fx:id=\"chkOrderConfirmation\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert ddlStatus != null : "fx:id=\"ddlStatus\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert txtAdditionalContact != null : "fx:id=\"txtAdditionalContact\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert txtCellular != null : "fx:id=\"txtCellular\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert txtEmail != null : "fx:id=\"txtEmail\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert txtExtension != null : "fx:id=\"txtExtension\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert txtFax != null : "fx:id=\"txtFax\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert txtPager != null : "fx:id=\"txtPager\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert txtPhone != null : "fx:id=\"txtPhone\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert txtPosition != null : "fx:id=\"txtPosition\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-
-	}
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-//		fetchMasterDataForDropDowns();
+		fetchMasterDataForDropDowns();
 //		if (CompanyAddController.addAddtionalContact != 1) {
 //			if (CompanyAddController.additionalContactModel != null) {
 //

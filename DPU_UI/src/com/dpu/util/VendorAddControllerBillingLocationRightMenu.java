@@ -1,6 +1,8 @@
 package com.dpu.util;
 
+import com.dpu.controller.CompanyEditController;
 import com.dpu.controller.vendor.VendorAddController;
+import com.dpu.controller.vendor.VendorEditController;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -11,7 +13,7 @@ import javafx.scene.control.MenuItem;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class RightMenu {
+public class VendorAddControllerBillingLocationRightMenu {
 
 	public void menuAdd(MenuItem item1, String basePackage, String screen, String title) {
 		item1.setStyle("-fx-padding: 0 10 0 10;");
@@ -20,12 +22,27 @@ public class RightMenu {
 			@Override
 			public void handle(ActionEvent event) {
 				VendorAddController.add = 1;
-//				CompanyEditController.selectedTabValue = 0;
+				VendorAddController.selectedTabValue = 0;
 //				CompanyAddController.listOfBilling = new ArrayList<BillingControllerModel>();
 //				CompanyAddController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
 //				CompanyAddController.company = new CompanyModel();
 				openScreen(basePackage, screen, title);
 
+			}
+		});
+	}
+	
+	public void menuDelete(MenuItem item1, String basePackage, String screen, String title) {
+		item1.setStyle("-fx-padding: 0 10 0 10;");
+		item1.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				VendorAddController.selectedTabValue = 0;
+				VendorAddController.addEditIndex = VendorAddController.duplicateTableBillingLocations.getSelectionModel().getSelectedIndex();
+				VendorAddController.listOfBilling.remove(VendorAddController.addEditIndex);
+				VendorAddController.fetchBillingLocationsUsingDuplicate();
+				VendorAddController.addEditIndex = -1;
 			}
 		});
 	}
@@ -37,7 +54,14 @@ public class RightMenu {
 
 			@Override
 			public void handle(ActionEvent event) {
-
+//				selectedTabValue = 0;
+				VendorAddController.add = 0;
+				VendorAddController.addEditIndex = VendorAddController.duplicateTableBillingLocations.getSelectionModel().getSelectedIndex();
+				VendorEditController.editIndex = VendorAddController.duplicateTableBillingLocations.getSelectionModel().getSelectedIndex();
+				VendorEditController.vendorBillingLocation = VendorAddController.duplicateTableBillingLocations.getSelectionModel().getSelectedItem();
+				if (VendorEditController.vendorBillingLocation.getBillingLocationId() != null)
+					VendorEditController.billingLocationIdPri = VendorEditController.vendorBillingLocation.getBillingLocationId();
+				openScreen(basePackage, screen, title);
 //				CompanyEditController.listOfBilling = new ArrayList<BillingControllerModel>();
 //				CompanyEditController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
 //				CompanyEditController.company = new CompanyModel();
@@ -104,7 +128,7 @@ public class RightMenu {
 										}
 									}*/
 
-							openScreen(basePackage, screen, title);
+//							openScreen(basePackage, screen, title);
 //									classa.initData(c);
 //								}
 //							} catch (Exception e) {

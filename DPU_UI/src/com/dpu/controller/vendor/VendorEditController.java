@@ -177,7 +177,7 @@ public class VendorEditController extends Application implements Initializable {
 	public static int editIndex = -1;
 	public static int addBillingLocation = 0;
 	public static int addAddtionalContact = 0;
-	public static VendorBillingLocation VendorBillingLocation = new VendorBillingLocation();
+	public static VendorBillingLocation vendorBillingLocation = new VendorBillingLocation();
 	public static AdditionalContact additionalContactModel = new AdditionalContact();
 	public static ArrayList<VendorBillingLocation> listOfBilling = new ArrayList<VendorBillingLocation>(); 
 	public static ArrayList<AdditionalContact> listOfAdditionalContact = new ArrayList<AdditionalContact>();
