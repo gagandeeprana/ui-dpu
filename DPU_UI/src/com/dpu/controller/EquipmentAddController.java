@@ -27,8 +27,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -42,6 +44,8 @@ public class EquipmentAddController extends Application implements Initializable
 
 	@FXML
 	ComboBox<String> ddlType;
+	@FXML
+	Label lblName, lblDescription, lblType;
 
 	Validate validate = new Validate();
 
@@ -56,35 +60,49 @@ public class EquipmentAddController extends Application implements Initializable
 	}
 
 	private boolean validateAddEquipmentScreen() {
+		boolean response = true;
 		String name = txtName.getText();
 		String description = txtDescription.getText();
 		String type = ddlType.getSelectionModel().getSelectedItem();
 
 		boolean result = validate.validateEmptyness(name);
 		if (!result) {
-			ValidationController.str = validsteFields();
-			openValidationScreen();
+			// ValidationController.str = validsteFields();
+			// openValidationScreen();
 			txtName.setStyle("-fx-focus-color: red;");
-			txtDescription.requestFocus();
+			lblName.setVisible(true);
+			lblName.setText("Equipment Name is Mandatory");
+			lblName.setTextFill(Color.RED);
+
+		} else if (!validate.validateLength(name, 5, 25)) {
+			response = false;
+			txtName.setStyle("-fx-focus-color: red;");
+			lblName.setVisible(true);
+			lblName.setText("Min. length 5 and Max. length 25");
+			lblName.setTextFill(Color.RED);
 			return result;
 		}
 		result = validate.validateEmptyness(description);
 		if (!result) {
-			ValidationController.str = validsteFields();
-			openValidationScreen();
-			txtName.setStyle("-fx-focus-color: red;");
-			txtDescription.requestFocus();
-			return result;
+			response = false;
+			// ValidationController.str = validsteFields();
+			// openValidationScreen();
+			txtDescription.setStyle("-fx-focus-color: red;");
+			lblDescription.setVisible(true);
+			lblDescription.setText("Description name is Mandatory");
+			lblDescription.setTextFill(Color.RED);
 		}
 		result = validate.validateEmptyness(type);
 		if (!result) {
-			ValidationController.str = validsteFields();
-			openValidationScreen();
+			response = false;
+			// ValidationController.str = validsteFields();
+			// openValidationScreen();
 			ddlType.setStyle("-fx-focus-color: red;");
-			ddlType.requestFocus();
-			return result;
+			lblType.setVisible(true);
+			lblType.setText("Type name is Mandatory");
+			lblType.setTextFill(Color.RED);
 		}
-		return result;
+		return response;
 	}
 
 	public StringBuffer validsteFields() {

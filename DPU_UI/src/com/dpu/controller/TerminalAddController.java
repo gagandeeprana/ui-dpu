@@ -17,17 +17,19 @@ import com.dpu.model.Failed;
 import com.dpu.model.Shipper;
 import com.dpu.model.Success;
 import com.dpu.model.Terminal;
+import com.dpu.util.Validate;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class TerminalAddController extends Application implements Initializable {
@@ -40,20 +42,72 @@ public class TerminalAddController extends Application implements Initializable 
 
 	@FXML
 	TextField txtTerminalName;
-
+	@FXML
+	Label lblTerminalName, lblLocation, lblAvailableServices;
+	Validate validate = new Validate();
 	@FXML
 	ComboBox<DPUService> ddlAvailableServices;
+	@FXML
 	ComboBox<String> ddlLocation;
 
 	@FXML
 	private void btnSaveTerminalAction() {
-		addTerminal();
-		closeAddTerminalScreen(btnSaveTerminal);
+		boolean result = validateAddTerminalScreen();
+		if (result) {
+			addTerminal();
+			closeAddTerminalScreen(btnSaveTerminal);
+		}
 	}
 
 	private void closeAddTerminalScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
 		loginStage.close();
+	}
+
+	private boolean validateAddTerminalScreen() {
+		boolean response = true;
+		String name = txtTerminalName.getText();
+		String service = ddlAvailableServices.getSelectionModel().getSelectedItem().toString();
+		String location = ddlLocation.getSelectionModel().getSelectedItem();
+
+		boolean result = validate.validateEmptyness(name);
+		if (!result) {
+			// ValidationController.str = validsteFields();
+			// openValidationScreen();
+			txtTerminalName.setStyle("-fx-focus-color: red;");
+			lblTerminalName.setVisible(true);
+			lblTerminalName.setText("Terminal Name is Mandatory");
+			lblTerminalName.setTextFill(Color.RED);
+
+		} else if (!validate.validateLength(name, 5, 25)) {
+			response = false;
+			txtTerminalName.setStyle("-fx-focus-color: red;");
+			lblTerminalName.setVisible(true);
+			lblTerminalName.setText("Min. length 5 and Max. length 25");
+			lblTerminalName.setTextFill(Color.RED);
+			return result;
+		}
+		result = validate.validateEmptyness(service);
+		if (!result) {
+			response = false;
+			// ValidationController.str = validsteFields();
+			// openValidationScreen();
+			ddlAvailableServices.setStyle("-fx-focus-color: red;");
+			lblAvailableServices.setVisible(true);
+			lblAvailableServices.setText("Service name is Mandatory");
+			lblAvailableServices.setTextFill(Color.RED);
+		}
+		result = validate.validateEmptyness(location);
+		if (!result) {
+			response = false;
+			// ValidationController.str = validsteFields();
+			// openValidationScreen();
+			ddlLocation.setStyle("-fx-focus-color: red;");
+			lblLocation.setVisible(true);
+			lblLocation.setText("Location name is Mandatory");
+			lblLocation.setTextFill(Color.RED);
+		}
+		return response;
 	}
 
 	@FXML
@@ -66,7 +120,7 @@ public class TerminalAddController extends Application implements Initializable 
 	// serviceList = terminal.getServiceList();
 
 	private void createComboBox(List<DPUService> serviceList) {
-//		ComboBox<DPUService> combo = new ComboBox<>();
+		// ComboBox<DPUService> combo = new ComboBox<>();
 		CheckBox btn = new CheckBox();
 		ddlAvailableServices.getItems().addAll(serviceList);
 		ddlAvailableServices.setCellFactory(listView -> new CheckItemListCell());
