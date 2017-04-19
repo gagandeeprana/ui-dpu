@@ -122,10 +122,10 @@ public class AdditionCaarierContactAddController implements Initializable {
 			AddtionalCarrierContact addtionalCarrierContact = new AddtionalCarrierContact(additionalContact, position,
 					phone, extension, fax, pager, cellular, status, email);
 			if (CarrierAddController.addAddtionalContact == 0) {
-				CarrierAddController.listOfAdditionalContact.set(CarrierAddController.addEditIndex,
+				CarrierEditController.listOfAdditionalContact.set(CarrierAddController.addEditIndex,
 						addtionalCarrierContact);
 			} else if (CarrierAddController.addAddtionalContact == 1) {
-				CarrierAddController.listOfAdditionalContact.add(addtionalCarrierContact);
+				CarrierEditController.listOfAdditionalContact.add(addtionalCarrierContact);
 			}
 			// CarrierAddController.listOfAdditionalContact.add(addtionalCarrierContact);
 			openAddCarrierScree();
