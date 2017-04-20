@@ -6,30 +6,23 @@ public class BillingControllerModel {
 	private String name;
 	private String address;
 	private String city;
-	private String zip;
-	private Long statusId;
-	private String contact;
-	private String position;
-	private String email;
-	private String cellular;
 	private String phone;
-	private String ext;
+	private String contact;
+	private String zip;
 	private String fax;
-	private String tollfree;
 
 	public Long companyId;
 	public Long billingLocationId = null;
 
-	public BillingControllerModel(String company, String address2, String city2, String phone2, String contact2,
-			String zip2, String fax2, Long statusId2) {
+	public BillingControllerModel(String company, String address, String city, String phone, String contact, String zip,
+			String fax) {
 		this.name = company;
-		this.address = address2;
-		this.city = city2;
-		this.phone = phone2;
-		this.contact = contact2;
-		this.zip = zip2;
-		this.fax = fax2;
-		this.statusId = statusId2;
+		this.address = address;
+		this.city = city;
+		this.phone = phone;
+		this.contact = contact;
+		this.zip = zip;
+		this.fax = fax;
 
 	}
 
@@ -85,44 +78,12 @@ public class BillingControllerModel {
 		this.zip = zip;
 	}
 
-	public Long getStatusId() {
-		return statusId;
-	}
-
-	public void setStatusId(Long statusId) {
-		this.statusId = statusId;
-	}
-
 	public String getContact() {
 		return contact;
 	}
 
 	public void setContact(String contact) {
 		this.contact = contact;
-	}
-
-	public String getPosition() {
-		return position;
-	}
-
-	public void setPosition(String position) {
-		this.position = position;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getCellular() {
-		return cellular;
-	}
-
-	public void setCellular(String cellular) {
-		this.cellular = cellular;
 	}
 
 	public String getPhone() {
@@ -133,28 +94,12 @@ public class BillingControllerModel {
 		this.phone = phone;
 	}
 
-	public String getExt() {
-		return ext;
-	}
-
-	public void setExt(String ext) {
-		this.ext = ext;
-	}
-
 	public String getFax() {
 		return fax;
 	}
 
 	public void setFax(String fax) {
 		this.fax = fax;
-	}
-
-	public String getTollfree() {
-		return tollfree;
-	}
-
-	public void setTollfree(String tollfree) {
-		this.tollfree = tollfree;
 	}
 
 }
