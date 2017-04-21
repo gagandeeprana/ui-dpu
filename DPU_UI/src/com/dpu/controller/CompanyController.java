@@ -30,24 +30,20 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TablePosition;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -62,11 +58,11 @@ public class CompanyController extends Application implements Initializable {
 
 	@FXML
 	Pane root, headerPaneCompany;
-	
+
 	private void filterBySelectedValue() {
-		
+
 		tblCompany.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-			  
+
 			@Override
 			public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
 				// Check whether item is selected and set value of selected item
@@ -77,15 +73,15 @@ public class CompanyController extends Application implements Initializable {
 					TableViewSelectionModel selectionModel = tblCompany.getSelectionModel();
 					ObservableList selectedCells = selectionModel.getSelectedCells();
 					TablePosition tablePosition = (TablePosition) selectedCells.get(0);
-					if(!newValue.equals(null))
-							  val = tablePosition.getTableColumn().getCellData(newValue);
-					if(val != null)
+					if (!newValue.equals(null))
+						val = tablePosition.getTableColumn().getCellData(newValue);
+					if (val != null)
 						valu = val + "";
-					 
+
 					int countt = 0;
-					
+
 					if (valu.length() > 0 && countt == 0) {
-						countt =1;
+						countt = 1;
 						String value = valu.toLowerCase();
 						ObservableList<CompanyModel> subentries = FXCollections.observableArrayList();
 
@@ -108,9 +104,7 @@ public class CompanyController extends Application implements Initializable {
 
 		});
 
-		 
 	}
-
 
 	@FXML
 	TableView<CompanyModel> tblCompany;
@@ -172,6 +166,22 @@ public class CompanyController extends Application implements Initializable {
 		openAddCompanyScreen();
 
 	}
+
+	/*public TableRow<CompanyModel> rowNumber() {
+		TableRow<CompanyModel> row = new TableRow<>();
+		tblCompany.setRowFactory(tv -> {
+
+			row.setOnMouseClicked(event -> {
+				if (event.getClickCount() == 2 && (!row.isEmpty())) {
+					CompanyModel rowData = row.getItem();
+					System.out.println(rowData);
+				}
+			});
+			return row;
+		});
+		return row;
+
+	}*/
 
 	public static Long companyId = 0l;
 
@@ -365,9 +375,39 @@ public class CompanyController extends Application implements Initializable {
 		afterHours.setVisible(afterHourss);
 	}
 
+	@FXML
+	public void clickItem(MouseEvent event) {
+		if (event.getClickCount() == 2) // Checking double click
+		{
+			System.out.println("Doble clicked........");
+		}
+	}
+
+	int clickCounter = 0;
+
 	@Override
 	public void start(Stage stage) {
+		/*System.out.println("START");
 
+		tblCompany.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if (event.getClickCount() > 1) {
+					System.out.println("double clicked!");
+				}
+			}
+		});
+
+		tblCompany.setRowFactory(tv -> {
+			TableRow<CompanyModel> row = new TableRow<>();
+			row.setOnMouseClicked(event -> {
+				if (event.getClickCount() == 2 && (!row.isEmpty())) {
+					CompanyModel rowData = row.getItem();
+					System.out.println(rowData);
+				}
+			});
+			return row;
+		});*/
 	}
 
 	/*
@@ -593,24 +633,44 @@ public class CompanyController extends Application implements Initializable {
 		// Add MenuItem to ContextMenu
 		contextMenu.getItems().addAll(add, edit, delete, duplicate, personalize, filterBy, filterByExclude,
 				clearAllFilters);
+
 		if (tblCompanyMenuCount == 0) {
 			tblCompanyMenuCount++;
 			// When user right-click on Table
 			tblCompany.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				int click = 0;
 
 				@Override
 				public void handle(MouseEvent mouseEvent) {
 
 					if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
+
 						if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.SECONDARY)) {
 							contextMenu.show(tblCompany, mouseEvent.getScreenX(), mouseEvent.getScreenY());
-							//textfield.setVisible(false);
+							// textfield.setVisible(false);
 							// contextMenu1 = new ContextMenu();
 							// contextMenu1.hide();
 						} else {
 							contextMenu.hide();
+							click++;
+							//System.out.println("now doublyyy" + click);
+
 						}
+						if (click == 2) {
+							btnEditCompanyAction();
+							//System.out.println("try doble====");
+							click = 0;
+						}
+
 					}
+					/*try {
+						Thread.sleep(2000);
+						if (click == 1) {
+							click = 0;
+						}
+					} catch (Exception e) {
+
+					}*/
 				}
 
 			});
@@ -924,7 +984,7 @@ public class CompanyController extends Application implements Initializable {
 
 		if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
 			if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.SECONDARY)) {
-				//textfield.setVisible(false);
+				// textfield.setVisible(false);
 				contextMenu.show(tblCompany, mouseEvent.getScreenX(), mouseEvent.getScreenY());
 
 			} else {

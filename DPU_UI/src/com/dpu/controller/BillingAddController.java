@@ -3,22 +3,17 @@ package com.dpu.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.dpu.constants.Iconstants;
 import com.dpu.model.BillingControllerModel;
 import com.dpu.util.Validate;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class BillingAddController implements Initializable {
@@ -69,9 +64,9 @@ public class BillingAddController implements Initializable {
 				String contact = txtContact.getText();
 				String zip = txtZip.getText();
 				String fax = txtFax.getText();
-				Long statusId = Long.parseLong("1");
+				// Long statusId = Long.parseLong("1");
 				BillingControllerModel bcm1 = new BillingControllerModel(company, address, city, phone, contact, zip,
-						fax, statusId);
+						fax);
 
 				if (CompanyAddController.add == 0) {
 					CompanyEditController.listOfBilling.set(CompanyAddController.addEditIndex, bcm1);
@@ -79,18 +74,9 @@ public class BillingAddController implements Initializable {
 					CompanyEditController.listOfBilling.add(bcm1);
 				}
 
-				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-						.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_ADD_SCREEN));
-				Parent root = (Parent) fxmlLoader.load();
-				Stage stage = new Stage();
-				stage.initModality(Modality.APPLICATION_MODAL);
-				stage.setTitle("Add New Company");
-				stage.setScene(new Scene(root));
-				stage.show();
-
 			} catch (Exception e) {
-				e.printStackTrace();
 			}
+			CompanyAddController.fetchBillingLocationsUsingDuplicate();
 			closeAddBillingScreen(btnSaveBillingLocation);
 		}
 
@@ -103,56 +89,28 @@ public class BillingAddController implements Initializable {
 
 	@FXML
 	void btnCancelBillingLocationAction(ActionEvent event) {
-		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-					.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_ADD_SCREEN));
-			Parent root = (Parent) fxmlLoader.load();
 
-			Stage stage = new Stage();
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add New Company");
-			stage.setScene(new Scene(root));
-			stage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		closeAddBillingScreen(btnCancelBillingLocation);
-	}
-
-	@FXML
-	void initialize() {
-		assert btnSaveBillingLocation != null : "fx:id=\"btnSaveBillingLocation\" was not injected: check your FXML file 'AddBillingLocationScreen.fxml'.";
-		assert txtAddress != null : "fx:id=\"txtAddress\" was not injected: check your FXML file 'AddBillingLocationScreen.fxml'.";
-		assert txtCity != null : "fx:id=\"txtCity\" was not injected: check your FXML file 'AddBillingLocationScreen.fxml'.";
-		assert txtCompany != null : "fx:id=\"txtCompany\" was not injected: check your FXML file 'AddBillingLocationScreen.fxml'.";
-		assert txtContact != null : "fx:id=\"txtContact\" was not injected: check your FXML file 'AddBillingLocationScreen.fxml'.";
-		assert txtFax != null : "fx:id=\"txtFax\" was not injected: check your FXML file 'AddBillingLocationScreen.fxml'.";
-		assert txtPhone != null : "fx:id=\"txtPhone\" was not injected: check your FXML file 'AddBillingLocationScreen.fxml'.";
-		assert txtZip != null : "fx:id=\"txtZip\" was not injected: check your FXML file 'AddBillingLocationScreen.fxml'.";
-
 	}
 
 	public void initialize(URL location, ResourceBundle resources) {
 
 		txtPhone.addEventFilter(KeyEvent.KEY_TYPED, Validate.numeric_Validation(10));
-		txtCompany.addEventFilter(KeyEvent.KEY_TYPED, Validate.letter_Validation(10));
+		//txtCompany.addEventFilter(KeyEvent.KEY_TYPED, Validate.letter_Validation(10));
 
 		if (CompanyAddController.add != 1) {
 			if (CompanyAddController.billingControllerModel != null) {
-				if (CompanyAddController.billingControllerModel.getName() != null) {
-					txtCompany.setText(CompanyAddController.billingControllerModel.getName());
-					txtPhone.setText(CompanyAddController.billingControllerModel.getPhone());
-				}
+				txtCompany.setText(CompanyAddController.billingControllerModel.getName());
+				txtPhone.setText(CompanyAddController.billingControllerModel.getPhone());
 				txtAddress.setText(CompanyAddController.billingControllerModel.getAddress());
 				txtCity.setText(CompanyAddController.billingControllerModel.getCity());
-				txtContact.setText(CompanyAddController.billingControllerModel.getPhone());
+				txtContact.setText(CompanyAddController.billingControllerModel.getContact());
 				txtZip.setText(CompanyAddController.billingControllerModel.getZip());
 				txtFax.setText(CompanyAddController.billingControllerModel.getFax());
 			}
 		}
 
 	}
-
 
 	@FXML
 	Label lblCompany, lblAddress, lblCity, lblZip, lblFax, lblPhone, lblContact;

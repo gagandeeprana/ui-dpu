@@ -254,6 +254,12 @@ public class CarrierEditController extends Application implements Initializable 
 
 	}
 
+	@FXML
+	public void openAdditionalContact() {
+		System.out.println("additional contacts");
+		fetchAdditionalContacts();
+	}
+
 	public void fetchAdditionalCarrierContacts() {
 
 		Platform.runLater(new Runnable() {
@@ -295,6 +301,20 @@ public class CarrierEditController extends Application implements Initializable 
 			e.printStackTrace();
 		}
 	}
+	private void openAddAdditionalContactScreen() {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(
+					Iconstants.CARRIER_BASE_PACKAGE + Iconstants.XML_ADD_CARRIER_ADDITIONAL_CONTACT_SCREEN));
+			Parent root = (Parent) fxmlLoader.load();
+			Stage stage = new Stage();
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setTitle("Add Additional Carrier Contact");
+			stage.setScene(new Scene(root));
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	@FXML
 	void handleAddContMouseClick(MouseEvent event) {
@@ -324,7 +344,7 @@ public class CarrierEditController extends Application implements Initializable 
 				carrierModel.setWebsite(txtWebsite.getText());
 				carrierModel.setName(txtCarrier.getText());
 
-				openEditAdditionalContactScreen();
+				openAddAdditionalContactScreen();
 
 				try {
 					closeEditCarrierScreen(btnSaveCarrier);
@@ -447,6 +467,7 @@ public class CarrierEditController extends Application implements Initializable 
 	}
 
 	ObjectMapper mapper = new ObjectMapper();
+	public List<AddtionalCarrierContact> cList = new ArrayList<AddtionalCarrierContact>();
 
 	private void fetchAdditionalContacts() {
 
@@ -454,11 +475,25 @@ public class CarrierEditController extends Application implements Initializable 
 
 			@Override
 			public void run() {
+				ObservableList<AddtionalCarrierContact> data = null;
 				try {
 					String response = GetAPIClient.callGetAPI(
 							Iconstants.URL_SERVER + Iconstants.URL_CARRIER_CONTACTS + "/" + carrierModel.getCarrierId(),
 							null);
-					List addtionalCarrierContact = mapper.readValue(response, List.class);
+					if (response != null && response.length() > 0) {
+						AddtionalCarrierContact c[] = mapper.readValue(response, AddtionalCarrierContact[].class);
+						cList = new ArrayList<AddtionalCarrierContact>();
+						for (AddtionalCarrierContact ccl : c) {
+							cList.add(ccl);
+						}
+						data = FXCollections.observableArrayList(cList);
+					} else {
+						data = FXCollections.observableArrayList(cList);
+					}
+					setAdditionalContactColumnValues();
+					tableAdditionalContact.setItems(data);
+
+					tableAdditionalContact.setVisible(true);
 
 				} catch (Exception e) {
 					e.printStackTrace();
