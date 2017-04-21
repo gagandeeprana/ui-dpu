@@ -1,8 +1,20 @@
 package com.dpu.controller.vendor;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.swing.JOptionPane;
+
+import org.codehaus.jackson.map.ObjectMapper;
+
+import com.dpu.client.GetAPIClient;
+import com.dpu.constants.Iconstants;
+import com.dpu.model.AdditionalContact;
+import com.dpu.model.Status;
+import com.dpu.model.Type;
+
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -67,7 +79,31 @@ public class VendorAdditionalContactEditController implements Initializable {
 
 	@FXML
 	private TextField txtPosition;
+	
+	List<Status> statusList;
 
+	/*private void fetchMasterDataForDropDowns() {
+
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					ObjectMapper mapper = new ObjectMapper();
+					String response = GetAPIClient
+							.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/openAdd", null);
+					AdditionalContact driver = mapper.readValue(response, AdditionalContact.class);
+
+					statusList = driver.getStatusList();
+					fillDropDown(ddlStatus, statusList);
+
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+				}
+			}
+		});
+	}*/
+	
 	@FXML
 	void btnCancelAdditionalContactAction(ActionEvent event) {
 //		try {
@@ -134,46 +170,35 @@ public class VendorAdditionalContactEditController implements Initializable {
 		loginStage.close();
 	}
 
-	@FXML
-	void initialize() {
-//		assert btnCancelAdditionalContact != null : "fx:id=\"btnCancelAdditionalContact\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert btnUpdateAdditionalContact != null : "fx:id=\"btnSaveAdditionalContact\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert chkActualDelivery != null : "fx:id=\"chkActualDelivery\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert chkActualPickupDetails != null : "fx:id=\"chkActualPickupDetails\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert chkETADeliveryDetails != null : "fx:id=\"chkETADeliveryDetails\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert chkETAPickupDetails != null : "fx:id=\"chkETAPickupDetails\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert chkOrderConfirmation != null : "fx:id=\"chkOrderConfirmation\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert ddlStatus != null : "fx:id=\"ddlStatus\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert txtAdditionalContact != null : "fx:id=\"txtAdditionalContact\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert txtCellular != null : "fx:id=\"txtCellular\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert txtEmail != null : "fx:id=\"txtEmail\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert txtExtension != null : "fx:id=\"txtExtension\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert txtFax != null : "fx:id=\"txtFax\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert txtPager != null : "fx:id=\"txtPager\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert txtPhone != null : "fx:id=\"txtPhone\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-//		assert txtPosition != null : "fx:id=\"txtPosition\" was not injected: check your FXML file 'AdditionalContactAddScreen.fxml'.";
-
-	}
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-//		if (CompanyEditController.addAddtionalContact != 1) {
-//			if (CompanyEditController.additionalContactModel != null) {
-//
-//				txtAdditionalContact.setText(CompanyEditController.additionalContactModel.getCustomerName());
-//				txtPosition.setText(CompanyEditController.additionalContactModel.getPosition());
-//				txtExtension.setText(CompanyEditController.additionalContactModel.getExt());
-//				txtFax.setText(CompanyEditController.additionalContactModel.getFax());
-//				txtCellular.setText(CompanyEditController.additionalContactModel.getCellular());
-//				txtEmail.setText(CompanyEditController.additionalContactModel.getEmail());
-//				txtPager.setText(CompanyEditController.additionalContactModel.getPrefix());
-//				txtPhone.setText(CompanyEditController.additionalContactModel.getPhone());
-//				// ddlStatus.getSelectionModel().getSelectedItem();
-//
-//			}
-//		}
-
+		if (VendorEditController.addAddtionalContact != 1) {
+			if (VendorEditController.additionalContactModel != null) {
+				txtAdditionalContact.setText(VendorEditController.additionalContactModel.getCustomerName());
+				txtPosition.setText(VendorEditController.additionalContactModel.getPosition());
+				txtExtension.setText(VendorEditController.additionalContactModel.getExt());
+				txtFax.setText(VendorEditController.additionalContactModel.getFax());
+				txtCellular.setText(VendorEditController.additionalContactModel.getCellular());
+				txtEmail.setText(VendorEditController.additionalContactModel.getEmail());
+				txtPager.setText(VendorEditController.additionalContactModel.getPrefix());
+				txtPhone.setText(VendorEditController.additionalContactModel.getPhone());
+				for(int i=0;i<VendorEditController.vendor.getStatusList().size();i++) {
+					Status status = VendorEditController.vendor.getStatusList().get(i);
+					if(status.getId().equals(VendorEditController.additionalContactModel.getStatus())) {
+						ddlStatus.getSelectionModel().select(i);
+					}
+				}
+			}
+		}
 	}
 
 }
+
+
+
+
+
+
+
+

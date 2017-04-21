@@ -1,5 +1,7 @@
 package com.dpu.model;
 
+import java.util.List;
+
 public class AdditionalContact {
 
 	private String customerName;
@@ -15,6 +17,15 @@ public class AdditionalContact {
 	public Long companyId;
 	public Long additionalContactId = null;
 	private Long status;
+	public List<Status> statusList;
+
+	public List<Status> getStatusList() {
+		return statusList;
+	}
+
+	public void setStatusList(List<Status> statusList) {
+		this.statusList = statusList;
+	}
 
 	public Long getStatus() {
 		return status;

@@ -20,7 +20,7 @@ public class VendorAddControllerAdditionalContactsRightMenu {
 
 			@Override
 			public void handle(ActionEvent event) {
-				VendorAddController.add = 1;
+				VendorAddController.addAddtionalContact = 1;
 				VendorAddController.selectedTabValue = 1;
 //				CompanyAddController.listOfBilling = new ArrayList<BillingControllerModel>();
 //				CompanyAddController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
@@ -37,9 +37,9 @@ public class VendorAddControllerAdditionalContactsRightMenu {
 			@Override
 			public void handle(ActionEvent event) {
 				VendorAddController.selectedTabValue = 1;
-				VendorAddController.addEditIndex = VendorAddController.duplicateTableBillingLocations.getSelectionModel().getSelectedIndex();
-				VendorAddController.listOfBilling.remove(VendorAddController.addEditIndex);
-				VendorAddController.fetchBillingLocationsUsingDuplicate();
+				VendorAddController.addEditIndex = VendorAddController.duplicateTableAdditionalContact.getSelectionModel().getSelectedIndex();
+				VendorAddController.listOfAdditionalContact.remove(VendorAddController.addEditIndex);
+				VendorAddController.fetchAdditionalContactsUsingDuplicate();
 				VendorAddController.addEditIndex = -1;
 			}
 		});
@@ -54,11 +54,11 @@ public class VendorAddControllerAdditionalContactsRightMenu {
 			public void handle(ActionEvent event) {
 //				selectedTabValue = 0;
 				VendorAddController.add = 0;
-				VendorAddController.addEditIndex = VendorAddController.duplicateTableBillingLocations.getSelectionModel().getSelectedIndex();
-				VendorEditController.editIndex = VendorAddController.duplicateTableBillingLocations.getSelectionModel().getSelectedIndex();
-				VendorEditController.vendorBillingLocation = VendorAddController.duplicateTableBillingLocations.getSelectionModel().getSelectedItem();
-				if (VendorEditController.vendorBillingLocation.getBillingLocationId() != null)
-					VendorEditController.billingLocationIdPri = VendorEditController.vendorBillingLocation.getBillingLocationId();
+				VendorAddController.addEditIndex = VendorAddController.duplicateTableAdditionalContact.getSelectionModel().getSelectedIndex();
+				VendorEditController.editIndex = VendorAddController.duplicateTableAdditionalContact.getSelectionModel().getSelectedIndex();
+				VendorEditController.additionalContactModel = VendorAddController.duplicateTableAdditionalContact.getSelectionModel().getSelectedItem();
+				if (VendorEditController.additionalContactModel.getAdditionalContactId() != null)
+					VendorEditController.additionalContactIdPri = VendorEditController.additionalContactModel.getAdditionalContactId();
 				openScreen(basePackage, screen, title);
 //				CompanyEditController.listOfBilling = new ArrayList<BillingControllerModel>();
 //				CompanyEditController.listOfAdditionalContact = new ArrayList<AdditionalContact>();

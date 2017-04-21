@@ -121,16 +121,17 @@ public class VendorAdditionalContactAddController implements Initializable {
 			AdditionalContact bcm1 = new AdditionalContact(additionalContact, position, phone, fax, cellular, email, extension, pager, status);
 			
 			VendorAddController.selectedTabValue = 1;
-			if (VendorAddController.addEditIndex != -1) {
+//			if (VendorAddController.addEditIndex != -1) {
 				if (VendorAddController.addAddtionalContact == 0) {
 					VendorAddController.listOfAdditionalContact.set(VendorAddController.addEditIndex, bcm1);
 				} else if (VendorAddController.addAddtionalContact == 1) {
 					VendorAddController.listOfAdditionalContact.add(bcm1);
 				}
-			}
+//			}
 
 //			VendorAddController.selectedTabValue = 0;
 			closeAddAdditionalContactScreen(btnSaveAdditionalContact);
+			VendorAddController.fetchAdditionalContactsUsingDuplicate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

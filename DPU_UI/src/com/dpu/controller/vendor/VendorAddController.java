@@ -12,17 +12,16 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.controller.MainScreen;
-import com.dpu.controller.ValidationController;
 import com.dpu.model.AdditionalContact;
-import com.dpu.model.VendorBillingLocation;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
 import com.dpu.model.Vendor;
 import com.dpu.model.VendorAdditionalContacts;
 import com.dpu.model.VendorBillingLocation;
 import com.dpu.request.CompanyModel;
-import com.dpu.util.VendorAddControllerBillingLocationRightMenu;
 import com.dpu.util.Validate;
+import com.dpu.util.VendorAddControllerAdditionalContactsRightMenu;
+import com.dpu.util.VendorAddControllerBillingLocationRightMenu;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -30,12 +29,10 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -47,7 +44,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -58,217 +54,54 @@ import javafx.util.Callback;
 
 public class VendorAddController extends Application implements Initializable {
 
-	@FXML
-	private ResourceBundle resources;
-
-	@FXML
-	private URL location;
-
+	public static int add = 0;
+	Validate validate = new Validate();
+	int billingLocationCountMenu = 0;
+	public static int addEditIndex = -1;
+	int additionalContactCountMenu = 0;
+	public static int selectedTabValue = 0;
+	public static int addAddtionalContact = 0;
+	public static Vendor vendor = new Vendor();
+	public static AdditionalContact additionalContactModel = new AdditionalContact();
+	public static VendorBillingLocation VendorBillingLocation = new VendorBillingLocation();
+	public static ArrayList<VendorBillingLocation> listOfBilling = new ArrayList<VendorBillingLocation>();
+	public static ArrayList<AdditionalContact> listOfAdditionalContact = new ArrayList<AdditionalContact>();
+	VendorAddControllerBillingLocationRightMenu rightMenu = new VendorAddControllerBillingLocationRightMenu();
+	VendorAddControllerAdditionalContactsRightMenu rightMenuAdditionalContacts = new VendorAddControllerAdditionalContactsRightMenu();
+	
 	@FXML
 	private Pane addVendorPane;
 
 	@FXML
-	private TableColumn<AdditionalContact, String> additionalContact, position, phoneNo, faxNo, cellular, email, 
-	extension, pager, status;
-
-	@FXML
-	private Button btnSaveVendor, btnCancelVendor;
-
-	@FXML
-	private TableColumn<VendorBillingLocation, String> address, city, contact, fax, name, phone, zip;
-
-	@FXML
 	public TableView<VendorBillingLocation> tableBillingLocations;
-	
+
 	public static TableView<VendorBillingLocation> duplicateTableBillingLocations;
 
 	@FXML
 	private TableView<AdditionalContact> tableAdditionalContact;
 
 	public static TableView<AdditionalContact> duplicateTableAdditionalContact;
-	
+
+	@FXML
+	private TableColumn<AdditionalContact, String> additionalContact, position, phoneNo, faxNo, cellular, email, extension, pager, status;
+
+	@FXML
+	private TableColumn<VendorBillingLocation, String> address, city, contact, fax, name, phone, zip;
+
+	@FXML
+	private Button btnSaveVendor, btnCancelVendor;
+
 	@FXML
 	public TextField txtAddress, txtAfterHours, txtCellular, txtCity, txtCompany, txtContact, txtEmail, txtExt, txtFax, txtPager, 
 	txtPhone, txtPosition, txtPrefix, txtProvince, txtTollFree, txtUnitNo, txtWebsite, txtZip;
 
 	@FXML
 	private TabPane tabPane;
-
-	Validate validate = new Validate();
-	public static int addAddtionalContact = 0;
-	public static VendorBillingLocation VendorBillingLocation = new VendorBillingLocation();
-	public static AdditionalContact additionalContactModel = new AdditionalContact();
-	public static ArrayList<VendorBillingLocation> listOfBilling = new ArrayList<VendorBillingLocation>();
-	public static ArrayList<AdditionalContact> listOfAdditionalContact = new ArrayList<AdditionalContact>();
-	public static Vendor vendor = new Vendor();
-	int additionalContactCountMenu = 0;
-	public static int selectedTabValue = 0;
-	ContextMenu contextMenu = new ContextMenu();
-	int billingLocationCountMenu = 0;
-	public static int addEditIndex = -1;
-	// public static int editIndex = -1;
-	public static int add = 0;
-	MouseEvent me;
-
-	public StringBuffer validsteFields() {
-		StringBuffer strBuff = new StringBuffer();
-		String customerName = txtCompany.getText();
-		String email = txtEmail.getText();
-
-		if (customerName == null || customerName.trim().equals("")) {
-			txtCompany.setStyle("-fx-focus-color: #87CEEB;");
-			strBuff.append("Company Name is Mandatory\n");
-		}
-		if (email == null || email.trim().equals("")) {
-			txtEmail.setStyle("-fx-focus-color: #87CEEB;");
-			strBuff.append("Email is Mandatory\n");
-		}
-
-		return strBuff;
-	}
-
+	
 	@FXML
 	private Label lblVendorName;
-	
-	private Object openValidationScreen() {
-		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-					.getResource(Iconstants.COMMON_BASE_PACKAGE + Iconstants.XML_VALIDATION_SCREEN));
 
-			Parent root = (Parent) fxmlLoader.load();
-
-			Stage stage = new Stage();
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Warning");
-			stage.setScene(new Scene(root));
-			stage.show();
-			return fxmlLoader.getController();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	private boolean validateAddVendorScreen() {
-		boolean response = true;
-		String name = txtCompany.getText();
-		boolean result = validate.validateEmptyness(name);
-
-		if (!result) {
-			
-			response = false;
-			txtCompany.setStyle("-fx-text-box-border: red;");
-			lblVendorName.setVisible(true);
-			lblVendorName.setText("Vendor Name is Mandatory");
-			lblVendorName.setTextFill(Color.RED);
-			
-		} else if (!validate.validateLength(name, 5, 25)) {
-			
-			response = false;
-			txtCompany.setStyle("-fx-text-box-border: red;");
-			lblVendorName.setVisible(true);
-			lblVendorName.setText("Min. length 5 and Max. length 25");
-			lblVendorName.setTextFill(Color.RED);
-		}
-		return response;
-	}
-	
-	@FXML
-	public void billingLocationMouseClick(MouseEvent arg0) {
-		me = arg0;
-		contextMenu = new ContextMenu();
-		MenuItem add = new MenuItem("Add");
-		rightMenu.menuAdd(add, Iconstants.VENDOR_BASE_PACKAGE, Iconstants.XML_VENDOR_BILLING_LOCATION_ADD_SCREEN, "Add New Billing Location");
-		MenuItem edit = new MenuItem("Edit");
-		rightMenu.menuEdit(edit, Iconstants.VENDOR_BASE_PACKAGE, Iconstants.XML_VENDOR_BILLING_LOCATION_EDIT_SCREEN, "Edit Billing Location");
-		MenuItem delete = new MenuItem("Delete");
-		rightMenu.menuDelete(delete, null, null, null);
-		MenuItem duplicate = new MenuItem("Duplicate");
-		MenuItem personalize = new MenuItem("Personalize");
-		MenuItem filterBy = new MenuItem("Filter By");
-		MenuItem filterByExclude = new MenuItem("Filter By Exclude");
-		MenuItem clearAllFilters = new MenuItem("Clear All Filters");
-
-		// Add MenuItem to ContextMenu
-		contextMenu.getItems().addAll(add, edit, delete, duplicate, personalize, filterBy, filterByExclude, clearAllFilters);
-			// When user right-click on Table
-		tableBillingLocations.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent mouseEvent) {
-
-				if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
-					if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
-						contextMenu.show(tableBillingLocations, mouseEvent.getScreenX(), mouseEvent.getScreenY());
-					} else {
-						contextMenu.hide();
-					}
-				}
-			}
-		});
-	}
-	
-	VendorAddControllerBillingLocationRightMenu rightMenu = new VendorAddControllerBillingLocationRightMenu();
-	
-	@FXML
-	private void vendorNameKeyReleased() {
-		String name = txtCompany.getText();
-		boolean result = validate.validateEmptyness(name);
-		if (result) {
-			lblVendorName.setText("");
-			txtCompany.setStyle("-fx-focus-color: skyblue;");
-			lblVendorName.setVisible(false);
-			if (!validate.validateLength(name, 5, 25)) {
-				
-				txtCompany.setStyle("-fx-border-color: red;");
-				lblVendorName.setVisible(true);
-				lblVendorName.setText("Min. length 5 and Max. length 25");
-				lblVendorName.setTextFill(Color.RED);
-			}
-		} else {
-			txtCompany.setStyle("-fx-border-color: red;");
-			lblVendorName.setVisible(true);
-			lblVendorName.setText("Vendor Name is Mandatory");
-			lblVendorName.setTextFill(Color.RED);
-		}
-	}
-	
-	@FXML
-	public void additionalContactMouseClick(MouseEvent arg0) {
-		me = arg0;
-		contextMenu = new ContextMenu();
-		MenuItem add = new MenuItem("Add");
-		rightMenu.menuAdd(add, Iconstants.VENDOR_BASE_PACKAGE, Iconstants.XML_VENDOR_ADDITIONAL_CONTACT_ADD_SCREEN, "Add New Additional Contact");
-		MenuItem edit = new MenuItem("Edit");
-		rightMenu.menuEdit(edit, Iconstants.VENDOR_BASE_PACKAGE, Iconstants.XML_VENDOR_ADDITIONAL_CONTACT_EDIT_SCREEN, "Edit Additional Contact");
-		MenuItem delete = new MenuItem("Delete");
-		MenuItem duplicate = new MenuItem("Duplicate");
-		MenuItem personalize = new MenuItem("Personalize");
-		MenuItem filterBy = new MenuItem("Filter By");
-		MenuItem filterByExclude = new MenuItem("Filter By Exclude");
-		MenuItem clearAllFilters = new MenuItem("Clear All Filters");
-
-		// Add MenuItem to ContextMenu
-		contextMenu.getItems().addAll(add, edit, delete, duplicate, personalize, filterBy, filterByExclude, clearAllFilters);
-			// When user right-click on Table
-		tableAdditionalContact.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent mouseEvent) {
-
-				if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
-					if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
-						contextMenu.show(tableAdditionalContact, mouseEvent.getScreenX(), mouseEvent.getScreenY());
-					} else {
-						contextMenu.hide();
-					}
-				}
-			}
-		});
-	}
-	
 	public void fetchBillingLocations() {
-//		 fetchColumns();
 
 		Platform.runLater(new Runnable() {
 
@@ -317,7 +150,52 @@ public class VendorAddController extends Application implements Initializable {
 
 		});
 	}
+	
+	public void fetchAdditionalContacts() {
 
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+
+					if (VendorEditController.listOfAdditionalContact != null & !(VendorEditController.listOfAdditionalContact.isEmpty())) {
+						ObservableList<AdditionalContact> data = FXCollections.observableArrayList(VendorEditController.listOfAdditionalContact);
+						setAdditionalContactColumnValues();
+						tableAdditionalContact.setItems(data);
+						tableAdditionalContact.setVisible(true);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Try Again..  " + e, "Info", 1);
+				}
+			}
+
+		});
+	}
+	
+	public static void fetchAdditionalContactsUsingDuplicate() {
+
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+
+					if (listOfAdditionalContact != null & !(listOfAdditionalContact.isEmpty())) {
+						ObservableList<AdditionalContact> data = FXCollections.observableArrayList(listOfAdditionalContact);
+						duplicateTableAdditionalContact.setItems(data);
+						duplicateTableAdditionalContact.setVisible(true);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Try Again..  " + e, "Info", 1);
+				}
+			}
+
+		});
+	}
+	
 	private void setColumnValues() {
 
 		name.setCellValueFactory(
@@ -378,131 +256,80 @@ public class VendorAddController extends Application implements Initializable {
 			});
 	}
 
-	public void fetchAdditionalContacts() {
-		// fetchColumns();
-
-		Platform.runLater(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-
-					if (VendorEditController.listOfAdditionalContact != null
-							& !(VendorEditController.listOfAdditionalContact.isEmpty())) {
-						ObservableList<AdditionalContact> data = FXCollections
-								.observableArrayList(VendorEditController.listOfAdditionalContact);
-						setAdditionalContactColumnValues();
-						tableAdditionalContact.setItems(data);
-						tableAdditionalContact.setVisible(true);
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-					JOptionPane.showMessageDialog(null, "Try Again..  " + e, "Info", 1);
-				}
-			}
-
-		});
-	}
-	
-	public void fetchAdditionalContactsUsingDuplicate() {
-
-		Platform.runLater(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-
-					if (VendorEditController.listOfAdditionalContact != null
-							& !(VendorEditController.listOfAdditionalContact.isEmpty())) {
-						ObservableList<AdditionalContact> data = FXCollections
-								.observableArrayList(VendorEditController.listOfAdditionalContact);
-						setAdditionalContactColumnValues();
-						tableAdditionalContact.setItems(data);
-						tableAdditionalContact.setVisible(true);
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-					JOptionPane.showMessageDialog(null, "Try Again..  " + e, "Info", 1);
-				}
-			}
-
-		});
-	}
-
 	private void setAdditionalContactColumnValues() {
 
 		additionalContact.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+			new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
 
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getCustomerName() + "");
-					}
-				});
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+					return new SimpleStringProperty(param.getValue().getCustomerName() + "");
+				}
+			});
 		position.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+			new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
 
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getPosition() + "");
-					}
-				});
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+					return new SimpleStringProperty(param.getValue().getPosition() + "");
+				}
+			});
 		phoneNo.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+			new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
 
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getPhone() + "");
-					}
-				});
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+					return new SimpleStringProperty(param.getValue().getPhone() + "");
+				}
+			});
 		faxNo.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+			new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
 
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getFax() + "");
-					}
-				});
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+					return new SimpleStringProperty(param.getValue().getFax() + "");
+				}
+			});
 		cellular.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+			new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
 
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getCellular() + "");
-					}
-				});
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+					return new SimpleStringProperty(param.getValue().getCellular() + "");
+				}
+			});
 		email.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+			new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
 
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getEmail() + "");
-					}
-				});
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+					return new SimpleStringProperty(param.getValue().getEmail() + "");
+				}
+			});
 		extension.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+			new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
 
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getExt() + "");
-					}
-				});
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+					return new SimpleStringProperty(param.getValue().getExt() + "");
+				}
+			});
 		pager.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+			new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
 
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getPrefix() + "");
-					}
-				});
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+					return new SimpleStringProperty(param.getValue().getPrefix() + "");
+				}
+			});
 		status.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+			new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
 
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getStatusId() + "");
-					}
-				});
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+					return new SimpleStringProperty(param.getValue().getStatusId() + "");
+				}
+			});
 	}
 
 
@@ -510,12 +337,84 @@ public class VendorAddController extends Application implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		duplicateTableBillingLocations = tableBillingLocations;
 		duplicateTableAdditionalContact = tableAdditionalContact;
-//		fetchColumns();
 		setColumnValues();
 		setAdditionalContactColumnValues();
 	}
 	
+	@Override
+	public void start(Stage arg0) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@FXML
+	public void billingLocationMouseClick(MouseEvent arg0) {
+		ContextMenu contextMenu = new ContextMenu();
+		MenuItem add = new MenuItem("Add");
+		rightMenu.menuAdd(add, Iconstants.VENDOR_BASE_PACKAGE, Iconstants.XML_VENDOR_BILLING_LOCATION_ADD_SCREEN, "Add New Billing Location");
+		MenuItem edit = new MenuItem("Edit");
+		rightMenu.menuEdit(edit, Iconstants.VENDOR_BASE_PACKAGE, Iconstants.XML_VENDOR_BILLING_LOCATION_EDIT_SCREEN, "Edit Billing Location");
+		MenuItem delete = new MenuItem("Delete");
+		rightMenu.menuDelete(delete, null, null, null);
+		MenuItem duplicate = new MenuItem("Duplicate");
+		MenuItem personalize = new MenuItem("Personalize");
+		MenuItem filterBy = new MenuItem("Filter By");
+		MenuItem filterByExclude = new MenuItem("Filter By Exclude");
+		MenuItem clearAllFilters = new MenuItem("Clear All Filters");
 
+		// Add MenuItem to ContextMenu
+		contextMenu.getItems().addAll(add, edit, delete, duplicate, personalize, filterBy, filterByExclude, clearAllFilters);
+			// When user right-click on Table
+		tableBillingLocations.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent mouseEvent) {
+
+				if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
+					if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+						contextMenu.show(tableBillingLocations, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+					} else {
+						contextMenu.hide();
+					}
+				}
+			}
+		});
+	}
+
+	@FXML
+	public void additionalContactMouseClick(MouseEvent arg0) {
+		ContextMenu contextMenu = new ContextMenu();
+		MenuItem add = new MenuItem("Add");
+		rightMenuAdditionalContacts.menuAdd(add, Iconstants.VENDOR_BASE_PACKAGE, Iconstants.XML_VENDOR_ADDITIONAL_CONTACT_ADD_SCREEN, "Add New Additional Contact");
+		MenuItem edit = new MenuItem("Edit");
+		rightMenuAdditionalContacts.menuEdit(edit, Iconstants.VENDOR_BASE_PACKAGE, Iconstants.XML_VENDOR_ADDITIONAL_CONTACT_EDIT_SCREEN, "Edit Additional Contact");
+		MenuItem delete = new MenuItem("Delete");
+		rightMenuAdditionalContacts.menuDelete(delete, null, null, null);
+		MenuItem duplicate = new MenuItem("Duplicate");
+		MenuItem personalize = new MenuItem("Personalize");
+		MenuItem filterBy = new MenuItem("Filter By");
+		MenuItem filterByExclude = new MenuItem("Filter By Exclude");
+		MenuItem clearAllFilters = new MenuItem("Clear All Filters");
+
+		// Add MenuItem to ContextMenu
+		contextMenu.getItems().addAll(add, edit, delete, duplicate, personalize, filterBy, filterByExclude, clearAllFilters);
+			// When user right-click on Table
+		tableAdditionalContact.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent mouseEvent) {
+
+				if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
+					if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+						contextMenu.show(tableAdditionalContact, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+					} else {
+						contextMenu.hide();
+					}
+				}
+			}
+		});
+	}
+	
 	// Create ContextMenu
 	@FXML
 	public void handleMouseClick(MouseEvent arg0) {
@@ -617,41 +516,6 @@ public class VendorAddController extends Application implements Initializable {
 		}*/
 	}
 
-	private void openAddBillingLocationScreen() {
-
-		try {
-
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-					.getResource(Iconstants.VENDOR_BASE_PACKAGE + Iconstants.XML_ADD_BILLING_LOCATION_SCREEN));
-			Parent root = (Parent) fxmlLoader.load();
-
-			Stage stage = new Stage();
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add Billing Location");
-			stage.setScene(new Scene(root));
-			stage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void openAddAdditionalContactScreen() {
-		try {
-
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-					.getResource(Iconstants.VENDOR_BASE_PACKAGE + Iconstants.XML_ADD_ADDITIONAL_CONTACT_SCREEN));
-			Parent root = (Parent) fxmlLoader.load();
-
-			Stage stage = new Stage();
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add Additional Contact");
-			stage.setScene(new Scene(root));
-			stage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	@FXML
 	private void btnSaveVendorAction() {
 
@@ -704,35 +568,6 @@ public class VendorAddController extends Application implements Initializable {
 			}
 		});
 	}
-
-	/*public void addCompany(String reponse) {
-
-		Platform.runLater(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					ObjectMapper mapper = new ObjectMapper();
-					CompanyModel company = setCompanyValue();
-					String payload = mapper.writeValueAsString(company);
-
-					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API,
-							null, payload);
-
-					if (response != null && response.contains("message")) {
-						Success success = mapper.readValue(response, Success.class);
-						JOptionPane.showMessageDialog(null, success.getMessage(), "Info", 1);
-					} else {
-						Failed failed = mapper.readValue(response, Failed.class);
-						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-					}
-					MainScreen.companyController.fetchCompanies();
-				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
-				}
-			}
-		});
-	}*/
 
 	private Vendor setVendorValue() {
 
@@ -812,39 +647,6 @@ public class VendorAddController extends Application implements Initializable {
 
 	}
 
-	/*@SuppressWarnings("unchecked")
-	private void fetchColumns() {
-		name = (TableColumn<VendorBillingLocation, String>) tableBillingLocations.getColumns().get(0);
-		address = (TableColumn<VendorBillingLocation, String>) tableBillingLocations.getColumns().get(1);
-		city = (TableColumn<VendorBillingLocation, String>) tableBillingLocations.getColumns().get(2);
-		phone = (TableColumn<VendorBillingLocation, String>) tableBillingLocations.getColumns().get(3);
-		contact = (TableColumn<VendorBillingLocation, String>) tableBillingLocations.getColumns().get(4);
-		zip = (TableColumn<VendorBillingLocation, String>) tableBillingLocations.getColumns().get(5);
-		fax = (TableColumn<VendorBillingLocation, String>) tableBillingLocations.getColumns().get(6);
-
-	}*/
-
-	private Object showPanel(String basePackage, String screenName) {
-		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(basePackage + screenName));
-			Parent root = (Parent) fxmlLoader.load();
-			Pane pane = (Pane) root;
-
-			ObservableList<Node> nodes = addVendorPane.getChildren();
-
-			if (nodes != null && nodes.size() >= 4 && nodes.get(3) != null) {
-				nodes.remove(3);
-				nodes.add(3, pane);
-			} else {
-				nodes.add(pane);
-			}
-			return fxmlLoader.getController();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
 	public void initData(CompanyModel c) {
 		// fetchBillingLocations();
 		// fetchAdditionalContacts();
@@ -868,10 +670,68 @@ public class VendorAddController extends Application implements Initializable {
 		txtPager.setText(c.getPager());
 	}
 
-	@Override
-	public void start(Stage arg0) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public StringBuffer validsteFields() {
+		StringBuffer strBuff = new StringBuffer();
+		String customerName = txtCompany.getText();
+		String email = txtEmail.getText();
+
+		if (customerName == null || customerName.trim().equals("")) {
+			txtCompany.setStyle("-fx-focus-color: #87CEEB;");
+			strBuff.append("Company Name is Mandatory\n");
+		}
+		if (email == null || email.trim().equals("")) {
+			txtEmail.setStyle("-fx-focus-color: #87CEEB;");
+			strBuff.append("Email is Mandatory\n");
+		}
+
+		return strBuff;
+	}
+
+	private boolean validateAddVendorScreen() {
+		boolean response = true;
+		String name = txtCompany.getText();
+		boolean result = validate.validateEmptyness(name);
+
+		if (!result) {
+			
+			response = false;
+			txtCompany.setStyle("-fx-text-box-border: red;");
+			lblVendorName.setVisible(true);
+			lblVendorName.setText("Vendor Name is Mandatory");
+			lblVendorName.setTextFill(Color.RED);
+			
+		} else if (!validate.validateLength(name, 5, 25)) {
+			
+			response = false;
+			txtCompany.setStyle("-fx-text-box-border: red;");
+			lblVendorName.setVisible(true);
+			lblVendorName.setText("Min. length 5 and Max. length 25");
+			lblVendorName.setTextFill(Color.RED);
+		}
+		return response;
+	}
+	
+	@FXML
+	private void vendorNameKeyReleased() {
+		String name = txtCompany.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblVendorName.setText("");
+			txtCompany.setStyle("-fx-focus-color: skyblue;");
+			lblVendorName.setVisible(false);
+			if (!validate.validateLength(name, 5, 25)) {
+				
+				txtCompany.setStyle("-fx-border-color: red;");
+				lblVendorName.setVisible(true);
+				lblVendorName.setText("Min. length 5 and Max. length 25");
+				lblVendorName.setTextFill(Color.RED);
+			}
+		} else {
+			txtCompany.setStyle("-fx-border-color: red;");
+			lblVendorName.setVisible(true);
+			lblVendorName.setText("Vendor Name is Mandatory");
+			lblVendorName.setTextFill(Color.RED);
+		}
 	}
 
 }
