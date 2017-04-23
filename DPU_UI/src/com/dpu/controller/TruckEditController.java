@@ -18,6 +18,8 @@ import com.dpu.model.Success;
 import com.dpu.model.Terminal;
 import com.dpu.model.Truck;
 import com.dpu.model.Type;
+import com.dpu.util.Validate;
+import com.dpu.validations.TruckValidator;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -25,38 +27,76 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class TruckEditController extends Application implements Initializable{
+public class TruckEditController extends Application implements Initializable, TruckValidator {
 
 	@FXML
 	Button btnUpdateTruck;
-	
+
 	Long truckId = 0l;
-	
+
 	@FXML
 	TextField txtUnitNo, txtUsage, txtOwner, txtOoName, txtFinance;
-	
+
 	@FXML
 	ComboBox<String> ddlStatus, ddlCategory, ddlDivision, ddlTerminal, ddlTruckType;
-	
+
+	@FXML
+	Label lblUnitNo;
+
 	@FXML
 	private void btnUpdateTruckAction() {
-		editTruck();
-		closeEditTruckScreen(btnUpdateTruck);
-		
+		if (validateEditTruckScreen()) {
+			editTruck();
+			closeEditTruckScreen(btnUpdateTruck);
+		}
 	}
+
 	
+	@FXML
+	private void truckUnitKeyPressed() {
+
+		String name = txtUnitNo.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblUnitNo.setTextFill(Color.BLACK);
+			txtUnitNo.setStyle("-fx-focus-color: skyblue;");
+		} else {
+			txtUnitNo.setStyle("-fx-focus-color: red;");
+			txtUnitNo.requestFocus();
+			lblUnitNo.setVisible(true);
+		}
+	}
+	Validate validate = new Validate();
+
+	private boolean validateEditTruckScreen() {
+
+		boolean result = true;
+		String unitNo = txtUnitNo.getText();
+
+		boolean blnUnitNo = validate.validateEmptyness(unitNo);
+		if (!blnUnitNo) {
+			result = false;
+			txtUnitNo.setStyle("-fx-text-box-border: red;");
+			lblUnitNo.setVisible(true);
+		}
+		return result;
+	}
+
 	private void closeEditTruckScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
-        loginStage.close();
+		loginStage.close();
 	}
-	
+
 	private void editTruck() {
-		
+
 		Platform.runLater(new Runnable() {
-			
+
 			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
@@ -65,8 +105,9 @@ public class TruckEditController extends Application implements Initializable{
 					Truck truck = setTruckValue();
 					String payload = mapper.writeValueAsString(truck);
 
-					String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_TRUCK_API + "/" + truckId, null, payload);
-//					MainScreen.truckController.fillTruck(response);
+					String response = PutAPIClient.callPutAPI(
+							Iconstants.URL_SERVER + Iconstants.URL_TRUCK_API + "/" + truckId, null, payload);
+					// MainScreen.truckController.fillTruck(response);
 					try {
 						Success success = mapper.readValue(response, Success.class);
 						List<Truck> truckList = (List<Truck>) success.getResultList();
@@ -77,13 +118,15 @@ public class TruckEditController extends Application implements Initializable{
 						Failed failed = mapper.readValue(response, Failed.class);
 						JOptionPane.showMessageDialog(null, failed.getMessage());
 					}
-					/*if(response != null && response.contains("message")) {
-						Success success = mapper.readValue(response, Success.class);
-						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
-					} else {
-						Failed failed = mapper.readValue(response, Failed.class);
-						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-					}*/
+					/*
+					 * if(response != null && response.contains("message")) {
+					 * Success success = mapper.readValue(response,
+					 * Success.class); JOptionPane.showMessageDialog(null,
+					 * success.getMessage() , "Info", 1); } else { Failed failed
+					 * = mapper.readValue(response, Failed.class);
+					 * JOptionPane.showMessageDialog(null, failed.getMessage(),
+					 * "Info", 1); }
+					 */
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
 				}
@@ -93,6 +136,7 @@ public class TruckEditController extends Application implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		txtUnitNo.addEventFilter(KeyEvent.KEY_TYPED, Validate.numeric_Validation(10));
 	}
 
 	@Override
@@ -115,9 +159,9 @@ public class TruckEditController extends Application implements Initializable{
 	}
 
 	ObjectMapper mapper = new ObjectMapper();
-	
+
 	List<Category> categoryList = null;
-	
+
 	List<Status> statusList = null;
 
 	List<Division> divisionList = null;
@@ -125,7 +169,7 @@ public class TruckEditController extends Application implements Initializable{
 	List<Terminal> terminalList = null;
 
 	List<Type> truckTypeList = null;
-	
+
 	public void initData(Truck t) {
 		truckId = t.getTruckId();
 		txtUnitNo.setText(String.valueOf(t.getUnitNo()));
@@ -134,42 +178,42 @@ public class TruckEditController extends Application implements Initializable{
 		txtUsage.setText(t.getTruchUsage());
 		txtFinance.setText(t.getFinance());
 		categoryList = t.getCategoryList();
-		for(int i = 0; i< t.getCategoryList().size();i++) {
+		for (int i = 0; i < t.getCategoryList().size(); i++) {
 			Category category = t.getCategoryList().get(i);
 			ddlCategory.getItems().add(category.getName());
-			if(category.getCategoryId() == t.getCategoryId()) {
+			if (category.getCategoryId() == t.getCategoryId()) {
 				ddlCategory.getSelectionModel().select(i);
 			}
 		}
 		statusList = t.getStatusList();
-		for(int i = 0; i< t.getStatusList().size();i++) {
+		for (int i = 0; i < t.getStatusList().size(); i++) {
 			Status status = t.getStatusList().get(i);
 			ddlStatus.getItems().add(status.getStatus());
-			if(status.getId() == t.getStatusId()) {
+			if (status.getId() == t.getStatusId()) {
 				ddlStatus.getSelectionModel().select(i);
 			}
 		}
 		divisionList = t.getDivisionList();
-		for(int i = 0; i< t.getDivisionList().size();i++) {
+		for (int i = 0; i < t.getDivisionList().size(); i++) {
 			Division division = t.getDivisionList().get(i);
 			ddlDivision.getItems().add(division.getDivisionName());
-			if(division.getDivisionId() == t.getDivisionId()) {
+			if (division.getDivisionId() == t.getDivisionId()) {
 				ddlDivision.getSelectionModel().select(i);
 			}
 		}
 		terminalList = t.getTerminalList();
-		for(int i = 0; i< t.getTerminalList().size();i++) {
+		for (int i = 0; i < t.getTerminalList().size(); i++) {
 			Terminal terminal = t.getTerminalList().get(i);
 			ddlTerminal.getItems().add(terminal.getTerminalName());
-			if(terminal.getTerminalId() == t.getTerminalId()) {
+			if (terminal.getTerminalId() == t.getTerminalId()) {
 				ddlTerminal.getSelectionModel().select(i);
 			}
 		}
 		truckTypeList = t.getTruckTypeList();
-		for(int i = 0; i< t.getTruckTypeList().size();i++) {
+		for (int i = 0; i < t.getTruckTypeList().size(); i++) {
 			Type truck = t.getTruckTypeList().get(i);
 			ddlTruckType.getItems().add(truck.getTypeName());
-			if(truck.getTypeId() == t.getTruckTypeId()) {
+			if (truck.getTypeId() == t.getTruckTypeId()) {
 				ddlTruckType.getSelectionModel().select(i);
 			}
 		}

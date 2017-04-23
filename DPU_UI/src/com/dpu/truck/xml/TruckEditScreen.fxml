@@ -15,7 +15,7 @@
           <content>
             <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="280.0" prefWidth="572.0" style="-fx-border-color: black;">
               <children>
-                <Label layoutX="11.0" layoutY="12.0" text="Unit No.">
+                <Label fx:id="lblUnitNo" layoutX="11.0" layoutY="12.0" text="Unit No.">
                            <font>
                               <Font size="14.0" />
                            </font></Label>
@@ -55,7 +55,7 @@
                            <font>
                               <Font size="14.0" />
                            </font></Label>
-                <TextField fx:id="txtUnitNo" layoutX="93.0" layoutY="9.0" prefHeight="25.0" prefWidth="240.0" />
+                <TextField fx:id="txtUnitNo"  onKeyPressed="#truckUnitKeyPressed" layoutX="93.0" layoutY="9.0" prefHeight="25.0" prefWidth="240.0" />
                 <TextField fx:id="txtOwner" layoutX="93.0" layoutY="42.0" prefHeight="25.0" prefWidth="240.0" />
                 <TextField fx:id="txtOoName" layoutX="93.0" layoutY="75.0" prefHeight="25.0" prefWidth="240.0" />
                 <TextField fx:id="txtUsage" layoutX="442.0" layoutY="10.0" prefHeight="25.0" prefWidth="240.0" />
