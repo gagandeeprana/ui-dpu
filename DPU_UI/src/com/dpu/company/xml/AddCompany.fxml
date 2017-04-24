@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import javafx.collections.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.VBox?>
@@ -13,40 +14,40 @@
         <Font size="14.0" fx:id="x1" />
       </font>
     </Label>
-    <TextField fx:id="txtCompany" onKeyPressed="#companyNameKeyPressed" layoutX="80.0" layoutY="37.0" prefHeight="25.0" prefWidth="240.0" />
-    <TextField fx:id="txtAddress"   layoutX="80.0" layoutY="72.0" prefHeight="25.0" prefWidth="240.0" />
+    <TextField fx:id="txtCompany" layoutX="80.0" layoutY="37.0" onKeyPressed="#companyNameKeyPressed" prefHeight="25.0" prefWidth="240.0" />
+    <TextField fx:id="txtAddress" layoutX="80.0" layoutY="72.0" prefHeight="25.0" prefWidth="240.0" />
     <Label fx:id="lblAddress" font="$x1" layoutX="14.0" layoutY="72.0" text="Address" />
     <Label fx:id="lblUnitNo" font="$x1" layoutX="13.0" layoutY="108.0" text="Unit No" />
-    <TextField fx:id="txtUnitNo"   layoutX="80.0" layoutY="107.0" prefHeight="25.0" prefWidth="240.0" />
-    <TextField fx:id="txtCity"   layoutX="80.0" layoutY="139.0" prefHeight="25.0" prefWidth="240.0" />
+    <TextField fx:id="txtUnitNo" layoutX="80.0" layoutY="107.0" prefHeight="25.0" prefWidth="240.0" />
+    <TextField fx:id="txtCity" layoutX="80.0" layoutY="139.0" prefHeight="25.0" prefWidth="240.0" />
     <Label fx:id="lblCity" font="$x1" layoutX="14.0" layoutY="138.0" text="City" />
-    <TextField fx:id="txtEmail"   layoutX="80.0" layoutY="212.0" prefHeight="25.0" prefWidth="240.0" />
+    <TextField fx:id="txtEmail" layoutX="80.0" layoutY="212.0" prefHeight="25.0" prefWidth="240.0" />
     <Label fx:id="lblEmail" font="$x1" layoutX="14.0" layoutY="215.0" text="Email" />
-    <TextField fx:id="txtWebsite"   layoutX="80.0" layoutY="253.0" prefHeight="25.0" prefWidth="240.0" />
+    <TextField fx:id="txtWebsite" layoutX="80.0" layoutY="253.0" prefHeight="25.0" prefWidth="240.0" />
     <Label fx:id="lblWebsite" font="$x1" layoutX="12.0" layoutY="256.0" text="Website" />
     <Label fx:id="lblProvince" font="$x1" layoutX="14.0" layoutY="180.0" text="Province" />
-    <TextField fx:id="txtProvince"   layoutX="80.0" layoutY="177.0" prefHeight="25.0" prefWidth="105.0" />
-    <TextField fx:id="txtZip"   layoutX="215.0" layoutY="177.0" prefHeight="25.0" prefWidth="105.0" />
+    <TextField fx:id="txtProvince" layoutX="80.0" layoutY="177.0" prefHeight="25.0" prefWidth="105.0" />
+    <TextField fx:id="txtZip" layoutX="215.0" layoutY="177.0" prefHeight="25.0" prefWidth="105.0" />
     <Label fx:id="lblZip" font="$x1" layoutX="191.0" layoutY="178.0" text="Zip" />
     <SplitPane layoutX="334.0" layoutY="35.0" prefHeight="247.0" prefWidth="1.0" />
-    <TextField fx:id="txtAfterHours"   layoutX="426.0" layoutY="168.0" prefHeight="25.0" prefWidth="240.0" />
+    <!--  <TextField fx:id="txtAfterHours"   layoutX="426.0" layoutY="168.0" prefHeight="25.0" prefWidth="240.0" />
     <Label fx:id="lblAfterHours" font="$x1" layoutX="344.0" layoutY="168.0" text="After Hours" />
     <Label fx:id="lblCellular" font="$x1" layoutX="346.0" layoutY="231.0" text="Cellular" />
     <TextField fx:id="txtCellular"   layoutX="426.0" layoutY="229.0" prefWidth="240.0" />
     <Label fx:id="lblTollFree" font="$x1" layoutX="344.0" layoutY="202.0" text="Toll Free" />
-    <TextField fx:id="txtTollFree"   layoutX="426.0" layoutY="200.0" prefWidth="240.0" />
+   <TextField fx:id="txtTollFree"   layoutX="426.0" layoutY="200.0" prefWidth="240.0" />
     <Label fx:id="lblFax" font="$x1" layoutX="346.0" layoutY="134.0" text="Fax" />
     <TextField fx:id="txtFax"   layoutX="426.0" layoutY="139.0" prefWidth="240.0" />
     <TextField fx:id="txtPhone"   layoutX="426.0" layoutY="107.0" prefHeight="25.0" prefWidth="240.0" />
     <Label fx:id="lblPhone" font="$x1" layoutX="346.0" layoutY="108.0" text="Phone" />
     <Label fx:id="lblPosition" font="$x1" layoutX="346.0" layoutY="72.0" text="Position" />
-    <TextField fx:id="txtPosition"   layoutX="426.0" layoutY="69.0" prefHeight="25.0" prefWidth="240.0" />
-    <TextField fx:id="txtContact"   layoutX="426.0" layoutY="37.0" prefHeight="25.0" prefWidth="240.0" />
-    <Label fx:id="lblContact" font="$x1" layoutX="346.0" layoutY="40.0" text="Contact" />
+   <TextField fx:id="txtPosition"   layoutX="426.0" layoutY="69.0" prefHeight="25.0" prefWidth="240.0" />
+   <TextField fx:id="txtContact"   layoutX="426.0" layoutY="37.0" prefHeight="25.0" prefWidth="240.0" />
+   <Label fx:id="lblContact" font="$x1" layoutX="346.0" layoutY="40.0" text="Contact" />
     <TextField fx:id="txtPager"   layoutX="426.0" layoutY="259.0" prefWidth="240.0" />
     <Label fx:id="lblPager" font="$x1" layoutX="347.0" layoutY="262.0" text="Pager" />
-    <Label fx:id="lblExt" font="$x1" layoutX="676.0" layoutY="104.0" text="Ext" />
-    <TextField fx:id="txtExt"   layoutX="715.0" layoutY="102.0" prefWidth="240.0" />
+   <Label fx:id="lblExt" font="$x1" layoutX="676.0" layoutY="104.0" text="Ext" />
+   <TextField fx:id="txtExt"   layoutX="715.0" layoutY="102.0" prefWidth="240.0" />
     <TextField fx:id="txtPrefix"  layoutX="715.0" layoutY="132.0" prefWidth="240.0" />
     <Label fx:id="lblPrefix" font="$x1" layoutX="676.0" layoutY="135.0" text="Prefix" />
     <Label fx:id="lblEmailNotification" font="$x1" layoutX="676.0" layoutY="166.0" text="Email Notifications" />
@@ -57,7 +58,7 @@
     </CheckBox>
     <CheckBox font="$x2" layoutX="787.0" layoutY="191.0" mnemonicParsing="false" text="PickUp ETA" />
     <CheckBox font="$x2" layoutX="787.0" layoutY="212.0" mnemonicParsing="false" text="Deliver ETA" />
-    <CheckBox font="$x2" layoutX="717.0" layoutY="212.0" mnemonicParsing="false" text="PickUp" />
+    <CheckBox font="$x2" layoutX="717.0" layoutY="212.0" mnemonicParsing="false" text="PickUp" /> -->
     <TabPane fx:id="tabPane" layoutX="6.0" layoutY="296.0" prefHeight="313.0" prefWidth="955.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
         <Tab fx:id="billingLocation" text="Billing Locations">
@@ -109,5 +110,33 @@
         <Font name="System Bold" size="16.0" />
       </font>
     </Label>
+    <Label fx:id="lblCategory" layoutX="352.0" layoutY="40.0" prefWidth="49.000099999997474" text="Category" />
+    <Label fx:id="lblDivision" layoutX="352.0" layoutY="80.0" prefWidth="50.9998779296875" text="Division" />
+    <Label fx:id="lblSale" layoutX="352.0" layoutY="117.0" prefWidth="37.0" text="Sale" />
+    <Label fx:id="lblCountry" layoutX="350.0" layoutY="151.0" prefWidth="51.0" text="Country" />
+    <ComboBox fx:id="ddlCategory" onKeyPressed="#companyDdlCategoryKeyPressed" layoutX="435.0" layoutY="40.0" prefHeight="21.0" prefWidth="160.0">
+      <items>
+        <FXCollections fx:factory="observableArrayList">
+        </FXCollections>
+      </items>
+    </ComboBox>
+    <ComboBox fx:id="ddlDivision" onKeyPressed="#companyDdlDivisionKeyPressed" layoutX="435.0" layoutY="77.0" prefHeight="21.0" prefWidth="160.0">
+      <items>
+        <FXCollections fx:factory="observableArrayList">
+        </FXCollections>
+      </items>
+    </ComboBox>
+    <ComboBox fx:id="ddlSale" onKeyPressed="#companyDdlSaleKeyPressed" layoutX="435.0" layoutY="114.0" prefHeight="21.0" prefWidth="160.0">
+      <items>
+        <FXCollections fx:factory="observableArrayList">
+        </FXCollections>
+      </items>
+    </ComboBox>
+    <ComboBox fx:id="ddlCountry"  onKeyPressed="#companyDdlCountryKeyPressed" layoutX="435.0" layoutY="149.0" prefHeight="21.0" prefWidth="160.0">
+      <items>
+        <FXCollections fx:factory="observableArrayList">
+        </FXCollections>
+      </items>
+    </ComboBox>
   </children>
 </Pane>

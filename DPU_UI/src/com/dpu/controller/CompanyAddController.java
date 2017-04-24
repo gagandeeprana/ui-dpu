@@ -43,7 +43,6 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -70,6 +69,66 @@ public class CompanyAddController extends Application implements Initializable {
 
 	@FXML
 	private void companyNameKeyPressed() {
+
+		String name = txtCompany.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblCompany.setTextFill(Color.BLACK);
+			txtCompany.setStyle("-fx-focus-color: skyblue;");
+		} else {
+			txtCompany.setStyle("-fx-focus-color: red;");
+			txtCompany.requestFocus();
+			lblCompany.setVisible(true);
+		}
+	}
+	
+	@FXML
+	private void companyDdlCategoryKeyPressed() {
+
+		String name = txtCompany.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblCompany.setTextFill(Color.BLACK);
+			txtCompany.setStyle("-fx-focus-color: skyblue;");
+		} else {
+			txtCompany.setStyle("-fx-focus-color: red;");
+			txtCompany.requestFocus();
+			lblCompany.setVisible(true);
+		}
+	}
+	
+	@FXML
+	private void companyDdlDivisionKeyPressed() {
+
+		String name = txtCompany.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblCompany.setTextFill(Color.BLACK);
+			txtCompany.setStyle("-fx-focus-color: skyblue;");
+		} else {
+			txtCompany.setStyle("-fx-focus-color: red;");
+			txtCompany.requestFocus();
+			lblCompany.setVisible(true);
+		}
+	}
+	
+	@FXML
+	private void companyDdlSaleKeyPressed() {
+
+		String name = txtCompany.getText();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			lblCompany.setTextFill(Color.BLACK);
+			txtCompany.setStyle("-fx-focus-color: skyblue;");
+		} else {
+			txtCompany.setStyle("-fx-focus-color: red;");
+			txtCompany.requestFocus();
+			lblCompany.setVisible(true);
+		}
+	}
+	
+	@FXML
+	private void companyDdlCountryKeyPressed() {
 
 		String name = txtCompany.getText();
 		boolean result = validate.validateEmptyness(name);
