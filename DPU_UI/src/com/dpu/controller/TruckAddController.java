@@ -20,7 +20,7 @@ import com.dpu.model.Terminal;
 import com.dpu.model.Truck;
 import com.dpu.model.Type;
 import com.dpu.util.Validate;
-import com.dpu.validations.TruckValidator;
+//import com.dpu.validations.TruckValidator;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -34,7 +34,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class TruckAddController extends Application implements Initializable, TruckValidator {
+public class TruckAddController extends Application implements Initializable {
 
 	@FXML
 	Button btnSaveTruck;

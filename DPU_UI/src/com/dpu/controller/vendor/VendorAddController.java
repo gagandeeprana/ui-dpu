@@ -551,8 +551,7 @@ public class VendorAddController extends Application implements Initializable {
 					Vendor vendor = setVendorValue();
 					String payload = mapper.writeValueAsString(vendor);
 
-					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_VENDOR_API,
-							null, payload);
+					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_VENDOR_API, null, payload);
 
 					if (response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
@@ -595,11 +594,11 @@ public class VendorAddController extends Application implements Initializable {
 
 		// need to use for loop here
 
-		if (VendorEditController.listOfBilling != null) {
-			int sizeOfBilling = VendorEditController.listOfBilling.size();
+		if (listOfBilling != null) {
+			int sizeOfBilling = listOfBilling.size();
 			for (int i = 0; i < sizeOfBilling; i++) {
 				VendorBillingLocation billingLocation = new VendorBillingLocation();
-				VendorBillingLocation billingModel = VendorEditController.listOfBilling.get(i);
+				VendorBillingLocation billingModel = listOfBilling.get(i);
 				billingLocation.setName(billingModel.getName());
 				billingLocation.setAddress(billingModel.getAddress());
 				billingLocation.setCity(billingModel.getCity());
