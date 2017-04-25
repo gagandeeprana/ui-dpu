@@ -175,7 +175,7 @@ public class VendorAdditionalContactEditController implements Initializable {
 
 		if (VendorEditController.addAddtionalContact != 1) {
 			if (VendorEditController.additionalContactModel != null) {
-				txtAdditionalContact.setText(VendorEditController.additionalContactModel.getCustomerName());
+				txtAdditionalContact.setText(VendorEditController.additionalContactModel.getVendorName());
 				txtPosition.setText(VendorEditController.additionalContactModel.getPosition());
 				txtExtension.setText(VendorEditController.additionalContactModel.getExt());
 				txtFax.setText(VendorEditController.additionalContactModel.getFax());
@@ -185,7 +185,7 @@ public class VendorAdditionalContactEditController implements Initializable {
 				txtPhone.setText(VendorEditController.additionalContactModel.getPhone());
 				for(int i=0;i<VendorEditController.vendor.getStatusList().size();i++) {
 					Status status = VendorEditController.vendor.getStatusList().get(i);
-					if(status.getId().equals(VendorEditController.additionalContactModel.getStatus())) {
+					if(status.getId().equals(VendorEditController.additionalContactModel.getStatusId())) {
 						ddlStatus.getSelectionModel().select(i);
 					}
 				}

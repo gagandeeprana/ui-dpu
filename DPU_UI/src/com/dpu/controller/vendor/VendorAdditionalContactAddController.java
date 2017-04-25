@@ -116,9 +116,9 @@ public class VendorAdditionalContactAddController implements Initializable {
 			String pager = txtPager.getText();
 			String cellular = txtCellular.getText();
 
-			String status = ddlStatus.getSelectionModel().getSelectedItem();
+			Long statusId = statusList.get(ddlStatus.getSelectionModel().getSelectedIndex()).getId();
 			String email = txtEmail.getText();
-			AdditionalContact bcm1 = new AdditionalContact(additionalContact, position, phone, fax, cellular, email, extension, pager, status);
+			AdditionalContact bcm1 = new AdditionalContact(additionalContact, position, phone, fax, cellular, email, extension, pager, statusId);
 			
 			VendorAddController.selectedTabValue = 1;
 //			if (VendorAddController.addEditIndex != -1) {
@@ -163,6 +163,8 @@ public class VendorAdditionalContactAddController implements Initializable {
 
 	}
 
+	List<Status> statusList = null;
+	
 	private void fetchMasterDataForDropDowns() {
 
 		Platform.runLater(new Runnable() {
@@ -176,7 +178,7 @@ public class VendorAdditionalContactAddController implements Initializable {
 					com.dpu.request.AdditionalContact driver = mapper.readValue(response,
 							com.dpu.request.AdditionalContact.class);
 
-					List<Status> statusList = driver.getStatusList();
+					statusList = driver.getStatusList();
 					fillDropDown(ddlStatus, statusList);
 
 				} catch (Exception e) {

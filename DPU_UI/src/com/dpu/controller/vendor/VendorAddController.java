@@ -62,7 +62,7 @@ public class VendorAddController extends Application implements Initializable {
 	public static int selectedTabValue = 0;
 	public static int addAddtionalContact = 0;
 	public static Vendor vendor = new Vendor();
-	public static AdditionalContact additionalContactModel = new AdditionalContact();
+	public static VendorAdditionalContacts additionalContactModel = new VendorAdditionalContacts();
 	public static VendorBillingLocation VendorBillingLocation = new VendorBillingLocation();
 	public static ArrayList<VendorBillingLocation> listOfBilling = new ArrayList<VendorBillingLocation>();
 	public static ArrayList<AdditionalContact> listOfAdditionalContact = new ArrayList<AdditionalContact>();
@@ -620,13 +620,13 @@ public class VendorAddController extends Application implements Initializable {
 		vendor.setBillingLocations(billingLocations);
 
 		// need to use for loop here
-		if (VendorEditController.listOfAdditionalContact != null) {
-			int sizeOfAdditionalContact = VendorEditController.listOfAdditionalContact.size();
+		if (listOfAdditionalContact != null) {
+			int sizeOfAdditionalContact = listOfAdditionalContact.size();
 			for (int i = 0; i < sizeOfAdditionalContact; i++) {
 
-				AdditionalContact additionalContactModel = VendorEditController.listOfAdditionalContact.get(i);
+				AdditionalContact additionalContactModel = listOfAdditionalContact.get(i);
 				VendorAdditionalContacts additionalContact = new VendorAdditionalContacts();
-				additionalContact.setVendorName(additionalContactModel.getCustomerName());
+				additionalContact.setVendorName(additionalContactModel.getVendorName());
 				additionalContact.setPosition(additionalContactModel.getPosition());
 				additionalContact.setPhone(additionalContactModel.getPhone());
 				additionalContact.setExt(additionalContactModel.getExt());
