@@ -232,7 +232,7 @@ public class VendorEditController extends Application implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		fetchBillingLocations();
-//		fetchAdditionalContacts();
+		fetchAdditionalContacts();
 
 		/*txtCompany.setText(vendor.getName());
 		txtAddress.setText(vendor.getAddress());
@@ -327,9 +327,9 @@ public class VendorEditController extends Application implements Initializable {
 				AdditionalContact additionalContactModel = listOfAdditionalContact.get(i);
 				VendorAdditionalContacts additionalContact = new VendorAdditionalContacts();
 
-				if (additionalContactModel.getAdditionalContactId() != null)
-					additionalContact.setAdditionalContactId(additionalContactModel.getAdditionalContactId());
-				additionalContact.setVendorName(additionalContactModel.getCustomerName());
+				if (additionalContactModel.getVendorAdditionalContactId() != null)
+					additionalContact.setAdditionalContactId(additionalContactModel.getVendorAdditionalContactId());
+				additionalContact.setVendorName(additionalContactModel.getVendorName());
 				additionalContact.setPosition(additionalContactModel.getPosition());
 				additionalContact.setPhone(additionalContactModel.getPhone());
 				additionalContact.setExt(additionalContactModel.getExt());
@@ -579,11 +579,9 @@ public class VendorEditController extends Application implements Initializable {
 							for (int j = 0; j < addtionalContactSize; j++) {
 								AdditionalContact additionalContact = new AdditionalContact();
 
-								additionalContact.setCompanyId(c.getVendorId());
-								additionalContact.setAdditionalContactId(
-										c.getAdditionalContacts().get(j).getAdditionalContactId());
-								additionalContact
-										.setCustomerName(c.getAdditionalContacts().get(j).getVendorName());
+//								additionalContact.setven(c.getVendorId());
+								additionalContact.setVendorAdditionalContactId(c.getAdditionalContacts().get(j).getAdditionalContactId());
+								additionalContact.setVendorName(c.getAdditionalContacts().get(j).getVendorName());
 								additionalContact.setCellular(c.getAdditionalContacts().get(j).getCellular());
 								additionalContact.setEmail(c.getAdditionalContacts().get(j).getEmail());
 								additionalContact.setExt(c.getAdditionalContacts().get(j).getExt());
@@ -591,7 +589,7 @@ public class VendorEditController extends Application implements Initializable {
 								additionalContact.setPrefix(c.getAdditionalContacts().get(j).getCellular());
 								additionalContact.setPhone(c.getAdditionalContacts().get(j).getPhone());
 								additionalContact.setPosition(c.getAdditionalContacts().get(j).getPosition());
-								additionalContact.setStatusId("Active");
+								additionalContact.setStatusId(1l);
 
 								VendorEditController.listOfAdditionalContact.add(additionalContact);
 							}
@@ -823,8 +821,8 @@ public class VendorEditController extends Application implements Initializable {
 			public void run() {
 				try {
 
-					if (listOfBilling != null & !(listOfBilling.isEmpty())) {
-						ObservableList<VendorBillingLocation> data = FXCollections.observableArrayList(listOfBilling);
+					if (VendorAddController.listOfBilling != null & !(VendorAddController.listOfBilling.isEmpty())) {
+						ObservableList<VendorBillingLocation> data = FXCollections.observableArrayList(VendorAddController.listOfBilling);
 						setColumnValues();
 						tableBillingLocations.setItems(data);
 						tableBillingLocations.setVisible(true);
@@ -847,9 +845,9 @@ public class VendorEditController extends Application implements Initializable {
 			public void run() {
 				try {
 
-					if (listOfAdditionalContact != null & !(listOfAdditionalContact.isEmpty())) {
+					if (VendorAddController.listOfAdditionalContact != null & !(VendorAddController.listOfAdditionalContact.isEmpty())) {
 						ObservableList<AdditionalContact> data = FXCollections
-								.observableArrayList(listOfAdditionalContact);
+								.observableArrayList(VendorAddController.listOfAdditionalContact);
 						setAdditionalContactColumnValues();
 						tableAdditionalContact.setItems(data);
 						tableAdditionalContact.setVisible(true);
@@ -870,7 +868,7 @@ public class VendorEditController extends Application implements Initializable {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getCustomerName() + "");
+						return new SimpleStringProperty(param.getValue().getVendorName() + "");
 					}
 				});
 		position.setCellValueFactory(

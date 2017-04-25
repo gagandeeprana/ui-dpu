@@ -15,12 +15,10 @@ import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.controller.Login;
 import com.dpu.model.AdditionalContact;
-import com.dpu.model.BillingControllerModel;
-import com.dpu.model.Driver;
+import com.dpu.model.DPUService;
+import com.dpu.model.Success;
 import com.dpu.model.Vendor;
 import com.dpu.model.VendorBillingLocation;
-import com.dpu.request.CompanyModel;
-import com.dpu.request.CompanyResponse;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -28,21 +26,17 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
@@ -173,11 +167,11 @@ public class VendorController extends Application implements Initializable {
 
 	@FXML
 	private void btnEditVendorAction() {
-		VendorEditController.listOfBilling = new ArrayList<VendorBillingLocation>();
+		VendorAddController.listOfBilling = new ArrayList<VendorBillingLocation>();
 //		VendorEditController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
-		VendorEditController.vendor = new Vendor();
+		VendorAddController.vendor = new Vendor();
 
-		VendorEditController.selectedTabValue = 0;
+		VendorAddController.selectedTabValue = 0;
 
 		Vendor selectedIndexVendor = cList.get(tblVendor.getSelectionModel().getSelectedIndex());
 		vendorId = selectedIndexVendor.getVendorId();
@@ -213,7 +207,7 @@ public class VendorController extends Application implements Initializable {
 									bcm.setFax(c.getBillingLocations().get(i).getFax());
 									bcm.setPhone(c.getBillingLocations().get(i).getPhone());
 									bcm.setZip(c.getBillingLocations().get(i).getZip());
-									VendorEditController.listOfBilling.add(bcm);
+									VendorAddController.listOfBilling.add(bcm);
 								}
 							}
 
@@ -422,15 +416,19 @@ public class VendorController extends Application implements Initializable {
 		fetchColumns();
 		Platform.runLater(new Runnable() {
 
+			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
 				ObservableList<Vendor> data = null;
 				try {
 					ObjectMapper mapper = new ObjectMapper();
 					if (response != null && response.length() > 0) {
-						Vendor c[] = mapper.readValue(response, Vendor[].class);
+						Success success = mapper.readValue(response, Success.class);
 						cList = new ArrayList<Vendor>();
-						for (Vendor ccl : c) {
+						List<Vendor> vendorList = (List<Vendor>) success.getResultList();
+						String res = mapper.writeValueAsString(vendorList);
+						Vendor c[] = mapper.readValue(res, Vendor[].class);
+						for(Vendor ccl : c) {
 							cList.add(ccl);
 						}
 						data = FXCollections.observableArrayList(cList);

@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
-import org.apache.commons.validator.EmailValidator;
+//import org.apache.commons.validator.EmailValidator;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.dpu.client.DeleteAPIClient;
@@ -1141,14 +1141,14 @@ public class CompanyEditController extends Application implements Initializable 
 
 		}
 
-		EmailValidator validator = EmailValidator.getInstance();
+		/*EmailValidator validator = EmailValidator.getInstance();
 		if (validator.isValid(email)) {
 			result = true;
 		} else {
 			result = false;
 			txtEmail.setStyle("-fx-text-box-border: red;");
 			lblEmail.setVisible(true);
-		}
+		}*/
 
 		/*
 		 * boolean blnAddress = validate.validateEmptyness(address); if

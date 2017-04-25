@@ -62,7 +62,7 @@ public class VendorAddController extends Application implements Initializable {
 	public static int selectedTabValue = 0;
 	public static int addAddtionalContact = 0;
 	public static Vendor vendor = new Vendor();
-	public static AdditionalContact additionalContactModel = new AdditionalContact();
+	public static VendorAdditionalContacts additionalContactModel = new VendorAdditionalContacts();
 	public static VendorBillingLocation VendorBillingLocation = new VendorBillingLocation();
 	public static ArrayList<VendorBillingLocation> listOfBilling = new ArrayList<VendorBillingLocation>();
 	public static ArrayList<AdditionalContact> listOfAdditionalContact = new ArrayList<AdditionalContact>();
@@ -551,8 +551,7 @@ public class VendorAddController extends Application implements Initializable {
 					Vendor vendor = setVendorValue();
 					String payload = mapper.writeValueAsString(vendor);
 
-					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_VENDOR_API,
-							null, payload);
+					String response = PostAPIClient.callPostAPI(Iconstants.URL_SERVER + Iconstants.URL_VENDOR_API, null, payload);
 
 					if (response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
@@ -595,11 +594,11 @@ public class VendorAddController extends Application implements Initializable {
 
 		// need to use for loop here
 
-		if (VendorEditController.listOfBilling != null) {
-			int sizeOfBilling = VendorEditController.listOfBilling.size();
+		if (listOfBilling != null) {
+			int sizeOfBilling = listOfBilling.size();
 			for (int i = 0; i < sizeOfBilling; i++) {
 				VendorBillingLocation billingLocation = new VendorBillingLocation();
-				VendorBillingLocation billingModel = VendorEditController.listOfBilling.get(i);
+				VendorBillingLocation billingModel = listOfBilling.get(i);
 				billingLocation.setName(billingModel.getName());
 				billingLocation.setAddress(billingModel.getAddress());
 				billingLocation.setCity(billingModel.getCity());
@@ -621,13 +620,13 @@ public class VendorAddController extends Application implements Initializable {
 		vendor.setBillingLocations(billingLocations);
 
 		// need to use for loop here
-		if (VendorEditController.listOfAdditionalContact != null) {
-			int sizeOfAdditionalContact = VendorEditController.listOfAdditionalContact.size();
+		if (listOfAdditionalContact != null) {
+			int sizeOfAdditionalContact = listOfAdditionalContact.size();
 			for (int i = 0; i < sizeOfAdditionalContact; i++) {
 
-				AdditionalContact additionalContactModel = VendorEditController.listOfAdditionalContact.get(i);
+				AdditionalContact additionalContactModel = listOfAdditionalContact.get(i);
 				VendorAdditionalContacts additionalContact = new VendorAdditionalContacts();
-				additionalContact.setVendorName(additionalContactModel.getCustomerName());
+				additionalContact.setVendorName(additionalContactModel.getVendorName());
 				additionalContact.setPosition(additionalContactModel.getPosition());
 				additionalContact.setPhone(additionalContactModel.getPhone());
 				additionalContact.setExt(additionalContactModel.getExt());
