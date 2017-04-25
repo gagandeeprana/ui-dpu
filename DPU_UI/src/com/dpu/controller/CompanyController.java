@@ -15,6 +15,11 @@ import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.AdditionalContact;
 import com.dpu.model.BillingControllerModel;
+import com.dpu.model.Category;
+import com.dpu.model.Company;
+import com.dpu.model.Division;
+import com.dpu.model.Sale;
+import com.dpu.model.Type;
 import com.dpu.request.CompanyModel;
 import com.dpu.request.CompanyResponse;
 
@@ -32,12 +37,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TablePosition;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.TextField;
@@ -159,6 +164,16 @@ public class CompanyController extends Application implements Initializable {
 
 	@FXML
 	private void btnAddCompanyAction() {
+		/*
+		 * String response = null; try { response =
+		 * GetAPIClient.callGetAPI(Iconstants.URL_SERVER +
+		 * Iconstants.URL_COMPANY_API + "/" + "openAdd", null); } catch
+		 * (Exception e) { e.printStackTrace(); }
+		 * 
+		 * if (response != null) {
+		 * 
+		 * }
+		 */
 		CompanyEditController.selectedTabValue = 0;
 		CompanyAddController.listOfBilling = new ArrayList<BillingControllerModel>();
 		CompanyAddController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
@@ -167,21 +182,16 @@ public class CompanyController extends Application implements Initializable {
 
 	}
 
-	/*public TableRow<CompanyModel> rowNumber() {
-		TableRow<CompanyModel> row = new TableRow<>();
-		tblCompany.setRowFactory(tv -> {
-
-			row.setOnMouseClicked(event -> {
-				if (event.getClickCount() == 2 && (!row.isEmpty())) {
-					CompanyModel rowData = row.getItem();
-					System.out.println(rowData);
-				}
-			});
-			return row;
-		});
-		return row;
-
-	}*/
+	/*
+	 * public TableRow<CompanyModel> rowNumber() { TableRow<CompanyModel> row =
+	 * new TableRow<>(); tblCompany.setRowFactory(tv -> {
+	 * 
+	 * row.setOnMouseClicked(event -> { if (event.getClickCount() == 2 &&
+	 * (!row.isEmpty())) { CompanyModel rowData = row.getItem();
+	 * System.out.println(rowData); } }); return row; }); return row;
+	 * 
+	 * }
+	 */
 
 	public static Long companyId = 0l;
 
@@ -360,6 +370,7 @@ public class CompanyController extends Application implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
 		Login.setWidthForAll(root, tblCompany);
 		Login.setWidthForAll(headerPaneCompany, null);
 		// textfield.setVisible(false);
@@ -375,6 +386,7 @@ public class CompanyController extends Application implements Initializable {
 		afterHours.setVisible(afterHourss);
 	}
 
+	
 	@FXML
 	public void clickItem(MouseEvent event) {
 		if (event.getClickCount() == 2) // Checking double click
@@ -387,27 +399,21 @@ public class CompanyController extends Application implements Initializable {
 
 	@Override
 	public void start(Stage stage) {
-		/*System.out.println("START");
-
-		tblCompany.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				if (event.getClickCount() > 1) {
-					System.out.println("double clicked!");
-				}
-			}
-		});
-
-		tblCompany.setRowFactory(tv -> {
-			TableRow<CompanyModel> row = new TableRow<>();
-			row.setOnMouseClicked(event -> {
-				if (event.getClickCount() == 2 && (!row.isEmpty())) {
-					CompanyModel rowData = row.getItem();
-					System.out.println(rowData);
-				}
-			});
-			return row;
-		});*/
+		/*
+		 * System.out.println("START");
+		 * 
+		 * tblCompany.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		 * 
+		 * @Override public void handle(MouseEvent event) { if
+		 * (event.getClickCount() > 1) { System.out.println("double clicked!");
+		 * } } });
+		 * 
+		 * tblCompany.setRowFactory(tv -> { TableRow<CompanyModel> row = new
+		 * TableRow<>(); row.setOnMouseClicked(event -> { if
+		 * (event.getClickCount() == 2 && (!row.isEmpty())) { CompanyModel
+		 * rowData = row.getItem(); System.out.println(rowData); } }); return
+		 * row; });
+		 */
 	}
 
 	/*
@@ -653,24 +659,22 @@ public class CompanyController extends Application implements Initializable {
 						} else {
 							contextMenu.hide();
 							click++;
-							//System.out.println("now doublyyy" + click);
+							// System.out.println("now doublyyy" + click);
 
 						}
 						if (click == 2) {
 							btnEditCompanyAction();
-							//System.out.println("try doble====");
+							// System.out.println("try doble====");
 							click = 0;
 						}
 
 					}
-					/*try {
-						Thread.sleep(2000);
-						if (click == 1) {
-							click = 0;
-						}
-					} catch (Exception e) {
-
-					}*/
+					/*
+					 * try { Thread.sleep(2000); if (click == 1) { click = 0; }
+					 * } catch (Exception e) {
+					 * 
+					 * }
+					 */
 				}
 
 			});
