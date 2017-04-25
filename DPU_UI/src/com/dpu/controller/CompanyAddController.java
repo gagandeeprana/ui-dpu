@@ -10,12 +10,18 @@ import javax.swing.JOptionPane;
 import org.apache.commons.validator.EmailValidator;
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.dpu.client.GetAPIClient;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.AdditionalContact;
 import com.dpu.model.BillingControllerModel;
+import com.dpu.model.Category;
+import com.dpu.model.Company;
+import com.dpu.model.Division;
 import com.dpu.model.Failed;
+import com.dpu.model.Sale;
 import com.dpu.model.Success;
+import com.dpu.model.Type;
 import com.dpu.request.BillingLocation;
 import com.dpu.request.CompanyModel;
 import com.dpu.util.Validate;
@@ -34,6 +40,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -958,6 +965,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
 		duplicateTableBillingLocations = tableBillingLocations;
 		duplicateTableAdditionalContact = tableAdditionalContact;
 		fetchBillingLocations();
@@ -967,6 +975,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 		// new for check
 		tabPane.getSelectionModel().select(selectedTabValue);
+		fetchMasterDataForDropDowns();
 	//	txtPhone.addEventFilter(KeyEvent.KEY_TYPED, Validate.numeric_Validation(10));
 	//	txtFax.addEventFilter(KeyEvent.KEY_TYPED, Validate.numeric_Validation(10));
 	//	txtCompany.addEventFilter(KeyEvent.KEY_TYPED, Validate.letter_Validation(10));
@@ -1253,5 +1262,72 @@ public class CompanyAddController extends Application implements Initializable {
 		txtCellular.setText(c.getCellular());
 		txtPager.setText(c.getPager());
 	}
+	
+	//=============================================
+	@FXML
+	ComboBox<String> ddlCategory, ddlDivision, ddlSale, ddlCountry;
+
+	private void fetchMasterDataForDropDowns() {
+
+		Platform.runLater(new Runnable() {
+			ObjectMapper mapper = new ObjectMapper();
+			List<Category> categoryList = null;
+			List<Division> divisionList = null;
+			List<Sale> saleList = null;
+			List<Type> countryList = null;
+
+			@Override
+			public void run() {
+				try {
+					String response = GetAPIClient
+							.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/openAdd", null);
+					Company company = mapper.readValue(response, Company.class);
+				
+					categoryList = company.getCategoryList();
+					if(categoryList != null)
+					fillDropDown(ddlCategory, categoryList);
+					
+					divisionList = company.getDivisionList();
+					if(divisionList != null)
+					fillDropDown(ddlDivision, divisionList);
+
+					saleList = company.getSaleList();
+					if(saleList != null)
+					fillDropDown(ddlSale, saleList);
+					
+					countryList = company.getCountryList();
+					if(countryList != null)
+					fillDropDown(ddlCountry, countryList);
+					 
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+				}
+			}
+		});
+	}
+	
+	private void fillDropDown(ComboBox<String> comboBox, List<?> list) {
+		for (int i = 0; i < list.size(); i++) {
+			Object object = list.get(i);
+			if (object != null && object instanceof Type) {
+				Type type = (Type) object;
+				comboBox.getItems().add(type.getTypeName());
+			}
+			 
+			if (object != null && object instanceof Category) {
+				Category category = (Category) object;
+				comboBox.getItems().add(category.getName());
+			}
+			if (object != null && object instanceof Division) {
+				Division division = (Division) object;
+				comboBox.getItems().add(division.getDivisionName());
+			}
+			if (object != null && object instanceof Sale) {
+				Sale sale = (Sale) object;
+				comboBox.getItems().add(sale.getName());
+			}
+		}
+	}
+
 
 }
