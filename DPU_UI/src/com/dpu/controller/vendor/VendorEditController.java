@@ -9,11 +9,11 @@ import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.controller.MainScreen;
-import com.dpu.model.AdditionalContact;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
 import com.dpu.model.Vendor;
@@ -26,17 +26,22 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
@@ -58,31 +63,31 @@ public class VendorEditController extends Application implements Initializable {
 	private TabPane tabPane;
 
 	@FXML
-	private TableColumn<AdditionalContact, String> additionalContact;
+	private TableColumn<VendorAdditionalContacts, String> additionalContact;
 
 	@FXML
-	private TableColumn<AdditionalContact, String> position;
+	private TableColumn<VendorAdditionalContacts, String> position;
 
 	@FXML
-	private TableColumn<AdditionalContact, String> phoneNo;
+	private TableColumn<VendorAdditionalContacts, String> phoneNo;
 
 	@FXML
-	private TableColumn<AdditionalContact, String> faxNo;
+	private TableColumn<VendorAdditionalContacts, String> faxNo;
 
 	@FXML
-	private TableColumn<AdditionalContact, String> cellular;
+	private TableColumn<VendorAdditionalContacts, String> cellular;
 
 	@FXML
-	private TableColumn<AdditionalContact, String> email;
+	private TableColumn<VendorAdditionalContacts, String> email;
 
 	@FXML
-	private TableColumn<AdditionalContact, String> extension;
+	private TableColumn<VendorAdditionalContacts, String> extension;
 
 	@FXML
-	private TableColumn<AdditionalContact, String> pager;
+	private TableColumn<VendorAdditionalContacts, String> pager;
 
 	@FXML
-	private TableColumn<AdditionalContact, String> status;
+	private TableColumn<VendorAdditionalContacts, String> status;
 
 	@FXML
 	private TableColumn<VendorBillingLocation, String> address;
@@ -109,7 +114,7 @@ public class VendorEditController extends Application implements Initializable {
 	private TableColumn<VendorBillingLocation, String> phone;
 
 	@FXML
-	private TableView<AdditionalContact> tableAdditionalContact;
+	private TableView<VendorAdditionalContacts> tableAdditionalContact;
 
 	@FXML
 	public TableView<VendorBillingLocation> tableBillingLocations;
@@ -178,9 +183,9 @@ public class VendorEditController extends Application implements Initializable {
 	public static int addBillingLocation = 0;
 	public static int addAddtionalContact = 0;
 	public static VendorBillingLocation vendorBillingLocation = new VendorBillingLocation();
-	public static AdditionalContact additionalContactModel = new AdditionalContact();
+	public static VendorAdditionalContacts additionalContactModel = new VendorAdditionalContacts();
 	public static ArrayList<VendorBillingLocation> listOfBilling = new ArrayList<VendorBillingLocation>(); 
-	public static ArrayList<AdditionalContact> listOfAdditionalContact = new ArrayList<AdditionalContact>();
+	public static ArrayList<VendorAdditionalContacts> listOfAdditionalContact = new ArrayList<VendorAdditionalContacts>();
 
 	public static Vendor vendor = new Vendor();
 
@@ -324,11 +329,11 @@ public class VendorEditController extends Application implements Initializable {
 			int sizeOfAdditionalContact = listOfAdditionalContact.size();
 			for (int i = 0; i < sizeOfAdditionalContact; i++) {
 
-				AdditionalContact additionalContactModel = listOfAdditionalContact.get(i);
+				VendorAdditionalContacts additionalContactModel = listOfAdditionalContact.get(i);
 				VendorAdditionalContacts additionalContact = new VendorAdditionalContacts();
 
 				if (additionalContactModel.getVendorAdditionalContactId() != null)
-					additionalContact.setAdditionalContactId(additionalContactModel.getVendorAdditionalContactId());
+					additionalContact.setVendorAdditionalContactId(additionalContactModel.getVendorAdditionalContactId());
 				additionalContact.setVendorName(additionalContactModel.getVendorName());
 				additionalContact.setPosition(additionalContactModel.getPosition());
 				additionalContact.setPhone(additionalContactModel.getPhone());
@@ -371,7 +376,7 @@ public class VendorEditController extends Application implements Initializable {
 	@FXML
 	private void btnCancelVendorAction() {
 		listOfBilling = new ArrayList<VendorBillingLocation>();
-		listOfAdditionalContact = new ArrayList<AdditionalContact>();
+		listOfAdditionalContact = new ArrayList<VendorAdditionalContacts>();
 		vendor = new Vendor();
 		closeAddVendorScreen(btnCancelVendor);
 	}
@@ -419,7 +424,7 @@ public class VendorEditController extends Application implements Initializable {
 	void handleAddContMouseClick(MouseEvent event) {
 
 		// Create ContextMenu
-		/*ContextMenu contextMenu = new ContextMenu();
+		ContextMenu contextMenu = new ContextMenu();
 
 		MenuItem item1 = new MenuItem("ADD");
 		item1.setOnAction(new EventHandler<ActionEvent>() {
@@ -427,37 +432,37 @@ public class VendorEditController extends Application implements Initializable {
 			@Override
 			public void handle(ActionEvent event) {
 				//add = 1;
-				setValuesToCmpanyTextField();
-				addAddtionalContact = 1;
-				selectedTabValue = 1;
-				company.setName(txtCompany.getText());
-				company.setAddress(txtAddress.getText());
-				company.setUnitNo(txtUnitNo.getText());
-				company.setCity(txtCity.getText());
-				company.setProvinceState(txtProvince.getText());
-				company.setZip(txtZip.getText());
-				company.setEmail(txtEmail.getText());
-				company.setWebsite(txtWebsite.getText());
-				company.setContact(txtContact.getText());
-				company.setPosition(txtPosition.getText());
-				company.setPhone(txtPhone.getText());
-				company.setExt(txtExt.getText());
-				company.setFax(txtFax.getText());
-				company.setCompanyPrefix(txtPrefix.getText());
-				company.setTollfree(txtTollFree.getText());
-				company.setCellular(txtCellular.getText());
-				company.setPager(txtPager.getText());
-				company.setAfterHours(txtAfterHours.getText());
+//				setValuesToCmpanyTextField();
+				VendorAddController.addAddtionalContact = 1;
+				VendorAddController.selectedTabValue = 1;
+//				VendorAddController.vendor.setName(txtCompany.getText());
+//				VendorAddController.vendor.setAddress(txtAddress.getText());
+//				VendorAddController.vendor.setUnitNo(txtUnitNo.getText());
+//				VendorAddController.vendor.setCity(txtCity.getText());
+//				VendorAddController.vendor.setProvinceState(txtProvince.getText());
+//				VendorAddController.vendor.setZip(txtZip.getText());
+//				VendorAddController.vendor.setEmail(txtEmail.getText());
+//				VendorAddController.vendor.setWebsite(txtWebsite.getText());
+//				VendorAddController.vendor.setContact(txtContact.getText());
+//				VendorAddController.vendor.setPosition(txtPosition.getText());
+//				VendorAddController.vendor.setPhone(txtPhone.getText());
+//				VendorAddController.vendor.setExt(txtExt.getText());
+//				VendorAddController.vendor.setFax(txtFax.getText());
+//				VendorAddController.vendor.setVendorPrefix(txtPrefix.getText());
+//				VendorAddController.vendor.setTollfree(txtTollFree.getText());
+//				VendorAddController.vendor.setCellular(txtCellular.getText());
+//				VendorAddController.vendor.setPager(txtPager.getText());
+//				VendorAddController.vendor.setAfterHours(txtAfterHours.getText());
 
 				openAddAdditionalContactScreen();
 
-				try {
-					closeAddCompanyScreen(btnSaveCompany);
-
-				} catch (Exception e) {
-					e.printStackTrace();
-					System.exit(0);
-				}
+//				try {
+//					closeAddCompanyScreen(btnSaveCompany);
+//
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//					System.exit(0);
+//				}
 
 			}
 		});
@@ -472,10 +477,10 @@ public class VendorEditController extends Application implements Initializable {
 				editIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
 				additionalContactModel = tableAdditionalContact.getSelectionModel().getSelectedItem();
 
-				if (additionalContactModel.getAdditionalContactId() != null)
-					additionalContactIdPri = additionalContactModel.getAdditionalContactId();
-				openAddAdditionalContactScreen();
-				closeAddCompanyScreen(btnSaveCompany);
+//				if (additionalContactModel.getAdditionalContactId() != null)
+//					additionalContactIdPri = additionalContactModel.getAdditionalContactId();
+//				openAddAdditionalContactScreen();
+//				closeAddCompanyScreen(btnSaveCompany);
 
 			}
 		});
@@ -486,14 +491,14 @@ public class VendorEditController extends Application implements Initializable {
 			@Override
 			public void handle(ActionEvent event) {
 				selectedTabValue = 1;
-				setValuesToCmpanyTextField();
+//				setValuesToCmpanyTextField();
 				editIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
  
-				Long additionalontactId = listOfAdditionalContact.get(editIndex).getAdditionalContactId();
-				Long companyId = listOfAdditionalContact.get(editIndex).getCompanyId();
+				Long additionalontactId = VendorAddController.listOfAdditionalContact.get(editIndex).getVendorAdditionalContactId();
+				Long companyId = VendorController.vendorId;
 
 				if (additionalontactId == null) {
-					listOfAdditionalContact.remove(editIndex);
+					VendorAddController.listOfAdditionalContact.remove(editIndex);
 					JOptionPane.showMessageDialog(null, "Additional Contact Deleted SuccessFully.", "Info", 1);
 
 				} else {
@@ -501,9 +506,9 @@ public class VendorEditController extends Application implements Initializable {
 					// hit api to delete Additional Conatct
 					try {
 						String response = DeleteAPIClient
-								.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_DELETE_BILLING_LOCATION_API + "/"
-										+ companyId + "/additionalcontacts/" + additionalontactId, null);
-						listOfAdditionalContact.remove(editIndex);
+								.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_VENDOR_API + "/"
+										+ companyId + "/additionalContacts/" + additionalontactId, null);
+						VendorAddController.listOfAdditionalContact.remove(editIndex);
 
 						ObjectMapper mapper = new ObjectMapper();
 
@@ -521,20 +526,7 @@ public class VendorEditController extends Application implements Initializable {
 				}
 				// }
 				editIndex = -1;
-
-				try {
-					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-							.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_EDIT_SCREEN));
-					Parent root = (Parent) fxmlLoader.load();
-					Stage stage = new Stage();
-					stage.initModality(Modality.APPLICATION_MODAL);
-					stage.setTitle("Update Company");
-					stage.setScene(new Scene(root));
-					stage.show();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				closeAddCompanyScreen(btnSaveCompany);
+				VendorAddController.fetchAdditionalContactsUsingDuplicate();
 
 			}
 		});
@@ -554,7 +546,7 @@ public class VendorEditController extends Application implements Initializable {
 			});
 
 		}
-	*/
+	
 	}
 	
 	@FXML
@@ -564,9 +556,11 @@ public class VendorEditController extends Application implements Initializable {
 			@Override
 			public void run() {
 				try {
+					
+					VendorAddController.listOfAdditionalContact = new ArrayList<>();
 					ObjectMapper mapper = new ObjectMapper();
 					String response = GetAPIClient.callGetAPI(
-							Iconstants.URL_SERVER + Iconstants.URL_VENDOR_API + "/" + vendor.getVendorId() + "/additionalContacts",
+							Iconstants.URL_SERVER + Iconstants.URL_VENDOR_API + "/" + VendorController.vendorId + "/additionalContacts",
 							null);
 
 					if (response != null && response.length() > 0) {
@@ -577,10 +571,10 @@ public class VendorEditController extends Application implements Initializable {
 						if (c.getAdditionalContacts() != null) {
 							int addtionalContactSize = c.getAdditionalContacts().size();
 							for (int j = 0; j < addtionalContactSize; j++) {
-								AdditionalContact additionalContact = new AdditionalContact();
+								VendorAdditionalContacts additionalContact = new VendorAdditionalContacts();
 
-//								additionalContact.setven(c.getVendorId());
-								additionalContact.setVendorAdditionalContactId(c.getAdditionalContacts().get(j).getAdditionalContactId());
+//								additionalContact.set(c.getVendorId());
+								additionalContact.setVendorAdditionalContactId(c.getAdditionalContacts().get(j).getVendorAdditionalContactId());
 								additionalContact.setVendorName(c.getAdditionalContacts().get(j).getVendorName());
 								additionalContact.setCellular(c.getAdditionalContacts().get(j).getCellular());
 								additionalContact.setEmail(c.getAdditionalContacts().get(j).getEmail());
@@ -591,9 +585,11 @@ public class VendorEditController extends Application implements Initializable {
 								additionalContact.setPosition(c.getAdditionalContacts().get(j).getPosition());
 								additionalContact.setStatusId(1l);
 
-								VendorEditController.listOfAdditionalContact.add(additionalContact);
+								VendorAddController.listOfAdditionalContact.add(additionalContact);
 							}
 						}
+						
+						fetchAdditionalContacts();
 
 					}
 				} catch (Exception e) {
@@ -607,7 +603,7 @@ public class VendorEditController extends Application implements Initializable {
 	private void openAddAdditionalContactScreen() {
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-					.getResource(Iconstants.VENDOR_BASE_PACKAGE + Iconstants.XML_EDIT_ADDITIONAL_CONTACT_SCREEN));
+					.getResource(Iconstants.VENDOR_BASE_PACKAGE + Iconstants.XML_VENDOR_ADDITIONAL_CONTACT_ADD_SCREEN));
 			Parent root = (Parent) fxmlLoader.load();
 
 			Stage stage = new Stage();
@@ -846,8 +842,7 @@ public class VendorEditController extends Application implements Initializable {
 				try {
 
 					if (VendorAddController.listOfAdditionalContact != null & !(VendorAddController.listOfAdditionalContact.isEmpty())) {
-						ObservableList<AdditionalContact> data = FXCollections
-								.observableArrayList(VendorAddController.listOfAdditionalContact);
+						ObservableList<VendorAdditionalContacts> data = FXCollections.observableArrayList(VendorAddController.listOfAdditionalContact);
 						setAdditionalContactColumnValues();
 						tableAdditionalContact.setItems(data);
 						tableAdditionalContact.setVisible(true);
@@ -864,74 +859,74 @@ public class VendorEditController extends Application implements Initializable {
 	private void setAdditionalContactColumnValues() {
 
 		additionalContact.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+				new Callback<TableColumn.CellDataFeatures<VendorAdditionalContacts, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+					public ObservableValue<String> call(CellDataFeatures<VendorAdditionalContacts, String> param) {
 						return new SimpleStringProperty(param.getValue().getVendorName() + "");
 					}
 				});
 		position.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+				new Callback<TableColumn.CellDataFeatures<VendorAdditionalContacts, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+					public ObservableValue<String> call(CellDataFeatures<VendorAdditionalContacts, String> param) {
 						return new SimpleStringProperty(param.getValue().getPosition() + "");
 					}
 				});
 		phoneNo.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+				new Callback<TableColumn.CellDataFeatures<VendorAdditionalContacts, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+					public ObservableValue<String> call(CellDataFeatures<VendorAdditionalContacts, String> param) {
 						return new SimpleStringProperty(param.getValue().getPhone() + "");
 					}
 				});
 		faxNo.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+				new Callback<TableColumn.CellDataFeatures<VendorAdditionalContacts, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+					public ObservableValue<String> call(CellDataFeatures<VendorAdditionalContacts, String> param) {
 						return new SimpleStringProperty(param.getValue().getFax() + "");
 					}
 				});
 		cellular.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+				new Callback<TableColumn.CellDataFeatures<VendorAdditionalContacts, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+					public ObservableValue<String> call(CellDataFeatures<VendorAdditionalContacts, String> param) {
 						return new SimpleStringProperty(param.getValue().getCellular() + "");
 					}
 				});
 		email.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+				new Callback<TableColumn.CellDataFeatures<VendorAdditionalContacts, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+					public ObservableValue<String> call(CellDataFeatures<VendorAdditionalContacts, String> param) {
 						return new SimpleStringProperty(param.getValue().getEmail() + "");
 					}
 				});
 		extension.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+				new Callback<TableColumn.CellDataFeatures<VendorAdditionalContacts, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+					public ObservableValue<String> call(CellDataFeatures<VendorAdditionalContacts, String> param) {
 						return new SimpleStringProperty(param.getValue().getExt() + "");
 					}
 				});
 		pager.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+				new Callback<TableColumn.CellDataFeatures<VendorAdditionalContacts, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+					public ObservableValue<String> call(CellDataFeatures<VendorAdditionalContacts, String> param) {
 						return new SimpleStringProperty(param.getValue().getPrefix() + "");
 					}
 				});
 		status.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+				new Callback<TableColumn.CellDataFeatures<VendorAdditionalContacts, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+					public ObservableValue<String> call(CellDataFeatures<VendorAdditionalContacts, String> param) {
 						return new SimpleStringProperty(param.getValue().getStatusId() + "");
 					}
 				});

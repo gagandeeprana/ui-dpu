@@ -65,7 +65,7 @@ public class VendorAddController extends Application implements Initializable {
 	public static VendorAdditionalContacts additionalContactModel = new VendorAdditionalContacts();
 	public static VendorBillingLocation VendorBillingLocation = new VendorBillingLocation();
 	public static ArrayList<VendorBillingLocation> listOfBilling = new ArrayList<VendorBillingLocation>();
-	public static ArrayList<AdditionalContact> listOfAdditionalContact = new ArrayList<AdditionalContact>();
+	public static ArrayList<VendorAdditionalContacts> listOfAdditionalContact = new ArrayList<VendorAdditionalContacts>();
 	VendorAddControllerBillingLocationRightMenu rightMenu = new VendorAddControllerBillingLocationRightMenu();
 	VendorAddControllerAdditionalContactsRightMenu rightMenuAdditionalContacts = new VendorAddControllerAdditionalContactsRightMenu();
 	
@@ -78,9 +78,9 @@ public class VendorAddController extends Application implements Initializable {
 	public static TableView<VendorBillingLocation> duplicateTableBillingLocations;
 
 	@FXML
-	private TableView<AdditionalContact> tableAdditionalContact;
+	private TableView<VendorAdditionalContacts> tableAdditionalContact;
 
-	public static TableView<AdditionalContact> duplicateTableAdditionalContact;
+	public static TableView<VendorAdditionalContacts> duplicateTableAdditionalContact;
 
 	@FXML
 	private TableColumn<AdditionalContact, String> additionalContact, position, phoneNo, faxNo, cellular, email, extension, pager, status;
@@ -160,7 +160,7 @@ public class VendorAddController extends Application implements Initializable {
 				try {
 
 					if (VendorEditController.listOfAdditionalContact != null & !(VendorEditController.listOfAdditionalContact.isEmpty())) {
-						ObservableList<AdditionalContact> data = FXCollections.observableArrayList(VendorEditController.listOfAdditionalContact);
+						ObservableList<VendorAdditionalContacts> data = FXCollections.observableArrayList(VendorEditController.listOfAdditionalContact);
 						setAdditionalContactColumnValues();
 						tableAdditionalContact.setItems(data);
 						tableAdditionalContact.setVisible(true);
@@ -183,7 +183,7 @@ public class VendorAddController extends Application implements Initializable {
 				try {
 
 					if (listOfAdditionalContact != null & !(listOfAdditionalContact.isEmpty())) {
-						ObservableList<AdditionalContact> data = FXCollections.observableArrayList(listOfAdditionalContact);
+						ObservableList<VendorAdditionalContacts> data = FXCollections.observableArrayList(listOfAdditionalContact);
 						duplicateTableAdditionalContact.setItems(data);
 						duplicateTableAdditionalContact.setVisible(true);
 					}
@@ -530,7 +530,7 @@ public class VendorAddController extends Application implements Initializable {
 	@FXML
 	private void btnCancelVendorAction() {
 		VendorEditController.listOfBilling = new ArrayList<VendorBillingLocation>();
-		VendorEditController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
+		VendorEditController.listOfAdditionalContact = new ArrayList<VendorAdditionalContacts>();
 		vendor = new Vendor();
 		closeAddVendorScreen(btnCancelVendor);
 	}
@@ -624,7 +624,7 @@ public class VendorAddController extends Application implements Initializable {
 			int sizeOfAdditionalContact = listOfAdditionalContact.size();
 			for (int i = 0; i < sizeOfAdditionalContact; i++) {
 
-				AdditionalContact additionalContactModel = listOfAdditionalContact.get(i);
+				VendorAdditionalContacts additionalContactModel = listOfAdditionalContact.get(i);
 				VendorAdditionalContacts additionalContact = new VendorAdditionalContacts();
 				additionalContact.setVendorName(additionalContactModel.getVendorName());
 				additionalContact.setPosition(additionalContactModel.getPosition());

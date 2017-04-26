@@ -57,8 +57,8 @@ public class VendorAddControllerAdditionalContactsRightMenu {
 				VendorAddController.addEditIndex = VendorAddController.duplicateTableAdditionalContact.getSelectionModel().getSelectedIndex();
 				VendorEditController.editIndex = VendorAddController.duplicateTableAdditionalContact.getSelectionModel().getSelectedIndex();
 				VendorEditController.additionalContactModel = VendorAddController.duplicateTableAdditionalContact.getSelectionModel().getSelectedItem();
-				if (VendorEditController.additionalContactModel.getAdditionalContactId() != null)
-					VendorEditController.additionalContactIdPri = VendorEditController.additionalContactModel.getAdditionalContactId();
+				if (VendorEditController.additionalContactModel.getVendorAdditionalContactId() != null)
+					VendorEditController.additionalContactIdPri = VendorEditController.additionalContactModel.getVendorAdditionalContactId();
 				openScreen(basePackage, screen, title);
 //				CompanyEditController.listOfBilling = new ArrayList<BillingControllerModel>();
 //				CompanyEditController.listOfAdditionalContact = new ArrayList<AdditionalContact>();

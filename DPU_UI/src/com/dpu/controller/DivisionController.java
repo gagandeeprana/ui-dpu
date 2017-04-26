@@ -59,6 +59,42 @@ public class DivisionController extends Application implements Initializable {
 	}
 
 	@FXML
+	private void handleRowSelect() {
+		tblDivision.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+					System.out.println("clicked:::::::::::::");
+					Division division = tblDivision.getSelectionModel().getSelectedItem();
+					if (division != null) {
+						Platform.runLater(new Runnable() {
+
+							@Override
+							public void run() {
+								try {
+									ObjectMapper mapper = new ObjectMapper();
+									String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER
+											+ Iconstants.URL_DIVISION_API + "/" + division.getDivisionId(), null);
+									System.out.println("byid response: division: " + response);
+									if (response != null && response.length() > 0) {
+
+										Division division = mapper.readValue(response, Division.class);
+										DivisionEditController divisionEditController = (DivisionEditController) openEditDivisionScreen();
+										divisionEditController.initData(division);
+									}
+								} catch (Exception e) {
+									JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+								}
+							}
+						});
+					}
+
+				}
+			}
+		});
+	}
+
+	@FXML
 	private void btnEditDivisionAction() {
 		Division division = tblDivision.getSelectionModel().getSelectedItem();
 		if (division != null) {
@@ -68,7 +104,9 @@ public class DivisionController extends Application implements Initializable {
 				public void run() {
 					try {
 						ObjectMapper mapper = new ObjectMapper();
-						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API + "/" + division.getDivisionId(),null);
+						String response = GetAPIClient.callGetAPI(
+								Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API + "/" + division.getDivisionId(),
+								null);
 						System.out.println("byid response: division: " + response);
 						if (response != null && response.length() > 0) {
 
@@ -86,43 +124,45 @@ public class DivisionController extends Application implements Initializable {
 
 	@FXML
 	TextField txtSearchDivision;
-	
+
 	@FXML
 	private void btnGoDivisionAction() {
 		String search = txtSearchDivision.getText();
-		if(search != null && search.length() > 0) {
+		if (search != null && search.length() > 0) {
 			Platform.runLater(new Runnable() {
-				
+
 				@Override
 				public void run() {
 					try {
-						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API + "/" + search + "/search", null);
+						String response = GetAPIClient.callGetAPI(
+								Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API + "/" + search + "/search", null);
 						fillDivisions(response);
 					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+						JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
 					}
 				}
 			});
-			
+
 		}
-		
-		if(search != null && search.length() == 0) {
+
+		if (search != null && search.length() == 0) {
 			Platform.runLater(new Runnable() {
-				
+
 				@Override
 				public void run() {
 					try {
-						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API, null);
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API,
+								null);
 						fillDivisions(response);
 					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+						JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
 					}
 				}
 			});
-			
+
 		}
 	}
-	
+
 	@FXML
 	private void btnDeleteDivisionAction() {
 		Division division = tblDivision.getSelectionModel().getSelectedItem();
@@ -133,8 +173,10 @@ public class DivisionController extends Application implements Initializable {
 				@Override
 				public void run() {
 					try {
-						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API + "/" + division.getDivisionId(),null);
-						
+						String response = DeleteAPIClient.callDeleteAPI(
+								Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API + "/" + division.getDivisionId(),
+								null);
+
 						try {
 							Success success = mapper.readValue(response, Success.class);
 							List<Division> divisionList = (List<Division>) success.getResultList();
@@ -145,13 +187,15 @@ public class DivisionController extends Application implements Initializable {
 							Failed failed = mapper.readValue(response, Failed.class);
 							JOptionPane.showMessageDialog(null, failed.getMessage());
 						}
-						/*if (response != null && response.contains("message")) {
-							Success success = mapper.readValue(response, Success.class);
-							JOptionPane.showMessageDialog(null, success.getMessage(), "Info", 1);
-						} else {
-							Failed failed = mapper.readValue(response, Failed.class);
-							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-						}*/
+						/*
+						 * if (response != null && response.contains("message"))
+						 * { Success success = mapper.readValue(response,
+						 * Success.class); JOptionPane.showMessageDialog(null,
+						 * success.getMessage(), "Info", 1); } else { Failed
+						 * failed = mapper.readValue(response, Failed.class);
+						 * JOptionPane.showMessageDialog(null,
+						 * failed.getMessage(), "Info", 1); }
+						 */
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
 					}
@@ -163,7 +207,8 @@ public class DivisionController extends Application implements Initializable {
 	private void openAddDivisionScreen() {
 		System.out.println("openAddDivisionScreen");
 		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.DIVISION_BASE_PACKAGE + Iconstants.XML_DIVISION_ADD_SCREEN));
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
+					.getResource(Iconstants.DIVISION_BASE_PACKAGE + Iconstants.XML_DIVISION_ADD_SCREEN));
 			Parent root = (Parent) fxmlLoader.load();
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
@@ -177,7 +222,8 @@ public class DivisionController extends Application implements Initializable {
 
 	private Object openEditDivisionScreen() {
 		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.DIVISION_BASE_PACKAGE + Iconstants.XML_DIVISION_EDIT_SCREEN));
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
+					.getResource(Iconstants.DIVISION_BASE_PACKAGE + Iconstants.XML_DIVISION_EDIT_SCREEN));
 			Parent root = (Parent) fxmlLoader.load();
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
@@ -190,20 +236,20 @@ public class DivisionController extends Application implements Initializable {
 		}
 		return null;
 	}
-	
+
 	List<Division> divisions = null;
-	
+
 	ObjectMapper mapper = new ObjectMapper();
-	
+
 	public void fillDivisions(String response) {
 		System.out.println(response + " ::: in fill Division:");
 		try {
 			divisions = new ArrayList<Division>();
 			setColumnValues();
 			ObservableList<Division> data = null;
-			if(response != null && response.length() > 0) {
+			if (response != null && response.length() > 0) {
 				Division c[] = mapper.readValue(response, Division[].class);
-				for(Division ccl : c) {
+				for (Division ccl : c) {
 					divisions.add(ccl);
 				}
 				System.out.println("division di list: " + divisions.size());
@@ -212,15 +258,15 @@ public class DivisionController extends Application implements Initializable {
 				data = FXCollections.observableArrayList(divisions);
 			}
 			tblDivision.setItems(data);
-            tblDivision.setVisible(true);
+			tblDivision.setVisible(true);
 		} catch (Exception e) {
-			System.out.println("DivisionController: fillDivisions(): "+ e.getMessage());
+			System.out.println("DivisionController: fillDivisions(): " + e.getMessage());
 		}
 	}
-	
+
 	@FXML
 	Pane root;
-	
+
 	@FXML
 	AnchorPane anchorPaneDivision;
 
@@ -252,7 +298,8 @@ public class DivisionController extends Application implements Initializable {
 			public void run() {
 				try {
 					ObjectMapper mapper = new ObjectMapper();
-					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API, null);
+					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_DIVISION_API,
+							null);
 					if (response != null && response.length() > 0) {
 						Division d[] = mapper.readValue(response, Division[].class);
 						divisionList = new ArrayList<Division>();
@@ -309,86 +356,84 @@ public class DivisionController extends Application implements Initializable {
 					}
 				});
 	}
-	
+
 	// ADD MENU
 
-				public int tblDivisionMenuCount = 0;
+	public int tblDivisionMenuCount = 0;
 
-				@FXML
-				public void handleAddContMouseClick(MouseEvent event) {
+	@FXML
+	public void handleAddContMouseClick(MouseEvent event) {
 
-					// Create ContextMenu
-					ContextMenu contextMenu = new ContextMenu();
+		// Create ContextMenu
+		ContextMenu contextMenu = new ContextMenu();
 
-					MenuItem item1 = new MenuItem("ADD");
-					item1.setOnAction(new EventHandler<ActionEvent>() {
+		MenuItem item1 = new MenuItem("ADD");
+		item1.setOnAction(new EventHandler<ActionEvent>() {
 
-						@Override
-						public void handle(ActionEvent event) {
-						}
+			@Override
+			public void handle(ActionEvent event) {
+			}
 
-					});
-					MenuItem item2 = new MenuItem("EDIT");
-					item2.setOnAction(new EventHandler<ActionEvent>() {
+		});
+		MenuItem item2 = new MenuItem("EDIT");
+		item2.setOnAction(new EventHandler<ActionEvent>() {
 
-						@Override
-						public void handle(ActionEvent event) {
+			@Override
+			public void handle(ActionEvent event) {
 
-						}
-					});
+			}
+		});
 
-					MenuItem item3 = new MenuItem("DELETE");
-					item3.setOnAction(new EventHandler<ActionEvent>() {
+		MenuItem item3 = new MenuItem("DELETE");
+		item3.setOnAction(new EventHandler<ActionEvent>() {
 
-						@Override
-						public void handle(ActionEvent event) {
+			@Override
+			public void handle(ActionEvent event) {
 
-						}
-					});
-					
-					MenuItem item4 = new MenuItem("PERSONALIZE");
-					item1.setOnAction(new EventHandler<ActionEvent>() {
+			}
+		});
 
-						@Override
-						public void handle(ActionEvent event) {
-						}
+		MenuItem item4 = new MenuItem("PERSONALIZE");
+		item1.setOnAction(new EventHandler<ActionEvent>() {
 
-					});
-					MenuItem item5 = new MenuItem("DUPLICATE");
-					item2.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+			}
 
-						@Override
-						public void handle(ActionEvent event) {
+		});
+		MenuItem item5 = new MenuItem("DUPLICATE");
+		item2.setOnAction(new EventHandler<ActionEvent>() {
 
-						}
-					});
+			@Override
+			public void handle(ActionEvent event) {
 
-					MenuItem item6 = new MenuItem("FILTER BY");
-					item3.setOnAction(new EventHandler<ActionEvent>() {
+			}
+		});
 
-						@Override
-						public void handle(ActionEvent event) {
+		MenuItem item6 = new MenuItem("FILTER BY");
+		item3.setOnAction(new EventHandler<ActionEvent>() {
 
-						}
-					});
+			@Override
+			public void handle(ActionEvent event) {
 
+			}
+		});
 
-
-					// Add MenuItem to ContextMenu
-					contextMenu.getItems().addAll(item1, item2, item3, item4, item5, item6);
-					if (tblDivisionMenuCount == 0) {
-						tblDivisionMenuCount++;
-						// When user right-click on Table
-						tblDivision.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
-							@Override
-							public void handle(ContextMenuEvent event) {
-								contextMenu.show(tblDivision, event.getScreenX(), event.getScreenY());
-
-							}
-
-						});
-
-					}
+		// Add MenuItem to ContextMenu
+		contextMenu.getItems().addAll(item1, item2, item3, item4, item5, item6);
+		if (tblDivisionMenuCount == 0) {
+			tblDivisionMenuCount++;
+			// When user right-click on Table
+			tblDivision.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+				@Override
+				public void handle(ContextMenuEvent event) {
+					contextMenu.show(tblDivision, event.getScreenX(), event.getScreenY());
 
 				}
+
+			});
+
+		}
+
+	}
 }

@@ -34,7 +34,7 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <TableView fx:id="tblDivision" layoutY="42.0" prefHeight="758.0" prefWidth="1200.0">
+      <TableView fx:id="tblDivision" onMouseClicked="#handleRowSelect" layoutY="42.0" prefHeight="758.0" prefWidth="1200.0">
          <columns>
             <TableColumn fx:id="code" prefWidth="187.0" text="Code" />
             <TableColumn fx:id="name" prefWidth="125.0" text="Name" />
