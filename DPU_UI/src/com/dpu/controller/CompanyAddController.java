@@ -1163,6 +1163,7 @@ public class CompanyAddController extends Application implements Initializable {
 		});
 	}
 
+	 
 	private CompanyModel setCompanyValue() {
 
 		List<BillingLocation> billingLocations = new ArrayList<BillingLocation>();
@@ -1176,17 +1177,10 @@ public class CompanyAddController extends Application implements Initializable {
 		company.setZip(txtZip.getText());
 		company.setEmail(txtEmail.getText());
 		company.setWebsite(txtWebsite.getText());
-		company.setContact(txtContact.getText());
-		company.setPosition(txtPosition.getText());
-		company.setPhone(txtPhone.getText());
-		company.setExt(txtExt.getText());
-		company.setFax(txtFax.getText());
-		company.setCompanyPrefix(txtPrefix.getText());
-		company.setTollfree(txtTollFree.getText());
-		company.setCellular(txtCellular.getText());
-		company.setPager(txtPager.getText());
-		company.setAfterHours(txtAfterHours.getText());
-
+		company.setDivisionId(divisionList.get(ddlDivision.getSelectionModel().getSelectedIndex()).getDivisionId());
+		company.setCategoryId(categoryList.get(ddlCategory.getSelectionModel().getSelectedIndex()).getCategoryId());
+		company.setSaleId(saleList.get(ddlSale.getSelectionModel().getSelectedIndex()).getSaleId());
+		company.setCountryId(countryList.get(ddlCountry.getSelectionModel().getSelectedIndex()).getTypeId());
 		// need to use for loop here
 
 		if (CompanyEditController.listOfBilling != null) {
@@ -1244,26 +1238,21 @@ public class CompanyAddController extends Application implements Initializable {
 	public void initData(CompanyModel c) {
 
 		txtCompany.setText(c.getName());
-		txtContact.setText(c.getContact());
 		txtAddress.setText(c.getAddress());
-		txtPosition.setText(c.getPosition());
 		txtUnitNo.setText(c.getUnitNo());
-		txtPhone.setText(c.getPhone());
-		txtExt.setText(c.getExt());
 		txtCity.setText(c.getCity());
-		txtFax.setText(c.getFax());
-		txtPrefix.setText(c.getCompanyPrefix());
 		txtProvince.setText(c.getProvinceState());
 		txtZip.setText(c.getZip());
-		txtAfterHours.setText(c.getAfterHours());
 		txtEmail.setText(c.getEmail());
-		txtTollFree.setText(c.getTollfree());
 		txtWebsite.setText(c.getWebsite());
-		txtCellular.setText(c.getCellular());
-		txtPager.setText(c.getPager());
+		
 	}
 	
 	//=============================================
+	List<Category> categoryList = null;
+	List<Division> divisionList = null;
+	List<Sale> saleList = null;
+	List<Type> countryList = null;
 	@FXML
 	ComboBox<String> ddlCategory, ddlDivision, ddlSale, ddlCountry;
 
@@ -1271,10 +1260,7 @@ public class CompanyAddController extends Application implements Initializable {
 
 		Platform.runLater(new Runnable() {
 			ObjectMapper mapper = new ObjectMapper();
-			List<Category> categoryList = null;
-			List<Division> divisionList = null;
-			List<Sale> saleList = null;
-			List<Type> countryList = null;
+			
 
 			@Override
 			public void run() {

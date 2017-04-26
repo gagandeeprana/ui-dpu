@@ -246,7 +246,7 @@ public class CompanyEditController extends Application implements Initializable 
 		company.setZip(txtZip.getText());
 		company.setEmail(txtEmail.getText());
 		company.setWebsite(txtWebsite.getText());
-		company.setContact(txtContact.getText());
+		/*company.setContact(txtContact.getText());
 		company.setPosition(txtPosition.getText());
 		company.setPhone(txtPhone.getText());
 		company.setExt(txtExt.getText());
@@ -255,7 +255,7 @@ public class CompanyEditController extends Application implements Initializable 
 		company.setTollfree(txtTollFree.getText());
 		company.setCellular(txtCellular.getText());
 		company.setPager(txtPager.getText());
-		company.setAfterHours(txtAfterHours.getText());
+		company.setAfterHours(txtAfterHours.getText());*/
 
 		// need to use for loop here
 
@@ -316,23 +316,13 @@ public class CompanyEditController extends Application implements Initializable 
 	public void initData(CompanyModel c) {
 		companyId = c.getCompanyId();
 		txtCompany.setText(c.getName());
-		txtContact.setText(c.getContact());
 		txtAddress.setText(c.getAddress());
-		txtPosition.setText(c.getPosition());
 		txtUnitNo.setText(c.getUnitNo());
-		txtPhone.setText(c.getPhone());
-		txtExt.setText(c.getExt());
 		txtCity.setText(c.getCity());
-		txtFax.setText(c.getFax());
-		txtPrefix.setText(c.getCompanyPrefix());
 		txtProvince.setText(c.getProvinceState());
 		txtZip.setText(c.getZip());
-		txtAfterHours.setText(c.getAfterHours());
 		txtEmail.setText(c.getEmail());
-		txtTollFree.setText(c.getTollfree());
 		txtWebsite.setText(c.getWebsite());
-		txtCellular.setText(c.getCellular());
-		txtPager.setText(c.getPager());
 	}
 
 	@FXML

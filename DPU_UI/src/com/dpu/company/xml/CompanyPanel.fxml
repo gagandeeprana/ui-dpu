@@ -40,10 +40,10 @@
             <TableColumn fx:id="email" prefWidth="112.0" text="Email" />
             <TableColumn fx:id="city" prefWidth="112.0" text="City" />
             <TableColumn fx:id="ps" prefWidth="112.0" text="P/S" />
-            <TableColumn fx:id="phone" prefWidth="112.0" text="Phone" />
-            <TableColumn fx:id="home" prefWidth="112.0" text="Home" />
-            <TableColumn fx:id="fax" prefWidth="112.0" text="Fax" />
-            <TableColumn fx:id="afterHours" prefWidth="112.0" text="After Hours" />
+            <TableColumn fx:id="category" prefWidth="112.0" text="Category" />
+            <TableColumn fx:id="division" prefWidth="112.0" text="Division" />
+            <TableColumn fx:id="sale" prefWidth="112.0" text="Sale" />
+            <TableColumn fx:id="country" prefWidth="112.0" text="Country" />
         </columns>
       </TableView>
    </children>

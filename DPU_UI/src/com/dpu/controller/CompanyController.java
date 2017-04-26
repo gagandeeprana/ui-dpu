@@ -15,11 +15,6 @@ import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.AdditionalContact;
 import com.dpu.model.BillingControllerModel;
-import com.dpu.model.Category;
-import com.dpu.model.Company;
-import com.dpu.model.Division;
-import com.dpu.model.Sale;
-import com.dpu.model.Type;
 import com.dpu.request.CompanyModel;
 import com.dpu.request.CompanyResponse;
 
@@ -37,7 +32,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
@@ -160,7 +154,7 @@ public class CompanyController extends Application implements Initializable {
 	public List<CompanyModel> cList = new ArrayList<CompanyModel>();
 
 	@FXML
-	TableColumn<CompanyModel, String> unitNo, name, email, city, ps, phone, home, fax, afterHours;
+	TableColumn<CompanyModel, String> unitNo, name, email, city, ps, category, division, sale, country;
 
 	@FXML
 	private void btnAddCompanyAction() {
@@ -363,10 +357,11 @@ public class CompanyController extends Application implements Initializable {
 	static boolean emaill = true;
 	static boolean cityy = true;
 	static boolean pss = true;
-	static boolean phoneNumber = true;
-	static boolean homeNumber = true;
-	static boolean faxNumber = true;
-	static boolean afterHourss = true;
+	static boolean categoryy = true;
+	static boolean divisionn = true;
+	static boolean salee = true;
+	static boolean countryy = true;
+	 
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -380,10 +375,10 @@ public class CompanyController extends Application implements Initializable {
 		email.setVisible(emaill);
 		city.setVisible(cityy);
 		ps.setVisible(pss);
-		phone.setVisible(phoneNumber);
-		home.setVisible(homeNumber);
-		fax.setVisible(faxNumber);
-		afterHours.setVisible(afterHourss);
+		category.setVisible(categoryy);
+		division.setVisible(divisionn);
+		sale.setVisible(salee);
+		country.setVisible(countryy);
 	}
 
 	
@@ -426,10 +421,10 @@ public class CompanyController extends Application implements Initializable {
 		email = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(2);
 		city = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(3);
 		ps = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(4);
-		phone = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(5);
-		home = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(6);
-		fax = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(7);
-		afterHours = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(8);
+		category = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(5);
+		division = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(6);
+		sale = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(7);
+		country = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(8);
 	}
 
 	public void fetchCompanies() {
@@ -574,36 +569,36 @@ public class CompanyController extends Application implements Initializable {
 						return new SimpleStringProperty(param.getValue().getProvinceState() + "");
 					}
 				});
-		phone.setCellValueFactory(
+		category.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<CompanyModel, String>, ObservableValue<String>>() {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
-						return new SimpleStringProperty(param.getValue().getPhone() + "");
+						return new SimpleStringProperty(param.getValue().getCategoryName()+ "");
 					}
 				});
-		home.setCellValueFactory(
+		division.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<CompanyModel, String>, ObservableValue<String>>() {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
-						return new SimpleStringProperty(param.getValue().getCellular() + "");
+						return new SimpleStringProperty(param.getValue().getDivisionName() + "");
 					}
 				});
-		fax.setCellValueFactory(
+		sale.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<CompanyModel, String>, ObservableValue<String>>() {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
-						return new SimpleStringProperty(param.getValue().getFax() + "");
+						return new SimpleStringProperty(param.getValue().getSaleName() + "");
 					}
 				});
-		afterHours.setCellValueFactory(
+		country.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<CompanyModel, String>, ObservableValue<String>>() {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
-						return new SimpleStringProperty(param.getValue().getAfterHours() + "");
+						return new SimpleStringProperty(param.getValue().getCountryName() + "");
 					}
 				});
 	}
