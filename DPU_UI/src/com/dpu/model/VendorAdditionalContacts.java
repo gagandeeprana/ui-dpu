@@ -7,7 +7,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 public class VendorAdditionalContacts {
 
 	////@JsonProperty("add_contact_id")
-	private Long additionalContactId;
+	private Long vendorAdditionalContactId;
 
 	////@JsonProperty("customer_name")
 	private String vendorName;
@@ -36,12 +36,30 @@ public class VendorAdditionalContacts {
 
 	private String email;
 
-	public Long getAdditionalContactId() {
-		return additionalContactId;
+	public VendorAdditionalContacts(String additionalContact, String position2, String phone2, String fax2,
+			String cellular2, String email2, String extension, String pager, Long statusId2) {
+		super();
+		this.vendorName = additionalContact;
+		this.position = position2;
+		this.phone = phone2;
+		this.ext = extension;
+		this.fax = fax2;
+		this.prefix = pager;
+		this.cellular = cellular2;
+		this.statusId = statusId2;
+		this.email = email2;
 	}
 
-	public void setAdditionalContactId(Long additionalContactId) {
-		this.additionalContactId = additionalContactId;
+	public VendorAdditionalContacts() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Long getVendorAdditionalContactId() {
+		return vendorAdditionalContactId;
+	}
+
+	public void setVendorAdditionalContactId(Long vendorAdditionalContactId) {
+		this.vendorAdditionalContactId = vendorAdditionalContactId;
 	}
 
 	public String getPosition() {

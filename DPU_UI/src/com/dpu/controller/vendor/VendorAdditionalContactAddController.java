@@ -13,6 +13,7 @@ import com.dpu.constants.Iconstants;
 import com.dpu.model.AdditionalContact;
 import com.dpu.model.Status;
 import com.dpu.model.Type;
+import com.dpu.model.VendorAdditionalContacts;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -118,7 +119,7 @@ public class VendorAdditionalContactAddController implements Initializable {
 
 			Long statusId = statusList.get(ddlStatus.getSelectionModel().getSelectedIndex()).getId();
 			String email = txtEmail.getText();
-			AdditionalContact bcm1 = new AdditionalContact(additionalContact, position, phone, fax, cellular, email, extension, pager, statusId);
+			VendorAdditionalContacts bcm1 = new VendorAdditionalContacts(additionalContact, position, phone, fax, cellular, email, extension, pager, statusId);
 			
 			VendorAddController.selectedTabValue = 1;
 //			if (VendorAddController.addEditIndex != -1) {

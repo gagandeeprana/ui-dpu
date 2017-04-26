@@ -14,10 +14,9 @@ import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.controller.Login;
-import com.dpu.model.AdditionalContact;
-import com.dpu.model.DPUService;
 import com.dpu.model.Success;
 import com.dpu.model.Vendor;
+import com.dpu.model.VendorAdditionalContacts;
 import com.dpu.model.VendorBillingLocation;
 
 import javafx.application.Application;
@@ -157,7 +156,7 @@ public class VendorController extends Application implements Initializable {
 	private void btnAddVendorAction() {
 		VendorEditController.selectedTabValue = 0;
 		VendorAddController.listOfBilling = new ArrayList<VendorBillingLocation>();
-		VendorAddController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
+		VendorAddController.listOfAdditionalContact = new ArrayList<VendorAdditionalContacts>();
 		VendorAddController.vendor = new Vendor();
 		openAddVendorScreen();
 
