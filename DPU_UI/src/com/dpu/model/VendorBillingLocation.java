@@ -2,214 +2,247 @@
 package com.dpu.model;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-import org.codehaus.jackson.annotate.JsonProperty;
-import org.codehaus.jackson.annotate.JsonPropertyOrder;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
  
 
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonSerialize(include= Inclusion.NON_NULL)
-@JsonPropertyOrder({
-    "billingLocationId",
-    "name",
-    "address",
-    "city",
-    "zip",
-    "statusId",
-    "contact",
-    "position",
-    "email",
-    "cellular",
-    "phone",
-    "ext",
-    "fax",
-    "tollfree"
-})
+
 public class VendorBillingLocation {
 
-    @JsonProperty("billingLocationId")
-    private Long billingLocationId;
-    @JsonProperty("name")
-    private String name;
-    @JsonProperty("address")
-    private String address;
-    @JsonProperty("city")
-    private String city;
-    @JsonProperty("zip")
-    private String zip;
-    @JsonProperty("statusId")
-    private Long status;
-    @JsonProperty("contact")
-    private String contact;
-    @JsonProperty("position")
-    private String position;
-    @JsonProperty("email")
-    private String email;
-    @JsonProperty("cellular")
-    private String cellular;
-    @JsonProperty("phone")
-    private String phone;
-    @JsonProperty("ext")
-    private String ext;
-    @JsonProperty("fax")
-    private String fax;
-    @JsonProperty("tollfree")
-    private String tollfree;
-    
-	public VendorBillingLocation() {
-		super();
-	}
+	//@JsonProperty( "billing_location_id")
+		private Long vendorBillingLocationId;
 
-	public VendorBillingLocation(String name, String address, String city, String zip, String contact,
-			String phone, String fax, Long status) {
-		super();
-		this.name = name;
-		this.address = address;
-		this.city = city;
-		this.zip = zip;
-		this.status = status;
-		this.contact = contact;
-		this.phone = phone;
-		this.fax = fax;
-	}
+		//@JsonProperty( "name")
+		private String name;
 
-	@JsonProperty("billingLocationId")
-    public Long getBillingLocationId() {
-        return billingLocationId;
-    }
+		//@JsonProperty( "address")
+		private String address;
 
-    @JsonProperty("billingLocationId")
-    public void setBillingLocationId(Long billingLocationId) {
-        this.billingLocationId = billingLocationId;
-    }
+		//@JsonProperty( "unit_no")
+		private String unitNo;
 
-    @JsonProperty("name")
-    public String getName() {
-        return name;
-    }
+		//@JsonProperty( "city")
+		private String city;
 
-    @JsonProperty("name")
-    public void setName(String name) {
-        this.name = name;
-    }
+		//@JsonProperty( "province_state")
+		private String provinceState;
 
-    @JsonProperty("address")
-    public String getAddress() {
-        return address;
-    }
+		//@JsonProperty( "zip")
+		private String zip;
 
-    @JsonProperty("address")
-    public void setAddress(String address) {
-        this.address = address;
-    }
+		//@JsonProperty( "ar_cdn")
+		private String arCDN;
 
-    @JsonProperty("city")
-    public String getCity() {
-        return city;
-    }
+		//@JsonProperty( "ar_us")
+		private String arUS;
 
-    @JsonProperty("city")
-    public void setCity(String city) {
-        this.city = city;
-    }
+		//@JsonProperty( "status")
+		private Long statusId;
+		private String statusName;
 
-    @JsonProperty("zip")
-    public String getZip() {
-        return zip;
-    }
+		//@JsonProperty( "contact")
+		private String contact;
 
-    @JsonProperty("zip")
-    public void setZip(String zip) {
-        this.zip = zip;
-    }
+		//@JsonProperty( "position")
+		private String position;
 
-    public Long getStatus() {
-		return status;
-	}
+		//@JsonProperty( "email")
+		private String email;
 
-	public void setStatus(Long status) {
-		this.status = status;
-	}
+		//@JsonProperty( "cellular")
+		private String cellular;
 
-	@JsonProperty("contact")
-    public String getContact() {
-        return contact;
-    }
+		//@JsonProperty( "phone")
+		private String phone;
 
-    @JsonProperty("contact")
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
+		//@JsonProperty( "ext")
+		private String ext;
 
-    @JsonProperty("position")
-    public String getPosition() {
-        return position;
-    }
+		//@JsonProperty( "fax")
+		private String fax;
 
-    @JsonProperty("position")
-    public void setPosition(String position) {
-        this.position = position;
-    }
+		//@JsonProperty( "billing_prefix")
+		private String prefix;
 
-    @JsonProperty("email")
-    public String getEmail() {
-        return email;
-    }
+		//@JsonProperty( "tollfree")
+		private String tollfree;
+		
+		public VendorBillingLocation() {
+			super();
+		}
 
-    @JsonProperty("email")
-    public void setEmail(String email) {
-        this.email = email;
-    }
+		public VendorBillingLocation(String name, String address, String city, String zip, String fax,
+				String contact, String phone, Long statusId) {
+			super();
+			this.name = name;
+			this.address = address;
+			this.city = city;
+			this.zip = zip;
+			this.statusId = statusId;
+			this.contact = contact;
+			this.phone = phone;
+			this.fax = fax;
+		}
 
-    @JsonProperty("cellular")
-    public String getCellular() {
-        return cellular;
-    }
+		public String getName() {
+			return name;
+		}
 
-    @JsonProperty("cellular")
-    public void setCellular(String cellular) {
-        this.cellular = cellular;
-    }
+		public void setName(String name) {
+			this.name = name;
+		}
 
-    @JsonProperty("phone")
-    public String getPhone() {
-        return phone;
-    }
+		public String getAddress() {
+			return address;
+		}
 
-    @JsonProperty("phone")
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+		public void setAddress(String address) {
+			this.address = address;
+		}
 
-    @JsonProperty("ext")
-    public String getExt() {
-        return ext;
-    }
+		public String getUnitNo() {
+			return unitNo;
+		}
 
-    @JsonProperty("ext")
-    public void setExt(String ext) {
-        this.ext = ext;
-    }
+		public void setUnitNo(String unitNo) {
+			this.unitNo = unitNo;
+		}
 
-    @JsonProperty("fax")
-    public String getFax() {
-        return fax;
-    }
+		public String getCity() {
+			return city;
+		}
 
-    @JsonProperty("fax")
-    public void setFax(String fax) {
-        this.fax = fax;
-    }
+		public void setCity(String city) {
+			this.city = city;
+		}
 
-    @JsonProperty("tollfree")
-    public String getTollfree() {
-        return tollfree;
-    }
+		public String getProvinceState() {
+			return provinceState;
+		}
 
-    @JsonProperty("tollfree")
-    public void setTollfree(String tollfree) {
-        this.tollfree = tollfree;
-    }
- 
+		public void setProvinceState(String provinceState) {
+			this.provinceState = provinceState;
+		}
+
+		public String getZip() {
+			return zip;
+		}
+
+		public void setZip(String zip) {
+			this.zip = zip;
+		}
+
+		public String getArCDN() {
+			return arCDN;
+		}
+
+		public void setArCDN(String arCDN) {
+			this.arCDN = arCDN;
+		}
+
+		public String getArUS() {
+			return arUS;
+		}
+
+		public void setArUS(String arUS) {
+			this.arUS = arUS;
+		}
+
+		public Long getStatusId() {
+			return statusId;
+		}
+
+		public void setStatusId(Long statusId) {
+			this.statusId = statusId;
+		}
+
+		public String getContact() {
+			return contact;
+		}
+
+		public void setContact(String contact) {
+			this.contact = contact;
+		}
+
+		public String getPosition() {
+			return position;
+		}
+
+		public void setPosition(String position) {
+			this.position = position;
+		}
+
+		public String getEmail() {
+			return email;
+		}
+
+		public void setEmail(String email) {
+			this.email = email;
+		}
+
+		public String getCellular() {
+			return cellular;
+		}
+
+		public void setCellular(String cellular) {
+			this.cellular = cellular;
+		}
+
+		public String getPhone() {
+			return phone;
+		}
+
+		public void setPhone(String phone) {
+			this.phone = phone;
+		}
+
+		public String getExt() {
+			return ext;
+		}
+
+		public void setExt(String ext) {
+			this.ext = ext;
+		}
+
+		public String getFax() {
+			return fax;
+		}
+
+		public void setFax(String fax) {
+			this.fax = fax;
+		}
+
+		public String getPrefix() {
+			return prefix;
+		}
+
+		public void setPrefix(String prefix) {
+			this.prefix = prefix;
+		}
+
+		public String getTollfree() {
+			return tollfree;
+		}
+
+		public void setTollfree(String tollfree) {
+			this.tollfree = tollfree;
+		}
+
+		public String getStatusName() {
+			return statusName;
+		}
+
+		public void setStatusName(String statusName) {
+			this.statusName = statusName;
+		}
+
+		public Long getVendorBillingLocationId() {
+			return vendorBillingLocationId;
+		}
+
+		public void setVendorBillingLocationId(Long vendorBillingLocationId) {
+			this.vendorBillingLocationId = vendorBillingLocationId;
+		} 
 }

@@ -9,7 +9,6 @@ import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
@@ -19,6 +18,7 @@ import com.dpu.model.Success;
 import com.dpu.model.Vendor;
 import com.dpu.model.VendorAdditionalContacts;
 import com.dpu.model.VendorBillingLocation;
+import com.dpu.util.VendorEditControllerBillingLocationRightMenu;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -26,7 +26,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -41,7 +40,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
@@ -217,7 +216,7 @@ public class VendorEditController extends Application implements Initializable {
 					String payload = mapper.writeValueAsString(vendor);
 
 					String response = PutAPIClient.callPutAPI(
-							Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + vendorId, null, payload);
+							Iconstants.URL_SERVER + Iconstants.URL_VENDOR_API + "/" + vendorId, null, payload);
 
 					if (response != null && response.contains("message")) {
 						Success success = mapper.readValue(response, Success.class);
@@ -236,6 +235,10 @@ public class VendorEditController extends Application implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		duplicateTableBillingLocations = tableBillingLocations;
+//		duplicateTableAdditionalContact = tableAdditionalContact;
+		setColumnValues();
+//		setAdditionalContactColumnValues();
 		fetchBillingLocations();
 		fetchAdditionalContacts();
 
@@ -276,40 +279,40 @@ public class VendorEditController extends Application implements Initializable {
 		List<VendorAdditionalContacts> additionalContacts = new ArrayList<VendorAdditionalContacts>();
 
 		// company.setCompanyId(companyId.toString());
-		vendor.setName(txtCompany.getText());
-		vendor.setAddress(txtAddress.getText());
-		vendor.setUnitNo(txtUnitNo.getText());
-		vendor.setCity(txtCity.getText());
-		vendor.setProvinceState(txtProvince.getText());
-		vendor.setZip(txtZip.getText());
-		vendor.setEmail(txtEmail.getText());
-		vendor.setWebsite(txtWebsite.getText());
-		vendor.setContact(txtContact.getText());
-		vendor.setPosition(txtPosition.getText());
-		vendor.setPhone(txtPhone.getText());
-		vendor.setExt(txtExt.getText());
-		vendor.setFax(txtFax.getText());
-		vendor.setVendorPrefix(txtPrefix.getText());
-		vendor.setTollfree(txtTollFree.getText());
-		vendor.setCellular(txtCellular.getText());
-		vendor.setPager(txtPager.getText());
-		vendor.setAfterHours(txtAfterHours.getText());
+		VendorAddController.vendor.setName(txtCompany.getText());
+		VendorAddController.vendor.setAddress(txtAddress.getText());
+		VendorAddController.vendor.setUnitNo(txtUnitNo.getText());
+		VendorAddController.vendor.setCity(txtCity.getText());
+		VendorAddController.vendor.setProvinceState(txtProvince.getText());
+		VendorAddController.vendor.setZip(txtZip.getText());
+		VendorAddController.vendor.setEmail(txtEmail.getText());
+		VendorAddController.vendor.setWebsite(txtWebsite.getText());
+		VendorAddController.vendor.setContact(txtContact.getText());
+		VendorAddController.vendor.setPosition(txtPosition.getText());
+		VendorAddController.vendor.setPhone(txtPhone.getText());
+		VendorAddController.vendor.setExt(txtExt.getText());
+		VendorAddController.vendor.setFax(txtFax.getText());
+		VendorAddController.vendor.setVendorPrefix(txtPrefix.getText());
+		VendorAddController.vendor.setTollfree(txtTollFree.getText());
+		VendorAddController.vendor.setCellular(txtCellular.getText());
+		VendorAddController.vendor.setPager(txtPager.getText());
+		VendorAddController.vendor.setAfterHours(txtAfterHours.getText());
 
 		// need to use for loop here
 
-		if (listOfBilling != null) {
-			int sizeOfBilling = listOfBilling.size();
+		if (VendorAddController.listOfBilling != null) {
+			int sizeOfBilling = VendorAddController.listOfBilling.size();
 			for (int i = 0; i < sizeOfBilling; i++) {
 				VendorBillingLocation billingLocation = new VendorBillingLocation();
-				VendorBillingLocation billingModel = listOfBilling.get(i);
-				if (billingModel.getBillingLocationId() != null)
-					billingLocation.setBillingLocationId(billingModel.getBillingLocationId());
+				VendorBillingLocation billingModel = VendorAddController.listOfBilling.get(i);
+				if (billingModel.getVendorBillingLocationId() != null)
+					billingLocation.setVendorBillingLocationId(billingModel.getVendorBillingLocationId());
 				billingLocation.setName(billingModel.getName());
 				billingLocation.setAddress(billingModel.getAddress());
 				billingLocation.setCity(billingModel.getCity());
 				billingLocation.setZip(billingModel.getZip());
 				// need to get Status
-				billingLocation.setStatus(1l);
+				billingLocation.setStatusId(1l);
 				billingLocation.setContact(billingModel.getContact());
 				billingLocation.setPosition(txtPosition.getText());
 				billingLocation.setEmail(txtEmail.getText());
@@ -322,14 +325,14 @@ public class VendorEditController extends Application implements Initializable {
 			}
 		}
 
-		vendor.setBillingLocations(billingLocations);
+		VendorAddController.vendor.setBillingLocations(billingLocations);
 
 		// need to use for loop here
-		if (listOfAdditionalContact != null) {
-			int sizeOfAdditionalContact = listOfAdditionalContact.size();
+		if (VendorAddController.listOfAdditionalContact != null) {
+			int sizeOfAdditionalContact = VendorAddController.listOfAdditionalContact.size();
 			for (int i = 0; i < sizeOfAdditionalContact; i++) {
 
-				VendorAdditionalContacts additionalContactModel = listOfAdditionalContact.get(i);
+				VendorAdditionalContacts additionalContactModel = VendorAddController.listOfAdditionalContact.get(i);
 				VendorAdditionalContacts additionalContact = new VendorAdditionalContacts();
 
 				if (additionalContactModel.getVendorAdditionalContactId() != null)
@@ -346,9 +349,9 @@ public class VendorEditController extends Application implements Initializable {
 				additionalContacts.add(additionalContact);
 			}
 		}
-		vendor.setAdditionalContacts(additionalContacts);
+		VendorAddController.vendor.setAdditionalContacts(additionalContacts);
 
-		return vendor;
+		return VendorAddController.vendor;
 	}
 
 	public void initData(Vendor c) {
@@ -381,6 +384,8 @@ public class VendorEditController extends Application implements Initializable {
 		closeAddVendorScreen(btnCancelVendor);
 	}
 
+	VendorEditControllerBillingLocationRightMenu rightMenu = new VendorEditControllerBillingLocationRightMenu();
+	
 	@FXML
 	private void btnSaveCompanyAction() {
 
@@ -423,7 +428,7 @@ public class VendorEditController extends Application implements Initializable {
 	@FXML
 	void handleAddContMouseClick(MouseEvent event) {
 
-		// Create ContextMenu
+		/*// Create ContextMenu
 		ContextMenu contextMenu = new ContextMenu();
 
 		MenuItem item1 = new MenuItem("ADD");
@@ -545,7 +550,9 @@ public class VendorEditController extends Application implements Initializable {
 
 			});
 
-		}
+		}*/
+		
+		
 	
 	}
 	
@@ -660,11 +667,71 @@ public class VendorEditController extends Application implements Initializable {
 	public static Long billingLocationIdPri = 0l;
 	public static Long additionalContactIdPri = 0l;
 
+	public static TableView<VendorBillingLocation> duplicateTableBillingLocations;
+	
+	public static void fetchBillingLocationsUsingDuplicate() {
+
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+
+					if (VendorAddController.listOfBilling != null & !(VendorAddController.listOfBilling.isEmpty())) {
+						ObservableList<VendorBillingLocation> data = FXCollections.observableArrayList(VendorAddController.listOfBilling);
+						duplicateTableBillingLocations.setItems(data);
+						duplicateTableBillingLocations.setVisible(true);
+					} else {
+						listOfBilling = new ArrayList<>();
+						ObservableList<VendorBillingLocation> data = FXCollections.observableArrayList(listOfBilling);
+						duplicateTableBillingLocations.setItems(data);
+						duplicateTableBillingLocations.setVisible(true);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Try Again..  " + e, "Info", 1);
+				}
+			}
+
+		});
+	}
+	
 	@FXML
 	public void handleMouseClick(MouseEvent arg0) {
 
-		// Create ContextMenu
-	/*	ContextMenu contextMenu = new ContextMenu();
+		ContextMenu contextMenu = new ContextMenu();
+		MenuItem add = new MenuItem("Add");
+		rightMenu.menuAdd(add, Iconstants.VENDOR_BASE_PACKAGE, Iconstants.XML_VENDOR_BILLING_LOCATION_ADD_SCREEN, "Add New Billing Location");
+		MenuItem edit = new MenuItem("Edit");
+		rightMenu.menuEdit(edit, Iconstants.VENDOR_BASE_PACKAGE, Iconstants.XML_VENDOR_BILLING_LOCATION_EDIT_SCREEN, "Edit Billing Location");
+		MenuItem delete = new MenuItem("Delete");
+		rightMenu.menuDelete(delete, null, null, null);
+		MenuItem duplicate = new MenuItem("Duplicate");
+		MenuItem personalize = new MenuItem("Personalize");
+		MenuItem filterBy = new MenuItem("Filter By");
+		MenuItem filterByExclude = new MenuItem("Filter By Exclude");
+		MenuItem clearAllFilters = new MenuItem("Clear All Filters");
+
+		// Add MenuItem to ContextMenu
+		contextMenu.getItems().addAll(add, edit, delete, duplicate, personalize, filterBy, filterByExclude, clearAllFilters);
+			// When user right-click on Table
+		tableBillingLocations.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent mouseEvent) {
+
+				if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
+					if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+						contextMenu.show(tableBillingLocations, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+					} else {
+						contextMenu.hide();
+					}
+				}
+			}
+		});
+		
+	/*	// Create ContextMenu
+		ContextMenu contextMenu = new ContextMenu();
 
 		MenuItem item1 = new MenuItem("ADD");
 		item1.setOnAction(new EventHandler<ActionEvent>() {
@@ -674,16 +741,16 @@ public class VendorEditController extends Application implements Initializable {
 				addBillingLocation = 1;
 				selectedTabValue = 0;
 				//add = 1;
-				setValuesToCmpanyTextField();
+//				setValuesToCmpanyTextField();
 				openAddBillingLocationScreen();
 
-				try {
-					closeAddCompanyScreen(btnSaveVendor);
-
-				} catch (Exception e) {
-					e.printStackTrace();
-					System.exit(0);
-				}
+//				try {
+//					closeAddCompanyScreen(btnSaveVendor);
+//
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//					System.exit(0);
+//				}
 
 			}
 		});
@@ -693,16 +760,16 @@ public class VendorEditController extends Application implements Initializable {
 			@Override
 			public void handle(ActionEvent event) {
 				selectedTabValue = 0;
-				setValuesToCmpanyTextField();
+//				setValuesToCmpanyTextField();
 				addBillingLocation = 0;
 				editIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
-				VendorBillingLocation = tableBillingLocations.getSelectionModel().getSelectedItem();
+				VendorAddController.VendorBillingLocation = tableBillingLocations.getSelectionModel().getSelectedItem();
 
-				if (VendorBillingLocation.getBillingLocationId() != null)
-					billingLocationIdPri = VendorBillingLocation.getBillingLocationId();
+				if (VendorAddController.VendorBillingLocation.getBillingLocationId() != null)
+					billingLocationIdPri = VendorAddController.VendorBillingLocation.getBillingLocationId();
 
-				openAddBillingLocationScreen();
-				closeAddCompanyScreen(btnSaveCompany);
+				openEditBillingLocationScreen();
+//				closeAddCompanyScreen(btnSaveCompany);
 
 			}
 		});
@@ -712,62 +779,62 @@ public class VendorEditController extends Application implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				selectedTabValue = 0;
-
-				editIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
-
-				// hit API to remove record from db.
-				// if (listOfBilling.get(editIndex).getBillingLocationId() ==
-				// null
-				// || listOfBilling.get(editIndex).getBillingLocationId() != 0l)
-				// {
-				Long billingId = listOfBilling.get(editIndex).getBillingLocationId();
-				Long companyId = listOfBilling.get(editIndex).getCompanyId();
-
-				if (billingId == null) {
-					JOptionPane.showMessageDialog(null, "Billing Location Deleted SuccessFully.", "Info", 1);
-					listOfBilling.remove(editIndex);
-				} else {
-
-					try {
-						String response = DeleteAPIClient
-								.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_DELETE_BILLING_LOCATION_API + "/"
-										+ companyId + "/billinglocations/" + billingId, null);
-						listOfBilling.remove(editIndex);
-
-						ObjectMapper mapper = new ObjectMapper();
-
-						if (response != null && response.contains("message")) {
-							Success success = mapper.readValue(response, Success.class);
-							JOptionPane.showMessageDialog(null, success.getMessage(), "Info", 1);
-						} else {
-							Failed failed = mapper.readValue(response, Failed.class);
-							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-						}
-
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-				// }
-				editIndex = -1;
-
-				setValuesToCmpanyTextField();
-
-				try {
-					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-							.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_EDIT_SCREEN));
-					Parent root = (Parent) fxmlLoader.load();
-					Stage stage = new Stage();
-					stage.initModality(Modality.APPLICATION_MODAL);
-					stage.setTitle("Add New Company");
-					stage.setScene(new Scene(root));
-					stage.show();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
-				closeAddCompanyScreen(btnSaveCompany);
+//				selectedTabValue = 0;
+//
+//				editIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
+//
+//				// hit API to remove record from db.
+//				// if (listOfBilling.get(editIndex).getBillingLocationId() ==
+//				// null
+//				// || listOfBilling.get(editIndex).getBillingLocationId() != 0l)
+//				// {
+//				Long billingId = listOfBilling.get(editIndex).getBillingLocationId();
+//				Long companyId = listOfBilling.get(editIndex).getCompanyId();
+//
+//				if (billingId == null) {
+//					JOptionPane.showMessageDialog(null, "Billing Location Deleted SuccessFully.", "Info", 1);
+//					listOfBilling.remove(editIndex);
+//				} else {
+//
+//					try {
+//						String response = DeleteAPIClient
+//								.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_DELETE_BILLING_LOCATION_API + "/"
+//										+ companyId + "/billinglocations/" + billingId, null);
+//						listOfBilling.remove(editIndex);
+//
+//						ObjectMapper mapper = new ObjectMapper();
+//
+//						if (response != null && response.contains("message")) {
+//							Success success = mapper.readValue(response, Success.class);
+//							JOptionPane.showMessageDialog(null, success.getMessage(), "Info", 1);
+//						} else {
+//							Failed failed = mapper.readValue(response, Failed.class);
+//							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
+//						}
+//
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//					}
+//				}
+//				// }
+//				editIndex = -1;
+//
+//				setValuesToCmpanyTextField();
+//
+//				try {
+//					FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
+//							.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_COMPANY_EDIT_SCREEN));
+//					Parent root = (Parent) fxmlLoader.load();
+//					Stage stage = new Stage();
+//					stage.initModality(Modality.APPLICATION_MODAL);
+//					stage.setTitle("Add New Company");
+//					stage.setScene(new Scene(root));
+//					stage.show();
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//
+//				closeAddCompanyScreen(btnSaveCompany);
 
 			}
 		});
@@ -794,12 +861,31 @@ public class VendorEditController extends Application implements Initializable {
 		try {
 
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-					.getResource(Iconstants.VENDOR_BASE_PACKAGE + Iconstants.XML_EDIT_BILLING_LOCATION_SCREEN));
+					.getResource(Iconstants.VENDOR_BASE_PACKAGE + Iconstants.XML_VENDOR_BILLING_LOCATION_ADD_SCREEN));
 			Parent root = (Parent) fxmlLoader.load();
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.setTitle("Add Billing Location");
+			stage.setScene(new Scene(root));
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	private void openEditBillingLocationScreen() {
+
+		try {
+
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
+					.getResource(Iconstants.VENDOR_BASE_PACKAGE + Iconstants.XML_VENDOR_BILLING_LOCATION_EDIT_SCREEN));
+			Parent root = (Parent) fxmlLoader.load();
+
+			Stage stage = new Stage();
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setTitle("Edit Billing Location");
 			stage.setScene(new Scene(root));
 			stage.show();
 		} catch (Exception e) {
@@ -820,8 +906,8 @@ public class VendorEditController extends Application implements Initializable {
 					if (VendorAddController.listOfBilling != null & !(VendorAddController.listOfBilling.isEmpty())) {
 						ObservableList<VendorBillingLocation> data = FXCollections.observableArrayList(VendorAddController.listOfBilling);
 						setColumnValues();
-						tableBillingLocations.setItems(data);
-						tableBillingLocations.setVisible(true);
+						duplicateTableBillingLocations.setVisible(true);
+						duplicateTableBillingLocations.setItems(data);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -67,9 +67,9 @@ public class VendorBillingEditController implements Initializable {
 			VendorBillingLocation bcm1 = new VendorBillingLocation(company, address, city, phone, contact, zip, fax,statusId);
 
 			if (VendorEditController.addBillingLocation == 0 ) {
-				if (VendorEditController.billingLocationIdPri != 0l
-						|| VendorEditController.billingLocationIdPri != null)
-				bcm1.setBillingLocationId(VendorEditController.billingLocationIdPri);
+				if (VendorEditController.billingLocationIdPri != 0l)
+					bcm1.setVendorBillingLocationId(VendorEditController.billingLocationIdPri);
+				
 				VendorAddController.listOfBilling.set(VendorEditController.editIndex, bcm1);
 				VendorEditController.billingLocationIdPri = 0l;
 
@@ -78,8 +78,11 @@ public class VendorBillingEditController implements Initializable {
 				
 			}
 			closeAddBillingScreen(btnUpdateBillingLocation);
-			VendorAddController.fetchBillingLocationsUsingDuplicate();
-
+			if(VendorAddController.whichScreenAddOrEdit == 0) {
+				VendorAddController.fetchBillingLocationsUsingDuplicate();
+			} else {
+				VendorEditController.fetchBillingLocationsUsingDuplicate();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

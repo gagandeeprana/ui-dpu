@@ -1,7 +1,16 @@
 package com.dpu.util;
 
+import javax.swing.JOptionPane;
+
+import org.codehaus.jackson.map.ObjectMapper;
+
+import com.dpu.client.DeleteAPIClient;
+import com.dpu.constants.Iconstants;
 import com.dpu.controller.vendor.VendorAddController;
+import com.dpu.controller.vendor.VendorController;
 import com.dpu.controller.vendor.VendorEditController;
+import com.dpu.model.Failed;
+import com.dpu.model.Success;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -12,7 +21,7 @@ import javafx.scene.control.MenuItem;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class VendorAddControllerAdditionalContactsRightMenu {
+public class VendorEditControllerBillingLocationRightMenu {
 
 	public void menuAdd(MenuItem item1, String basePackage, String screen, String title) {
 		item1.setStyle("-fx-padding: 0 10 0 10;");
@@ -20,12 +29,14 @@ public class VendorAddControllerAdditionalContactsRightMenu {
 
 			@Override
 			public void handle(ActionEvent event) {
-				VendorAddController.addAddtionalContact = 1;
-				VendorAddController.selectedTabValue = 1;
+				VendorAddController.add = 1;
+				VendorAddController.selectedTabValue = 0;
+				VendorAddController.whichScreenAddOrEdit = 1;
 //				CompanyAddController.listOfBilling = new ArrayList<BillingControllerModel>();
 //				CompanyAddController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
 //				CompanyAddController.company = new CompanyModel();
 				openScreen(basePackage, screen, title);
+
 			}
 		});
 	}
@@ -36,11 +47,45 @@ public class VendorAddControllerAdditionalContactsRightMenu {
 
 			@Override
 			public void handle(ActionEvent event) {
-				VendorAddController.selectedTabValue = 1;
-				VendorAddController.addEditIndex = VendorAddController.duplicateTableAdditionalContact.getSelectionModel().getSelectedIndex();
-				VendorAddController.listOfAdditionalContact.remove(VendorAddController.addEditIndex);
-				VendorAddController.fetchAdditionalContactsUsingDuplicate();
+				VendorAddController.selectedTabValue = 0;
+				VendorAddController.whichScreenAddOrEdit = 1;
+				VendorAddController.addEditIndex = VendorEditController.duplicateTableBillingLocations.getSelectionModel().getSelectedIndex();
+//				VendorAddController.listOfBilling.remove(VendorAddController.addEditIndex);
+				
+				//-----------------------------------------------------
+				
+				Long billingLocationId = VendorAddController.listOfBilling.get(VendorAddController.addEditIndex).getVendorBillingLocationId();
+				Long companyId = VendorController.vendorId;
+
+				if (billingLocationId == null) {
+					VendorAddController.listOfBilling.remove(VendorAddController.addEditIndex);
+					JOptionPane.showMessageDialog(null, "Additional Contact Deleted SuccessFully.", "Info", 1);
+
+				} else {
+
+					// hit api to delete Additional Conatct
+					try {
+						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_VENDOR_API + "/" + companyId + "/billingLocation/" + billingLocationId, null);
+						VendorAddController.listOfBilling.remove(VendorAddController.addEditIndex);
+
+						ObjectMapper mapper = new ObjectMapper();
+
+						if (response != null && response.contains("message")) {
+							Success success = mapper.readValue(response, Success.class);
+							JOptionPane.showMessageDialog(null, success.getMessage(), "Info", 1);
+						} else {
+							Failed failed = mapper.readValue(response, Failed.class);
+							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
+						}
+
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+
+				VendorEditController.fetchBillingLocationsUsingDuplicate();
 				VendorAddController.addEditIndex = -1;
+			
 			}
 		});
 	}
@@ -54,11 +99,12 @@ public class VendorAddControllerAdditionalContactsRightMenu {
 			public void handle(ActionEvent event) {
 //				selectedTabValue = 0;
 				VendorAddController.add = 0;
-				VendorAddController.addEditIndex = VendorAddController.duplicateTableAdditionalContact.getSelectionModel().getSelectedIndex();
-				VendorEditController.editIndex = VendorAddController.duplicateTableAdditionalContact.getSelectionModel().getSelectedIndex();
-				VendorAddController.additionalContactModel = VendorAddController.duplicateTableAdditionalContact.getSelectionModel().getSelectedItem();
-				if (VendorEditController.additionalContactModel.getVendorAdditionalContactId() != null)
-					VendorEditController.additionalContactIdPri = VendorAddController.additionalContactModel.getVendorAdditionalContactId();
+				VendorAddController.whichScreenAddOrEdit = 1;
+				VendorAddController.addEditIndex = VendorEditController.duplicateTableBillingLocations.getSelectionModel().getSelectedIndex();
+				VendorEditController.editIndex = VendorEditController.duplicateTableBillingLocations.getSelectionModel().getSelectedIndex();
+				VendorEditController.vendorBillingLocation = VendorAddController.listOfBilling.get(VendorAddController.addEditIndex);
+				if (VendorEditController.vendorBillingLocation.getVendorBillingLocationId() != null)
+					VendorEditController.billingLocationIdPri = VendorEditController.vendorBillingLocation.getVendorBillingLocationId();
 				openScreen(basePackage, screen, title);
 //				CompanyEditController.listOfBilling = new ArrayList<BillingControllerModel>();
 //				CompanyEditController.listOfAdditionalContact = new ArrayList<AdditionalContact>();

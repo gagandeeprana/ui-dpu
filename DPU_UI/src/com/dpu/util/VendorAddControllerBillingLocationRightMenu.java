@@ -23,6 +23,7 @@ public class VendorAddControllerBillingLocationRightMenu {
 			public void handle(ActionEvent event) {
 				VendorAddController.add = 1;
 				VendorAddController.selectedTabValue = 0;
+				VendorAddController.whichScreenAddOrEdit = 0;
 //				CompanyAddController.listOfBilling = new ArrayList<BillingControllerModel>();
 //				CompanyAddController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
 //				CompanyAddController.company = new CompanyModel();
@@ -38,6 +39,7 @@ public class VendorAddControllerBillingLocationRightMenu {
 
 			@Override
 			public void handle(ActionEvent event) {
+				VendorAddController.whichScreenAddOrEdit = 0;
 				VendorAddController.selectedTabValue = 0;
 				VendorAddController.addEditIndex = VendorAddController.duplicateTableBillingLocations.getSelectionModel().getSelectedIndex();
 				VendorAddController.listOfBilling.remove(VendorAddController.addEditIndex);
@@ -56,11 +58,12 @@ public class VendorAddControllerBillingLocationRightMenu {
 			public void handle(ActionEvent event) {
 //				selectedTabValue = 0;
 				VendorAddController.add = 0;
-				VendorAddController.addEditIndex = VendorAddController.duplicateTableBillingLocations.getSelectionModel().getSelectedIndex();
-				VendorEditController.editIndex = VendorAddController.duplicateTableBillingLocations.getSelectionModel().getSelectedIndex();
-				VendorEditController.vendorBillingLocation = VendorAddController.duplicateTableBillingLocations.getSelectionModel().getSelectedItem();
-				if (VendorEditController.vendorBillingLocation.getBillingLocationId() != null)
-					VendorEditController.billingLocationIdPri = VendorEditController.vendorBillingLocation.getBillingLocationId();
+				VendorAddController.whichScreenAddOrEdit = 0;
+				VendorAddController.addEditIndex = VendorEditController.duplicateTableBillingLocations.getSelectionModel().getSelectedIndex();
+				VendorEditController.editIndex = VendorEditController.duplicateTableBillingLocations.getSelectionModel().getSelectedIndex();
+				VendorEditController.vendorBillingLocation = VendorEditController.duplicateTableBillingLocations.getSelectionModel().getSelectedItem();
+				if (VendorEditController.vendorBillingLocation.getVendorBillingLocationId() != null)
+					VendorEditController.billingLocationIdPri = VendorEditController.vendorBillingLocation.getVendorBillingLocationId();
 				openScreen(basePackage, screen, title);
 //				CompanyEditController.listOfBilling = new ArrayList<BillingControllerModel>();
 //				CompanyEditController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
