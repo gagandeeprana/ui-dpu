@@ -18,6 +18,7 @@ import com.dpu.model.Success;
 import com.dpu.model.Vendor;
 import com.dpu.model.VendorAdditionalContacts;
 import com.dpu.model.VendorBillingLocation;
+import com.dpu.util.VendorEditControllerAdditionalContactsRightMenu;
 import com.dpu.util.VendorEditControllerBillingLocationRightMenu;
 
 import javafx.application.Application;
@@ -203,6 +204,30 @@ public class VendorEditController extends Application implements Initializable {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
 		loginStage.close();
 	}
+	
+	public static TableView<VendorAdditionalContacts> duplicateTableAdditionalContact;
+	
+	public static void fetchAdditionalContactsUsingDuplicate() {
+
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+
+					if (listOfAdditionalContact != null & !(listOfAdditionalContact.isEmpty())) {
+						ObservableList<VendorAdditionalContacts> data = FXCollections.observableArrayList(listOfAdditionalContact);
+						duplicateTableAdditionalContact.setItems(data);
+						duplicateTableAdditionalContact.setVisible(true);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Try Again..  " + e, "Info", 1);
+				}
+			}
+
+		});
+	}
 
 	private void editVendor() {
 
@@ -236,9 +261,9 @@ public class VendorEditController extends Application implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		duplicateTableBillingLocations = tableBillingLocations;
-//		duplicateTableAdditionalContact = tableAdditionalContact;
+		duplicateTableAdditionalContact = tableAdditionalContact;
 		setColumnValues();
-//		setAdditionalContactColumnValues();
+		setAdditionalContactColumnValues();
 		fetchBillingLocations();
 		fetchAdditionalContacts();
 
@@ -386,6 +411,8 @@ public class VendorEditController extends Application implements Initializable {
 
 	VendorEditControllerBillingLocationRightMenu rightMenu = new VendorEditControllerBillingLocationRightMenu();
 	
+	VendorEditControllerAdditionalContactsRightMenu rightMenuAdditionalContact = new VendorEditControllerAdditionalContactsRightMenu();
+	
 	@FXML
 	private void btnSaveCompanyAction() {
 
@@ -428,6 +455,36 @@ public class VendorEditController extends Application implements Initializable {
 	@FXML
 	void handleAddContMouseClick(MouseEvent event) {
 
+		ContextMenu contextMenu = new ContextMenu();
+		MenuItem add = new MenuItem("Add");
+		rightMenuAdditionalContact.menuAdd(add, Iconstants.VENDOR_BASE_PACKAGE, Iconstants.XML_VENDOR_ADDITIONAL_CONTACT_ADD_SCREEN, "Add New Additional Contact");
+		MenuItem edit = new MenuItem("Edit");
+		rightMenuAdditionalContact.menuEdit(edit, Iconstants.VENDOR_BASE_PACKAGE, Iconstants.XML_VENDOR_ADDITIONAL_CONTACT_EDIT_SCREEN, "Edit Additional Contact");
+		MenuItem delete = new MenuItem("Delete");
+		rightMenuAdditionalContact.menuDelete(delete, null, null, null);
+		MenuItem duplicate = new MenuItem("Duplicate");
+		MenuItem personalize = new MenuItem("Personalize");
+		MenuItem filterBy = new MenuItem("Filter By");
+		MenuItem filterByExclude = new MenuItem("Filter By Exclude");
+		MenuItem clearAllFilters = new MenuItem("Clear All Filters");
+
+		// Add MenuItem to ContextMenu
+		contextMenu.getItems().addAll(add, edit, delete, duplicate, personalize, filterBy, filterByExclude, clearAllFilters);
+			// When user right-click on Table
+		tableAdditionalContact.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent mouseEvent) {
+
+				if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
+					if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+						contextMenu.show(tableAdditionalContact, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+					} else {
+						contextMenu.hide();
+					}
+				}
+			}
+		});
 		/*// Create ContextMenu
 		ContextMenu contextMenu = new ContextMenu();
 
@@ -590,7 +647,13 @@ public class VendorEditController extends Application implements Initializable {
 								additionalContact.setPrefix(c.getAdditionalContacts().get(j).getCellular());
 								additionalContact.setPhone(c.getAdditionalContacts().get(j).getPhone());
 								additionalContact.setPosition(c.getAdditionalContacts().get(j).getPosition());
-								additionalContact.setStatusId(1l);
+								additionalContact.setStatusId(c.getAdditionalContacts().get(j).getStatusId());
+								for(int i=0;i<VendorController.statusList.size();i++) {
+									if(VendorController.statusList.get(i).getId().equals(c.getAdditionalContacts().get(j).getStatusId())) {
+										additionalContact.setStatusName(VendorController.statusList.get(i).getStatus());
+										break;
+									}
+								}
 
 								VendorAddController.listOfAdditionalContact.add(additionalContact);
 							}
@@ -930,8 +993,8 @@ public class VendorEditController extends Application implements Initializable {
 					if (VendorAddController.listOfAdditionalContact != null & !(VendorAddController.listOfAdditionalContact.isEmpty())) {
 						ObservableList<VendorAdditionalContacts> data = FXCollections.observableArrayList(VendorAddController.listOfAdditionalContact);
 						setAdditionalContactColumnValues();
-						tableAdditionalContact.setItems(data);
-						tableAdditionalContact.setVisible(true);
+						duplicateTableAdditionalContact.setItems(data);
+						duplicateTableAdditionalContact.setVisible(true);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -1013,7 +1076,7 @@ public class VendorEditController extends Application implements Initializable {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<VendorAdditionalContacts, String> param) {
-						return new SimpleStringProperty(param.getValue().getStatusId() + "");
+						return new SimpleStringProperty(param.getValue().getStatusName() + "");
 					}
 				});
 	}

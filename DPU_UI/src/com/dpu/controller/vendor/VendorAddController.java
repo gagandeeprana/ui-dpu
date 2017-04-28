@@ -183,6 +183,11 @@ public class VendorAddController extends Application implements Initializable {
 						ObservableList<VendorAdditionalContacts> data = FXCollections.observableArrayList(listOfAdditionalContact);
 						duplicateTableAdditionalContact.setItems(data);
 						duplicateTableAdditionalContact.setVisible(true);
+					} else {
+						listOfAdditionalContact = new ArrayList<>();
+						ObservableList<VendorAdditionalContacts> data = FXCollections.observableArrayList(listOfAdditionalContact);
+						duplicateTableAdditionalContact.setItems(data);
+						duplicateTableAdditionalContact.setVisible(true);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -324,7 +329,7 @@ public class VendorAddController extends Application implements Initializable {
 
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<VendorAdditionalContacts, String> param) {
-					return new SimpleStringProperty(param.getValue().getStatusId() + "");
+					return new SimpleStringProperty(param.getValue().getStatusName() + "");
 				}
 			});
 	}

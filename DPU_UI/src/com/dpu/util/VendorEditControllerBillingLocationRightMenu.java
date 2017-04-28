@@ -59,7 +59,7 @@ public class VendorEditControllerBillingLocationRightMenu {
 
 				if (billingLocationId == null) {
 					VendorAddController.listOfBilling.remove(VendorAddController.addEditIndex);
-					JOptionPane.showMessageDialog(null, "Additional Contact Deleted SuccessFully.", "Info", 1);
+					JOptionPane.showMessageDialog(null, "Billing Location Deleted SuccessFully.", "Info", 1);
 
 				} else {
 

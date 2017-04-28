@@ -1,6 +1,5 @@
 package com.dpu.util;
 
-import com.dpu.controller.CompanyEditController;
 import com.dpu.controller.vendor.VendorAddController;
 import com.dpu.controller.vendor.VendorEditController;
 
@@ -59,9 +58,9 @@ public class VendorAddControllerBillingLocationRightMenu {
 //				selectedTabValue = 0;
 				VendorAddController.add = 0;
 				VendorAddController.whichScreenAddOrEdit = 0;
-				VendorAddController.addEditIndex = VendorEditController.duplicateTableBillingLocations.getSelectionModel().getSelectedIndex();
-				VendorEditController.editIndex = VendorEditController.duplicateTableBillingLocations.getSelectionModel().getSelectedIndex();
-				VendorEditController.vendorBillingLocation = VendorEditController.duplicateTableBillingLocations.getSelectionModel().getSelectedItem();
+				VendorAddController.addEditIndex = VendorAddController.duplicateTableBillingLocations.getSelectionModel().getSelectedIndex();
+				VendorEditController.editIndex = VendorAddController.duplicateTableBillingLocations.getSelectionModel().getSelectedIndex();
+				VendorEditController.vendorBillingLocation = VendorAddController.duplicateTableBillingLocations.getSelectionModel().getSelectedItem();
 				if (VendorEditController.vendorBillingLocation.getVendorBillingLocationId() != null)
 					VendorEditController.billingLocationIdPri = VendorEditController.vendorBillingLocation.getVendorBillingLocationId();
 				openScreen(basePackage, screen, title);
