@@ -64,7 +64,7 @@ public class DivisionController extends Application implements Initializable {
 			@Override
 			public void handle(MouseEvent event) {
 				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-					System.out.println("clicked:::::::::::::");
+//					System.out.println("clicked:::::::::::::");
 					Division division = tblDivision.getSelectionModel().getSelectedItem();
 					if (division != null) {
 						Platform.runLater(new Runnable() {
