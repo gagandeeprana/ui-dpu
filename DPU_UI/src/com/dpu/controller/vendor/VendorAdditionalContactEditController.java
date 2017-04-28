@@ -170,26 +170,70 @@ public class VendorAdditionalContactEditController implements Initializable {
 		loginStage.close();
 	}
 
+	private void fetchMasterDataForDropDowns() {
+
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					ObjectMapper mapper = new ObjectMapper();
+					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_VENDOR_API + "/openAdd", null);
+					com.dpu.request.AdditionalContact driver = mapper.readValue(response, com.dpu.request.AdditionalContact.class);
+
+					statusList = driver.getStatusList();
+//					fillDropDown(ddlStatus, statusList);
+
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+				}
+			}
+		});
+	}
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		if (VendorEditController.addAddtionalContact != 1) {
-			if (VendorEditController.additionalContactModel != null) {
-				txtAdditionalContact.setText(VendorEditController.additionalContactModel.getVendorName());
-				txtPosition.setText(VendorEditController.additionalContactModel.getPosition());
-				txtExtension.setText(VendorEditController.additionalContactModel.getExt());
-				txtFax.setText(VendorEditController.additionalContactModel.getFax());
-				txtCellular.setText(VendorEditController.additionalContactModel.getCellular());
-				txtEmail.setText(VendorEditController.additionalContactModel.getEmail());
-				txtPager.setText(VendorEditController.additionalContactModel.getPrefix());
-				txtPhone.setText(VendorEditController.additionalContactModel.getPhone());
-				for(int i=0;i<VendorEditController.vendor.getStatusList().size();i++) {
-					Status status = VendorEditController.vendor.getStatusList().get(i);
-					if(status.getId().equals(VendorEditController.additionalContactModel.getStatusId())) {
+//		if (VendorAddController.addAddtionalContact != 1) {
+			if (VendorAddController.additionalContactModel != null) {
+				txtAdditionalContact.setText(VendorAddController.additionalContactModel.getVendorName());
+				txtPosition.setText(VendorAddController.additionalContactModel.getPosition());
+				txtExtension.setText(VendorAddController.additionalContactModel.getExt());
+				txtFax.setText(VendorAddController.additionalContactModel.getFax());
+				txtCellular.setText(VendorAddController.additionalContactModel.getCellular());
+				txtEmail.setText(VendorAddController.additionalContactModel.getEmail());
+				txtPager.setText(VendorAddController.additionalContactModel.getPrefix());
+				txtPhone.setText(VendorAddController.additionalContactModel.getPhone());
+				if(VendorAdditionalContactAddController.statusList != null && VendorAdditionalContactAddController.statusList.size() > 0) {
+					statusList = VendorAdditionalContactAddController.statusList;
+				} else {
+					fetchMasterDataForDropDowns();
+				}
+				
+				for(int i=0; i < statusList.size(); i++) {
+					Status status = statusList.get(i);
+					ddlStatus.getItems().add(status.getStatus());
+					if(status.getId().equals(VendorAddController.additionalContactModel.getStatusId())) {
 						ddlStatus.getSelectionModel().select(i);
 					}
 				}
+//			}
+		}
+	}
+	
+	private void fillDropDown(ComboBox<String> comboBox, List<?> list) {
+		for (int i = 0; i < list.size(); i++) {
+			Object object = list.get(i);
+			if (object != null && object instanceof Type) {
+				Type type = (Type) object;
+				comboBox.getItems().add(type.getTypeName());
 			}
+
+			if (object != null && object instanceof Status) {
+				Status status = (Status) object;
+				comboBox.getItems().add(status.getStatus());
+			}
+
 		}
 	}
 

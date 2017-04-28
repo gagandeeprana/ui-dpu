@@ -164,7 +164,7 @@ public class VendorAdditionalContactAddController implements Initializable {
 
 	}
 
-	List<Status> statusList = null;
+	public static List<Status> statusList = null;
 	
 	private void fetchMasterDataForDropDowns() {
 
@@ -175,7 +175,7 @@ public class VendorAdditionalContactAddController implements Initializable {
 				try {
 					ObjectMapper mapper = new ObjectMapper();
 					String response = GetAPIClient
-							.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/openAdd", null);
+							.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_VENDOR_API + "/openAdd", null);
 					com.dpu.request.AdditionalContact driver = mapper.readValue(response,
 							com.dpu.request.AdditionalContact.class);
 

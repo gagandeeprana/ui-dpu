@@ -11,6 +11,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.AdditionalContact;
+import com.dpu.model.Company;
 import com.dpu.model.Status;
 import com.dpu.model.Type;
 import com.dpu.util.Validate;
@@ -57,7 +58,7 @@ public class AdditionalContactAddController implements Initializable {
 	private CheckBox chkOrderConfirmation;
 
 	@FXML
-	private ComboBox<String> ddlStatus;
+	private ComboBox<String> ddlStatus,ddlFunction;
 
 	@FXML
 	private TextField txtAdditionalContact;
@@ -107,8 +108,9 @@ public class AdditionalContactAddController implements Initializable {
 
 				String status = ddlStatus.getSelectionModel().getSelectedItem();
 				String email = txtEmail.getText();
+				String function = ddlFunction.getSelectionModel().getSelectedItem();
 				AdditionalContact bcm1 = new AdditionalContact(additionalContact, position, phone, fax, cellular, email,
-						extension, pager, status);
+						extension, pager, status,function);
 				CompanyAddController.selectedTabValue = 1;
 				// if(CompanyAddController.addEditIndex != -1){
 				if (CompanyAddController.addAddtionalContact == 0) {
@@ -163,12 +165,14 @@ public class AdditionalContactAddController implements Initializable {
 				try {
 					ObjectMapper mapper = new ObjectMapper();
 					String response = GetAPIClient
-							.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/openAdd", null);
-					com.dpu.request.AdditionalContact driver = mapper.readValue(response,
-							com.dpu.request.AdditionalContact.class);
-
-					List<Status> statusList = driver.getStatusList();
+							.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/openAddAdditionalContact", null);
+					Company company = mapper.readValue(response, Company.class);
+					 
+					List<Status> statusList = company.getStatusList();
 					fillDropDown(ddlStatus, statusList);
+					
+					List<Type> functionList = company.getFunctionList();
+					fillDropDown(ddlFunction, functionList);
 
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
@@ -178,8 +182,11 @@ public class AdditionalContactAddController implements Initializable {
 	}
 
 	private void fillDropDown(ComboBox<String> comboBox, List<?> list) {
+		
 		for (int i = 0; i < list.size(); i++) {
+			
 			Object object = list.get(i);
+			
 			if (object != null && object instanceof Type) {
 				Type type = (Type) object;
 				comboBox.getItems().add(type.getTypeName());

@@ -198,7 +198,7 @@ public class VendorController extends Application implements Initializable {
 
 									VendorBillingLocation bcm = new VendorBillingLocation();
 //									bcm.set(c.getVendorId());
-									bcm.setBillingLocationId(c.getBillingLocations().get(i).getBillingLocationId());
+									bcm.setVendorBillingLocationId(c.getBillingLocations().get(i).getVendorBillingLocationId());
 									bcm.setAddress(c.getBillingLocations().get(i).getAddress());
 									bcm.setCity(c.getBillingLocations().get(i).getCity());
 									bcm.setName(c.getBillingLocations().get(i).getName());
@@ -210,16 +210,14 @@ public class VendorController extends Application implements Initializable {
 								}
 							}
 
-							/*if (c.getAdditionalContacts() != null) {
+							if (c.getAdditionalContacts() != null) {
 								int addtionalContactSize = c.getAdditionalContacts().size();
 								for (int j = 0; j < addtionalContactSize; j++) {
-									AdditionalContact additionalContact = new AdditionalContact();
+									VendorAdditionalContacts additionalContact = new VendorAdditionalContacts();
 
-									additionalContact.setCompanyId(c.getVendorId());
-									additionalContact.setAdditionalContactId(
-											c.getAdditionalContacts().get(j).getAdditionalContactId());
-									additionalContact
-											.setCustomerName(c.getAdditionalContacts().get(j).getVendorName());
+//									additionalContact.setCompanyId(c.getVendorId());
+									additionalContact.setVendorAdditionalContactId(c.getAdditionalContacts().get(j).getVendorAdditionalContactId());
+									additionalContact.setVendorName(c.getAdditionalContacts().get(j).getVendorName());
 									additionalContact.setCellular(c.getAdditionalContacts().get(j).getCellular());
 									additionalContact.setEmail(c.getAdditionalContacts().get(j).getEmail());
 									additionalContact.setExt(c.getAdditionalContacts().get(j).getExt());
@@ -227,11 +225,11 @@ public class VendorController extends Application implements Initializable {
 									additionalContact.setPrefix(c.getAdditionalContacts().get(j).getCellular());
 									additionalContact.setPhone(c.getAdditionalContacts().get(j).getPhone());
 									additionalContact.setPosition(c.getAdditionalContacts().get(j).getPosition());
-									additionalContact.setStatusId("Active");
+									additionalContact.setStatusId(0l);
 
-									VendorEditController.listOfAdditionalContact.add(additionalContact);
+									VendorAddController.listOfAdditionalContact.add(additionalContact);
 								}
-							}*/
+							}
 
 							// -----------------------------------------------------
 							VendorEditController vendorEditController = (VendorEditController) openEditVendorScreen();
@@ -515,78 +513,78 @@ public class VendorController extends Application implements Initializable {
 
 	private void setColumnValues() {
 
-		unitNo.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<Vendor, String>, ObservableValue<String>>() {
+	unitNo.setCellValueFactory(
+		new Callback<TableColumn.CellDataFeatures<Vendor, String>, ObservableValue<String>>() {
 
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<Vendor, String> param) {
-						return new SimpleStringProperty(param.getValue().getUnitNo() + "");
-					}
-				});
-		name.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<Vendor, String>, ObservableValue<String>>() {
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Vendor, String> param) {
+				return new SimpleStringProperty(param.getValue().getUnitNo() + "");
+			}
+		});
+	name.setCellValueFactory(
+		new Callback<TableColumn.CellDataFeatures<Vendor, String>, ObservableValue<String>>() {
 
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<Vendor, String> param) {
-						return new SimpleStringProperty(param.getValue().getName() + "");
-					}
-				});
-		email.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<Vendor, String>, ObservableValue<String>>() {
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Vendor, String> param) {
+				return new SimpleStringProperty(param.getValue().getName() + "");
+			}
+		});
+	email.setCellValueFactory(
+			new Callback<TableColumn.CellDataFeatures<Vendor, String>, ObservableValue<String>>() {
 
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<Vendor, String> param) {
-						return new SimpleStringProperty(param.getValue().getEmail() + "");
-					}
-				});
-		city.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<Vendor, String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<Vendor, String> param) {
+					return new SimpleStringProperty(param.getValue().getEmail() + "");
+				}
+			});
+	city.setCellValueFactory(
+			new Callback<TableColumn.CellDataFeatures<Vendor, String>, ObservableValue<String>>() {
 
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<Vendor, String> param) {
-						return new SimpleStringProperty(param.getValue().getCity() + "");
-					}
-				});
-		ps.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<Vendor, String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<Vendor, String> param) {
+					return new SimpleStringProperty(param.getValue().getCity() + "");
+				}
+			});
+	ps.setCellValueFactory(
+			new Callback<TableColumn.CellDataFeatures<Vendor, String>, ObservableValue<String>>() {
 
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<Vendor, String> param) {
-						return new SimpleStringProperty(param.getValue().getProvinceState() + "");
-					}
-				});
-		phone.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<Vendor, String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<Vendor, String> param) {
+					return new SimpleStringProperty(param.getValue().getProvinceState() + "");
+				}
+			});
+	phone.setCellValueFactory(
+			new Callback<TableColumn.CellDataFeatures<Vendor, String>, ObservableValue<String>>() {
 
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<Vendor, String> param) {
-						return new SimpleStringProperty(param.getValue().getPhone() + "");
-					}
-				});
-		home.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<Vendor, String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<Vendor, String> param) {
+					return new SimpleStringProperty(param.getValue().getPhone() + "");
+				}
+			});
+	home.setCellValueFactory(
+			new Callback<TableColumn.CellDataFeatures<Vendor, String>, ObservableValue<String>>() {
 
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<Vendor, String> param) {
-						return new SimpleStringProperty(param.getValue().getCellular() + "");
-					}
-				});
-		fax.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<Vendor, String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<Vendor, String> param) {
+					return new SimpleStringProperty(param.getValue().getCellular() + "");
+				}
+			});
+	fax.setCellValueFactory(
+			new Callback<TableColumn.CellDataFeatures<Vendor, String>, ObservableValue<String>>() {
 
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<Vendor, String> param) {
-						return new SimpleStringProperty(param.getValue().getFax() + "");
-					}
-				});
-		afterHours.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<Vendor, String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<Vendor, String> param) {
+					return new SimpleStringProperty(param.getValue().getFax() + "");
+				}
+			});
+	afterHours.setCellValueFactory(
+			new Callback<TableColumn.CellDataFeatures<Vendor, String>, ObservableValue<String>>() {
 
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<Vendor, String> param) {
-						return new SimpleStringProperty(param.getValue().getAfterHours() + "");
-					}
-				});
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<Vendor, String> param) {
+					return new SimpleStringProperty(param.getValue().getAfterHours() + "");
+				}
+			});
 	}
 
 	@Override

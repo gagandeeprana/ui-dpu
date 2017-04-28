@@ -109,7 +109,11 @@ public class VendorBillingAddController implements Initializable {
 				stage.setScene(new Scene(root));
 				stage.show();*/
 				closeAddBillingScreen(btnSaveBillingLocation);
-				VendorAddController.fetchBillingLocationsUsingDuplicate();
+				if(VendorAddController.whichScreenAddOrEdit == 0) {
+					VendorAddController.fetchBillingLocationsUsingDuplicate();
+				} else {
+					VendorEditController.fetchBillingLocationsUsingDuplicate();
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

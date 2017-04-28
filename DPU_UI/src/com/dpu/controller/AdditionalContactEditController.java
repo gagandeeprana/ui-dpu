@@ -101,8 +101,9 @@ public class AdditionalContactEditController implements Initializable {
 				String cellular = txtCellular.getText();
 				String status = ddlStatus.getSelectionModel().getSelectedItem();
 				String email = txtEmail.getText();
+				String function = "";
 				AdditionalContact bcm1 = new AdditionalContact(additionalContact, position, phone, fax, cellular, email,
-						extension, pager, status);
+						extension, pager, status,function);
 				CompanyEditController.selectedTabValue = 1;
 				// if(CompanyAddController.addEditIndex != -1){
 				if (CompanyEditController.addAddtionalContact == 0) {

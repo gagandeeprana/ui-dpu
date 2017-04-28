@@ -15,6 +15,7 @@ public class AdditionalContact {
 	private String statusId;
 	private String email;
 	public Long companyId;
+	private String function;
 	public Long additionalContactId = null;
 	private Long status;
 	public List<Status> statusList;
@@ -36,7 +37,7 @@ public class AdditionalContact {
 	}
 
 	public AdditionalContact(String additionalContact, String position2, String phone2, String fax2, String cellular2,
-			String email2, String extension, String pager, String status) {
+			String email2, String extension, String pager, String status,String function ) {
 		this.customerName = additionalContact;
 		this.position = position2;
 		this.phone = phone2;
@@ -46,6 +47,20 @@ public class AdditionalContact {
 		this.cellular = cellular2;
 		this.statusId = status;
 		this.email = email2;
+		this.function = function;
+		 
+	}
+
+	
+	 
+	 
+
+	public String getFunction() {
+		return function;
+	}
+
+	public void setFunction(String function) {
+		this.function = function;
 	}
 
 	public AdditionalContact() {

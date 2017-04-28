@@ -34,8 +34,26 @@ public class Company {
 	private List<Division> divisionList;
 
 	private List<Sale> saleList;
+	private List<Status> statusList;
 
 	private List<Type> countryList;
+	private List<Type> functionList;
+
+	public List<Type> getFunctionList() {
+		return functionList;
+	}
+
+	public void setFunctionList(List<Type> functionList) {
+		this.functionList = functionList;
+	}
+
+	public List<Status> getStatusList() {
+		return statusList;
+	}
+
+	public void setStatusList(List<Status> statusList) {
+		this.statusList = statusList;
+	}
 
 	public List<Category> getCategoryList() {
 		return categoryList;

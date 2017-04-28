@@ -519,7 +519,7 @@ public class CompanyAddController extends Application implements Initializable {
 	private TableColumn<AdditionalContact, String> pager;
 
 	@FXML
-	private TableColumn<AdditionalContact, String> status;
+	private TableColumn<AdditionalContact, String> status,function,country;
 
 	@FXML
 	private TableColumn<BillingControllerModel, String> address;
@@ -959,6 +959,16 @@ public class CompanyAddController extends Application implements Initializable {
 						return new SimpleStringProperty(param.getValue().getStatusId() + "");
 					}
 				});
+		
+		function.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+						return new SimpleStringProperty(param.getValue().getFunction() + "");
+					}
+				});
+		
 	}
 
 	public static int selectedTabValue = 0;

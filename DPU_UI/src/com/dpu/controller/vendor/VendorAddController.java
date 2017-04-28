@@ -12,7 +12,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.controller.MainScreen;
-import com.dpu.model.AdditionalContact;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
 import com.dpu.model.Vendor;
@@ -31,10 +30,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -48,7 +44,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -69,6 +64,8 @@ public class VendorAddController extends Application implements Initializable {
 	VendorAddControllerBillingLocationRightMenu rightMenu = new VendorAddControllerBillingLocationRightMenu();
 	VendorAddControllerAdditionalContactsRightMenu rightMenuAdditionalContacts = new VendorAddControllerAdditionalContactsRightMenu();
 	
+	public static int whichScreenAddOrEdit = 0;
+	
 	@FXML
 	private Pane addVendorPane;
 
@@ -83,7 +80,7 @@ public class VendorAddController extends Application implements Initializable {
 	public static TableView<VendorAdditionalContacts> duplicateTableAdditionalContact;
 
 	@FXML
-	private TableColumn<AdditionalContact, String> additionalContact, position, phoneNo, faxNo, cellular, email, extension, pager, status;
+	private TableColumn<VendorAdditionalContacts, String> additionalContact, position, phoneNo, faxNo, cellular, email, extension, pager, status;
 
 	@FXML
 	private TableColumn<VendorBillingLocation, String> address, city, contact, fax, name, phone, zip;
@@ -259,74 +256,74 @@ public class VendorAddController extends Application implements Initializable {
 	private void setAdditionalContactColumnValues() {
 
 		additionalContact.setCellValueFactory(
-			new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+			new Callback<TableColumn.CellDataFeatures<VendorAdditionalContacts, String>, ObservableValue<String>>() {
 
 				@Override
-				public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
-					return new SimpleStringProperty(param.getValue().getCustomerName() + "");
+				public ObservableValue<String> call(CellDataFeatures<VendorAdditionalContacts, String> param) {
+					return new SimpleStringProperty(param.getValue().getVendorName() + "");
 				}
 			});
 		position.setCellValueFactory(
-			new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+			new Callback<TableColumn.CellDataFeatures<VendorAdditionalContacts, String>, ObservableValue<String>>() {
 
 				@Override
-				public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+				public ObservableValue<String> call(CellDataFeatures<VendorAdditionalContacts, String> param) {
 					return new SimpleStringProperty(param.getValue().getPosition() + "");
 				}
 			});
 		phoneNo.setCellValueFactory(
-			new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+			new Callback<TableColumn.CellDataFeatures<VendorAdditionalContacts, String>, ObservableValue<String>>() {
 
 				@Override
-				public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+				public ObservableValue<String> call(CellDataFeatures<VendorAdditionalContacts, String> param) {
 					return new SimpleStringProperty(param.getValue().getPhone() + "");
 				}
 			});
 		faxNo.setCellValueFactory(
-			new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+			new Callback<TableColumn.CellDataFeatures<VendorAdditionalContacts, String>, ObservableValue<String>>() {
 
 				@Override
-				public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+				public ObservableValue<String> call(CellDataFeatures<VendorAdditionalContacts, String> param) {
 					return new SimpleStringProperty(param.getValue().getFax() + "");
 				}
 			});
 		cellular.setCellValueFactory(
-			new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+			new Callback<TableColumn.CellDataFeatures<VendorAdditionalContacts, String>, ObservableValue<String>>() {
 
 				@Override
-				public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+				public ObservableValue<String> call(CellDataFeatures<VendorAdditionalContacts, String> param) {
 					return new SimpleStringProperty(param.getValue().getCellular() + "");
 				}
 			});
 		email.setCellValueFactory(
-			new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+			new Callback<TableColumn.CellDataFeatures<VendorAdditionalContacts, String>, ObservableValue<String>>() {
 
 				@Override
-				public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+				public ObservableValue<String> call(CellDataFeatures<VendorAdditionalContacts, String> param) {
 					return new SimpleStringProperty(param.getValue().getEmail() + "");
 				}
 			});
 		extension.setCellValueFactory(
-			new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+			new Callback<TableColumn.CellDataFeatures<VendorAdditionalContacts, String>, ObservableValue<String>>() {
 
 				@Override
-				public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+				public ObservableValue<String> call(CellDataFeatures<VendorAdditionalContacts, String> param) {
 					return new SimpleStringProperty(param.getValue().getExt() + "");
 				}
 			});
 		pager.setCellValueFactory(
-			new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+			new Callback<TableColumn.CellDataFeatures<VendorAdditionalContacts, String>, ObservableValue<String>>() {
 
 				@Override
-				public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+				public ObservableValue<String> call(CellDataFeatures<VendorAdditionalContacts, String> param) {
 					return new SimpleStringProperty(param.getValue().getPrefix() + "");
 				}
 			});
 		status.setCellValueFactory(
-			new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+			new Callback<TableColumn.CellDataFeatures<VendorAdditionalContacts, String>, ObservableValue<String>>() {
 
 				@Override
-				public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+				public ObservableValue<String> call(CellDataFeatures<VendorAdditionalContacts, String> param) {
 					return new SimpleStringProperty(param.getValue().getStatusId() + "");
 				}
 			});
@@ -604,7 +601,7 @@ public class VendorAddController extends Application implements Initializable {
 				billingLocation.setCity(billingModel.getCity());
 				billingLocation.setZip(billingModel.getZip());
 				// need to get Status
-				billingLocation.setStatus(1l);
+				billingLocation.setStatusId(1l);
 				billingLocation.setContact(billingModel.getContact());
 				billingLocation.setPosition(txtPosition.getText());
 				billingLocation.setEmail(txtEmail.getText());
@@ -649,24 +646,24 @@ public class VendorAddController extends Application implements Initializable {
 	public void initData(CompanyModel c) {
 		// fetchBillingLocations();
 		// fetchAdditionalContacts();
-		txtCompany.setText(c.getName());
-		txtContact.setText(c.getContact());
-		txtAddress.setText(c.getAddress());
-		txtPosition.setText(c.getPosition());
-		txtUnitNo.setText(c.getUnitNo());
-		txtPhone.setText(c.getPhone());
-		txtExt.setText(c.getExt());
-		txtCity.setText(c.getCity());
-		txtFax.setText(c.getFax());
-		txtPrefix.setText(c.getCompanyPrefix());
-		txtProvince.setText(c.getProvinceState());
-		txtZip.setText(c.getZip());
-		txtAfterHours.setText(c.getAfterHours());
-		txtEmail.setText(c.getEmail());
-		txtTollFree.setText(c.getTollfree());
-		txtWebsite.setText(c.getWebsite());
-		txtCellular.setText(c.getCellular());
-		txtPager.setText(c.getPager());
+//		txtCompany.setText(c.getName());
+//		txtContact.setText(c.getContact());
+//		txtAddress.setText(c.getAddress());
+//		txtPosition.setText(c.getPosition());
+//		txtUnitNo.setText(c.getUnitNo());
+//		txtPhone.setText(c.getPhone());
+//		txtExt.setText(c.getExt());
+//		txtCity.setText(c.getCity());
+//		txtFax.setText(c.getFax());
+//		txtPrefix.setText(c.getCompanyPrefix());
+//		txtProvince.setText(c.getProvinceState());
+//		txtZip.setText(c.getZip());
+//		txtAfterHours.setText(c.getAfterHours());
+//		txtEmail.setText(c.getEmail());
+//		txtTollFree.setText(c.getTollfree());
+//		txtWebsite.setText(c.getWebsite());
+//		txtCellular.setText(c.getCellular());
+//		txtPager.setText(c.getPager());
 	}
 
 	public StringBuffer validsteFields() {
