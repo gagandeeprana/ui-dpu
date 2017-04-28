@@ -59,7 +59,7 @@ public class TerminalPanelController extends Application implements Initializabl
 
 	@FXML
 	AnchorPane root, anchorPaneTerminal;
-	
+
 	@FXML
 	TextField txtSearchTerminal;
 
@@ -308,78 +308,94 @@ public class TerminalPanelController extends Application implements Initializabl
 	@FXML
 	public void handleAddContMouseClick(MouseEvent event) {
 
-		// Create ContextMenu
-		ContextMenu contextMenu = new ContextMenu();
-
-		MenuItem item1 = new MenuItem("ADD");
-		item1.setOnAction(new EventHandler<ActionEvent>() {
-
+		tblTerminal.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
-			public void handle(ActionEvent event) {
-			}
+			public void handle(MouseEvent event) {
+				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+					System.out.println("clicked:::::::::::::");
+					Terminal terminal = tblTerminal.getSelectionModel().getSelectedItem();
+					if (terminal != null) {
+						Platform.runLater(new Runnable() {
 
-		});
-		MenuItem item2 = new MenuItem("EDIT");
-		item2.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-
-			}
-		});
-
-		MenuItem item3 = new MenuItem("DELETE");
-		item3.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-
-			}
-		});
-		
-		MenuItem item4 = new MenuItem("PERSONALIZE");
-		item1.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-			}
-
-		});
-		MenuItem item5 = new MenuItem("DUPLICATE");
-		item2.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-
-			}
-		});
-
-		MenuItem item6 = new MenuItem("FILTER BY");
-		item3.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-
-			}
-		});
-
-
-
-		// Add MenuItem to ContextMenu
-		contextMenu.getItems().addAll(item1, item2, item3, item4, item5, item6);
-		if (tblTerminalMenuCount == 0) {
-			tblTerminalMenuCount++;
-			// When user right-click on Table
-			tblTerminal.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
-				@Override
-				public void handle(ContextMenuEvent event) {
-					contextMenu.show(tblTerminal, event.getScreenX(), event.getScreenY());
-
+							@Override
+							public void run() {
+								try {
+									ObjectMapper mapper = new ObjectMapper();
+									String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER
+											+ Iconstants.URL_TERMINAL_API + "/" + terminal.getTerminalId(), null);
+									if (response != null && response.length() > 0) {
+										Terminal c = mapper.readValue(response, Terminal.class);
+										TerminalEditController terminalEditController = (TerminalEditController) openEditTerminalScreen();
+										terminalEditController.initData(c);
+									}
+								} catch (Exception e) {
+									e.printStackTrace();
+									JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
+								}
+							}
+						});
+					}
 				}
-
-			});
-
-		}
-
+			}
+		});
+		/*
+		 * // Create ContextMenu ContextMenu contextMenu = new ContextMenu();
+		 * 
+		 * MenuItem item1 = new MenuItem("ADD"); item1.setOnAction(new
+		 * EventHandler<ActionEvent>() {
+		 * 
+		 * @Override public void handle(ActionEvent event) { }
+		 * 
+		 * }); MenuItem item2 = new MenuItem("EDIT"); item2.setOnAction(new
+		 * EventHandler<ActionEvent>() {
+		 * 
+		 * @Override public void handle(ActionEvent event) {
+		 * 
+		 * } });
+		 * 
+		 * MenuItem item3 = new MenuItem("DELETE"); item3.setOnAction(new
+		 * EventHandler<ActionEvent>() {
+		 * 
+		 * @Override public void handle(ActionEvent event) {
+		 * 
+		 * } });
+		 * 
+		 * MenuItem item4 = new MenuItem("PERSONALIZE"); item1.setOnAction(new
+		 * EventHandler<ActionEvent>() {
+		 * 
+		 * @Override public void handle(ActionEvent event) { }
+		 * 
+		 * }); MenuItem item5 = new MenuItem("DUPLICATE"); item2.setOnAction(new
+		 * EventHandler<ActionEvent>() {
+		 * 
+		 * @Override public void handle(ActionEvent event) {
+		 * 
+		 * } });
+		 * 
+		 * MenuItem item6 = new MenuItem("FILTER BY"); item3.setOnAction(new
+		 * EventHandler<ActionEvent>() {
+		 * 
+		 * @Override public void handle(ActionEvent event) {
+		 * 
+		 * } });
+		 * 
+		 * 
+		 * 
+		 * // Add MenuItem to ContextMenu contextMenu.getItems().addAll(item1,
+		 * item2, item3, item4, item5, item6); if (tblTerminalMenuCount == 0) {
+		 * tblTerminalMenuCount++; // When user right-click on Table
+		 * tblTerminal.setOnContextMenuRequested(new
+		 * EventHandler<ContextMenuEvent>() {
+		 * 
+		 * @Override public void handle(ContextMenuEvent event) {
+		 * contextMenu.show(tblTerminal, event.getScreenX(),
+		 * event.getScreenY());
+		 * 
+		 * }
+		 * 
+		 * });
+		 * 
+		 * }
+		 */
 	}
 }
