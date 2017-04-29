@@ -151,23 +151,14 @@ public class CompanyController extends Application implements Initializable {
 		}
 	}
 
-	public List<CompanyModel> cList = new ArrayList<CompanyModel>();
+	public static List<CompanyModel> cList = new ArrayList<CompanyModel>();
 
 	@FXML
 	TableColumn<CompanyModel, String> unitNo, name, email, city, ps, category, division, sale, country;
 
 	@FXML
 	private void btnAddCompanyAction() {
-		/*
-		 * String response = null; try { response =
-		 * GetAPIClient.callGetAPI(Iconstants.URL_SERVER +
-		 * Iconstants.URL_COMPANY_API + "/" + "openAdd", null); } catch
-		 * (Exception e) { e.printStackTrace(); }
-		 * 
-		 * if (response != null) {
-		 * 
-		 * }
-		 */
+
 		CompanyEditController.selectedTabValue = 0;
 		CompanyAddController.listOfBilling = new ArrayList<BillingControllerModel>();
 		CompanyAddController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
@@ -175,17 +166,6 @@ public class CompanyController extends Application implements Initializable {
 		openAddCompanyScreen();
 
 	}
-
-	/*
-	 * public TableRow<CompanyModel> rowNumber() { TableRow<CompanyModel> row =
-	 * new TableRow<>(); tblCompany.setRowFactory(tv -> {
-	 * 
-	 * row.setOnMouseClicked(event -> { if (event.getClickCount() == 2 &&
-	 * (!row.isEmpty())) { CompanyModel rowData = row.getItem();
-	 * System.out.println(rowData); } }); return row; }); return row;
-	 * 
-	 * }
-	 */
 
 	public static Long companyId = 0l;
 
@@ -361,11 +341,10 @@ public class CompanyController extends Application implements Initializable {
 	static boolean divisionn = true;
 	static boolean salee = true;
 	static boolean countryy = true;
-	 
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 		Login.setWidthForAll(root, tblCompany);
 		Login.setWidthForAll(headerPaneCompany, null);
 		// textfield.setVisible(false);
@@ -381,7 +360,6 @@ public class CompanyController extends Application implements Initializable {
 		country.setVisible(countryy);
 	}
 
-	
 	@FXML
 	public void clickItem(MouseEvent event) {
 		if (event.getClickCount() == 2) // Checking double click
@@ -394,26 +372,9 @@ public class CompanyController extends Application implements Initializable {
 
 	@Override
 	public void start(Stage stage) {
-		/*
-		 * System.out.println("START");
-		 * 
-		 * tblCompany.setOnMouseClicked(new EventHandler<MouseEvent>() {
-		 * 
-		 * @Override public void handle(MouseEvent event) { if
-		 * (event.getClickCount() > 1) { System.out.println("double clicked!");
-		 * } } });
-		 * 
-		 * tblCompany.setRowFactory(tv -> { TableRow<CompanyModel> row = new
-		 * TableRow<>(); row.setOnMouseClicked(event -> { if
-		 * (event.getClickCount() == 2 && (!row.isEmpty())) { CompanyModel
-		 * rowData = row.getItem(); System.out.println(rowData); } }); return
-		 * row; });
-		 */
+
 	}
 
-	/*
-	 * public static void main(String[] args) { launch(args); }
-	 */
 	@SuppressWarnings("unchecked")
 	private void fetchColumns() {
 		unitNo = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(0);
@@ -574,7 +535,7 @@ public class CompanyController extends Application implements Initializable {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
-						return new SimpleStringProperty(param.getValue().getCategoryName()+ "");
+						return new SimpleStringProperty(param.getValue().getCategoryName() + "");
 					}
 				});
 		division.setCellValueFactory(
@@ -648,28 +609,19 @@ public class CompanyController extends Application implements Initializable {
 
 						if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.SECONDARY)) {
 							contextMenu.show(tblCompany, mouseEvent.getScreenX(), mouseEvent.getScreenY());
-							// textfield.setVisible(false);
-							// contextMenu1 = new ContextMenu();
-							// contextMenu1.hide();
+
 						} else {
 							contextMenu.hide();
 							click++;
-							// System.out.println("now doublyyy" + click);
 
 						}
 						if (click == 2) {
 							btnEditCompanyAction();
-							// System.out.println("try doble====");
 							click = 0;
 						}
 
 					}
-					/*
-					 * try { Thread.sleep(2000); if (click == 1) { click = 0; }
-					 * } catch (Exception e) {
-					 * 
-					 * }
-					 */
+
 				}
 
 			});
@@ -705,7 +657,6 @@ public class CompanyController extends Application implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				// textfield.setVisible(true);
 				item6.setText(newText);
 				filterBySelectedValue();
 			}
@@ -983,14 +934,13 @@ public class CompanyController extends Application implements Initializable {
 
 		if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
 			if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.SECONDARY)) {
-				// textfield.setVisible(false);
 				contextMenu.show(tblCompany, mouseEvent.getScreenX(), mouseEvent.getScreenY());
 
 			} else {
 				contextMenu.hide();
 			}
 		}
-		// contextMenu1 = new ContextMenu();
+
 	}
 
 }

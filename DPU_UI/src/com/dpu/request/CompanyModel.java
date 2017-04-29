@@ -36,42 +36,30 @@ public class CompanyModel {
 	private String email;
 	@JsonProperty("website")
 	private String website;
-	/*
-	 * @JsonProperty("contact") private String contact;
-	 * 
-	 * @JsonProperty("position") private String position;
-	 * 
-	 * @JsonProperty("phone") private String phone;
-	 * 
-	 * @JsonProperty("ext") private String ext;
-	 * 
-	 * @JsonProperty("fax") private String fax;
-	 * 
-	 * @JsonProperty("companyPrefix") private String companyPrefix;
-	 * 
-	 * @JsonProperty("tollfree") private String tollfree;
-	 * 
-	 * @JsonProperty("cellular") private String cellular;
-	 * 
-	 * @JsonProperty("pager") private String pager;
-	 * 
-	 * @JsonProperty("afterHours") private String afterHours;
-	 */
-
+	@JsonProperty("categoryId")
 	private Long categoryId;
+	@JsonProperty("divisionId")
 	private Long divisionId;
+	@JsonProperty("saleId")
 	private Long saleId;
+	@JsonProperty("countryId")
 	private Long countryId;
+	@JsonProperty("categoryName")
 	private String categoryName;
+	@JsonProperty("divisionName")
 	private String divisionName;
+	@JsonProperty("saleName")
 	private String saleName;
+	@JsonProperty("countryName")
 	private String countryName;
+	@JsonProperty("categoryList")
 	private List<Category> categoryList;
+	@JsonProperty("divisionList")
 	private List<Division> divisionList;
+	@JsonProperty("saleList")
 	private List<Sale> saleList;
+	@JsonProperty("countryList")
 	private List<Type> countryList;
-	
-	
 
 	public Long getCategoryId() {
 		return categoryId;
