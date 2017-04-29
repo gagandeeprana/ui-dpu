@@ -15,6 +15,7 @@ import com.dpu.model.Failed;
 import com.dpu.model.Shipper;
 import com.dpu.model.Status;
 import com.dpu.model.Success;
+import com.dpu.util.Validate;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -22,37 +23,44 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class ShipperEditController extends Application implements Initializable{
+public class ShipperEditController extends Application implements Initializable {
 
 	@FXML
 	Button btnUpdateShipper;
-	
+
 	@FXML
-	TextField txtLocationName, txtContact, txtAddress, txtPosition, txtUnitNo, txtPhone, txtExt, txtCity, txtFax, txtPrefix, 
-	txtProvince, txtTollFree, txtPlant, txtCellNumber, txtZone, txtEmail, txtLeadTime, txtTimeZone, txtImporter;
-	
+	TextField txtLocationName, txtContact, txtAddress, txtPosition, txtUnitNo, txtPhone, txtExt, txtCity, txtFax,
+			txtPrefix, txtProvince, txtTollFree, txtPlant, txtCellNumber, txtZone, txtEmail, txtLeadTime, txtTimeZone,
+			txtImporter;
+
 	@FXML
 	TextArea txtInternalNotes, txtStandardNotes;
-	
+
 	@FXML
 	ComboBox<String> ddlStatus;
 
 	private Long shipperId = 0l;
-	
+
 	@FXML
 	private void btnUpdateShipperAction() {
-		editShipper();
-		closeEditShipperScreen(btnUpdateShipper);
+
+		boolean result = validateShipperScreen();
+		if (result) {
+			editShipper();
+			closeEditShipperScreen(btnUpdateShipper);
+		}
 	}
-	
+
 	private void editShipper() {
-		
+
 		Platform.runLater(new Runnable() {
-			
+
 			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
@@ -61,7 +69,8 @@ public class ShipperEditController extends Application implements Initializable{
 					Shipper shipper = setShipperValue();
 					String payload = mapper.writeValueAsString(shipper);
 
-					String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_SHIPPER_API + "/" + shipperId, null, payload);
+					String response = PutAPIClient.callPutAPI(
+							Iconstants.URL_SERVER + Iconstants.URL_SHIPPER_API + "/" + shipperId, null, payload);
 					try {
 						Success success = mapper.readValue(response, Success.class);
 						List<Shipper> shipperList = (List<Shipper>) success.getResultList();
@@ -72,22 +81,23 @@ public class ShipperEditController extends Application implements Initializable{
 						Failed failed = mapper.readValue(response, Failed.class);
 						JOptionPane.showMessageDialog(null, failed.getMessage());
 					}
-					
-					/*if(response != null && response.contains("message")) {
-						Success success = mapper.readValue(response, Success.class);
-						JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
-					} else {
-						Failed failed = mapper.readValue(response, Failed.class);
-						JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-					}*/
+
+					/*
+					 * if(response != null && response.contains("message")) {
+					 * Success success = mapper.readValue(response,
+					 * Success.class); JOptionPane.showMessageDialog(null,
+					 * success.getMessage() , "Info", 1); } else { Failed failed
+					 * = mapper.readValue(response, Failed.class);
+					 * JOptionPane.showMessageDialog(null, failed.getMessage(),
+					 * "Info", 1); }
+					 */
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
 				}
 			}
 		});
-		
+
 	}
-	
 
 	private Shipper setShipperValue() {
 		Shipper shipper = new Shipper();
@@ -105,7 +115,7 @@ public class ShipperEditController extends Application implements Initializable{
 		shipper.setTollFree(txtTollFree.getText());
 		shipper.setPlant(txtPlant.getText());
 		shipper.setStatusId(statusList.get(ddlStatus.getSelectionModel().getSelectedIndex()).getId());
-		//cellnumber yet to be done
+		// cellnumber yet to be done
 		shipper.setZone(txtZone.getText());
 		shipper.setEmail(txtEmail.getText());
 		shipper.setLeadTime(txtLeadTime.getText());
@@ -118,43 +128,43 @@ public class ShipperEditController extends Application implements Initializable{
 
 	private void closeEditShipperScreen(Button btnSaveTrailer) {
 		Stage loginStage = (Stage) btnSaveTrailer.getScene().getWindow();
-        loginStage.close();
-		
+		loginStage.close();
+
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	List<Company> companyList = null;
-	
+
 	List<Status> statusList = null;
-	
+
 	public void initData(Shipper s) {
 		shipperId = s.getShipperId();
 		statusList = s.getStatusList();
-		for(int i = 0; i< s.getStatusList().size();i++) {
+		for (int i = 0; i < s.getStatusList().size(); i++) {
 			Status status = s.getStatusList().get(i);
 			ddlStatus.getItems().add(status.getStatus());
-			if(status.getId() == s.getStatusId()) {
+			if (status.getId() == s.getStatusId()) {
 				ddlStatus.getSelectionModel().select(i);
 			}
 		}
-		/*companyList = s.getCompanyList();
-		for(int i = 0; i< s.getCompanyList().size();i++) {
-			Company company = s.getCompanyList().get(i);
-			ddlCompany.getItems().add(company.getName());
-			if(company.getCompanyId() == s.getCompanyId()) {
-				ddlCompany.getSelectionModel().select(i);
-			}
-		}*/
+		/*
+		 * companyList = s.getCompanyList(); for(int i = 0; i<
+		 * s.getCompanyList().size();i++) { Company company =
+		 * s.getCompanyList().get(i);
+		 * ddlCompany.getItems().add(company.getName());
+		 * if(company.getCompanyId() == s.getCompanyId()) {
+		 * ddlCompany.getSelectionModel().select(i); } }
+		 */
 		txtLocationName.setText(s.getLocationName());
 		txtContact.setText(s.getContact());
 		txtAddress.setText(s.getAddress());
@@ -176,5 +186,73 @@ public class ShipperEditController extends Application implements Initializable{
 		txtImporter.setText(s.getImporter());
 		txtInternalNotes.setText(s.getInternalNotes());
 		txtStandardNotes.setText(s.getStandardNotes());
+	}
+
+	// validation Applying
+
+	@FXML
+	Label locationMsg, statusMsg;
+
+	Validate validate = new Validate();
+
+	private boolean validateShipperScreen() {
+
+		boolean result = true;
+		String additionalContact = txtLocationName.getText();
+
+		boolean blnAdditionalContact = validate.validateEmptyness(additionalContact);
+		if (!blnAdditionalContact) {
+			result = false;
+			txtLocationName.setStyle("-fx-text-box-border: red;");
+			locationMsg.setVisible(true);
+			locationMsg.setText("Location is Mandatory");
+			locationMsg.setTextFill(Color.RED);
+		}
+
+		String status = ddlStatus.getSelectionModel().getSelectedItem();
+		boolean blnStatus = validate.validateEmptyness(status);
+		if (!blnStatus) {
+			result = false;
+			ddlStatus.setStyle("-fx-text-box-border: red;");
+			statusMsg.setVisible(true);
+			statusMsg.setText("Status is Mandatory");
+			statusMsg.setTextFill(Color.RED);
+		}
+		return result;
+	}
+
+	@FXML
+	private void shipperLocationKeyPressed() {
+
+		String name = txtLocationName.getText();
+		boolean result = validate.validateEmptyness(name);
+
+		if (!result) {
+			txtLocationName.setStyle("-fx-focus-color: red;");
+			txtLocationName.requestFocus();
+			locationMsg.setVisible(true);
+			locationMsg.setText("Location is Mandatory");
+			locationMsg.setTextFill(Color.RED);
+		} else {
+			txtLocationName.setStyle("-fx-focus-color: skyblue;");
+			locationMsg.setVisible(false);
+		}
+	}
+
+	@FXML
+	private void ddlStatusAction() {
+
+		String status = ddlStatus.getSelectionModel().getSelectedItem();
+		boolean result = validate.validateEmptyness(status);
+		if (result) {
+			ddlStatus.setStyle("-fx-focus-color: skyblue;");
+			statusMsg.setVisible(false);
+		} else {
+
+			ddlStatus.setStyle("-fx-border-color: red;");
+			statusMsg.setVisible(true);
+			statusMsg.setText("Status is Mandatory");
+			statusMsg.setTextFill(Color.RED);
+		}
 	}
 }
