@@ -22,20 +22,16 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -51,6 +47,8 @@ public class TerminalPanelController extends Application implements Initializabl
 
 	@FXML
 	TableColumn<Terminal, String> terminalName, location;
+
+	public static int flag = 0;
 
 	@FXML
 	private void btnAddTerminalAction() {
@@ -130,6 +128,7 @@ public class TerminalPanelController extends Application implements Initializabl
 
 	@FXML
 	private void btnEditTerminalAction() {
+		flag = 2;
 		Terminal terminal = tblTerminal.getSelectionModel().getSelectedItem();
 		if (terminal != null) {
 			Platform.runLater(new Runnable() {
@@ -312,7 +311,7 @@ public class TerminalPanelController extends Application implements Initializabl
 			@Override
 			public void handle(MouseEvent event) {
 				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-					System.out.println("clicked:::::::::::::");
+					flag = 1;
 					Terminal terminal = tblTerminal.getSelectionModel().getSelectedItem();
 					if (terminal != null) {
 						Platform.runLater(new Runnable() {

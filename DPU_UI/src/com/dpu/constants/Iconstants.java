@@ -91,7 +91,7 @@ public class Iconstants {
 	public static final String XML_EQUIPMENT_SCREEN = "List Equipment2.fxml";
 	public static final String URL_EQUIPMENT_API = "equipment";
 	public static final String XML_EQUIPMENT_ADD_SCREEN = "Add Equipment Type.fxml";
-	public static final String XML_EQUIPMENT_EDIT_SCREEN = "Edit Equipment Type.fxml";
+	public static final String XML_EQUIPMENT_EDIT_SCREEN = "EditEquipment.fxml";
 	
 	public static final String URL_TYPE_API = "masterData/type";
 	

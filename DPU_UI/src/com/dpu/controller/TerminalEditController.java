@@ -11,6 +11,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.controller.database.HandlingController;
 import com.dpu.model.DPUService;
 import com.dpu.model.Failed;
 import com.dpu.model.Shipper;
@@ -31,7 +32,7 @@ import javafx.stage.Stage;
 
 public class TerminalEditController extends Application implements Initializable {
 	@FXML
-	Button btnUpdateTerminal;
+	Button btnUpdateTerminal, btnEdit;
 
 	Long terminalId = 0l;
 
@@ -146,8 +147,28 @@ public class TerminalEditController extends Application implements Initializable
 		});
 	}
 
+	@FXML
+	public void handleEditAction() {
+		btnEdit.setDisable(true);
+		disableFields(false);
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		if (TerminalPanelController.flag == 1) {
+			disableFields(true);
+		}
+		if (TerminalPanelController.flag == 2) {
+			btnEdit.setVisible(false);
+		}
+	}
+
+	private void disableFields(boolean v) {
+		btnUpdateTerminal.setDisable(v);
+		txtLocation.setDisable(v);
+		txtTerminalName.setDisable(v);
+		ddlAvailableServices.setDisable(v);
+		ddlLocation.setDisable(v);
 	}
 
 	@Override
