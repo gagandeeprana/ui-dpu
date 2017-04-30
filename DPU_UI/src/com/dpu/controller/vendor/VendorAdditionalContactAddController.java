@@ -118,9 +118,10 @@ public class VendorAdditionalContactAddController implements Initializable {
 			String cellular = txtCellular.getText();
 
 			Long statusId = statusList.get(ddlStatus.getSelectionModel().getSelectedIndex()).getId();
+			String status = statusList.get(ddlStatus.getSelectionModel().getSelectedIndex()).getStatus();
 			String email = txtEmail.getText();
 			VendorAdditionalContacts bcm1 = new VendorAdditionalContacts(additionalContact, position, phone, fax, cellular, email, extension, pager, statusId);
-			
+			bcm1.setStatusName(status);
 			VendorAddController.selectedTabValue = 1;
 //			if (VendorAddController.addEditIndex != -1) {
 				if (VendorAddController.addAddtionalContact == 0) {
@@ -132,7 +133,11 @@ public class VendorAdditionalContactAddController implements Initializable {
 
 //			VendorAddController.selectedTabValue = 0;
 			closeAddAdditionalContactScreen(btnSaveAdditionalContact);
-			VendorAddController.fetchAdditionalContactsUsingDuplicate();
+			if(VendorAddController.whichScreenAddOrEdit == 0) {
+				VendorAddController.fetchAdditionalContactsUsingDuplicate();
+			} else {
+				VendorEditController.fetchAdditionalContactsUsingDuplicate();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -45,25 +45,13 @@ public class TruckAddController extends Application implements Initializable {
 	@FXML
 	ComboBox<String> ddlStatus, ddlCategory, ddlDivision, ddlTerminal, ddlTruckType;
 
-	@FXML
-	Label lblUnitNo;
+	
+	// ---------------------------==================--------------------========================-------------
+	 
 
-	Validate validate = new Validate();
+	 
 
-	@FXML
-	private void truckUnitKeyPressed() {
-
-		String name = txtUnitNo.getText();
-		boolean result = validate.validateEmptyness(name);
-		if (result) {
-			lblUnitNo.setTextFill(Color.BLACK);
-			txtUnitNo.setStyle("-fx-focus-color: skyblue;");
-		} else {
-			txtUnitNo.setStyle("-fx-focus-color: red;");
-			txtUnitNo.requestFocus();
-			lblUnitNo.setVisible(true);
-		}
-	}
+	 
 
 	@FXML
 	private void btnSaveTruckAction() {
@@ -73,19 +61,7 @@ public class TruckAddController extends Application implements Initializable {
 		}
 	}
 
-	private boolean validateAddTruckScreen() {
-
-		boolean result = true;
-		String unitNo = txtUnitNo.getText();
-
-		boolean blnUnitNo = validate.validateEmptyness(unitNo);
-		if (!blnUnitNo) {
-			result = false;
-			txtUnitNo.setStyle("-fx-text-box-border: red;");
-			lblUnitNo.setVisible(true);
-		}
-		return result;
-	}
+	
 
 	private void closeAddTruckScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
@@ -224,4 +200,47 @@ public class TruckAddController extends Application implements Initializable {
 		truck.setTruckTypeId(truckTypeList.get(ddlTruckType.getSelectionModel().getSelectedIndex()).getTypeId());
 		return truck;
 	}
+	
+	
+	// validation Applying
+
+			@FXML
+			Label unitMsg;
+
+			Validate validate = new Validate();
+
+			private boolean validateAddTruckScreen() {
+
+				boolean result = true;
+				String additionalContact = txtUnitNo.getText();
+
+				boolean blnAdditionalContact = validate.validateEmptyness(additionalContact);
+				if (!blnAdditionalContact) {
+					result = false;
+					txtUnitNo.setStyle("-fx-text-box-border: red;");
+					unitMsg.setVisible(true);
+					unitMsg.setText("Unit No is Mandatory");
+					unitMsg.setTextFill(Color.RED);
+				}
+
+				return result;
+			}
+
+			@FXML
+			private void truckUnitKeyPressed() {
+
+				String name = txtUnitNo.getText();
+				boolean result = validate.validateEmptyness(name);
+
+				if (!result) {
+					txtUnitNo.setStyle("-fx-focus-color: red;");
+					txtUnitNo.requestFocus();
+					unitMsg.setVisible(true);
+					unitMsg.setText("Unit No is Mandatory");
+					unitMsg.setTextFill(Color.RED);
+				} else {
+					txtUnitNo.setStyle("-fx-focus-color: skyblue;");
+					unitMsg.setVisible(false);
+				}
+			}
 }

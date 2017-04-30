@@ -45,7 +45,7 @@ public class TrailerAddController extends Application implements Initializable {
 
 	@FXML
 	private void btnSaveTrailerAction() {
-		boolean result = validateAddDriverScreen();
+		boolean result = validateAddTrailerScreen();
 		if (result) {
 			addTrailer();
 			closeAddTrailerScreen(btnSaveTrailer);
@@ -190,109 +190,25 @@ public class TrailerAddController extends Application implements Initializable {
 
 	}
 
-	// -----------------------------------------------------------------------------
+	// validation Applying
 
 	@FXML
-	Label lblUnitNo, lblOwner, lblOoName, lblStatus, lblCategory, lblUsage, lblDivision, lblTerminal, lblTrailerType,
-			lblFinance;
+	Label unitMsg;
 
 	Validate validate = new Validate();
 
-	private boolean validateAddDriverScreen() {
+	private boolean validateAddTrailerScreen() {
 
 		boolean result = true;
-		String unitNo = txtUnitNo.getText();
-	//	String owner = txtOwner.getText();
-	//	String usage = txtUsage.getText();
-	//	String ooName = txtOoName.getText();
-	//	String finance = txtFinance.getText();
+		String additionalContact = txtUnitNo.getText();
 
-		String status = ddlStatus.getSelectionModel().getSelectedItem();
-		String category = ddlCategory.getSelectionModel().getSelectedItem();
-		String division = ddlDivision.getSelectionModel().getSelectedItem();
-		String terminal = ddlTerminal.getSelectionModel().getSelectedItem();
-		String trailerType = ddlTrailerType.getSelectionModel().getSelectedItem();
-
-		boolean blnUnitNo = validate.validateEmptyness(unitNo);
-		if (!blnUnitNo) {
+		boolean blnAdditionalContact = validate.validateEmptyness(additionalContact);
+		if (!blnAdditionalContact) {
 			result = false;
 			txtUnitNo.setStyle("-fx-text-box-border: red;");
-			lblUnitNo.setVisible(true);
-			// lblUnitNo.setText("Company Name is Mandatory");
-			// lblUnitNo.setTextFill(Color.RED);
-
-		}
-
-		/*
-		 * boolean blnOwner = validate.validateEmptyness(owner); if (!blnOwner)
-		 * { result = false; txtOwner.setStyle("-fx-text-box-border: red;");
-		 * lblOwner.setVisible(true); //
-		 * lblOwner.setText("Address is Mandatory"); //
-		 * lblOwner.setTextFill(Color.RED); }
-		 * 
-		 * boolean blnUsage = validate.validateEmptyness(usage); if (!blnUsage)
-		 * { result = false; txtUsage.setStyle("-fx-text-box-border: red;");
-		 * lblUsage.setVisible(true); //
-		 * lblUsage.setText("Phone Number is Mandatory"); //
-		 * lblUsage.setTextFill(Color.RED); }
-		 * 
-		 * boolean blnOoname = validate.validateEmptyness(ooName); if
-		 * (!blnOoname) { result = false;
-		 * txtOoName.setStyle("-fx-text-box-border: red;");
-		 * lblOoName.setVisible(true); //
-		 * lblOoName.setText("Fax Number is Mandatory"); //
-		 * lblOoName.setTextFill(Color.RED); }
-		 * 
-		 * boolean blnFinance = validate.validateEmptyness(finance); if
-		 * (!blnFinance) { result = false;
-		 * txtFinance.setStyle("-fx-text-box-border: red;");
-		 * lblFinance.setVisible(true); //
-		 * lblFinance.setText("Fax Number is Mandatory"); //
-		 * lblFinance.setTextFill(Color.RED); }
-		 */
-		boolean blnStatus = validate.validateEmptyness(status);
-		if (!blnStatus) {
-			result = false;
-			ddlStatus.setStyle("-fx-text-box-border: red;");
-			lblStatus.setVisible(true);
-			// lblStatus.setText("Fax Number is Mandatory");
-			// lblStatus.setTextFill(Color.RED);
-		}
-
-		boolean blnCategory = validate.validateEmptyness(category);
-		if (!blnCategory) {
-			result = false;
-			ddlCategory.setStyle("-fx-text-box-border: red;");
-			lblCategory.setVisible(true);
-			// lblCategory.setText("Fax Number is Mandatory");
-			// lblCategory.setTextFill(Color.RED);
-		}
-
-		boolean blnDivision = validate.validateEmptyness(division);
-		if (!blnDivision) {
-			result = false;
-			ddlDivision.setStyle("-fx-text-box-border: red;");
-			lblDivision.setVisible(true);
-			// lblDivision.setText("Fax Number is Mandatory");
-			// lblDivision.setTextFill(Color.RED);
-		}
-
-		boolean blnTerminal = validate.validateEmptyness(terminal);
-		if (!blnTerminal) {
-			result = false;
-			ddlTerminal.setStyle("-fx-text-box-border: red;");
-			lblTerminal.setVisible(true);
-			// lblTerminal.setText("Fax Number is Mandatory");
-			// lblTerminal.setTextFill(Color.RED);
-		}
-
-		boolean blnTrailerType = validate.validateEmptyness(trailerType);
-		if (!blnTrailerType) {
-			result = false;
-			ddlTrailerType.setStyle("-fx-text-box-border: red;");
-			lblTrailerType.setVisible(true);
-			// lblTrailerType.setText("Fax Number is Mandatory");
-			// lblTrailerType.setTextFill(Color.RED);
+			unitMsg.setVisible(true);
+			unitMsg.setText("Unit No is Mandatory");
+			unitMsg.setTextFill(Color.RED);
 		}
 
 		return result;
@@ -303,145 +219,16 @@ public class TrailerAddController extends Application implements Initializable {
 
 		String name = txtUnitNo.getText();
 		boolean result = validate.validateEmptyness(name);
-		if (result) {
-			lblUnitNo.setTextFill(Color.BLACK);
-			txtUnitNo.setStyle("-fx-focus-color: skyblue;");
-		} else {
+
+		if (!result) {
 			txtUnitNo.setStyle("-fx-focus-color: red;");
 			txtUnitNo.requestFocus();
-			lblUnitNo.setVisible(true);
-			// lblUnitNo.setText("Company Name is Mandatory");
-			// lblUnitNo.setTextFill(Color.RED);
-		}
-	}
-
-	/*
-	 * @FXML private void trailerOwnerKeyPressed() {
-	 * 
-	 * String name = txtOwner.getText(); boolean result =
-	 * validate.validateEmptyness(name); if (result) {
-	 * lblOwner.setTextFill(Color.BLACK);
-	 * txtOwner.setStyle("-fx-focus-color: skyblue;"); } else {
-	 * txtOwner.setStyle("-fx-focus-color: red;"); txtOwner.requestFocus();
-	 * lblOwner.setVisible(true); //
-	 * lblOwner.setText("Company Name is Mandatory"); //
-	 * lblOwner.setTextFill(Color.RED); } }
-	 * 
-	 * @FXML private void trailerUsageKeyPressed() {
-	 * 
-	 * String name = txtUsage.getText(); boolean result =
-	 * validate.validateEmptyness(name); if (result) {
-	 * lblUsage.setTextFill(Color.BLACK);
-	 * txtUsage.setStyle("-fx-focus-color: skyblue;"); } else {
-	 * txtUsage.setStyle("-fx-focus-color: red;"); txtUsage.requestFocus();
-	 * lblUsage.setVisible(true); //
-	 * lblUsage.setText("Company Name is Mandatory"); //
-	 * lblUsage.setTextFill(Color.RED); } }
-	 * 
-	 * @FXML private void trailerOonameKeyPressed() {
-	 * 
-	 * String name = txtOoName.getText(); boolean result =
-	 * validate.validateEmptyness(name); if (result) {
-	 * lblOoName.setTextFill(Color.BLACK);
-	 * txtOoName.setStyle("-fx-focus-color: skyblue;"); } else {
-	 * txtOoName.setStyle("-fx-focus-color: red;"); txtOoName.requestFocus();
-	 * lblOoName.setVisible(true); //
-	 * lblOoName.setText("Company Name is Mandatory"); //
-	 * lblOoName.setTextFill(Color.RED); } }
-	 * 
-	 * @FXML private void trailerFinanceKeyPressed() {
-	 * 
-	 * String name = txtFinance.getText(); boolean result =
-	 * validate.validateEmptyness(name); if (result) {
-	 * lblFinance.setTextFill(Color.BLACK);
-	 * txtFinance.setStyle("-fx-focus-color: skyblue;"); } else {
-	 * txtFinance.setStyle("-fx-focus-color: red;"); txtFinance.requestFocus();
-	 * lblFinance.setVisible(true); //
-	 * lblFinance.setText("Company Name is Mandatory"); //
-	 * lblFinance.setTextFill(Color.RED); } }
-	 */
-	@FXML
-	private void trailerDdlStatusKeyPressed() {
-
-		String textField = ddlStatus.getSelectionModel().getSelectedItem();
-		boolean result = validate.validateEmptyness(textField);
-		if (result) {
-			lblStatus.setText("");
-			ddlStatus.setStyle("-fx-focus-color: skyblue;");
-			lblStatus.setVisible(false);
+			unitMsg.setVisible(true);
+			unitMsg.setText("Unit No is Mandatory");
+			unitMsg.setTextFill(Color.RED);
 		} else {
-			ddlStatus.setStyle("-fx-border-color: red;");
-			lblStatus.setVisible(true);
-			lblStatus.setText("TextField is Mandatory");
-			// lblStatus.setTextFill(Color.RED);
-		}
-	}
-
-	@FXML
-	private void trailerDdlCategoryKeyPressed() {
-
-		String textField = ddlCategory.getSelectionModel().getSelectedItem();
-		boolean result = validate.validateEmptyness(textField);
-		if (result) {
-			lblCategory.setText("");
-			ddlCategory.setStyle("-fx-focus-color: skyblue;");
-			lblCategory.setVisible(false);
-		} else {
-			ddlCategory.setStyle("-fx-border-color: red;");
-			lblCategory.setVisible(true);
-			lblCategory.setText("TextField is Mandatory");
-			// lblCategory.setTextFill(Color.RED);
-		}
-	}
-
-	@FXML
-	private void trailerDdlDivisionKeyPressed() {
-
-		String textField = ddlDivision.getSelectionModel().getSelectedItem();
-		boolean result = validate.validateEmptyness(textField);
-		if (result) {
-			lblDivision.setText("");
-			ddlDivision.setStyle("-fx-focus-color: skyblue;");
-			lblDivision.setVisible(false);
-		} else {
-			ddlDivision.setStyle("-fx-border-color: red;");
-			lblDivision.setVisible(true);
-			lblDivision.setText("TextField is Mandatory");
-			// lblDivision.setTextFill(Color.RED);
-		}
-	}
-
-	@FXML
-	private void trailerTerminalKeyPressed() {
-
-		String textField = ddlTerminal.getSelectionModel().getSelectedItem();
-		boolean result = validate.validateEmptyness(textField);
-		if (result) {
-			lblTerminal.setText("");
-			ddlTerminal.setStyle("-fx-focus-color: skyblue;");
-			lblTerminal.setVisible(false);
-		} else {
-			ddlTerminal.setStyle("-fx-border-color: red;");
-			lblTerminal.setVisible(true);
-			lblTerminal.setText("TextField is Mandatory");
-			// lblTerminal.setTextFill(Color.RED);
-		}
-	}
-
-	@FXML
-	private void trailerTypeKeyPressed() {
-
-		String textField = ddlTrailerType.getSelectionModel().getSelectedItem();
-		boolean result = validate.validateEmptyness(textField);
-		if (result) {
-			lblTrailerType.setText("");
-			ddlTrailerType.setStyle("-fx-focus-color: skyblue;");
-			lblTrailerType.setVisible(false);
-		} else {
-			ddlTrailerType.setStyle("-fx-border-color: red;");
-			lblTrailerType.setVisible(true);
-			lblTrailerType.setText("TextField is Mandatory");
-			// lblTrailerType.setTextFill(Color.RED);
+			txtUnitNo.setStyle("-fx-focus-color: skyblue;");
+			unitMsg.setVisible(false);
 		}
 	}
 

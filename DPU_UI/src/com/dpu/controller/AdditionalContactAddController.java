@@ -200,10 +200,9 @@ public class AdditionalContactAddController implements Initializable {
 		}
 	}
 
-	// -----------------------------------------------------------------------------------------
-
+  // validation Applying
 	@FXML
-	Label lblAdditionalCOntact, lblPosition, lblPhone, lblFax, lblCellular, lblEmail, lblExt, lblPager, lblStatus;
+	Label additionalContactMsg;
 
 	Validate validate = new Validate();
 
@@ -211,97 +210,16 @@ public class AdditionalContactAddController implements Initializable {
 
 		boolean result = true;
 		String additionalContact = txtAdditionalContact.getText();
-		String position = txtPosition.getText();
-		String phone = txtPhone.getText();
-		String fax = txtFax.getText();
-		String city = txtCellular.getText();
-		String email = txtEmail.getText();
-		String ext = txtExtension.getText();
-		String pager = txtPager.getText();
-		String status = ddlStatus.getSelectionModel().getSelectedItem();
-
+	 
 		boolean blnAdditionalContact = validate.validateEmptyness(additionalContact);
 		if (!blnAdditionalContact) {
 			result = false;
 			txtAdditionalContact.setStyle("-fx-text-box-border: red;");
-			lblAdditionalCOntact.setVisible(true);
-			// lblCompany.setText("Company Name is Mandatory");
-			lblAdditionalCOntact.setTextFill(Color.RED);
-
+			additionalContactMsg.setVisible(true);
+			additionalContactMsg.setText("Additional Contact is Mandatory");
+			additionalContactMsg.setTextFill(Color.RED);
 		}
-
-		boolean blnPosition = validate.validateEmptyness(position);
-		if (!blnPosition) {
-			result = false;
-			txtPosition.setStyle("-fx-text-box-border: red;");
-			lblPosition.setVisible(true);
-			// lblAddress.setText("Address is Mandatory");
-			lblPosition.setTextFill(Color.RED);
-		}
-
-		boolean blnPhone = validate.validateEmptyness(phone);
-		if (!blnPhone) {
-			result = false;
-			txtPhone.setStyle("-fx-text-box-border: red;");
-			lblPhone.setVisible(true);
-			// lblPhone.setText("Phone Number is Mandatory");
-			lblPhone.setTextFill(Color.RED);
-		}
-
-		boolean blnFax = validate.validateEmptyness(fax);
-		if (!blnFax) {
-			result = false;
-			txtFax.setStyle("-fx-text-box-border: red;");
-			lblFax.setVisible(true);
-			// lblFax.setText("Fax Number is Mandatory");
-			lblFax.setTextFill(Color.RED);
-		}
-
-		boolean blnCellular = validate.validateEmptyness(city);
-		if (!blnCellular) {
-			result = false;
-			txtCellular.setStyle("-fx-text-box-border: red;");
-			lblCellular.setVisible(true);
-			// lblFax.setText("Fax Number is Mandatory");
-			lblCellular.setTextFill(Color.RED);
-		}
-
-		boolean blnEmail = validate.validateEmptyness(email);
-		if (!blnEmail) {
-			result = false;
-			txtEmail.setStyle("-fx-text-box-border: red;");
-			lblEmail.setVisible(true);
-			// lblFax.setText("Fax Number is Mandatory");
-			lblEmail.setTextFill(Color.RED);
-		}
-
-		boolean blnExtension = validate.validateEmptyness(ext);
-		if (!blnExtension) {
-			result = false;
-			txtExtension.setStyle("-fx-text-box-border: red;");
-			lblExt.setVisible(true);
-			// lblExt.setText("Fax Number is Mandatory");
-			lblExt.setTextFill(Color.RED);
-		}
-
-		boolean blnPager = validate.validateEmptyness(pager);
-		if (!blnPager) {
-			result = false;
-			txtPager.setStyle("-fx-text-box-border: red;");
-			lblPager.setVisible(true);
-			// lblPager.setText("Fax Number is Mandatory");
-			lblPager.setTextFill(Color.RED);
-		}
-
-		boolean blnStatus = validate.validateEmptyness(status);
-		if (!blnStatus) {
-			result = false;
-			ddlStatus.setStyle("-fx-text-box-border: red;");
-			lblStatus.setVisible(true);
-			// lblExt.setText("Fax Number is Mandatory");
-			lblStatus.setTextFill(Color.RED);
-		}
-
+		
 		return result;
 	}
 
@@ -310,151 +228,16 @@ public class AdditionalContactAddController implements Initializable {
 
 		String name = txtAdditionalContact.getText();
 		boolean result = validate.validateEmptyness(name);
-		if (result) {
-			lblAdditionalCOntact.setTextFill(Color.BLACK);
-			txtAdditionalContact.setStyle("-fx-focus-color: skyblue;");
-		} else {
+		
+		if (!result) {
 			txtAdditionalContact.setStyle("-fx-focus-color: red;");
 			txtAdditionalContact.requestFocus();
-			lblAdditionalCOntact.setVisible(true);
-			// lblCompany.setText("Company Name is Mandatory");
-			lblAdditionalCOntact.setTextFill(Color.RED);
-		}
-	}
-
-	@FXML
-	private void companyPositionKeyPressed() {
-
-		String name = txtPosition.getText();
-		boolean result = validate.validateEmptyness(name);
-		if (result) {
-			lblPosition.setTextFill(Color.BLACK);
-			txtPosition.setStyle("-fx-focus-color: skyblue;");
-		} else {
-			txtPosition.setStyle("-fx-focus-color: red;");
-			txtPosition.requestFocus();
-			lblPosition.setVisible(true);
-			// lblCompany.setText("Company Name is Mandatory");
-			lblPosition.setTextFill(Color.RED);
-		}
-	}
-
-	@FXML
-	private void companyPhoneKeyPressed() {
-
-		String name = txtPhone.getText();
-		boolean result = validate.validateEmptyness(name);
-		if (result) {
-			lblPhone.setTextFill(Color.BLACK);
-			txtPhone.setStyle("-fx-focus-color: skyblue;");
-		} else {
-			txtPhone.setStyle("-fx-focus-color: red;");
-			txtPhone.requestFocus();
-			lblPhone.setVisible(true);
-			// lblCompany.setText("Company Name is Mandatory");
-			lblPhone.setTextFill(Color.RED);
-		}
-	}
-
-	@FXML
-	private void companyFaxKeyPressed() {
-
-		String name = txtFax.getText();
-		boolean result = validate.validateEmptyness(name);
-		if (result) {
-			lblFax.setTextFill(Color.BLACK);
-			txtFax.setStyle("-fx-focus-color: skyblue;");
-		} else {
-			txtFax.setStyle("-fx-focus-color: red;");
-			txtFax.requestFocus();
-			lblFax.setVisible(true);
-			// lblFax.setText("Company Name is Mandatory");
-			lblFax.setTextFill(Color.RED);
-		}
-	}
-
-	@FXML
-	private void companyCellularKeyPressed() {
-
-		String name = txtCellular.getText();
-		boolean result = validate.validateEmptyness(name);
-		if (result) {
-			lblCellular.setTextFill(Color.BLACK);
-			txtCellular.setStyle("-fx-focus-color: skyblue;");
-		} else {
-			txtCellular.setStyle("-fx-focus-color: red;");
-			txtCellular.requestFocus();
-			lblCellular.setVisible(true);
-			// lblCellular.setText("Company Name is Mandatory");
-			lblCellular.setTextFill(Color.RED);
-		}
-	}
-
-	@FXML
-	private void companyEmailKeyPressed() {
-
-		String name = txtEmail.getText();
-		boolean result = validate.validateEmptyness(name);
-		if (result) {
-			lblEmail.setTextFill(Color.BLACK);
-			txtEmail.setStyle("-fx-focus-color: skyblue;");
-		} else {
-			txtEmail.setStyle("-fx-focus-color: red;");
-			txtEmail.requestFocus();
-			lblEmail.setVisible(true);
-			// lblEmail.setText("Company Name is Mandatory");
-			lblEmail.setTextFill(Color.RED);
-		}
-	}
-
-	@FXML
-	private void companyExtKeyPressed() {
-
-		String name = txtExtension.getText();
-		boolean result = validate.validateEmptyness(name);
-		if (result) {
-			lblExt.setTextFill(Color.BLACK);
-			txtExtension.setStyle("-fx-focus-color: skyblue;");
-		} else {
-			txtExtension.setStyle("-fx-focus-color: red;");
-			txtExtension.requestFocus();
-			lblExt.setVisible(true);
-			// lblExt.setText("Company Name is Mandatory");
-			lblExt.setTextFill(Color.RED);
-		}
-	}
-
-	@FXML
-	private void companyPagerKeyPressed() {
-
-		String name = txtPager.getText();
-		boolean result = validate.validateEmptyness(name);
-		if (result) {
-			lblPager.setTextFill(Color.BLACK);
-			txtPager.setStyle("-fx-focus-color: skyblue;");
-		} else {
-			txtPager.setStyle("-fx-focus-color: red;");
-			txtPager.requestFocus();
-			lblPager.setVisible(true);
-			// lblPager.setText("Company Name is Mandatory");
-			lblPager.setTextFill(Color.RED);
-		}
-	}
-
-	@FXML
-	private void companyDdlStatusKeyPressed() {
-
-		String textField = ddlStatus.getSelectionModel().getSelectedItem();
-		boolean result = validate.validateEmptyness(textField);
-		if (result) {
-			lblStatus.setText("");
-			ddlStatus.setStyle("-fx-focus-color: skyblue;");
-			lblStatus.setVisible(false);
-		} else {
-			ddlStatus.setStyle("-fx-border-color: red;");
-			lblStatus.setVisible(true);
-			lblStatus.setText("TextField is Mandatory");
-			lblStatus.setTextFill(Color.RED);
+			additionalContactMsg.setVisible(true);
+			additionalContactMsg.setText("Additional Contact is Mandatory");
+			additionalContactMsg.setTextFill(Color.RED);
+		}  else{
+			txtAdditionalContact.setStyle("-fx-focus-color: skyblue;");
+			additionalContactMsg.setVisible(false);
 		}
 	}
 

@@ -14,6 +14,7 @@ import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.controller.Login;
+import com.dpu.model.Status;
 import com.dpu.model.Success;
 import com.dpu.model.Vendor;
 import com.dpu.model.VendorAdditionalContacts;
@@ -164,6 +165,8 @@ public class VendorController extends Application implements Initializable {
 
 	public static Long vendorId = 0l;
 
+	public static List<Status> statusList = null;
+	
 	@FXML
 	private void btnEditVendorAction() {
 		VendorAddController.listOfBilling = new ArrayList<VendorBillingLocation>();
@@ -209,8 +212,13 @@ public class VendorController extends Application implements Initializable {
 									VendorAddController.listOfBilling.add(bcm);
 								}
 							}
+							
+							statusList = c.getStatusList();
 
-							if (c.getAdditionalContacts() != null) {
+							/**
+							 * can uncomment this block if u want to get additionalcontacts without clicking on second tab in edit screen.
+							 */
+							/*if (c.getAdditionalContacts() != null) {
 								int addtionalContactSize = c.getAdditionalContacts().size();
 								for (int j = 0; j < addtionalContactSize; j++) {
 									VendorAdditionalContacts additionalContact = new VendorAdditionalContacts();
@@ -225,11 +233,16 @@ public class VendorController extends Application implements Initializable {
 									additionalContact.setPrefix(c.getAdditionalContacts().get(j).getCellular());
 									additionalContact.setPhone(c.getAdditionalContacts().get(j).getPhone());
 									additionalContact.setPosition(c.getAdditionalContacts().get(j).getPosition());
-									additionalContact.setStatusId(0l);
-
+									additionalContact.setStatusId(c.getAdditionalContacts().get(j).getStatusId());
+									for(int i=0;i<c.getStatusList().size();i++) {
+										if(c.getStatusList().get(i).getId().equals(c.getAdditionalContacts().get(j).getStatusId())) {
+											additionalContact.setStatusName(c.getStatusList().get(i).getStatus());
+											break;
+										}
+									}
 									VendorAddController.listOfAdditionalContact.add(additionalContact);
 								}
-							}
+							}*/
 
 							// -----------------------------------------------------
 							VendorEditController vendorEditController = (VendorEditController) openEditVendorScreen();
