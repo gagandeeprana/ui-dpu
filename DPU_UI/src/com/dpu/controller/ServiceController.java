@@ -59,6 +59,8 @@ public class ServiceController extends Application implements Initializable {
 	@FXML
 	AnchorPane root, anchorPaneService;
 
+	public static int flag = 0;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// newMethod();
@@ -155,6 +157,7 @@ public class ServiceController extends Application implements Initializable {
 
 	@FXML
 	private void btnEditServiceAction() {
+		flag = 2;
 		DPUService dpuService = services.get(tblService.getSelectionModel().getSelectedIndex());
 		if (dpuService != null) {
 			Platform.runLater(new Runnable() {
@@ -357,7 +360,8 @@ public class ServiceController extends Application implements Initializable {
 			@Override
 			public void handle(MouseEvent event) {
 				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-//					System.out.println(":::::::clicked::::::::");
+					// System.out.println(":::::::clicked::::::::");
+					flag = 1;
 					DPUService dpuService = services.get(tblService.getSelectionModel().getSelectedIndex());
 					if (dpuService != null) {
 						Platform.runLater(new Runnable() {

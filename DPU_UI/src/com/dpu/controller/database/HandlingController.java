@@ -56,6 +56,8 @@ public class HandlingController extends Application implements Initializable {
 	@FXML
 	TextField txtSearchHandling;
 
+	public static int flag = 0;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		Login.setWidthForAll(root, tblHandling);
@@ -142,6 +144,7 @@ public class HandlingController extends Application implements Initializable {
 
 	@FXML
 	private void btnEditHandlingAction() {
+		flag = 2;
 		HandlingModel handling = handlings.get(tblHandling.getSelectionModel().getSelectedIndex());
 		if (handling != null) {
 			Platform.runLater(new Runnable() {
@@ -289,7 +292,7 @@ public class HandlingController extends Application implements Initializable {
 			@Override
 			public void handle(MouseEvent event) {
 				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-					System.out.println("clicked:::::::::::::");
+					flag = 1;
 					HandlingModel handling = handlings.get(tblHandling.getSelectionModel().getSelectedIndex());
 					if (handling != null) {
 						Platform.runLater(new Runnable() {

@@ -38,7 +38,7 @@ import javafx.stage.Stage;
 public class DivisionEditController extends Application implements Initializable {
 
 	@FXML
-	Button btnUpdateDivision, btnCancel;
+	Button btnUpdateDivision, btnCancel, btnEdit;
 
 	Long divisionId = 0l;
 
@@ -258,8 +258,33 @@ public class DivisionEditController extends Application implements Initializable
 		});
 	}
 
+	@FXML
+	public void handleEditAction() {
+		btnEdit.setDisable(true);
+		disableFields(false);
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		if (DivisionController.flag == 1) {
+			disableFields(true);
+		}
+		if (DivisionController.flag == 2) {
+			btnEdit.setVisible(false);
+		}
+	}
+
+	private void disableFields(boolean v) {
+		btnUpdateDivision.setDisable(v);
+		txtCarrierCode.setDisable(v);
+		txtContractPrefix.setDisable(v);
+		txtDivisionCode.setDisable(v);
+		txtDivisionName.setDisable(v);
+		txtFedral.setDisable(v);
+		txtInvoicePrefix.setDisable(v);
+		txtProvincial.setDisable(v);
+		txtSCAC.setDisable(v);
+		ddlStatus.setDisable(v);
 	}
 
 	@Override

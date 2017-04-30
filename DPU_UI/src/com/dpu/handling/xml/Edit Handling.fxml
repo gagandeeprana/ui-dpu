@@ -27,6 +27,7 @@
       <Text layoutX="24.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status" />
       <Label id="lblHandling" layoutX="145.0" layoutY="52.0" prefHeight="17.0" prefWidth="230.0" />
       <Label id="lblStatus" layoutX="145.0" layoutY="103.0" prefHeight="17.0" prefWidth="230.0" />
+      <Button fx:id="btnEdit" onAction="#handleEditAction" layoutX="163.0" layoutY="132.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="65.0" text="Edit" />
    </children>
    
 </AnchorPane>

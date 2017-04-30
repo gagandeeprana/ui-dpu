@@ -80,5 +80,6 @@
       <Label fx:id="lblCarierCode" layoutX="158.0" layoutY="372.0" prefHeight="17.0" prefWidth="240.0" />
       <Label fx:id="lblContactPrefix" layoutX="159.0" layoutY="423.0" prefHeight="17.0" prefWidth="240.0" />
       <Label fx:id="lblInvoicePrefix" layoutX="158.0" layoutY="471.0" prefHeight="17.0" prefWidth="240.0" />
+      <Button fx:id="btnEdit" layoutX="194.0" onAction="#handleEditAction" layoutY="510.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="59.0" text="Edit" />
    </children>
 </AnchorPane>
