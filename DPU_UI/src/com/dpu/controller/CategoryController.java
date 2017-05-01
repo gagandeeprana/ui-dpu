@@ -58,6 +58,8 @@ public class CategoryController extends Application implements Initializable {
 	@FXML
 	AnchorPane anchorPaneCategory, root;
 
+	public static int flag = 0;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		Login.setWidthForAll(root, tblCategory);
@@ -72,6 +74,7 @@ public class CategoryController extends Application implements Initializable {
 
 	@FXML
 	private void btnEditCategoryAction() {
+		flag = 2;
 		Category category = cList.get(tblCategory.getSelectionModel().getSelectedIndex());
 		if (category != null) {
 			Platform.runLater(new Runnable() {
@@ -328,7 +331,8 @@ public class CategoryController extends Application implements Initializable {
 			@Override
 			public void handle(MouseEvent event) {
 				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-					System.out.println("clicked:::::::::::::");
+					// System.out.println("clicked:::::::::::::");
+					flag = 1;
 					Category category = cList.get(tblCategory.getSelectionModel().getSelectedIndex());
 					if (category != null) {
 						Platform.runLater(new Runnable() {

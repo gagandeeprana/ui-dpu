@@ -35,7 +35,7 @@ import javafx.stage.Stage;
 public class CategoryEditController extends Application implements Initializable {
 
 	@FXML
-	Button btnUpdateCategory;
+	Button btnUpdateCategory, btnEdit;
 
 	Long categoryId = 0l;
 
@@ -215,8 +215,28 @@ public class CategoryEditController extends Application implements Initializable
 		return category;
 	}
 
+	@FXML
+	public void handleEditAction() {
+		btnEdit.setDisable(true);
+		disableFields(false);
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		if (CategoryController.flag == 1) {
+			disableFields(true);
+		}
+		if (CategoryController.flag == 2) {
+			btnEdit.setVisible(false);
+		}
+	}
+
+	private void disableFields(boolean v) {
+		btnUpdateCategory.setDisable(v);
+		txtCategory.setDisable(v);
+		ddlHighlight.setDisable(v);
+		ddlStatus.setDisable(v);
+		ddlType.setDisable(v);
 	}
 
 	@Override
