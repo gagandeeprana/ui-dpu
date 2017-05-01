@@ -35,7 +35,7 @@ import javafx.stage.Stage;
 public class ServiceEditController extends Application implements Initializable {
 
 	@FXML
-	Button btnUpdateService;
+	Button btnUpdateService, btnEdit;
 
 	Long serviceId = 0l;
 
@@ -48,11 +48,12 @@ public class ServiceEditController extends Application implements Initializable 
 
 	@FXML
 	ComboBox<String> ddlTextField, ddlAssociationWith, ddlStatus;
+
 	@FXML
 	private void serviceNameKeyPressed() {
 		String name = txtService.getText();
 		boolean result = validate.validateEmptyness(name);
-		if(result) {
+		if (result) {
 			lblService.setText("");
 			txtService.setStyle("-fx-focus-color: skyblue;");
 			lblService.setVisible(false);
@@ -64,7 +65,7 @@ public class ServiceEditController extends Application implements Initializable 
 			lblService.setTextFill(Color.RED);
 		}
 	}
-	
+
 	@FXML
 	private void ddlTextFieldAction() {
 		String textField = ddlTextField.getSelectionModel().getSelectedItem();
@@ -74,16 +75,16 @@ public class ServiceEditController extends Application implements Initializable 
 			ddlTextField.setStyle("-fx-focus-color: skyblue;");
 			lblTextField.setVisible(false);
 		} else {
-//			ValidationController.str = validsteFields();
-//			openValidationScreen();
-//			ddlTextField.setStyle("-fx-focus-color: red;");
+			// ValidationController.str = validsteFields();
+			// openValidationScreen();
+			// ddlTextField.setStyle("-fx-focus-color: red;");
 			ddlTextField.setStyle("-fx-border-color: red;");
 			lblTextField.setVisible(true);
 			lblTextField.setText("TextField is Mandatory");
 			lblTextField.setTextFill(Color.RED);
 		}
 	}
-	
+
 	@FXML
 	private void ddlAssociationWithAction() {
 		String association = ddlAssociationWith.getSelectionModel().getSelectedItem();
@@ -93,16 +94,16 @@ public class ServiceEditController extends Application implements Initializable 
 			ddlAssociationWith.setStyle("-fx-focus-color: skyblue;");
 			lblAssociationWith.setVisible(false);
 		} else {
-//			ValidationController.str = validsteFields();
-//			openValidationScreen();
-//			ddlTextField.setStyle("-fx-focus-color: red;");
+			// ValidationController.str = validsteFields();
+			// openValidationScreen();
+			// ddlTextField.setStyle("-fx-focus-color: red;");
 			ddlAssociationWith.setStyle("-fx-border-color: red;");
 			lblAssociationWith.setVisible(true);
 			lblAssociationWith.setText("AssociationWith is Mandatory");
 			lblAssociationWith.setTextFill(Color.RED);
 		}
 	}
-	
+
 	@FXML
 	private void ddlStatusAction() {
 		String status = ddlStatus.getSelectionModel().getSelectedItem();
@@ -112,15 +113,16 @@ public class ServiceEditController extends Application implements Initializable 
 			ddlStatus.setStyle("-fx-focus-color: skyblue;");
 			lblStatus.setVisible(false);
 		} else {
-//			ValidationController.str = validsteFields();
-//			openValidationScreen();
-//			ddlTextField.setStyle("-fx-focus-color: red;");
+			// ValidationController.str = validsteFields();
+			// openValidationScreen();
+			// ddlTextField.setStyle("-fx-focus-color: red;");
 			ddlStatus.setStyle("-fx-border-color: red;");
 			lblStatus.setVisible(true);
 			lblStatus.setText("Status is Mandatory");
 			lblStatus.setTextFill(Color.RED);
 		}
 	}
+
 	private boolean validateEditServiceScreen() {
 		boolean response = true;
 		String name = txtService.getText();
@@ -300,8 +302,28 @@ public class ServiceEditController extends Application implements Initializable 
 		return dPUService;
 	}
 
+	@FXML
+	public void handleEditAction() {
+		btnEdit.setDisable(true);
+		disableFields(false);
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		if (ServiceController.flag == 1) {
+			disableFields(true);
+		}
+		if (ServiceController.flag == 2) {
+			btnEdit.setVisible(false);
+		}
+	}
+
+	private void disableFields(boolean v) {
+		btnUpdateService.setDisable(v);
+		txtService.setDisable(v);
+		ddlTextField.setDisable(v);
+		ddlAssociationWith.setDisable(v);
+		ddlStatus.setDisable(v);
 	}
 
 	@Override

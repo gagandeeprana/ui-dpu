@@ -11,6 +11,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.controller.MainScreen;
+import com.dpu.controller.ServiceController;
 import com.dpu.model.Failed;
 import com.dpu.model.HandlingModel;
 import com.dpu.model.Status;
@@ -32,7 +33,7 @@ import javafx.stage.Stage;
 public class HandlingEditController extends Application implements Initializable {
 
 	@FXML
-	Button btnUpdateHandling;
+	Button btnUpdateHandling, btnEdit;
 
 	Long handlingId = 0l;
 
@@ -130,8 +131,26 @@ public class HandlingEditController extends Application implements Initializable
 		return dPUService;
 	}
 
+	@FXML
+	public void handleEditAction() {
+		btnEdit.setDisable(true);
+		disableFields(false);
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		if (HandlingController.flag == 1) {
+			disableFields(true);
+		}
+		if (HandlingController.flag == 2) {
+			btnEdit.setVisible(false);
+		}
+	}
+
+	private void disableFields(boolean v) {
+		btnUpdateHandling.setDisable(v);
+		txtHandling.setDisable(v);
+		ddlStatus.setDisable(v);
 	}
 
 	@Override

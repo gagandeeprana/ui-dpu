@@ -17,6 +17,7 @@ import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.AddtionalCarrierContact;
 import com.dpu.model.CarrierModel;
+import com.dpu.util.Validate;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -33,6 +34,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -42,6 +44,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -301,6 +304,7 @@ public class CarrierEditController extends Application implements Initializable 
 			e.printStackTrace();
 		}
 	}
+
 	private void openAddAdditionalContactScreen() {
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(
@@ -566,13 +570,60 @@ public class CarrierEditController extends Application implements Initializable 
 
 	@FXML
 	private void btnSaveCarrierAction() {
-		carrierId = CarrierController.carrierId;
-		editCarrier();
-		closeEditCarrierScreen(btnSaveCarrier);
+
+		boolean result = validateCarrierScreen();
+		if (result) {
+			carrierId = CarrierController.carrierId;
+			editCarrier();
+			closeEditCarrierScreen(btnSaveCarrier);
+		}
 	}
 
 	@FXML
 	private void btnCancelCarrierAction() {
 		closeEditCarrierScreen(btnCancelCarrier);
 	}
+
+	// validation Applying
+
+	@FXML
+	Label carrierMsg;
+
+	Validate validate = new Validate();
+
+	private boolean validateCarrierScreen() {
+
+		boolean result = true;
+		String carrier = txtCarrier.getText();
+
+		boolean blnCarrier = validate.validateEmptyness(carrier);
+		if (!blnCarrier) {
+			result = false;
+			txtCarrier.setStyle("-fx-text-box-border: red;");
+			carrierMsg.setVisible(true);
+			carrierMsg.setText("Carrier Name is Mandatory");
+			carrierMsg.setTextFill(Color.RED);
+		}
+
+		return result;
+	}
+
+	@FXML
+	private void carrierKeyPressed() {
+
+		String name = txtCarrier.getText();
+		boolean result = validate.validateEmptyness(name);
+
+		if (!result) {
+			txtCarrier.setStyle("-fx-focus-color: red;");
+			txtCarrier.requestFocus();
+			carrierMsg.setVisible(true);
+			carrierMsg.setText("Carrier Name is Mandatory");
+			carrierMsg.setTextFill(Color.RED);
+		} else {
+			txtCarrier.setStyle("-fx-focus-color: skyblue;");
+			carrierMsg.setVisible(false);
+		}
+	}
+
 }

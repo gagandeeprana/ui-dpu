@@ -57,37 +57,7 @@ public class TruckEditController extends Application implements Initializable {
 		}
 	}
 
-	
-	@FXML
-	private void truckUnitKeyPressed() {
-
-		String name = txtUnitNo.getText();
-		boolean result = validate.validateEmptyness(name);
-		if (result) {
-			lblUnitNo.setTextFill(Color.BLACK);
-			txtUnitNo.setStyle("-fx-focus-color: skyblue;");
-		} else {
-			txtUnitNo.setStyle("-fx-focus-color: red;");
-			txtUnitNo.requestFocus();
-			lblUnitNo.setVisible(true);
-		}
-	}
-	Validate validate = new Validate();
-
-	private boolean validateEditTruckScreen() {
-
-		boolean result = true;
-		String unitNo = txtUnitNo.getText();
-
-		boolean blnUnitNo = validate.validateEmptyness(unitNo);
-		if (!blnUnitNo) {
-			result = false;
-			txtUnitNo.setStyle("-fx-text-box-border: red;");
-			lblUnitNo.setVisible(true);
-		}
-		return result;
-	}
-
+ 
 	private void closeEditTruckScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
 		loginStage.close();
@@ -218,4 +188,46 @@ public class TruckEditController extends Application implements Initializable {
 			}
 		}
 	}
+	
+	// validation Applying
+
+				@FXML
+				Label unitMsg;
+
+				Validate validate = new Validate();
+
+				private boolean validateEditTruckScreen() {
+
+					boolean result = true;
+					String additionalContact = txtUnitNo.getText();
+
+					boolean blnAdditionalContact = validate.validateEmptyness(additionalContact);
+					if (!blnAdditionalContact) {
+						result = false;
+						txtUnitNo.setStyle("-fx-text-box-border: red;");
+						unitMsg.setVisible(true);
+						unitMsg.setText("Unit No is Mandatory");
+						unitMsg.setTextFill(Color.RED);
+					}
+
+					return result;
+				}
+
+				@FXML
+				private void truckUnitKeyPressed() {
+
+					String name = txtUnitNo.getText();
+					boolean result = validate.validateEmptyness(name);
+
+					if (!result) {
+						txtUnitNo.setStyle("-fx-focus-color: red;");
+						txtUnitNo.requestFocus();
+						unitMsg.setVisible(true);
+						unitMsg.setText("Unit No is Mandatory");
+						unitMsg.setTextFill(Color.RED);
+					} else {
+						txtUnitNo.setStyle("-fx-focus-color: skyblue;");
+						unitMsg.setVisible(false);
+					}
+				}
 }

@@ -52,6 +52,7 @@ public class EquipmentController extends Application implements Initializable {
 	TableView<Equipment> tblEquipment;
 
 	List<Equipment> equipments = null;
+	public static int flag = 0;
 
 	@FXML
 	TableColumn<Equipment, String> name, type, description;
@@ -89,6 +90,7 @@ public class EquipmentController extends Application implements Initializable {
 			@Override
 			public void handle(MouseEvent event) {
 				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+					flag = 1;
 					// System.out.println("clicked:::::::::::::");
 					Equipment equipment = equipments.get(tblEquipment.getSelectionModel().getSelectedIndex());
 					if (equipment != null) {
@@ -215,7 +217,7 @@ public class EquipmentController extends Application implements Initializable {
 
 	@FXML
 	private void btnEditEquipmentAction() {
-
+		flag = 2;
 		Equipment equipment = equipments.get(tblEquipment.getSelectionModel().getSelectedIndex());
 		if (equipment != null) {
 			Platform.runLater(new Runnable() {

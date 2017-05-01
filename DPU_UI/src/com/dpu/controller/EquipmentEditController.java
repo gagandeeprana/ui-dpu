@@ -34,7 +34,7 @@ import javafx.stage.Stage;
 public class EquipmentEditController extends Application implements Initializable {
 
 	@FXML
-	Button btnUpdateEquipment;
+	Button btnUpdateEquipment, btnEdit;
 
 	Long equipmentId = 0l;
 
@@ -205,9 +205,27 @@ public class EquipmentEditController extends Application implements Initializabl
 		});
 	}
 
+	@FXML
+	public void handleEditAction() {
+		btnEdit.setDisable(true);
+		disableFields(false);
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// fetchTypes();
+		if (EquipmentController.flag == 1) {
+			disableFields(true);
+		}
+		if (EquipmentController.flag == 2) {
+			btnEdit.setVisible(false);
+		}
+	}
+
+	private void disableFields(boolean v) {
+		btnUpdateEquipment.setDisable(v);
+		txtDescription.setDisable(v);
+		txtName.setDisable(v);
+		ddlType.setDisable(v);
 	}
 
 	@Override

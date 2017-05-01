@@ -53,6 +53,8 @@ public class DivisionController extends Application implements Initializable {
 	@FXML
 	TableColumn<Division, String> code, name, fedralaccount, provincialaccount;
 
+	public static int flag = 0;
+
 	@FXML
 	private void btnAddDivisionAction() {
 		openAddDivisionScreen();
@@ -64,7 +66,7 @@ public class DivisionController extends Application implements Initializable {
 			@Override
 			public void handle(MouseEvent event) {
 				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-//					System.out.println("clicked:::::::::::::");
+					flag = 1;
 					Division division = tblDivision.getSelectionModel().getSelectedItem();
 					if (division != null) {
 						Platform.runLater(new Runnable() {
@@ -96,6 +98,7 @@ public class DivisionController extends Application implements Initializable {
 
 	@FXML
 	private void btnEditDivisionAction() {
+		flag = 2;
 		Division division = tblDivision.getSelectionModel().getSelectedItem();
 		if (division != null) {
 			Platform.runLater(new Runnable() {
