@@ -128,17 +128,17 @@ public class VendorBillingEditController implements Initializable {
 
 	public void initialize(URL location, ResourceBundle resources) {
 
-		if (VendorEditController.addBillingLocation != 1) {
-			if (VendorEditController.vendorBillingLocation != null) {
-				txtCompany.setText(VendorEditController.vendorBillingLocation.getName());
-				txtAddress.setText(VendorEditController.vendorBillingLocation.getAddress());
-				txtCity.setText(VendorEditController.vendorBillingLocation.getCity());
-				txtPhone.setText(VendorEditController.vendorBillingLocation.getPhone());
-				txtContact.setText(VendorEditController.vendorBillingLocation.getPhone());
-				txtZip.setText(VendorEditController.vendorBillingLocation.getZip());
-				txtFax.setText(VendorEditController.vendorBillingLocation.getFax());
+//		if (VendorEditController.addBillingLocation != 1) {
+			if (VendorAddController.VendorBillingLocation != null) {
+				txtCompany.setText(VendorAddController.VendorBillingLocation.getName());
+				txtAddress.setText(VendorAddController.VendorBillingLocation.getAddress());
+				txtCity.setText(VendorAddController.VendorBillingLocation.getCity());
+				txtPhone.setText(VendorAddController.VendorBillingLocation.getPhone());
+				txtContact.setText(VendorAddController.VendorBillingLocation.getPhone());
+				txtZip.setText(VendorAddController.VendorBillingLocation.getZip());
+				txtFax.setText(VendorAddController.VendorBillingLocation.getFax());
 			}
-		}
+//		}
 
 	}
 }

@@ -60,9 +60,9 @@ public class VendorAddControllerBillingLocationRightMenu {
 				VendorAddController.whichScreenAddOrEdit = 0;
 				VendorAddController.addEditIndex = VendorAddController.duplicateTableBillingLocations.getSelectionModel().getSelectedIndex();
 				VendorEditController.editIndex = VendorAddController.duplicateTableBillingLocations.getSelectionModel().getSelectedIndex();
-				VendorEditController.vendorBillingLocation = VendorAddController.duplicateTableBillingLocations.getSelectionModel().getSelectedItem();
-				if (VendorEditController.vendorBillingLocation.getVendorBillingLocationId() != null)
-					VendorEditController.billingLocationIdPri = VendorEditController.vendorBillingLocation.getVendorBillingLocationId();
+				VendorAddController.VendorBillingLocation = VendorAddController.duplicateTableBillingLocations.getSelectionModel().getSelectedItem();
+				if (VendorAddController.VendorBillingLocation.getVendorBillingLocationId() != null)
+					VendorEditController.billingLocationIdPri = VendorAddController.VendorBillingLocation.getVendorBillingLocationId();
 				openScreen(basePackage, screen, title);
 //				CompanyEditController.listOfBilling = new ArrayList<BillingControllerModel>();
 //				CompanyEditController.listOfAdditionalContact = new ArrayList<AdditionalContact>();

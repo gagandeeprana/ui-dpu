@@ -215,7 +215,12 @@ public class VendorEditController extends Application implements Initializable {
 			public void run() {
 				try {
 
-					if (listOfAdditionalContact != null & !(listOfAdditionalContact.isEmpty())) {
+					if (VendorAddController.listOfAdditionalContact != null & !(VendorAddController.listOfAdditionalContact.isEmpty())) {
+						ObservableList<VendorAdditionalContacts> data = FXCollections.observableArrayList(VendorAddController.listOfAdditionalContact);
+						duplicateTableAdditionalContact.setItems(data);
+						duplicateTableAdditionalContact.setVisible(true);
+					} else {
+						listOfAdditionalContact = new ArrayList<>();
 						ObservableList<VendorAdditionalContacts> data = FXCollections.observableArrayList(listOfAdditionalContact);
 						duplicateTableAdditionalContact.setItems(data);
 						duplicateTableAdditionalContact.setVisible(true);
@@ -261,11 +266,11 @@ public class VendorEditController extends Application implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		duplicateTableBillingLocations = tableBillingLocations;
-		duplicateTableAdditionalContact = tableAdditionalContact;
+//		duplicateTableAdditionalContact = tableAdditionalContact;
 		setColumnValues();
-		setAdditionalContactColumnValues();
+//		setAdditionalContactColumnValues();
 		fetchBillingLocations();
-		fetchAdditionalContacts();
+//		fetchAdditionalContacts();
 
 		/*txtCompany.setText(vendor.getName());
 		txtAddress.setText(vendor.getAddress());
@@ -620,7 +625,7 @@ public class VendorEditController extends Application implements Initializable {
 			@Override
 			public void run() {
 				try {
-					
+					duplicateTableAdditionalContact = tableAdditionalContact;
 					VendorAddController.listOfAdditionalContact = new ArrayList<>();
 					ObjectMapper mapper = new ObjectMapper();
 					String response = GetAPIClient.callGetAPI(
@@ -989,7 +994,6 @@ public class VendorEditController extends Application implements Initializable {
 			@Override
 			public void run() {
 				try {
-
 					if (VendorAddController.listOfAdditionalContact != null & !(VendorAddController.listOfAdditionalContact.isEmpty())) {
 						ObservableList<VendorAdditionalContacts> data = FXCollections.observableArrayList(VendorAddController.listOfAdditionalContact);
 						setAdditionalContactColumnValues();

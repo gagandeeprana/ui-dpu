@@ -83,7 +83,7 @@ public class VendorEditControllerAdditionalContactsRightMenu {
 					}
 				}
 
-				VendorEditController.fetchBillingLocationsUsingDuplicate();
+				VendorEditController.fetchAdditionalContactsUsingDuplicate();
 				VendorAddController.addEditIndex = -1;
 			
 			}
@@ -99,11 +99,12 @@ public class VendorEditControllerAdditionalContactsRightMenu {
 			public void handle(ActionEvent event) {
 //				selectedTabValue = 0;
 				VendorAddController.add = 0;
-				VendorAddController.addEditIndex = VendorAddController.duplicateTableAdditionalContact.getSelectionModel().getSelectedIndex();
-				VendorEditController.editIndex = VendorAddController.duplicateTableAdditionalContact.getSelectionModel().getSelectedIndex();
-				VendorAddController.additionalContactModel = VendorAddController.duplicateTableAdditionalContact.getSelectionModel().getSelectedItem();
+				VendorAddController.whichScreenAddOrEdit = 1;
+				VendorAddController.addEditIndex = VendorEditController.duplicateTableAdditionalContact.getSelectionModel().getSelectedIndex();
+				VendorEditController.editIndex = VendorEditController.duplicateTableAdditionalContact.getSelectionModel().getSelectedIndex();
+				VendorEditController.additionalContactModel = VendorAddController.listOfAdditionalContact.get(VendorAddController.addEditIndex);
 				if (VendorEditController.additionalContactModel.getVendorAdditionalContactId() != null)
-					VendorEditController.additionalContactIdPri = VendorAddController.additionalContactModel.getVendorAdditionalContactId();
+					VendorEditController.additionalContactIdPri = VendorEditController.additionalContactModel.getVendorAdditionalContactId();
  				openScreen(basePackage, screen, title);
 //				CompanyEditController.listOfBilling = new ArrayList<BillingControllerModel>();
 //				CompanyEditController.listOfAdditionalContact = new ArrayList<AdditionalContact>();

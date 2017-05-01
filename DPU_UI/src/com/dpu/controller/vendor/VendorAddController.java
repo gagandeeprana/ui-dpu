@@ -61,8 +61,6 @@ public class VendorAddController extends Application implements Initializable {
 	public static VendorBillingLocation VendorBillingLocation = new VendorBillingLocation();
 	public static ArrayList<VendorBillingLocation> listOfBilling = new ArrayList<VendorBillingLocation>();
 	public static ArrayList<VendorAdditionalContacts> listOfAdditionalContact = new ArrayList<VendorAdditionalContacts>();
-	VendorAddControllerBillingLocationRightMenu rightMenu = new VendorAddControllerBillingLocationRightMenu();
-	VendorAddControllerAdditionalContactsRightMenu rightMenuAdditionalContacts = new VendorAddControllerAdditionalContactsRightMenu();
 	
 	public static int whichScreenAddOrEdit = 0;
 	
@@ -156,7 +154,7 @@ public class VendorAddController extends Application implements Initializable {
 			public void run() {
 				try {
 
-					if (VendorEditController.listOfAdditionalContact != null & !(VendorEditController.listOfAdditionalContact.isEmpty())) {
+					if (listOfAdditionalContact != null & !(listOfAdditionalContact.isEmpty())) {
 						ObservableList<VendorAdditionalContacts> data = FXCollections.observableArrayList(VendorEditController.listOfAdditionalContact);
 						setAdditionalContactColumnValues();
 						tableAdditionalContact.setItems(data);
@@ -351,6 +349,7 @@ public class VendorAddController extends Application implements Initializable {
 	
 	@FXML
 	public void billingLocationMouseClick(MouseEvent arg0) {
+		VendorAddControllerBillingLocationRightMenu rightMenu = new VendorAddControllerBillingLocationRightMenu();
 		ContextMenu contextMenu = new ContextMenu();
 		MenuItem add = new MenuItem("Add");
 		rightMenu.menuAdd(add, Iconstants.VENDOR_BASE_PACKAGE, Iconstants.XML_VENDOR_BILLING_LOCATION_ADD_SCREEN, "Add New Billing Location");
@@ -385,6 +384,7 @@ public class VendorAddController extends Application implements Initializable {
 
 	@FXML
 	public void additionalContactMouseClick(MouseEvent arg0) {
+		VendorAddControllerAdditionalContactsRightMenu rightMenuAdditionalContacts = new VendorAddControllerAdditionalContactsRightMenu();
 		ContextMenu contextMenu = new ContextMenu();
 		MenuItem add = new MenuItem("Add");
 		rightMenuAdditionalContacts.menuAdd(add, Iconstants.VENDOR_BASE_PACKAGE, Iconstants.XML_VENDOR_ADDITIONAL_CONTACT_ADD_SCREEN, "Add New Additional Contact");

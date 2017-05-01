@@ -157,8 +157,6 @@ public class VendorAdditionalContactEditController implements Initializable {
 			e.printStackTrace();
 		}
 
-		CompanyEditController.selectedTabValue = 0;
-		
 		if(VendorAddController.whichScreenAddOrEdit == 0) {
 			VendorAddController.fetchAdditionalContactsUsingDuplicate();
 		} else {
@@ -197,15 +195,15 @@ public class VendorAdditionalContactEditController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 
 //		if (VendorAddController.addAddtionalContact != 1) {
-			if (VendorAddController.additionalContactModel != null) {
-				txtAdditionalContact.setText(VendorAddController.additionalContactModel.getVendorName());
-				txtPosition.setText(VendorAddController.additionalContactModel.getPosition());
-				txtExtension.setText(VendorAddController.additionalContactModel.getExt());
-				txtFax.setText(VendorAddController.additionalContactModel.getFax());
-				txtCellular.setText(VendorAddController.additionalContactModel.getCellular());
-				txtEmail.setText(VendorAddController.additionalContactModel.getEmail());
-				txtPager.setText(VendorAddController.additionalContactModel.getPrefix());
-				txtPhone.setText(VendorAddController.additionalContactModel.getPhone());
+			if (VendorEditController.additionalContactModel != null) {
+				txtAdditionalContact.setText(VendorEditController.additionalContactModel.getVendorName());
+				txtPosition.setText(VendorEditController.additionalContactModel.getPosition());
+				txtExtension.setText(VendorEditController.additionalContactModel.getExt());
+				txtFax.setText(VendorEditController.additionalContactModel.getFax());
+				txtCellular.setText(VendorEditController.additionalContactModel.getCellular());
+				txtEmail.setText(VendorEditController.additionalContactModel.getEmail());
+				txtPager.setText(VendorEditController.additionalContactModel.getPrefix());
+				txtPhone.setText(VendorEditController.additionalContactModel.getPhone());
 				if(VendorAdditionalContactAddController.statusList != null && VendorAdditionalContactAddController.statusList.size() > 0) {
 					statusList = VendorAdditionalContactAddController.statusList;
 				} else {
@@ -216,7 +214,7 @@ public class VendorAdditionalContactEditController implements Initializable {
 				for(int i=0; i < statusList.size(); i++) {
 					Status status = statusList.get(i);
 					ddlStatus.getItems().add(status.getStatus());
-					if(status.getId().equals(VendorAddController.additionalContactModel.getStatusId())) {
+					if(status.getId().equals(VendorEditController.additionalContactModel.getStatusId())) {
 						ddlStatus.getSelectionModel().select(i);
 					}
 				}
