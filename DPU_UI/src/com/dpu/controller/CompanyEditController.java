@@ -222,9 +222,9 @@ public class CompanyEditController extends Application implements Initializable 
 		setColumnValues();
 		setAdditionalContactColumnValues();
 		tabPane.getSelectionModel().select(selectedTabValue);
-		txtPhone.addEventFilter(KeyEvent.KEY_TYPED, Validate.numeric_Validation(10));
-		txtFax.addEventFilter(KeyEvent.KEY_TYPED, Validate.numeric_Validation(10));
-		txtCompany.addEventFilter(KeyEvent.KEY_TYPED, Validate.letter_Validation(10));
+	//	txtPhone.addEventFilter(KeyEvent.KEY_TYPED, Validate.numeric_Validation(10));
+	//	txtFax.addEventFilter(KeyEvent.KEY_TYPED, Validate.numeric_Validation(10));
+	//	txtCompany.addEventFilter(KeyEvent.KEY_TYPED, Validate.letter_Validation(10));
 	}
 
 	@Override
