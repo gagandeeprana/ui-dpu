@@ -153,6 +153,15 @@
                   <Label fx:id="lblCarrierContract" onMouseClicked="#lblCarrierContractAction" text="Carrier Contract" textFill="#186a3b" />
                </graphic>
             </Menu>
+            <Menu fx:id="mnuAccounting" mnemonicParsing="false">
+               <graphic>
+                  <Label fx:id="lblAccounting" text="Accounting" textFill="#186a3b" />
+               </graphic>
+               <items>
+                  <MenuItem fx:id="miAccounts" mnemonicParsing="false" onAction="#miAccountsAction" text="Accounts" />
+                  <MenuItem fx:id="miTaxCodes" mnemonicParsing="false" onAction="#miTaxCodesAction" text="Tax Codes" />
+               </items>
+            </Menu>
          </menus>
       </MenuBar>
   </children>

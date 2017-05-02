@@ -2,7 +2,7 @@ package com.dpu.constants;
 
 public class Iconstants {
 
-	public static final String URL_SERVER = "http://localhost:8080/DPUWebProject/";
+	public static final String URL_SERVER = "http://localhost:8082/DPUWebProject/";
 //	public static final String URL_SERVER = "http://35.154.6.180:8080/DPUWebProject/";
 
 	public static final String COMMON_BASE_PACKAGE = "com/dpu/common/xml/";
@@ -150,5 +150,14 @@ public class Iconstants {
 	public static final String XML_VENDOR_ADDITIONAL_CONTACT_ADD_SCREEN = "AddVendorAdditionalContact.fxml";
 	public static final String XML_VENDOR_BILLING_LOCATION_EDIT_SCREEN = "EditVendorBillingLocation.fxml";
 	public static final String XML_VENDOR_ADDITIONAL_CONTACT_EDIT_SCREEN = "EditVendorAdditionalContact.fxml";
+
+	public static final String URL_TAX_CODE_API = "taxCode";
+	public static final String TAX_CODE_BASE_PACKAGE = "com/dpu/taxcodes/xml/";
+	public static final String XML_TAX_CODE_ADD_SCREEN = "AddTaxCodes.fxml";
+	public static final String XML_TAX_CODE_SCREEN = "TaxCodeListing.fxml";
+
+	public static final String YES = "YES";
+	public static final String NO = "NO";
+
 
 }

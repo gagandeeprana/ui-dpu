@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import com.dpu.constants.Iconstants;
 import com.dpu.controller.database.CustomBrokerController;
 import com.dpu.controller.database.HandlingController;
+import com.dpu.controller.database.TaxCodeController;
 import com.dpu.controller.order.OrderController;
 import com.dpu.controller.planner.PlannerController;
 import com.dpu.controller.vendor.VendorController;
@@ -66,6 +67,8 @@ public class MainScreen extends Application implements Initializable {
 	public static CarrierContractController carrierContractController;
 	
 	public static VendorController vendorController;
+	
+	public static TaxCodeController taxCodeController;
 
 	@FXML
 	private void lblCarrierContractAction() {
@@ -134,6 +137,11 @@ public class MainScreen extends Application implements Initializable {
 	@FXML
 	private void lblVendorInvoiceAction() {
 	}
+	
+	@FXML
+	private void miTaxCodesAction() {
+		taxCodeController = (TaxCodeController) showPanel(Iconstants.TAX_CODE_BASE_PACKAGE, Iconstants.XML_TAX_CODE_SCREEN);
+	}
 
 	@FXML
 	private void lblDAction() {
@@ -180,6 +188,10 @@ public class MainScreen extends Application implements Initializable {
 	private void lblVendorAction() {
 		vendorController = (VendorController) showPanel(Iconstants.VENDOR_BASE_PACKAGE,
 				Iconstants.XML_VENDOR_SCREEN);
+	}
+	
+	@FXML
+	private void miAccountsAction() {
 	}
 
 	@Override
