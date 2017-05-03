@@ -32,7 +32,7 @@ import javafx.stage.Stage;
 public class CarrierContractEditController extends Application implements Initializable {
 	Long carrierContractId = 0l;
 	@FXML
-	Button btnUpdateCarrierContract, btnCancelCarrierContract;
+	Button btnUpdateCarrierContract, btnCancelCarrierContract, btnEdit;
 
 	@FXML
 	TextField txtContractNo, txtCarrierInfo, txtDivisionName, txtContractRate, txtCarrierRat, txtEquipment, txtHrs,
@@ -52,9 +52,51 @@ public class CarrierContractEditController extends Application implements Initia
 	List<Type> commodityList = null;
 	List<Type> dispatcherList = null;
 
+	@FXML
+	public void handleEditAction() {
+		btnEdit.setDisable(true);
+		disableFields(false);
+	}
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
+		if (CarrierContractController.flag == 1) {
+			disableFields(true);
+		}
+		if (CarrierContractController.flag == 2) {
+			btnEdit.setVisible(false);
+		}
+
+	}
+
+	private void disableFields(boolean v) {
+		btnUpdateCarrierContract.setDisable(v);
+		txtCargo.setDisable(v);
+		txtCarrierInfo.setDisable(v);
+		txtCarrierRat.setDisable(v);
+		txtContractNo.setDisable(v);
+		txtContractRate.setDisable(v);
+		txtCreatedBy.setDisable(v);
+		txtDispatched.setDisable(v);
+		txtDivisionName.setDisable(v);
+		txtDotNo.setDisable(v);
+		txtEquipment.setDisable(v);
+		txtHrs.setDisable(v);
+		txtincExpires.setDisable(v);
+		txtLibility.setDisable(v);
+		txtMcNo.setDisable(v);
+		txtMiles.setDisable(v);
+		txtTransDoc.setDisable(v);
+		ddlArrangedWith.setDisable(v);
+		ddlCarrier.setDisable(v);
+		ddlCategory.setDisable(v);
+		ddlCommodity.setDisable(v);
+		ddlCurrancy.setDisable(v);
+		ddlDispatcher.setDisable(v);
+		ddlDivision.setDisable(v);
+		ddlDriver.setDisable(v);
+		ddlEquipment.setDisable(v);
+		ddlRole.setDisable(v);
 
 	}
 
