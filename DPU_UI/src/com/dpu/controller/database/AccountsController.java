@@ -14,7 +14,7 @@ import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.controller.Login;
-import com.dpu.model.TaxCode;
+import com.dpu.model.Accounts;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
 
@@ -24,49 +24,45 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-public class TaxCodeController extends Application implements Initializable {
+public class AccountsController extends Application implements Initializable {
 
 	@FXML
-	TableView<TaxCode> tblTaxCode;
+	TableView<Accounts> tblAccounts;
 
 	@FXML
-	TableColumn<TaxCode, String> taxCode, description, percentage;
+	TableColumn<Accounts, String> accountNo, accountName, accountType, parent;
 
 	ObjectMapper mapper = new ObjectMapper();
 
 	@FXML
-	TextField txtSearchTaxCode;
+	TextField txtSearchAccounts;
 
 	@FXML
-	AnchorPane root, anchorPaneTaxCode;
+	AnchorPane root, anchorPaneAccounts;
 
 	public static int flag = 0;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		Login.setWidthForAll(root, tblTaxCode);
-		Login.setWidthForAll(anchorPaneTaxCode, null);
-		fetchTaxCodes();
+		Login.setWidthForAll(root, tblAccounts);
+		Login.setWidthForAll(anchorPaneAccounts, null);
+		fetchAccountss();
 	}
 
 	@Override
@@ -74,24 +70,24 @@ public class TaxCodeController extends Application implements Initializable {
 	}
 
 	@FXML
-	private void btnAddTaxCodeAction() {
-		openAddTaxCodeScreen();
+	private void btnAddAccountsAction() {
+		openAddAccountsScreen();
 	}
 
 	@FXML
-	private void btnGoTaxCodeAction() {
-		String searchTaxCode = txtSearchTaxCode.getText();
+	private void btnGoAccountsAction() {
+		String searchAccounts = txtSearchAccounts.getText();
 
-		if (searchTaxCode != null && searchTaxCode.length() > 0) {
+		if (searchAccounts != null && searchAccounts.length() > 0) {
 			Platform.runLater(new Runnable() {
 
 				@Override
 				public void run() {
 					try {
 						String response = GetAPIClient.callGetAPI(
-								Iconstants.URL_SERVER + Iconstants.URL_TAX_CODE_API + "/" + searchTaxCode + "/search",
+								Iconstants.URL_SERVER + Iconstants.URL_ACCOUNTS_API + "/" + searchAccounts + "/search",
 								null);
-						fillTaxCodes(response);
+						fillAccounts(response);
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
 					}
@@ -100,15 +96,15 @@ public class TaxCodeController extends Application implements Initializable {
 
 		}
 
-		if (searchTaxCode != null && searchTaxCode.length() == 0) {
+		if (searchAccounts != null && searchAccounts.length() == 0) {
 			Platform.runLater(new Runnable() {
 
 				@Override
 				public void run() {
 					try {
-						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_TAX_CODE_API,
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_ACCOUNTS_API,
 								null);
-						fillTaxCodes(response);
+						fillAccounts(response);
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
 					}
@@ -117,11 +113,11 @@ public class TaxCodeController extends Application implements Initializable {
 		}
 	}
 
-	List<TaxCode> TaxCodes = null;
+	List<Accounts> Accountss = null;
 
 	/*
 	 * public void newMethod() {
-	 * txtSearchTaxCode.addEventFilter(KeyEvent.KEY_PRESSED, new
+	 * txtSearchAccounts.addEventFilter(KeyEvent.KEY_PRESSED, new
 	 * EventHandler<KeyEvent>() {
 	 * 
 	 * @Override public void handle(KeyEvent event) { if (event.getCode() ==
@@ -130,35 +126,35 @@ public class TaxCodeController extends Application implements Initializable {
 	 * } } }); }
 	 */
 
-	public void fillTaxCodes(String response) {
+	public void fillAccounts(String response) {
 
 		try {
-			TaxCodes = new ArrayList<TaxCode>();
+			Accountss = new ArrayList<Accounts>();
 			setColumnValues();
-			ObservableList<TaxCode> data = null;
+			ObservableList<Accounts> data = null;
 			if (response != null && response.length() > 0) {
-				TaxCode c[] = mapper.readValue(response, TaxCode[].class);
-				for (TaxCode ccl : c) {
-					TaxCodes.add(ccl);
+				Accounts c[] = mapper.readValue(response, Accounts[].class);
+				for (Accounts ccl : c) {
+					Accountss.add(ccl);
 				}
-				data = FXCollections.observableArrayList(TaxCodes);
+				data = FXCollections.observableArrayList(Accountss);
 
 			} else {
-				data = FXCollections.observableArrayList(TaxCodes);
+				data = FXCollections.observableArrayList(Accountss);
 			}
-			tblTaxCode.setItems(data);
+			tblAccounts.setItems(data);
 
-			tblTaxCode.setVisible(true);
+			tblAccounts.setVisible(true);
 		} catch (Exception e) {
-			System.out.println("TaxCodeController: fillTaxCodes(): " + e.getMessage());
+			System.out.println("AccountsController: fillAccountss(): " + e.getMessage());
 		}
 	}
 
 	@FXML
-	private void btnEditTaxCodeAction() {
+	private void btnEditAccountsAction() {
 		flag = 2;
-		TaxCode dpuTaxCode = TaxCodes.get(tblTaxCode.getSelectionModel().getSelectedIndex());
-		if (dpuTaxCode != null) {
+		Accounts dpuAccounts = Accountss.get(tblAccounts.getSelectionModel().getSelectedIndex());
+		if (dpuAccounts != null) {
 			Platform.runLater(new Runnable() {
 
 				@Override
@@ -166,12 +162,12 @@ public class TaxCodeController extends Application implements Initializable {
 					try {
 						ObjectMapper mapper = new ObjectMapper();
 						String response = GetAPIClient.callGetAPI(
-								Iconstants.URL_SERVER + Iconstants.URL_TAX_CODE_API + "/" + dpuTaxCode.getTaxCodeId(),
+								Iconstants.URL_SERVER + Iconstants.URL_ACCOUNTS_API + "/" + dpuAccounts.getAccountId(),
 								null);
 						if (response != null && response.length() > 0) {
-							TaxCode c = mapper.readValue(response, TaxCode.class);
-							TaxCodeEditController taxCodeEditController = (TaxCodeEditController) openEditTaxCodeScreen();
-							taxCodeEditController.initData(c);
+							Accounts c = mapper.readValue(response, Accounts.class);
+//							AccountsEditController AccountsEditController = (AccountsEditController) openEditAccountsScreen();
+//							AccountsEditController.initData(c);
 						}
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
@@ -181,7 +177,7 @@ public class TaxCodeController extends Application implements Initializable {
 		}
 	}
 
-	private Object openEditTaxCodeScreen() {
+	private Object openEditAccountsScreen() {
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
 					.getResource(Iconstants.TAX_CODE_BASE_PACKAGE + Iconstants.XML_TAX_CODE_EDIT_SCREEN));
@@ -190,7 +186,7 @@ public class TaxCodeController extends Application implements Initializable {
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Edit TaxCode");
+			stage.setTitle("Edit Accounts");
 			stage.setScene(new Scene(root));
 			stage.show();
 			return fxmlLoader.getController();
@@ -201,16 +197,16 @@ public class TaxCodeController extends Application implements Initializable {
 		return null;
 	}
 
-	public static void openAddTaxCodeScreen() {
+	public static void openAddAccountsScreen() {
 		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(TaxCodeController.class.getClassLoader()
-					.getResource(Iconstants.TAX_CODE_BASE_PACKAGE + Iconstants.XML_TAX_CODE_ADD_SCREEN));
+			FXMLLoader fxmlLoader = new FXMLLoader(AccountsController.class.getClassLoader()
+					.getResource(Iconstants.ACCOUNTS_BASE_PACKAGE + Iconstants.XML_ACCOUNTS_ADD_SCREEN));
 
 			Parent root = (Parent) fxmlLoader.load();
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add New TaxCode");
+			stage.setTitle("Add New Accounts");
 			stage.setScene(new Scene(root));
 			stage.show();
 		} catch (Exception e) {
@@ -221,12 +217,13 @@ public class TaxCodeController extends Application implements Initializable {
 
 	@SuppressWarnings("unchecked")
 	private void fetchColumns() {
-		taxCode = (TableColumn<TaxCode, String>) tblTaxCode.getColumns().get(0);
-		description = (TableColumn<TaxCode, String>) tblTaxCode.getColumns().get(1);
-		percentage = (TableColumn<TaxCode, String>) tblTaxCode.getColumns().get(2);
+		accountNo = (TableColumn<Accounts, String>) tblAccounts.getColumns().get(0);
+		accountName = (TableColumn<Accounts, String>) tblAccounts.getColumns().get(1);
+		accountType = (TableColumn<Accounts, String>) tblAccounts.getColumns().get(2);
+		parent = (TableColumn<Accounts, String>) tblAccounts.getColumns().get(3);
 	}
 
-	public void fetchTaxCodes() {
+	public void fetchAccountss() {
 
 		fetchColumns();
 		Platform.runLater(new Runnable() {
@@ -235,18 +232,18 @@ public class TaxCodeController extends Application implements Initializable {
 			public void run() {
 				try {
 					ObjectMapper mapper = new ObjectMapper();
-					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_TAX_CODE_API, null);
-					TaxCode s[] = mapper.readValue(response, TaxCode[].class);
-					TaxCodes = new ArrayList<TaxCode>();
-					for (TaxCode ccl : s) {
-						TaxCodes.add(ccl);
+					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_ACCOUNTS_API, null);
+					Accounts s[] = mapper.readValue(response, Accounts[].class);
+					Accountss = new ArrayList<Accounts>();
+					for (Accounts ccl : s) {
+						Accountss.add(ccl);
 					}
-					ObservableList<TaxCode> data = FXCollections.observableArrayList(TaxCodes);
+					ObservableList<Accounts> data = FXCollections.observableArrayList(Accountss);
 
 					setColumnValues();
-					tblTaxCode.setItems(data);
+					tblAccounts.setItems(data);
 
-					tblTaxCode.setVisible(true);
+					tblAccounts.setVisible(true);
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
 				}
@@ -255,9 +252,9 @@ public class TaxCodeController extends Application implements Initializable {
 	}
 
 	@FXML
-	private void btnDeleteTaxCodeAction() {
-		TaxCode TaxCode = tblTaxCode.getSelectionModel().getSelectedItem();
-		if (TaxCode != null) {
+	private void btnDeleteAccountsAction() {
+		Accounts Accounts = tblAccounts.getSelectionModel().getSelectedItem();
+		if (Accounts != null) {
 			Platform.runLater(new Runnable() {
 
 				@SuppressWarnings("unchecked")
@@ -265,15 +262,15 @@ public class TaxCodeController extends Application implements Initializable {
 				public void run() {
 					try {
 						String response = DeleteAPIClient.callDeleteAPI(
-								Iconstants.URL_SERVER + Iconstants.URL_TAX_CODE_API + "/" + TaxCode.getTaxCodeId(),
+								Iconstants.URL_SERVER + Iconstants.URL_TAX_CODE_API + "/" + Accounts.getAccountId(),
 								null);
-						// fillTaxCodes(response);
+						// fillAccountss(response);
 						try {
 							Success success = mapper.readValue(response, Success.class);
-							List<TaxCode> TaxCodeList = (List<TaxCode>) success.getResultList();
-							String res = mapper.writeValueAsString(TaxCodeList);
+							List<Accounts> AccountsList = (List<Accounts>) success.getResultList();
+							String res = mapper.writeValueAsString(AccountsList);
 							JOptionPane.showMessageDialog(null, success.getMessage());
-							fillTaxCodes(res);
+							fillAccounts(res);
 						} catch (Exception e) {
 							Failed failed = mapper.readValue(response, Failed.class);
 							JOptionPane.showMessageDialog(null, failed.getMessage());
@@ -286,7 +283,7 @@ public class TaxCodeController extends Application implements Initializable {
 						 * success.getMessage() , "Info", 1); } else { Failed
 						 * failed = mapper.readValue(response, Failed.class);
 						 * JOptionPane.showMessageDialog(null,
-						 * failed.getMessage(), "Info", 1); } fetchTaxCodes();
+						 * failed.getMessage(), "Info", 1); } fetchAccountss();
 						 */
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
@@ -298,39 +295,51 @@ public class TaxCodeController extends Application implements Initializable {
 
 	private void setColumnValues() {
 
-		taxCode.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<TaxCode, String>, ObservableValue<String>>() {
+		accountNo.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Accounts, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<TaxCode, String> param) {
-						return new SimpleStringProperty(param.getValue().getTaxCode() + "");
+					public ObservableValue<String> call(CellDataFeatures<Accounts, String> param) {
+						return new SimpleStringProperty(param.getValue().getAccount() + "");
 					}
 				});
-		description.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<TaxCode, String>, ObservableValue<String>>() {
+		accountName.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Accounts, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<TaxCode, String> param) {
-						return new SimpleStringProperty(param.getValue().getDescription() + "");
+					public ObservableValue<String> call(CellDataFeatures<Accounts, String> param) {
+						return new SimpleStringProperty(param.getValue().getAccountName() + "");
 					}
 				});
-		percentage.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<TaxCode, String>, ObservableValue<String>>() {
+		accountType.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Accounts, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<TaxCode, String> param) {
-						return new SimpleStringProperty(param.getValue().getPercentage() + "");
+					public ObservableValue<String> call(CellDataFeatures<Accounts, String> param) {
+						return new SimpleStringProperty(param.getValue().getAccountTypeName() + "");
+					}
+				});
+		parent.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Accounts, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<Accounts, String> param) {
+						if(param.getValue().getParentAccountName() != null) {
+							return new SimpleStringProperty(param.getValue().getParentAccountName() + "");
+						} else {
+							return new SimpleStringProperty("");
+						}
 					}
 				});
 
 	}
 
-	TaxCode temp;
+	Accounts temp;
 	Date lastClickTime;
 
 	@FXML
 	private void handleRowSelect() {
-		tblTaxCode.setOnMousePressed(new EventHandler<MouseEvent>() {
+		tblAccounts.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
@@ -343,18 +352,18 @@ public class TaxCodeController extends Application implements Initializable {
 
 	// ADD MENU
 
-	public int tblTaxCoderMenuCount = 0;
+	public int tblAccountsrMenuCount = 0;
 
 	@FXML
 	public void handleAddContMouseClick(MouseEvent event) {
-		tblTaxCode.setOnMousePressed(new EventHandler<MouseEvent>() {
+		tblAccounts.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
 					// System.out.println(":::::::clicked::::::::");
 					flag = 1;
-					TaxCode dpuTaxCode = TaxCodes.get(tblTaxCode.getSelectionModel().getSelectedIndex());
-					if (dpuTaxCode != null) {
+					Accounts dpuAccounts = Accountss.get(tblAccounts.getSelectionModel().getSelectedIndex());
+					if (dpuAccounts != null) {
 						Platform.runLater(new Runnable() {
 
 							@Override
@@ -362,11 +371,11 @@ public class TaxCodeController extends Application implements Initializable {
 								try {
 									ObjectMapper mapper = new ObjectMapper();
 									String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER
-											+ Iconstants.URL_TAX_CODE_API + "/" + dpuTaxCode.getTaxCodeId(), null);
+											+ Iconstants.URL_ACCOUNTS_API + "/" + dpuAccounts.getAccountId(), null);
 									if (response != null && response.length() > 0) {
-										TaxCode c = mapper.readValue(response, TaxCode.class);
-//										TaxCodeEditController TaxCodeEditController = (TaxCodeEditController) openEditTaxCodeScreen();
-//										TaxCodeEditController.initData(c);
+										Accounts c = mapper.readValue(response, Accounts.class);
+//										AccountsEditController AccountsEditController = (AccountsEditController) openEditAccountsScreen();
+//										AccountsEditController.initData(c);
 									}
 								} catch (Exception e) {
 									JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
@@ -421,13 +430,13 @@ public class TaxCodeController extends Application implements Initializable {
 		 * } });
 		 * 
 		 * // Add MenuItem to ContextMenu contextMenu.getItems().addAll(item1,
-		 * item2, item3, item4, item5, item6); if (tblTaxCoderMenuCount == 0) {
-		 * tblTaxCoderMenuCount++; // When user right-click on Table
-		 * tblTaxCode.setOnContextMenuRequested(new
+		 * item2, item3, item4, item5, item6); if (tblAccountsrMenuCount == 0) {
+		 * tblAccountsrMenuCount++; // When user right-click on Table
+		 * tblAccounts.setOnContextMenuRequested(new
 		 * EventHandler<ContextMenuEvent>() {
 		 * 
 		 * @Override public void handle(ContextMenuEvent event) {
-		 * contextMenu.show(tblTaxCode, event.getScreenX(), event.getScreenY());
+		 * contextMenu.show(tblAccounts, event.getScreenX(), event.getScreenY());
 		 * 
 		 * }
 		 * 

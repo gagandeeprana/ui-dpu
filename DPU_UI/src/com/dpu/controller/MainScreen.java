@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.dpu.constants.Iconstants;
+import com.dpu.controller.database.AccountsController;
 import com.dpu.controller.database.CustomBrokerController;
 import com.dpu.controller.database.HandlingController;
 import com.dpu.controller.database.TaxCodeController;
@@ -70,6 +71,8 @@ public class MainScreen extends Application implements Initializable {
 	
 	public static TaxCodeController taxCodeController;
 
+	public static AccountsController accountsController;
+	
 	@FXML
 	private void lblCarrierContractAction() {
 		carrierContractController = (CarrierContractController) showPanel(Iconstants.CARRIER_CONTRACT_BASE_PACKAGE,
@@ -192,6 +195,8 @@ public class MainScreen extends Application implements Initializable {
 	
 	@FXML
 	private void miAccountsAction() {
+		accountsController = (AccountsController) showPanel(Iconstants.ACCOUNTS_BASE_PACKAGE, Iconstants.XML_ACCOUNTS_SCREEN);
+
 	}
 
 	@Override
