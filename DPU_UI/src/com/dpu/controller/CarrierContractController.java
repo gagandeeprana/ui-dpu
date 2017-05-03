@@ -21,6 +21,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -28,6 +29,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TableView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -38,6 +40,7 @@ public class CarrierContractController extends Application implements Initializa
 	public List<CarrierContractModel> cList = new ArrayList<CarrierContractModel>();
 	@FXML
 	TableView<CarrierContractModel> tableCarrierContract;
+	public static int flag = 0;
 
 	@FXML
 	TableColumn<CarrierContractModel, String> contractNo, contractRate, carrierRat, hours, miles, dispatched, createdBy,
@@ -331,6 +334,7 @@ public class CarrierContractController extends Application implements Initializa
 
 	@FXML
 	private void btnEditCarrierContractAction() {
+		flag = 2;
 		CarrierContractModel carrierContractModel = tableCarrierContract.getSelectionModel().getSelectedItem();
 		if (carrierContractModel != null) {
 			Platform.runLater(new Runnable() {
@@ -356,6 +360,45 @@ public class CarrierContractController extends Application implements Initializa
 				}
 			});
 		}
+	}
+
+	@FXML
+	private void handleRowSelect() {
+		tableCarrierContract.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+					flag = 1;
+					CarrierContractModel carrierContractModel = tableCarrierContract.getSelectionModel()
+							.getSelectedItem();
+					if (carrierContractModel != null) {
+						Platform.runLater(new Runnable() {
+
+							@Override
+							public void run() {
+								try {
+									System.out.println("id   " + carrierContractModel.getContractNoId());
+									ObjectMapper mapper = new ObjectMapper();
+									String response = GetAPIClient
+											.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_CARRIER_CONTRACT_API
+													+ "/" + carrierContractModel.getContractNoId(), null);
+									if (response != null && response.length() > 0) {
+										CarrierContractModel c = mapper.readValue(response, CarrierContractModel.class);
+										System.out.println("muiles::  " + c.getMiles());
+										CarrierContractEditController carrierContractEditController = (CarrierContractEditController) openEditCarrierContractScreen();
+										carrierContractEditController.initData(c);
+									}
+								} catch (Exception e) {
+									JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+									e.printStackTrace();
+								}
+							}
+						});
+					}
+
+				}
+			}
+		});
 	}
 
 	@FXML
