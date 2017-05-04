@@ -51,6 +51,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -355,7 +356,7 @@ public class CompanyEditController extends Application implements Initializable 
 		}
 
 		for (int i = 0; i < companyModel.getCategoryList().size(); i++) {
-			System.out.println("category size : "+companyModel.getCategoryList().size());
+			 
 			Category category = companyModel.getCategoryList().get(i);
 			if (category != null ) {
 				if (category.getName() != null) {
@@ -368,13 +369,12 @@ public class CompanyEditController extends Application implements Initializable 
 		}
 
 		for (int i = 0; i < companyModel.getCountryList().size(); i++) {
-			System.out.println("country size : "+companyModel.getCountryList().size());
+			 
 			Type country = companyModel.getCountryList().get(i);
 			if (country != null) {
 				if (country.getTypeName() != null) {
 					ddlCountry.getItems().add(country.getTypeName());
-					System.out.println("companyModel.getCountryId() "+companyModel.getCountryId());
-					System.out.println("country.getTypeId() : "+country.getTypeId());
+					 
 					if (country.getTypeId() == companyModel.getCountryId()) {
 						ddlCountry.getSelectionModel().select(i);
 					}
@@ -761,7 +761,7 @@ public class CompanyEditController extends Application implements Initializable 
 			@Override
 			public void run() {
 				try {
-					System.out.println();
+					 
 					if (listOfAdditionalContact != null & !(listOfAdditionalContact.isEmpty())) {
 						ObservableList<AdditionalContact> data = FXCollections
 								.observableArrayList(listOfAdditionalContact);
@@ -922,9 +922,10 @@ public class CompanyEditController extends Application implements Initializable 
 				});
 	}
 
+	
+	// validation applying
 	@FXML
-	Label lblCompany, lblAddress, lblUnitNo, lblCity, lblEmail, lblWebsite, lblProvince, lblZip, lblAfterHours,
-			lblCellular, lblTollFree, lblFax, lblPhone, lblPosition, lblContact, lblPager, lblExt, lblPrefix;
+	Label  companyMsg, countryMsg , lblZip, lblProvince;
 
 	Validate validate = new Validate();
 
@@ -934,30 +935,64 @@ public class CompanyEditController extends Application implements Initializable 
 		String name = txtCompany.getText();
 		boolean result = validate.validateEmptyness(name);
 		if (result) {
-			//lblCompany.setTextFill(Color.BLACK);
-			txtCompany.setStyle("-fx-focus-color: skyblue;");
+			companyMsg.setVisible(false);
+			txtCompany.setStyle("-fx-focus-color: skyBlue;");
 		} else {
 			txtCompany.setStyle("-fx-focus-color: red;");
 			txtCompany.requestFocus();
-		//	lblCompany.setVisible(true);
-
+			companyMsg.setVisible(true);
 		}
 	}
 
-	private boolean validateAddCompanyScreen() {
+	@FXML
+	private void ddlCountryAction() {
 
+		String name = ddlCountry.getSelectionModel().getSelectedItem();
+		boolean result = validate.validateEmptyness(name);
+		if (result) {
+			countryMsg.setVisible(false);
+			ddlCountry.setStyle("-fx-focus-color: skyBlue;");
+			if(ddlCountry.getSelectionModel().getSelectedItem().equals("usa")){
+				lblZip.setText("Zip");
+				lblProvince.setText("State");
+			}else if(ddlCountry.getSelectionModel().getSelectedItem().equals("canada")){
+				lblZip.setText("Postal");
+				lblProvince.setText("Province");
+			}
+		} else {
+			ddlCountry.setStyle("-fx-focus-color: red;");
+			ddlCountry.requestFocus();
+			countryMsg.setVisible(true);
+		}
+	}
+	 
+
+	private boolean validateAddCompanyScreen() {
 		boolean result = true;
 		String customerName = txtCompany.getText();
+		String country = ddlCountry.getSelectionModel().getSelectedItem();
 
 		boolean blnName = validate.validateEmptyness(customerName);
 		if (!blnName) {
 			result = false;
 			txtCompany.setStyle("-fx-text-box-border: red;");
-			lblCompany.setVisible(true);
+			companyMsg.setText("Company Name is Mandatory");
+			companyMsg.setTextFill(Color.RED);
+
 		}
 
+		boolean blnCountry = validate.validateEmptyness(country);
+		if (!blnCountry) {
+			result = false;
+			ddlCountry.setStyle("-fx-border-color: red;");
+			countryMsg.setVisible(true);
+			countryMsg.setText("Country is Mandatory");
+			countryMsg.setTextFill(Color.RED);
+
+		}
 		return result;
 
 	}
+
 
 }

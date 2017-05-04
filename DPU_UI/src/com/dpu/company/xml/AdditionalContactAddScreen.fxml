@@ -39,31 +39,7 @@
             <FXCollections fx:factory="observableArrayList" />
           </items>
         </ComboBox>
-        <!-- <CheckBox fx:id="chkOrderConfirmation" layoutX="136.0" layoutY="239.0" mnemonicParsing="false" text="Send Order confirmation via Email by default.">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </CheckBox>
-        <CheckBox fx:id="chkActualPickupDetails" layoutX="136.0" layoutY="263.0" mnemonicParsing="false" text="send Actual pickup details via Email by default.">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </CheckBox>
-        <CheckBox fx:id="chkActualDelivery" layoutX="136.0" layoutY="286.0" mnemonicParsing="false" text="send Actual delivery details via Email by default.">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </CheckBox>
-        <CheckBox fx:id="chkETAPickupDetails" layoutX="136.0" layoutY="310.0" mnemonicParsing="false" text="Send ETA to Pickup details via Email by default.">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </CheckBox>
-        <CheckBox fx:id="chkETADeliveryDetails" layoutX="136.0" layoutY="334.0" mnemonicParsing="false" text="Send Eta to Deliver details via Email by default.">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </CheckBox> -->
+        
         <Button fx:id="btnSaveAdditionalContact" layoutX="317.0" layoutY="373.0" mnemonicParsing="false" onAction="#btnSaveAdditionalContactAction" prefHeight="25.0" prefWidth="65.0" text="Save">
           <font>
             <Font size="13.0" fx:id="x2" />
