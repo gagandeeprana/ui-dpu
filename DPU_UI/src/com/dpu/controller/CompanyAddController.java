@@ -69,9 +69,7 @@ public class CompanyAddController extends Application implements Initializable {
 	private Pane addCompanyPane;
 
 	@FXML
-	Label lblCompany, lblAddress, lblUnitNo, lblCity, lblEmail, lblWebsite, lblProvince, lblZip, lblAfterHours,
-			lblCellular, lblTollFree, lblFax, lblPhone, lblPosition, lblContact, lblPager, lblExt, lblPrefix,
-			companyMsg, countryMsg;
+	Label  companyMsg, countryMsg;
 
 	Validate validate = new Validate();
 
@@ -81,105 +79,30 @@ public class CompanyAddController extends Application implements Initializable {
 		String name = txtCompany.getText();
 		boolean result = validate.validateEmptyness(name);
 		if (result) {
-			// lblCompany.setTextFill(Color.BLACK);
-			txtCompany.setStyle("-fx-focus-color: skyblue;");
 			companyMsg.setVisible(false);
+			txtCompany.setStyle("-fx-focus-color: skyBlue;");
 		} else {
 			txtCompany.setStyle("-fx-focus-color: red;");
 			txtCompany.requestFocus();
 			companyMsg.setVisible(true);
-			// lblCompany.setVisible(true);
 		}
 	}
 
 	@FXML
 	private void ddlCountryAction() {
-		String countryName = ddlCountry.getSelectionModel().getSelectedItem();
-		boolean result = validate.validateEmptyness(countryName);
+
+		String name = ddlCountry.getSelectionModel().getSelectedItem();
+		boolean result = validate.validateEmptyness(name);
 		if (result) {
-			ddlCountry.setStyle("-fx-focus-color: skyblue;");
 			countryMsg.setVisible(false);
-			if (countryName.equals("usa")) {
-				lblZip.setText("Zip");
-				lblProvince.setText("State");
-			} else {
-				lblZip.setText("Postal");
-				lblProvince.setText("Province");
-			}
+			ddlCountry.setStyle("-fx-focus-color: skyBlue;");
 		} else {
-			ddlCountry.setStyle("-fx-border-color: red;");
+			ddlCountry.setStyle("-fx-focus-color: red;");
+			ddlCountry.requestFocus();
 			countryMsg.setVisible(true);
-			countryMsg.setText("Status is Mandatory");
-			countryMsg.setTextFill(Color.RED);
 		}
 	}
-
-	@FXML
-	private void companyDdlCategoryKeyPressed() {
-
-		String name = txtCompany.getText();
-		boolean result = validate.validateEmptyness(name);
-		if (result) {
-			lblCompany.setTextFill(Color.BLACK);
-			txtCompany.setStyle("-fx-focus-color: skyblue;");
-		} else {
-			txtCompany.setStyle("-fx-focus-color: red;");
-			txtCompany.requestFocus();
-			lblCompany.setVisible(true);
-		}
-	}
-
-	@FXML
-	private void companyDdlDivisionKeyPressed() {
-
-		String name = txtCompany.getText();
-		boolean result = validate.validateEmptyness(name);
-		if (result) {
-			lblCompany.setTextFill(Color.BLACK);
-			txtCompany.setStyle("-fx-focus-color: skyblue;");
-		} else {
-			txtCompany.setStyle("-fx-focus-color: red;");
-			txtCompany.requestFocus();
-			lblCompany.setVisible(true);
-		}
-	}
-
-	@FXML
-	private void companyDdlSaleKeyPressed() {
-
-		String name = txtCompany.getText();
-		boolean result = validate.validateEmptyness(name);
-		if (result) {
-			lblCompany.setTextFill(Color.BLACK);
-			txtCompany.setStyle("-fx-focus-color: skyblue;");
-		} else {
-			txtCompany.setStyle("-fx-focus-color: red;");
-			txtCompany.requestFocus();
-			lblCompany.setVisible(true);
-		}
-	}
-
-	@FXML
-	private void companyDdlCountryKeyPressed() {
-		System.out.println("CountrySelected");
-		String countryName = ddlCountry.getSelectionModel().getSelectedItem();
-		// String name = txtCompany.getText();
-		boolean result = validate.validateEmptyness(countryName);
-		if (!result) {
-			companyMsg.setStyle("-fx-focus-color: red;");
-			companyMsg.requestFocus();
-			companyMsg.setVisible(true);
-		} else {
-			if (countryName.equals("usa")) {
-				lblZip.setText("Zip");
-				lblProvince.setText("State");
-			} else {
-				lblZip.setText("Postal");
-				lblProvince.setText("Province");
-			}
-
-		}
-	}
+	 
 
 	private boolean validateAddCompanyScreen() {
 		boolean result = true;
@@ -895,6 +818,7 @@ public class CompanyAddController extends Application implements Initializable {
 		company.setZip(txtZip.getText());
 		company.setEmail(txtEmail.getText());
 		company.setWebsite(txtWebsite.getText());
+		 
 		company.setDivisionId(divisionList.get(ddlDivision.getSelectionModel().getSelectedIndex()).getDivisionId());
 		company.setCategoryId(categoryList.get(ddlCategory.getSelectionModel().getSelectedIndex()).getCategoryId());
 		company.setSaleId(saleList.get(ddlSale.getSelectionModel().getSelectedIndex()).getSaleId());

@@ -194,8 +194,7 @@ public class CompanyController extends Application implements Initializable {
 
 						if (response != null && response.length() > 0) {
 							CompanyModel c = mapper.readValue(response, CompanyModel.class);
-
-							// ----------------------------------------------
+ 
 
 							if (c.getBillingLocations() != null) {
 								int billingSize = c.getBillingLocations().size();

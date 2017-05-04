@@ -116,17 +116,17 @@
     <Label layoutX="352.0" layoutY="81.0" prefWidth="50.9998779296875" text="Division" />
     <Label layoutX="352.0" layoutY="125.0" prefWidth="37.0" text="Sale" />
     <Label layoutX="11.0" layoutY="165.0" prefWidth="51.0" text="Country" />
-    <ComboBox fx:id="ddlCategory" layoutX="435.0" layoutY="40.0" onKeyPressed="#companyDdlCategoryKeyPressed" prefHeight="21.0" prefWidth="240.0">
+    <ComboBox fx:id="ddlCategory" layoutX="435.0" layoutY="40.0"   prefHeight="21.0" prefWidth="240.0">
       <items>
         <FXCollections fx:factory="observableArrayList" />
       </items>
     </ComboBox>
-    <ComboBox fx:id="ddlDivision" layoutX="435.0" layoutY="80.0" onKeyPressed="#companyDdlDivisionKeyPressed" prefHeight="21.0" prefWidth="240.0">
+    <ComboBox fx:id="ddlDivision" layoutX="435.0" layoutY="80.0"   prefHeight="21.0" prefWidth="240.0">
       <items>
         <FXCollections fx:factory="observableArrayList" />
       </items>
     </ComboBox>
-    <ComboBox fx:id="ddlSale" layoutX="435.0" layoutY="124.0" onKeyPressed="#companyDdlSaleKeyPressed" prefHeight="21.0" prefWidth="240.0">
+    <ComboBox fx:id="ddlSale" layoutX="435.0" layoutY="124.0"   prefHeight="21.0" prefWidth="240.0">
       <items>
         <FXCollections fx:factory="observableArrayList" />
       </items>
