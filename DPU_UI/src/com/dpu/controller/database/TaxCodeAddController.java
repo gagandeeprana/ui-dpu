@@ -2,19 +2,27 @@ package com.dpu.controller.database;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.controlsfx.control.textfield.AutoCompletionBinding;
+
+import com.dpu.client.GetAPIClient;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.controller.MainScreen;
+import com.dpu.model.Accounts;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
 import com.dpu.model.TaxCode;
+import com.dpu.model.Type;
 import com.dpu.util.Validate;
+
+import impl.org.controlsfx.autocompletion.AutoCompletionTextFieldBinding;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -22,7 +30,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class TaxCodeAddController extends Application implements Initializable {
 
@@ -276,7 +286,11 @@ public class TaxCodeAddController extends Application implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		fillDropDowns();
+		fetchMasterDataForDropDowns();
 	}
+	
+	List<Accounts> gLAccounts = null;
+	List<String> parentName = null;
 	
 	private void fillDropDowns() {
 		taxableList = new ArrayList<>();
@@ -287,6 +301,74 @@ public class TaxCodeAddController extends Application implements Initializable {
 		}
 	}
 
+	private void fetchMasterDataForDropDowns() {
+
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_TAX_CODE_API + "/openAdd", null);
+					TaxCode taxCode = mapper.readValue(response, TaxCode.class);
+					gLAccounts = taxCode.getGlAccountRevenueList();
+					parentName = new ArrayList<>();
+					for(Accounts accounts2: gLAccounts) {
+						parentName.add(accounts2.getAccountName());
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+				}
+			}
+		});
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+	@FXML
+	private void txtAccountSalesKeyPressed(KeyEvent event) {
+	
+		String value = event.getText().trim();
+		AutoCompletionTextFieldBinding aa = null;
+		if(!value.equals("")) {
+			
+			aa = new AutoCompletionTextFieldBinding(txtAccountSales, new Callback<AutoCompletionBinding.ISuggestionRequest, Collection>() {
+				@Override
+				public Collection call(AutoCompletionBinding.ISuggestionRequest param) {
+					List<String> filteredList = new ArrayList<>();
+					for(int i=0;i<parentName.size();i++) {
+						if(parentName.get(i).contains(param.getUserText())) {
+							filteredList.add(parentName.get(i));
+						}
+					}
+					return filteredList;
+				}
+			});
+		} 
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+	@FXML
+	private void txtAccountRevenueKeyPressed(KeyEvent event) {
+	
+		String value = event.getText().trim();
+		AutoCompletionTextFieldBinding aa = null;
+		if(!value.equals("")) {
+			
+			aa = new AutoCompletionTextFieldBinding(txtAccountRevenue, new Callback<AutoCompletionBinding.ISuggestionRequest, Collection>() {
+				@Override
+				public Collection call(AutoCompletionBinding.ISuggestionRequest param) {
+					List<String> filteredList = new ArrayList<>();
+					for(int i=0;i<parentName.size();i++) {
+						if(parentName.get(i).contains(param.getUserText())) {
+							filteredList.add(parentName.get(i));
+						}
+					}
+					return filteredList;
+				}
+			});
+		} 
+	}
+	
 	private TaxCode setTaxCodeValue() {
 		TaxCode taxCode = new TaxCode();
 		taxCode.setTaxCode(txtTaxCode.getText());
@@ -295,6 +377,20 @@ public class TaxCodeAddController extends Application implements Initializable {
 			taxCode.setTaxable(true);
 		} else {
 			taxCode.setTaxable(false);
+		}
+		int salesFound = 0, revenueFound = 0;
+		for(int i=0;i<gLAccounts.size();i++) {
+			if(gLAccounts.get(i).getAccountName().equals(txtAccountSales.getText())) {
+				taxCode.setGlAccountSaleId(gLAccounts.get(i).getAccountId());
+				salesFound = 1;
+			}
+			if(gLAccounts.get(i).getAccountName().equals(txtAccountRevenue.getText())) {
+				taxCode.setGlAccountRevenueId(gLAccounts.get(i).getAccountId());
+				revenueFound = 1;
+			}
+			if(salesFound == 1 && revenueFound == 1) {
+				break;
+			}
 		}
 		taxCode.setPercentage(Double.parseDouble(txtPercentage.getText()));
 		return taxCode;

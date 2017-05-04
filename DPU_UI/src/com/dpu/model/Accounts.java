@@ -28,7 +28,35 @@ public class Accounts {
 	private String parentAccountName;
 	private List<Accounts> parentAccountList;
 	
+	private Long taxCodeId;
+	private String taxCodeName;
+	private List<TaxCode> taxCodeList;
+	
 	private String description;
+
+	public Long getTaxCodeId() {
+		return taxCodeId;
+	}
+
+	public void setTaxCodeId(Long taxCodeId) {
+		this.taxCodeId = taxCodeId;
+	}
+
+	public String getTaxCodeName() {
+		return taxCodeName;
+	}
+
+	public void setTaxCodeName(String taxCodeName) {
+		this.taxCodeName = taxCodeName;
+	}
+
+	public List<TaxCode> getTaxCodeList() {
+		return taxCodeList;
+	}
+
+	public void setTaxCodeList(List<TaxCode> taxCodeList) {
+		this.taxCodeList = taxCodeList;
+	}
 
 	public Long getAccountId() {
 		return accountId;

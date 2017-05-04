@@ -164,5 +164,6 @@ public class Iconstants {
 	public static final String ACCOUNTS_BASE_PACKAGE = "com/dpu/accounts/xml/";
 	public static final String XML_ACCOUNTS_SCREEN = "AccountsListing.fxml";
 	public static final String XML_ACCOUNTS_ADD_SCREEN = "AddAccounts.fxml";
+	public static final String XML_ACCOUNTS_EDIT_SCREEN = "EditAccounts.fxml";
 
 }

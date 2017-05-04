@@ -2,7 +2,6 @@ package com.dpu.controller.database;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -18,7 +17,10 @@ import com.dpu.constants.Iconstants;
 import com.dpu.controller.MainScreen;
 import com.dpu.model.Accounts;
 import com.dpu.model.Failed;
+import com.dpu.model.Status;
 import com.dpu.model.Success;
+import com.dpu.model.TaxCode;
+import com.dpu.model.Type;
 import com.dpu.util.Validate;
 
 import impl.org.controlsfx.autocompletion.AutoCompletionTextFieldBinding;
@@ -286,7 +288,10 @@ public class AccountsAddController extends Application implements Initializable 
 
 	List<Accounts> parentAccountList = null;
 	List<String> parentName = null;
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	List<Type> typeList = null;
+	List<String> taxCodeList = null;
+	List<Type> currencyList = null;
+	List<TaxCode> allTaxCodes = null;
 	private void fetchMasterDataForDropDowns() {
 
 		Platform.runLater(new Runnable() {
@@ -297,9 +302,19 @@ public class AccountsAddController extends Application implements Initializable 
 					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_ACCOUNTS_API + "/openAdd", null);
 					Accounts accounts = mapper.readValue(response, Accounts.class);
 					parentAccountList = accounts.getParentAccountList();
+					typeList = accounts.getAccountTypeList();
+					fillDropDown(ddlAccountType, typeList);
+					currencyList = accounts.getCurrencyList();
+					fillDropDown(ddlCurrency, currencyList);
+
 					parentName = new ArrayList<>();
 					for(Accounts accounts2: parentAccountList) {
 						parentName.add(accounts2.getAccountName());
+					}
+					allTaxCodes = accounts.getTaxCodeList();
+					taxCodeList = new ArrayList<>();
+					for(TaxCode taxCode: allTaxCodes) {
+						taxCodeList.add(taxCode.getTaxCode());
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -309,7 +324,21 @@ public class AccountsAddController extends Application implements Initializable 
 		});
 	}
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private void fillDropDown(ComboBox<String> comboBox, List<?> list) {
+		for (int i = 0; i < list.size(); i++) {
+			Object object = list.get(i);
+			if (object != null && object instanceof Type) {
+				Type associatedWith = (Type) object;
+				comboBox.getItems().add(associatedWith.getTypeName());
+			}
+			if (object != null && object instanceof Status) {
+				Status status = (Status) object;
+				comboBox.getItems().add(status.getStatus());
+			}
+		}
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 	@FXML
 	private void txtSubAccountKeyPressed(KeyEvent event) {
 	
@@ -331,31 +360,60 @@ public class AccountsAddController extends Application implements Initializable 
 			});
 		} 
 	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+	@FXML
+	private void txtDefaultTaxCodeKeyPressed(KeyEvent event) {
+	
+		String value = event.getText().trim();
+		AutoCompletionTextFieldBinding aa = null;
+		if(!value.equals("")) {
+			
+			aa = new AutoCompletionTextFieldBinding(txtDefaultTaxCode, new Callback<AutoCompletionBinding.ISuggestionRequest, Collection>() {
+				@Override
+				public Collection call(AutoCompletionBinding.ISuggestionRequest param) {
+					List<String> filteredList = new ArrayList<>();
+					for(int i=0;i<taxCodeList.size();i++) {
+						if(taxCodeList.get(i).contains(param.getUserText())) {
+							filteredList.add(taxCodeList.get(i));
+						}
+					}
+					return filteredList;
+				}
+			});
+		} 
+	}
 
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		fetchMasterDataForDropDowns();
-//		TextFields.bindAutoCompletion(txtSubAccount, parentAccountList);
-		
 	}
 	
 	private Accounts setAccountsValue() {
 		Accounts accounts = new Accounts();
-//		accounts.setAccounts(txtAccounts.getText());
-//		accounts.setDescription(txtDescription.getText());
-//		if(ddlTaxable.getSelectionModel().getSelectedItem().equals(Iconstants.YES)) {
-//			Accounts.setTaxable(true);
-//		} else {
-//			Accounts.setTaxable(false);
-//		}
-//		Accounts.setPercentage(Double.parseDouble(txtPercentage.getText()));
+		accounts.setAccount(txtAccountNo.getText());
+		accounts.setAccountName(txtAccountName.getText());
+		for(int i=0;i<parentAccountList.size();i++) {
+			if(parentAccountList.get(i).getAccountName().equals(txtSubAccount.getText())) {
+				accounts.setParentAccountId(parentAccountList.get(i).getAccountId());
+				break;
+			}
+		}
+		accounts.setDescription(txtDescription.getText());
+		accounts.setAccountTypeId(typeList.get(ddlAccountType.getSelectionModel().getSelectedIndex()).getTypeId());
+		accounts.setCurrencyId(currencyList.get(ddlCurrency.getSelectionModel().getSelectedIndex()).getTypeId());
+		for(int i=0;i<allTaxCodes.size();i++) {
+			if(allTaxCodes.get(i).getTaxCode().equals(txtDefaultTaxCode.getText())) {
+				accounts.setTaxCodeId(allTaxCodes.get(i).getTaxCodeId());
+				break;
+			}
+		}
 		return accounts;
 	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		
 	}
 
 }

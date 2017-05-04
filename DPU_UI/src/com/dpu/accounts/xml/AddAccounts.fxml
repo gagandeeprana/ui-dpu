@@ -43,7 +43,7 @@
       <Label fx:id="lblAssociationWith" layoutX="158.0" layoutY="197.0" prefHeight="17.0" prefWidth="240.0" />
       <Label fx:id="lblStatus" layoutX="159.0" layoutY="244.0" prefHeight="17.0" prefWidth="240.0" />
       <TextField fx:id="txtAccountName" layoutX="188.0" layoutY="128.0" prefHeight="25.0" prefWidth="240.0" />
-      <TextField fx:id="txtDefaultTaxCode" layoutX="187.0" layoutY="292.0" prefHeight="25.0" prefWidth="240.0" />
+      <TextField fx:id="txtDefaultTaxCode" layoutX="187.0" layoutY="292.0" onKeyPressed="#txtDefaultTaxCodeKeyPressed" prefHeight="25.0" prefWidth="240.0" />
       <Text layoutX="18.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Default Tax Code" wrappingWidth="131.759765625">
          <font>
             <Font size="14.0" />

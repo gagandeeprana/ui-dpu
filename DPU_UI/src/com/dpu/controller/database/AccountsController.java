@@ -166,8 +166,8 @@ public class AccountsController extends Application implements Initializable {
 								null);
 						if (response != null && response.length() > 0) {
 							Accounts c = mapper.readValue(response, Accounts.class);
-//							AccountsEditController AccountsEditController = (AccountsEditController) openEditAccountsScreen();
-//							AccountsEditController.initData(c);
+							AccountsEditController AccountsEditController = (AccountsEditController) openEditAccountsScreen();
+							AccountsEditController.initData(c);
 						}
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
@@ -180,7 +180,7 @@ public class AccountsController extends Application implements Initializable {
 	private Object openEditAccountsScreen() {
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
-					.getResource(Iconstants.TAX_CODE_BASE_PACKAGE + Iconstants.XML_TAX_CODE_EDIT_SCREEN));
+					.getResource(Iconstants.ACCOUNTS_BASE_PACKAGE + Iconstants.XML_ACCOUNTS_EDIT_SCREEN));
 
 			Parent root = (Parent) fxmlLoader.load();
 
@@ -262,7 +262,7 @@ public class AccountsController extends Application implements Initializable {
 				public void run() {
 					try {
 						String response = DeleteAPIClient.callDeleteAPI(
-								Iconstants.URL_SERVER + Iconstants.URL_TAX_CODE_API + "/" + Accounts.getAccountId(),
+								Iconstants.URL_SERVER + Iconstants.URL_ACCOUNTS_API + "/" + Accounts.getAccountId(),
 								null);
 						// fillAccountss(response);
 						try {

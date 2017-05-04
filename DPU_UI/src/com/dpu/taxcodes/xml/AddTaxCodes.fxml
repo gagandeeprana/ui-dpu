@@ -45,7 +45,7 @@
       <Label fx:id="lblStatus" layoutX="159.0" layoutY="179.0" prefHeight="17.0" prefWidth="240.0" />
       <TextField fx:id="txtDescription" layoutX="188.0" layoutY="63.0" prefHeight="25.0" prefWidth="240.0" />
       <TextField fx:id="txtPercentage" layoutX="188.0" layoutY="154.0" prefHeight="25.0" prefWidth="240.0" />
-      <TextField fx:id="txtAccountSales" layoutX="188.0" layoutY="204.0" prefHeight="25.0" prefWidth="240.0" />
+      <TextField fx:id="txtAccountSales" layoutX="188.0" layoutY="204.0" onKeyPressed="#txtAccountSalesKeyPressed" prefHeight="25.0" prefWidth="240.0" />
       <Text layoutX="19.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="G/L Account for sales" wrappingWidth="131.759765625">
          <font>
             <Font size="14.0" />
@@ -56,6 +56,6 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <TextField fx:id="txtAccountRevenue" layoutX="188.0" layoutY="249.0" prefHeight="25.0" prefWidth="240.0" />
+      <TextField fx:id="txtAccountRevenue" layoutX="188.0" layoutY="249.0" onKeyPressed="#txtAccountRevenueKeyPressed" prefHeight="25.0" prefWidth="240.0" />
    </children>
 </AnchorPane>
