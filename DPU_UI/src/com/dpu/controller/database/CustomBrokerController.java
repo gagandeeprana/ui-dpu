@@ -23,6 +23,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -30,6 +31,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
@@ -41,21 +43,21 @@ public class CustomBrokerController extends Application implements Initializable
 
 	@FXML
 	TableView<CustomBroker> tblCustomBroker;
-	
+
 	@FXML
 	TableColumn<CustomBroker, String> customBrokerName;
-	
+
 	ObjectMapper mapper = new ObjectMapper();
-	
+
 	@FXML
 	TextField txtSearchCustomBroker;
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		Login.setWidthForAll(TruckMain, tblCustomBroker);
 		fetchCustomBroker();
 	}
-	
+
 	@FXML
 	Pane TruckMain;
 
@@ -67,162 +69,170 @@ public class CustomBrokerController extends Application implements Initializable
 	private void btnAddCustomBrokerAction() {
 		openAddCustomBrokerScreen();
 	}
-	
+
 	@FXML
 	private void btnGoCustomBrokerAction() {
 		String searchCustomBroker = txtSearchCustomBroker.getText();
 
-		if(searchCustomBroker != null && searchCustomBroker.length() > 0) {
+		if (searchCustomBroker != null && searchCustomBroker.length() > 0) {
 			Platform.runLater(new Runnable() {
-				
+
 				@Override
 				public void run() {
 					try {
-						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_CUSTOM_BROKER_API + "/" + searchCustomBroker + "/search", null);
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER
+								+ Iconstants.URL_CUSTOM_BROKER_API + "/" + searchCustomBroker + "/search", null);
 						fillCustomBrokers(response);
 					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+						JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
 					}
 				}
 			});
-			
+
 		}
-		
-		if(searchCustomBroker != null && searchCustomBroker.length() == 0) {
+
+		if (searchCustomBroker != null && searchCustomBroker.length() == 0) {
 			Platform.runLater(new Runnable() {
-				
+
 				@Override
 				public void run() {
 					try {
-						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_CUSTOM_BROKER_API, null);
+						String response = GetAPIClient
+								.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_CUSTOM_BROKER_API, null);
 						fillCustomBrokers(response);
 					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+						JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
 					}
 				}
 			});
 		}
 	}
-	
+
 	List<CustomBroker> customBrokers = null;
-	
+
 	public void fillCustomBrokers(String response) {
-		
+
 		try {
 			customBrokers = new ArrayList<CustomBroker>();
 			setColumnValues();
 			ObservableList<CustomBroker> data = null;
-			if(response != null && response.length() > 0) {
+			if (response != null && response.length() > 0) {
 				CustomBroker c[] = mapper.readValue(response, CustomBroker[].class);
-				for(CustomBroker ccl : c) {
+				for (CustomBroker ccl : c) {
 					customBrokers.add(ccl);
 				}
 				data = FXCollections.observableArrayList(customBrokers);
-				
+
 			} else {
 				data = FXCollections.observableArrayList(customBrokers);
 			}
 			tblCustomBroker.setItems(data);
-			
+
 			tblCustomBroker.setVisible(true);
 		} catch (Exception e) {
-			System.out.println("CustomBrokerController: fillCustomBroker(): "+ e.getMessage());
+			System.out.println("CustomBrokerController: fillCustomBroker(): " + e.getMessage());
 		}
 	}
-	
+
 	@FXML
 	private void btnEditCustomBrokerAction() {
+		flag = 2;
 		CustomBroker customBroker = tblCustomBroker.getSelectionModel().getSelectedItem();
-		if(customBroker != null) {
+		if (customBroker != null) {
 			Platform.runLater(new Runnable() {
-				
+
 				@Override
 				public void run() {
 					try {
 						ObjectMapper mapper = new ObjectMapper();
-						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_CUSTOM_BROKER_API + "/" + customBroker.getCustomBrokerId(), null);
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER
+								+ Iconstants.URL_CUSTOM_BROKER_API + "/" + customBroker.getCustomBrokerId(), null);
 						System.out.println(response);
-						if(response != null && response.length() > 0) {
+						if (response != null && response.length() > 0) {
 							CustomBroker c = mapper.readValue(response, CustomBroker.class);
 							CustomBrokerEditController customBrokerEditController = (CustomBrokerEditController) openEditCustomBrokerScreen();
 							customBrokerEditController.initData(c);
 						}
 					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, "Try Again.." + e , "Info", 1);
+						JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
 					}
 				}
 			});
 		}
 	}
-	
+
 	private Object openEditCustomBrokerScreen() {
 		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.CUSTOM_BROKER_BASE_PACKAGE + Iconstants.XML_CUSTOM_BROKER_EDIT_SCREEN));
-			
-	        Parent root = (Parent) fxmlLoader.load();
-	        
-	        Stage stage = new Stage();
-	        stage.initModality(Modality.APPLICATION_MODAL);
-	        stage.setTitle("Edit CustomBroker");
-	        stage.setScene(new Scene(root)); 
-	        stage.show();
-	        return fxmlLoader.getController();
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
+					.getResource(Iconstants.CUSTOM_BROKER_BASE_PACKAGE + Iconstants.XML_CUSTOM_BROKER_EDIT_SCREEN));
+
+			Parent root = (Parent) fxmlLoader.load();
+
+			Stage stage = new Stage();
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setTitle("Edit CustomBroker");
+			stage.setScene(new Scene(root));
+			stage.show();
+			return fxmlLoader.getController();
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 		return null;
 	}
-	
+
 	public static void openAddCustomBrokerScreen() {
 		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(CustomBrokerController.class.getClassLoader().getResource(Iconstants.CUSTOM_BROKER_BASE_PACKAGE + Iconstants.XML_CUSTOM_BROKER_ADD_SCREEN));
-			
-	        Parent root = (Parent) fxmlLoader.load();
-	        
-	        Stage stage = new Stage();
-	        stage.initModality(Modality.APPLICATION_MODAL);
-	        stage.setTitle("Add New CustomBroker");
-	        stage.setScene(new Scene(root)); 
-	        stage.show();
+			FXMLLoader fxmlLoader = new FXMLLoader(CustomBrokerController.class.getClassLoader()
+					.getResource(Iconstants.CUSTOM_BROKER_BASE_PACKAGE + Iconstants.XML_CUSTOM_BROKER_ADD_SCREEN));
+
+			Parent root = (Parent) fxmlLoader.load();
+
+			Stage stage = new Stage();
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setTitle("Add New CustomBroker");
+			stage.setScene(new Scene(root));
+			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e);
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private void fetchColumns() {
 		customBrokerName = (TableColumn<CustomBroker, String>) tblCustomBroker.getColumns().get(0);
 	}
 
 	public void fetchCustomBroker() {
-	
+
 		fetchColumns();
 		Platform.runLater(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				try {
-					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_CUSTOM_BROKER_API, null);
+					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_CUSTOM_BROKER_API,
+							null);
 					fillCustomBrokers(response);
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+					JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
 				}
 			}
 		});
 	}
-	
+
 	@FXML
 	private void btnDeleteCustomBrokerAction() {
 		CustomBroker customBroker = tblCustomBroker.getSelectionModel().getSelectedItem();
-		if(customBroker != null) {
+		if (customBroker != null) {
 			Platform.runLater(new Runnable() {
-				
+
 				@SuppressWarnings("unchecked")
 				@Override
 				public void run() {
 					try {
-						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_CUSTOM_BROKER_API + "/" + customBroker.getCustomBrokerId(), null);
+						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER
+								+ Iconstants.URL_CUSTOM_BROKER_API + "/" + customBroker.getCustomBrokerId(), null);
 						try {
 							Success success = mapper.readValue(response, Success.class);
 							List<CustomBroker> customBrokerList = (List<CustomBroker>) success.getResultList();
@@ -234,109 +244,129 @@ public class CustomBrokerController extends Application implements Initializable
 							JOptionPane.showMessageDialog(null, failed.getMessage());
 						}
 					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+						JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
 					}
 				}
 			});
 		}
 	}
-	
+
 	private void setColumnValues() {
-		
-		customBrokerName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CustomBroker,String>, ObservableValue<String>>() {
-			
+
+		customBrokerName.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<CustomBroker, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<CustomBroker, String> param) {
+						return new SimpleStringProperty(param.getValue().getCustomBrokerName() + "");
+					}
+				});
+	}
+
+	public static int flag = 0;
+
+	@FXML
+	private void tblCustomBrokerAction() {
+		// tblCustomBroker.getScene().getStylesheets().add(Iconstants.CUSTOM_BROKER_BASE_PACKAGE
+		// + "sample.css");
+		tblCustomBroker.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
-			public ObservableValue<String> call(CellDataFeatures<CustomBroker, String> param) {
-				return new SimpleStringProperty(param.getValue().getCustomBrokerName() + "");
+			public void handle(MouseEvent event) {
+				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+					flag = 1;
+					CustomBroker customBroker = tblCustomBroker.getSelectionModel().getSelectedItem();
+					if (customBroker != null) {
+						Platform.runLater(new Runnable() {
+
+							@Override
+							public void run() {
+								try {
+									ObjectMapper mapper = new ObjectMapper();
+									String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER
+											+ Iconstants.URL_CUSTOM_BROKER_API + "/" + customBroker.getCustomBrokerId(),
+											null);
+									System.out.println(response);
+									if (response != null && response.length() > 0) {
+										CustomBroker c = mapper.readValue(response, CustomBroker.class);
+										CustomBrokerEditController customBrokerEditController = (CustomBrokerEditController) openEditCustomBrokerScreen();
+										customBrokerEditController.initData(c);
+									}
+								} catch (Exception e) {
+									JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+								}
+							}
+						});
+					}
+				}
 			}
 		});
 	}
-	
-	@FXML
-	private void tblCustomBrokerAction() {
-		tblCustomBroker.getScene().getStylesheets().add(Iconstants.CUSTOM_BROKER_BASE_PACKAGE + "sample.css");
-	}
-	
+
 	// ADD MENU
-	
-		/*	public int tblServicerMenuCount = 0;
-			
-			@FXML
-			public void handleAddContMouseClick(MouseEvent event) {
 
-				// Create ContextMenu
-				ContextMenu contextMenu = new ContextMenu();
-
-				MenuItem item1 = new MenuItem("ADD");
-				item1.setOnAction(new EventHandler<ActionEvent>() {
-
-					@Override
-					public void handle(ActionEvent event) {
-					}
-
-				});
-				MenuItem item2 = new MenuItem("EDIT");
-				item2.setOnAction(new EventHandler<ActionEvent>() {
-
-					@Override
-					public void handle(ActionEvent event) {
-
-					}
-				});
-
-				MenuItem item3 = new MenuItem("DELETE");
-				item3.setOnAction(new EventHandler<ActionEvent>() {
-
-					@Override
-					public void handle(ActionEvent event) {
-
-					}
-				});
-				
-				MenuItem item4 = new MenuItem("PERSONALIZE");
-				item1.setOnAction(new EventHandler<ActionEvent>() {
-
-					@Override
-					public void handle(ActionEvent event) {
-					}
-
-				});
-				MenuItem item5 = new MenuItem("DUPLICATE");
-				item2.setOnAction(new EventHandler<ActionEvent>() {
-
-					@Override
-					public void handle(ActionEvent event) {
-
-					}
-				});
-
-				MenuItem item6 = new MenuItem("FILTER BY");
-				item3.setOnAction(new EventHandler<ActionEvent>() {
-
-					@Override
-					public void handle(ActionEvent event) {
-
-					}
-				});
-
-
-
-				// Add MenuItem to ContextMenu
-				contextMenu.getItems().addAll(item1, item2, item3, item4, item5, item6);
-				if (tblServicerMenuCount == 0) {
-					tblServicerMenuCount++;
-					// When user right-click on Table
-					tblHandling.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
-						@Override
-						public void handle(ContextMenuEvent event) {
-							contextMenu.show(tblHandling, event.getScreenX(), event.getScreenY());
-
-						}
-
-					});
-
-				}
-
-			}*/
+	/*
+	 * public int tblServicerMenuCount = 0;
+	 * 
+	 * @FXML public void handleAddContMouseClick(MouseEvent event) {
+	 * 
+	 * // Create ContextMenu ContextMenu contextMenu = new ContextMenu();
+	 * 
+	 * MenuItem item1 = new MenuItem("ADD"); item1.setOnAction(new
+	 * EventHandler<ActionEvent>() {
+	 * 
+	 * @Override public void handle(ActionEvent event) { }
+	 * 
+	 * }); MenuItem item2 = new MenuItem("EDIT"); item2.setOnAction(new
+	 * EventHandler<ActionEvent>() {
+	 * 
+	 * @Override public void handle(ActionEvent event) {
+	 * 
+	 * } });
+	 * 
+	 * MenuItem item3 = new MenuItem("DELETE"); item3.setOnAction(new
+	 * EventHandler<ActionEvent>() {
+	 * 
+	 * @Override public void handle(ActionEvent event) {
+	 * 
+	 * } });
+	 * 
+	 * MenuItem item4 = new MenuItem("PERSONALIZE"); item1.setOnAction(new
+	 * EventHandler<ActionEvent>() {
+	 * 
+	 * @Override public void handle(ActionEvent event) { }
+	 * 
+	 * }); MenuItem item5 = new MenuItem("DUPLICATE"); item2.setOnAction(new
+	 * EventHandler<ActionEvent>() {
+	 * 
+	 * @Override public void handle(ActionEvent event) {
+	 * 
+	 * } });
+	 * 
+	 * MenuItem item6 = new MenuItem("FILTER BY"); item3.setOnAction(new
+	 * EventHandler<ActionEvent>() {
+	 * 
+	 * @Override public void handle(ActionEvent event) {
+	 * 
+	 * } });
+	 * 
+	 * 
+	 * 
+	 * // Add MenuItem to ContextMenu contextMenu.getItems().addAll(item1,
+	 * item2, item3, item4, item5, item6); if (tblServicerMenuCount == 0) {
+	 * tblServicerMenuCount++; // When user right-click on Table
+	 * tblHandling.setOnContextMenuRequested(new
+	 * EventHandler<ContextMenuEvent>() {
+	 * 
+	 * @Override public void handle(ContextMenuEvent event) {
+	 * contextMenu.show(tblHandling, event.getScreenX(), event.getScreenY());
+	 * 
+	 * }
+	 * 
+	 * });
+	 * 
+	 * }
+	 * 
+	 * }
+	 */
 
 }
