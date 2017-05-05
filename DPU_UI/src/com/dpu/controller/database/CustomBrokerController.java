@@ -14,6 +14,7 @@ import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.controller.Login;
 import com.dpu.model.CustomBroker;
+import com.dpu.model.CustomBrokerTypeModel;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
 
@@ -43,7 +44,8 @@ public class CustomBrokerController extends Application implements Initializable
 	TableView<CustomBroker> tblCustomBroker;
 	
 	@FXML
-	TableColumn<CustomBroker, String> customBrokerName;
+	TableColumn<CustomBroker, String> customBrokerName, pars, paps, parsName, parsPhone, parsEmail, parsLink,
+	papsName, papsPhone, papsEmail, papsLink;
 	
 	ObjectMapper mapper = new ObjectMapper();
 	
@@ -193,6 +195,19 @@ public class CustomBrokerController extends Application implements Initializable
 	@SuppressWarnings("unchecked")
 	private void fetchColumns() {
 		customBrokerName = (TableColumn<CustomBroker, String>) tblCustomBroker.getColumns().get(0);
+		pars = (TableColumn<CustomBroker, String>) tblCustomBroker.getColumns().get(1);
+		ObservableList<TableColumn<CustomBroker, ?>> parsChildColumns = pars.getColumns();
+		parsName = (TableColumn<CustomBroker, String>) parsChildColumns.get(0);
+		parsEmail = (TableColumn<CustomBroker, String>) parsChildColumns.get(1);
+		parsPhone = (TableColumn<CustomBroker, String>) parsChildColumns.get(2);
+		parsLink = (TableColumn<CustomBroker, String>) parsChildColumns.get(3);
+		
+		paps = (TableColumn<CustomBroker, String>) tblCustomBroker.getColumns().get(2);
+		ObservableList<TableColumn<CustomBroker, ?>> papsChildColumns = paps.getColumns();
+		papsName = (TableColumn<CustomBroker, String>) papsChildColumns.get(0);
+		papsEmail = (TableColumn<CustomBroker, String>) papsChildColumns.get(1);
+		papsPhone = (TableColumn<CustomBroker, String>) papsChildColumns.get(2);
+		papsLink = (TableColumn<CustomBroker, String>) papsChildColumns.get(3);
 	}
 
 	public void fetchCustomBroker() {
@@ -210,6 +225,21 @@ public class CustomBrokerController extends Application implements Initializable
 				}
 			}
 		});
+		double width = Login.width;
+		int noOfColumns = tblCustomBroker.getColumns().size();
+		System.out.println("width: " + width);
+		for(int i=0;i<noOfColumns;i++) {
+			tblCustomBroker.getColumns().get(i).setMinWidth(width/noOfColumns);
+			if(tblCustomBroker.getColumns().get(i).getColumns() != null && tblCustomBroker.getColumns().get(i).getColumns().size() > 0) {
+				int noOfInnerColumns = tblCustomBroker.getColumns().get(i).getColumns().size();
+				
+				for(int j=0;j<noOfInnerColumns;j++) {
+					double mainColumnWidth = tblCustomBroker.getColumns().get(i).getWidth();
+					tblCustomBroker.getColumns().get(i).getColumns().get(j).setMinWidth(mainColumnWidth/noOfInnerColumns);
+				}
+			}
+		}
+		txtSearchCustomBroker.setLayoutX(Login.width - txtSearchCustomBroker.getWidth() - );
 	}
 	
 	@FXML
@@ -250,6 +280,127 @@ public class CustomBrokerController extends Application implements Initializable
 				return new SimpleStringProperty(param.getValue().getCustomBrokerName() + "");
 			}
 		});
+		
+		parsName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CustomBroker,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<CustomBroker, String> param) {
+				List<CustomBrokerTypeModel> list = param.getValue().getCustomBrokerTypes();
+				if(list != null && list.size() > 0) {
+					for(CustomBrokerTypeModel customBrokerTypeModel : list) {
+						if(customBrokerTypeModel.getTypeName() != null && customBrokerTypeModel.getTypeName().equals(Iconstants.PARS)) {
+							return new SimpleStringProperty(customBrokerTypeModel.getContactName() + "");
+						}
+					}
+				}
+				return new SimpleStringProperty("");
+			}
+		});
+		papsName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CustomBroker,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<CustomBroker, String> param) {
+				List<CustomBrokerTypeModel> list = param.getValue().getCustomBrokerTypes();
+				if(list != null && list.size() > 0) {
+					for(CustomBrokerTypeModel customBrokerTypeModel : list) {
+						if(customBrokerTypeModel.getTypeName() != null && customBrokerTypeModel.getTypeName().equals(Iconstants.PAPS)) {
+							return new SimpleStringProperty(customBrokerTypeModel.getContactName() + "");
+						}
+					}
+				}
+				return new SimpleStringProperty("");
+			}
+		});
+parsPhone.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CustomBroker,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<CustomBroker, String> param) {
+				List<CustomBrokerTypeModel> list = param.getValue().getCustomBrokerTypes();
+				if(list != null && list.size() > 0) {
+					for(CustomBrokerTypeModel customBrokerTypeModel : list) {
+						if(customBrokerTypeModel.getTypeName() != null && customBrokerTypeModel.getTypeName().equals(Iconstants.PARS)) {
+							return new SimpleStringProperty(customBrokerTypeModel.getPhone() + "");
+						}
+					}
+				}
+				return new SimpleStringProperty("");
+			}
+		});
+papsPhone.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CustomBroker,String>, ObservableValue<String>>() {
+	
+	@Override
+	public ObservableValue<String> call(CellDataFeatures<CustomBroker, String> param) {
+		List<CustomBrokerTypeModel> list = param.getValue().getCustomBrokerTypes();
+		if(list != null && list.size() > 0) {
+			for(CustomBrokerTypeModel customBrokerTypeModel : list) {
+				if(customBrokerTypeModel.getTypeName() != null && customBrokerTypeModel.getTypeName().equals(Iconstants.PAPS)) {
+					return new SimpleStringProperty(customBrokerTypeModel.getPhone() + "");
+				}
+			}
+		}
+		return new SimpleStringProperty("");
+	}
+});
+parsEmail.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CustomBroker,String>, ObservableValue<String>>() {
+	
+	@Override
+	public ObservableValue<String> call(CellDataFeatures<CustomBroker, String> param) {
+		List<CustomBrokerTypeModel> list = param.getValue().getCustomBrokerTypes();
+		if(list != null && list.size() > 0) {
+			for(CustomBrokerTypeModel customBrokerTypeModel : list) {
+				if(customBrokerTypeModel.getTypeName() != null && customBrokerTypeModel.getTypeName().equals(Iconstants.PARS)) {
+					return new SimpleStringProperty(customBrokerTypeModel.getEmail() + "");
+				}
+			}
+		}
+		return new SimpleStringProperty("");
+	}
+});
+papsEmail.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CustomBroker,String>, ObservableValue<String>>() {
+	
+	@Override
+	public ObservableValue<String> call(CellDataFeatures<CustomBroker, String> param) {
+		List<CustomBrokerTypeModel> list = param.getValue().getCustomBrokerTypes();
+		if(list != null && list.size() > 0) {
+			for(CustomBrokerTypeModel customBrokerTypeModel : list) {
+				if(customBrokerTypeModel.getTypeName() != null && customBrokerTypeModel.getTypeName().equals(Iconstants.PAPS)) {
+					return new SimpleStringProperty(customBrokerTypeModel.getEmail() + "");
+				}
+			}
+		}
+		return new SimpleStringProperty("");
+	}
+});
+parsLink.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CustomBroker,String>, ObservableValue<String>>() {
+	
+	@Override
+	public ObservableValue<String> call(CellDataFeatures<CustomBroker, String> param) {
+		List<CustomBrokerTypeModel> list = param.getValue().getCustomBrokerTypes();
+		if(list != null && list.size() > 0) {
+			for(CustomBrokerTypeModel customBrokerTypeModel : list) {
+				if(customBrokerTypeModel.getTypeName() != null && customBrokerTypeModel.getTypeName().equals(Iconstants.PARS)) {
+					return new SimpleStringProperty(customBrokerTypeModel.getTrackerLink() + "");
+				}
+			}
+		}
+		return new SimpleStringProperty("");
+	}
+});
+papsLink.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CustomBroker,String>, ObservableValue<String>>() {
+	
+	@Override
+	public ObservableValue<String> call(CellDataFeatures<CustomBroker, String> param) {
+		List<CustomBrokerTypeModel> list = param.getValue().getCustomBrokerTypes();
+		if(list != null && list.size() > 0) {
+			for(CustomBrokerTypeModel customBrokerTypeModel : list) {
+				if(customBrokerTypeModel.getTypeName() != null && customBrokerTypeModel.getTypeName().equals(Iconstants.PAPS)) {
+					return new SimpleStringProperty(customBrokerTypeModel.getTrackerLink() + "");
+				}
+			}
+		}
+		return new SimpleStringProperty("");
+	}
+});
 	}
 	
 	@FXML

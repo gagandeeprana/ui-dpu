@@ -161,6 +161,7 @@ public class Login extends Application implements Initializable{
 	        stage.setScene(new Scene(root)); 
 //	        stage.setMaximized(true);
 	        width = primaryScreenBounds.getWidth();
+	        System.out.println("Login: openMainScreen(): width: " + width);
 	        double height = primaryScreenBounds.getHeight();
 	        stage.setMinWidth(width);
 	        stage.setMinHeight(height);
