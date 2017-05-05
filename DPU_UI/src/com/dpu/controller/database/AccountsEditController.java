@@ -14,11 +14,11 @@ import org.controlsfx.control.textfield.AutoCompletionBinding;
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.controller.MainScreen;
-import com.dpu.model.Accounts;
 import com.dpu.model.Failed;
 import com.dpu.model.Status;
 import com.dpu.model.Success;
 import com.dpu.model.TaxCode;
+import com.dpu.model.Accounts;
 import com.dpu.model.Type;
 import com.dpu.util.Validate;
 
@@ -26,52 +26,52 @@ import impl.org.controlsfx.autocompletion.AutoCompletionTextFieldBinding;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-public class TaxCodeEditController extends Application implements Initializable {
+public class AccountsEditController extends Application implements Initializable {
 
 	@FXML
-	Button btnUpdateTaxCode, btnEdit;
-
-	Long taxCodeId = 0l;
+	Button btnUpdateAccounts, btnEdit;
 
 	@FXML
-	TextField txtTaxCode, txtDescription, txtPercentage, txtAccountSales, txtAccountRevenue;
+	TextField txtAccountNo, txtAccountName, txtSubAccount, txtDefaultTaxCode;
+
+	@FXML
+	TextArea txtDescription;
+	
+	@FXML
+	ComboBox<String> ddlAccountType, ddlCurrency;
 
 	Validate validate = new Validate();
 	
 	@FXML
-	Label lblTaxCode, lblTextField, lblAssociationWith, lblStatus;
+	Label lblAccounts, lblTextField, lblAssociationWith, lblStatus;
 
 	@FXML
 	ComboBox<String> ddlTaxable;
-
+	
 	/*@FXML
-	private void taxCodeNameKeyPressed() {
-		String name = txtTaxCode.getText();
+	private void AccountsNameKeyPressed() {
+		String name = txtAccounts.getText();
 		boolean result = validate.validateEmptyness(name);
 		if (result) {
-			lblTaxCode.setText("");
-			txtTaxCode.setStyle("-fx-focus-color: skyblue;");
-			lblTaxCode.setVisible(false);
+			lblAccounts.setText("");
+			txtAccounts.setStyle("-fx-focus-color: skyblue;");
+			lblAccounts.setVisible(false);
 		} else {
-			txtTaxCode.setStyle("-fx-focus-color: red;");
-			txtTaxCode.requestFocus();
-			lblTaxCode.setVisible(true);
-			lblTaxCode.setText("TaxCode Name is Mandatory");
-			lblTaxCode.setTextFill(Color.RED);
+			txtAccounts.setStyle("-fx-focus-color: red;");
+			txtAccounts.requestFocus();
+			lblAccounts.setVisible(true);
+			lblAccounts.setText("Accounts Name is Mandatory");
+			lblAccounts.setTextFill(Color.RED);
 		}
 	}
 
@@ -132,9 +132,9 @@ public class TaxCodeEditController extends Application implements Initializable 
 		}
 	}
 
-	private boolean validateEditTaxCodeScreen() {
+	private boolean validateEditAccountsScreen() {
 		boolean response = true;
-		String name = txtTaxCode.getText();
+		String name = txtAccounts.getText();
 		String textField = ddlTextField.getSelectionModel().getSelectedItem();
 		String association = ddlAssociationWith.getSelectionModel().getSelectedItem();
 		String status = ddlStatus.getSelectionModel().getSelectedItem();
@@ -145,22 +145,22 @@ public class TaxCodeEditController extends Application implements Initializable 
 			response = false;
 			// ValidationController.str = validsteFields();
 			// openValidationScreen();
-			// txtTaxCode.setStyle("-fx-focus-color: red;");
-			txtTaxCode.setStyle("-fx-text-box-border: red;");
-			lblTaxCode.setVisible(true);
-			lblTaxCode.setText("TaxCode Name is Mandatory");
-			lblTaxCode.setTextFill(Color.RED);
+			// txtAccounts.setStyle("-fx-focus-color: red;");
+			txtAccounts.setStyle("-fx-text-box-border: red;");
+			lblAccounts.setVisible(true);
+			lblAccounts.setText("Accounts Name is Mandatory");
+			lblAccounts.setTextFill(Color.RED);
 
 		} else if (!validate.validateLength(name, 5, 25)) {
 
 			response = false;
 			// openValidationScreen();
-			// txtTaxCode.requestFocus();
-			// txtTaxCode.setStyle("-fx-focus-color: red;");
-			txtTaxCode.setStyle("-fx-text-box-border: red;");
-			lblTaxCode.setVisible(true);
-			lblTaxCode.setText("Min. length 5 and Max. length 25");
-			lblTaxCode.setTextFill(Color.RED);
+			// txtAccounts.requestFocus();
+			// txtAccounts.setStyle("-fx-focus-color: red;");
+			txtAccounts.setStyle("-fx-text-box-border: red;");
+			lblAccounts.setVisible(true);
+			lblAccounts.setText("Min. length 5 and Max. length 25");
+			lblAccounts.setTextFill(Color.RED);
 			return result;
 		}
 		result = validate.validateEmptyness(textField);
@@ -201,7 +201,7 @@ public class TaxCodeEditController extends Application implements Initializable 
 
 	public StringBuffer validsteFields() {
 		StringBuffer strBuff = new StringBuffer();
-		String name = txtTaxCode.getText();
+		String name = txtAccounts.getText();
 		String textField = ddlTextField.getSelectionModel().getSelectedItem();
 		String association = ddlAssociationWith.getSelectionModel().getSelectedItem();
 		String status = ddlStatus.getSelectionModel().getSelectedItem();
@@ -239,31 +239,17 @@ public class TaxCodeEditController extends Application implements Initializable 
 		return null;
 	}*/
 
-	@FXML
-	private void btnUpdateTaxCodeAction() {
-//		boolean response = validateEditTaxCodeScreen();
-//		if (response) {
-			editTaxCode();
-			closeEditTaxCodeScreen(btnUpdateTaxCode);
-//		}
-	}
-
-	private void closeEditTaxCodeScreen(Button clickedButton) {
-		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
-		loginStage.close();
-	}
-
 	List<String> parentName = null;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 	@FXML
-	private void txtAccountSalesKeyPressed(KeyEvent event) {
+	private void txtSubAccountKeyPressed(KeyEvent event) {
 	
 		String value = event.getText().trim();
 		AutoCompletionTextFieldBinding aa = null;
 		if(!value.equals("")) {
 			
-			aa = new AutoCompletionTextFieldBinding(txtAccountSales, new Callback<AutoCompletionBinding.ISuggestionRequest, Collection>() {
+			aa = new AutoCompletionTextFieldBinding(txtSubAccount, new Callback<AutoCompletionBinding.ISuggestionRequest, Collection>() {
 				@Override
 				public Collection call(AutoCompletionBinding.ISuggestionRequest param) {
 					List<String> filteredList = new ArrayList<>();
@@ -278,30 +264,23 @@ public class TaxCodeEditController extends Application implements Initializable 
 		} 
 	}
 	
-	@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 	@FXML
-	private void txtAccountRevenueKeyPressed(KeyEvent event) {
-	
-		String value = event.getText().trim();
-		AutoCompletionTextFieldBinding aa = null;
-		if(!value.equals("")) {
-			
-			aa = new AutoCompletionTextFieldBinding(txtAccountRevenue, new Callback<AutoCompletionBinding.ISuggestionRequest, Collection>() {
-				@Override
-				public Collection call(AutoCompletionBinding.ISuggestionRequest param) {
-					List<String> filteredList = new ArrayList<>();
-					for(int i=0;i<parentName.size();i++) {
-						if(parentName.get(i).contains(param.getUserText())) {
-							filteredList.add(parentName.get(i));
-						}
-					}
-					return filteredList;
-				}
-			});
-		} 
+	private void btnUpdateAccountsAction() {
+//		boolean response = validateEditAccountsScreen();
+//		if (response) {
+			editAccounts();
+			closeEditAccountsScreen(btnUpdateAccounts);
+//		}
 	}
+
+	private void closeEditAccountsScreen(Button clickedButton) {
+		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
+		loginStage.close();
+	}
+
+	Long accountsId = 0l, parentAccountId = 0l;
 	
-	private void editTaxCode() {
+	private void editAccounts() {
 
 		Platform.runLater(new Runnable() {
 
@@ -309,18 +288,16 @@ public class TaxCodeEditController extends Application implements Initializable 
 			public void run() {
 				try {
 					ObjectMapper mapper = new ObjectMapper();
-					TaxCode TaxCode = setTaxCodeValue();
-					String payload = mapper.writeValueAsString(TaxCode);
+					Accounts Accounts = setAccountsValue();
+					String payload = mapper.writeValueAsString(Accounts);
 
-					String response = PutAPIClient.callPutAPI(
-							Iconstants.URL_SERVER + Iconstants.URL_TAX_CODE_API + "/" + taxCodeId, null, payload);
-					// MainScreen.TaxCodeController.fillTaxCodes(response);
+					String response = PutAPIClient.callPutAPI(Iconstants.URL_SERVER + Iconstants.URL_ACCOUNTS_API + "/" + accountsId, null, payload);
 					try {
 						Success success = mapper.readValue(response, Success.class);
-						List<TaxCode> TaxCodeList = (List<TaxCode>) success.getResultList();
-						String res = mapper.writeValueAsString(TaxCodeList);
+						List<Accounts> AccountsList = (List<Accounts>) success.getResultList();
+						String res = mapper.writeValueAsString(AccountsList);
 						JOptionPane.showMessageDialog(null, success.getMessage());
-						MainScreen.taxCodeController.fillTaxCodes(res);
+						MainScreen.accountsController.fillAccounts(res);
 					} catch (Exception e) {
 						Failed failed = mapper.readValue(response, Failed.class);
 						JOptionPane.showMessageDialog(null, failed.getMessage());
@@ -334,36 +311,47 @@ public class TaxCodeEditController extends Application implements Initializable 
 		});
 	}
 
-	List<Type> typeList, associatedWithList;
+	List<TaxCode> allTaxCodes = null;
 
-	List<Status> statusList;
-
-	private TaxCode setTaxCodeValue() {
-		
-		TaxCode taxCode = new TaxCode();
-		taxCode.setTaxCode(txtTaxCode.getText());
-		taxCode.setDescription(txtDescription.getText());
-		if(ddlTaxable.getSelectionModel().getSelectedItem().equals(Iconstants.YES)) {
-			taxCode.setTaxable(true);
-		} else {
-			taxCode.setTaxable(false);
-		}
-		taxCode.setPercentage(Double.parseDouble(txtPercentage.getText()));
-		int salesFound = 0, revenueFound = 0;
-		for(int i=0;i<glSaleRevenueList.size();i++) {
-			if(glSaleRevenueList.get(i).getAccountName().equals(txtAccountSales.getText())) {
-				taxCode.setGlAccountSaleId(glSaleRevenueList.get(i).getAccountId());
-				salesFound = 1;
-			}
-			if(glSaleRevenueList.get(i).getAccountName().equals(txtAccountRevenue.getText())) {
-				taxCode.setGlAccountRevenueId(glSaleRevenueList.get(i).getAccountId());
-				revenueFound = 1;
-			}
-			if(salesFound == 1 && revenueFound == 1) {
+	private Accounts setAccountsValue() {
+		Accounts accounts = new Accounts();
+		accounts.setAccountId(accountsId);
+		accounts.setAccount(txtAccountNo.getText());
+		accounts.setAccountName(txtAccountName.getText());
+		accounts.setParentAccountId(parentAccountId);
+		accounts.setDescription(txtDescription.getText());
+		accounts.setAccountTypeId(typeList.get(ddlAccountType.getSelectionModel().getSelectedIndex()).getTypeId());
+		accounts.setCurrencyId(currencyList.get(ddlCurrency.getSelectionModel().getSelectedIndex()).getTypeId());
+		for(int i=0;i<allTaxCodes.size();i++) {
+			if(allTaxCodes.get(i).getTaxCode().equals(txtDefaultTaxCode.getText())) {
+				accounts.setTaxCodeId(allTaxCodes.get(i).getTaxCodeId());
 				break;
 			}
 		}
-		return taxCode;
+		return accounts;
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+	@FXML
+	private void txtDefaultTaxCodeKeyPressed(KeyEvent event) {
+	
+		String value = event.getText().trim();
+		AutoCompletionTextFieldBinding aa = null;
+		if(!value.equals("")) {
+			
+			aa = new AutoCompletionTextFieldBinding(txtDefaultTaxCode, new Callback<AutoCompletionBinding.ISuggestionRequest, Collection>() {
+				@Override
+				public Collection call(AutoCompletionBinding.ISuggestionRequest param) {
+					List<String> filteredList = new ArrayList<>();
+					for(int i=0;i<taxCodeList.size();i++) {
+						if(taxCodeList.get(i).contains(param.getUserText())) {
+							filteredList.add(taxCodeList.get(i));
+						}
+					}
+					return filteredList;
+				}
+			});
+		} 
 	}
 
 	@FXML
@@ -374,18 +362,17 @@ public class TaxCodeEditController extends Application implements Initializable 
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		if (TaxCodeController.flag == 1) {
+		if (AccountsController.flag == 1) {
 			disableFields(true);
 		}
-		if (TaxCodeController.flag == 2) {
+		if (AccountsController.flag == 2) {
 			btnEdit.setVisible(false);
 		}
-		fillDropDowns();
 	}
 
 	private void disableFields(boolean v) {
-		btnUpdateTaxCode.setDisable(v);
-		txtTaxCode.setDisable(v);
+		btnUpdateAccounts.setDisable(v);
+//		txtAccounts.setDisable(v);
 	}
 
 	@Override
@@ -393,47 +380,46 @@ public class TaxCodeEditController extends Application implements Initializable 
 	}
 
 	List<String> taxableList;
+	List<Type> typeList = null;
+	List<Type> currencyList = null;
+	List<Accounts> parentAccountList = null;
+	List<String> taxCodeList = null;
+	
+	public void initData(Accounts accounts) {
+		accountsId = accounts.getAccountId();
+		parentAccountId = accounts.getParentAccountId();
+		txtAccountNo.setText(accounts.getAccount());
+		txtAccountName.setText(accounts.getAccountName());
+		txtSubAccount.setText(accounts.getParentAccountName());
+		txtDescription.setText(accounts.getDescription());
+//		txtDefaultTaxCode.setText(accounts.getde);
+		typeList = accounts.getAccountTypeList();
+		currencyList = accounts.getCurrencyList();
+		parentAccountList = accounts.getParentAccountList();
 
-	private void fillDropDowns() {
-		taxableList = new ArrayList<>();
-		taxableList.add(Iconstants.YES);
-		taxableList.add(Iconstants.NO);
-		for(int i=0;i<taxableList.size();i++) {
-			ddlTaxable.getItems().add(taxableList.get(i));
+		for(int i=0;i<typeList.size();i++) {
+			ddlAccountType.getItems().add(typeList.get(i).getTypeName());
+			if(accounts.getAccountTypeId().equals(typeList.get(i).getTypeId())) {
+				ddlAccountType.getSelectionModel().select(i);
+			}
 		}
-	}
-	
-	List<Accounts> glSaleRevenueList = null;
-	
-	int salesInit = 0, revenueInit = 0;
-	public void initData(TaxCode taxCode) {
-		taxCodeId = taxCode.getTaxCodeId();
-		txtTaxCode.setText(taxCode.getTaxCode());
-		txtDescription.setText(taxCode.getDescription());
-		if(taxCode.getTaxable()) {
-			ddlTaxable.getSelectionModel().select(0);
-		} else {
-			ddlTaxable.getSelectionModel().select(1);
+		for(int i=0;i<currencyList.size();i++) {
+			ddlCurrency.getItems().add(currencyList.get(i).getTypeName());
+			if(accounts.getCurrencyId().equals(currencyList.get(i).getTypeId())) {
+				ddlCurrency.getSelectionModel().select(i);
+			}
 		}
-		txtPercentage.setText(String.valueOf(taxCode.getPercentage()));
-		glSaleRevenueList = taxCode.getGlAccountRevenueList();
-		for(int i=0;i<glSaleRevenueList.size();i++) {
-			if(glSaleRevenueList.get(i).getAccountId().equals(taxCode.getGlAccountSaleId())) {
-				txtAccountSales.setText(glSaleRevenueList.get(i).getAccountName());
-				salesInit = 1;
-			}
-			if(glSaleRevenueList.get(i).getAccountId().equals(taxCode.getGlAccountRevenueId())) {
-				txtAccountRevenue.setText(glSaleRevenueList.get(i).getAccountName());
-				revenueInit = 1;
-			}
-			if(salesInit == 1 && revenueInit == 1) {
-				break;
-			}
+		allTaxCodes = accounts.getTaxCodeList();
+		taxCodeList = new ArrayList<>();
+		for(TaxCode taxCode: allTaxCodes) {
+			taxCodeList.add(taxCode.getTaxCode());
 		}
 		
-		parentName = new ArrayList<>();
-		for(Accounts accounts2: glSaleRevenueList) {
-			parentName.add(accounts2.getAccountName());
+		for(int i=0;i<allTaxCodes.size();i++) {
+			if(allTaxCodes.get(i).getTaxCodeId().equals(accounts.getTaxCodeId())) {
+				txtDefaultTaxCode.setText(allTaxCodes.get(i).getTaxCode());
+				break;
+			}
 		}
 	}
 }

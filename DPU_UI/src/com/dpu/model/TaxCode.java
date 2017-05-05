@@ -1,5 +1,7 @@
 package com.dpu.model;
 
+import java.util.List;
+
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
@@ -16,6 +18,62 @@ public class TaxCode {
 	private Double percentage;
 	
 	private Boolean taxable;
+	
+	private Long glAccountSaleId;
+	private String glAccountSaleName;
+	private List<Accounts> glAccountSaleList;
+	
+	private Long glAccountRevenueId;
+	private String glAccountRevenueName;
+	private List<Accounts> glAccountRevenueList;
+
+	public Long getGlAccountSaleId() {
+		return glAccountSaleId;
+	}
+
+	public void setGlAccountSaleId(Long glAccountSaleId) {
+		this.glAccountSaleId = glAccountSaleId;
+	}
+
+	public String getGlAccountSaleName() {
+		return glAccountSaleName;
+	}
+
+	public void setGlAccountSaleName(String glAccountSaleName) {
+		this.glAccountSaleName = glAccountSaleName;
+	}
+
+	public List<Accounts> getGlAccountSaleList() {
+		return glAccountSaleList;
+	}
+
+	public void setGlAccountSaleList(List<Accounts> glAccountSaleList) {
+		this.glAccountSaleList = glAccountSaleList;
+	}
+
+	public Long getGlAccountRevenueId() {
+		return glAccountRevenueId;
+	}
+
+	public void setGlAccountRevenueId(Long glAccountRevenueId) {
+		this.glAccountRevenueId = glAccountRevenueId;
+	}
+
+	public String getGlAccountRevenueName() {
+		return glAccountRevenueName;
+	}
+
+	public void setGlAccountRevenueName(String glAccountRevenueName) {
+		this.glAccountRevenueName = glAccountRevenueName;
+	}
+
+	public List<Accounts> getGlAccountRevenueList() {
+		return glAccountRevenueList;
+	}
+
+	public void setGlAccountRevenueList(List<Accounts> glAccountRevenueList) {
+		this.glAccountRevenueList = glAccountRevenueList;
+	}
 
 	public Long getTaxCodeId() {
 		return taxCodeId;

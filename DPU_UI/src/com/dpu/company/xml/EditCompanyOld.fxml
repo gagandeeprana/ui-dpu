@@ -31,35 +31,7 @@
     <TextField fx:id="txtZip" layoutX="237.0" layoutY="213.0" prefHeight="25.0" prefWidth="83.0" />
     <Label fx:id="lblZip" font="$x1" layoutX="191.0" layoutY="216.0" text="Postal" />
     <SplitPane layoutX="334.0" layoutY="35.0" prefHeight="247.0" prefWidth="1.0" />
-    <!--  <TextField fx:id="txtAfterHours"   layoutX="426.0" layoutY="168.0" prefHeight="25.0" prefWidth="240.0" />
-    <Label fx:id="lblAfterHours" font="$x1" layoutX="344.0" layoutY="168.0" text="After Hours" />
-    <Label fx:id="lblCellular" font="$x1" layoutX="346.0" layoutY="231.0" text="Cellular" />
-    <TextField fx:id="txtCellular"   layoutX="426.0" layoutY="229.0" prefWidth="240.0" />
-    <Label fx:id="lblTollFree" font="$x1" layoutX="344.0" layoutY="202.0" text="Toll Free" />
-   <TextField fx:id="txtTollFree"   layoutX="426.0" layoutY="200.0" prefWidth="240.0" />
-    <Label fx:id="lblFax" font="$x1" layoutX="346.0" layoutY="134.0" text="Fax" />
-    <TextField fx:id="txtFax"   layoutX="426.0" layoutY="139.0" prefWidth="240.0" />
-    <TextField fx:id="txtPhone"   layoutX="426.0" layoutY="107.0" prefHeight="25.0" prefWidth="240.0" />
-    <Label fx:id="lblPhone" font="$x1" layoutX="346.0" layoutY="108.0" text="Phone" />
-    <Label fx:id="lblPosition" font="$x1" layoutX="346.0" layoutY="72.0" text="Position" />
-   <TextField fx:id="txtPosition"   layoutX="426.0" layoutY="69.0" prefHeight="25.0" prefWidth="240.0" />
-   <TextField fx:id="txtContact"   layoutX="426.0" layoutY="37.0" prefHeight="25.0" prefWidth="240.0" />
-   <Label fx:id="lblContact" font="$x1" layoutX="346.0" layoutY="40.0" text="Contact" />
-    <TextField fx:id="txtPager"   layoutX="426.0" layoutY="259.0" prefWidth="240.0" />
-    <Label fx:id="lblPager" font="$x1" layoutX="347.0" layoutY="262.0" text="Pager" />
-   <Label fx:id="lblExt" font="$x1" layoutX="676.0" layoutY="104.0" text="Ext" />
-   <TextField fx:id="txtExt"   layoutX="715.0" layoutY="102.0" prefWidth="240.0" />
-    <TextField fx:id="txtPrefix"  layoutX="715.0" layoutY="132.0" prefWidth="240.0" />
-    <Label fx:id="lblPrefix" font="$x1" layoutX="676.0" layoutY="135.0" text="Prefix" />
-    <Label fx:id="lblEmailNotification" font="$x1" layoutX="676.0" layoutY="166.0" text="Email Notifications" />
-    <CheckBox layoutX="717.0" layoutY="191.0" mnemonicParsing="false" text="Order">
-      <font>
-        <Font size="13.0" fx:id="x2" />
-      </font>
-    </CheckBox>
-    <CheckBox font="$x2" layoutX="787.0" layoutY="191.0" mnemonicParsing="false" text="PickUp ETA" />
-    <CheckBox font="$x2" layoutX="787.0" layoutY="212.0" mnemonicParsing="false" text="Deliver ETA" />
-    <CheckBox font="$x2" layoutX="717.0" layoutY="212.0" mnemonicParsing="false" text="PickUp" /> -->
+     
     <TabPane fx:id="tabPane" layoutX="6.0" layoutY="296.0" prefHeight="313.0" prefWidth="955.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
         <Tab fx:id="billingLocation" text="Billing Locations">
@@ -131,7 +103,7 @@
         <FXCollections fx:factory="observableArrayList" />
       </items>
     </ComboBox>
-    <ComboBox fx:id="ddlCountry" layoutX="80.0" layoutY="163.0"   prefHeight="21.0" prefWidth="240.0">
+    <ComboBox fx:id="ddlCountry" onAction="#ddlCountryAction" layoutX="80.0" layoutY="163.0"   prefHeight="21.0" prefWidth="240.0">
       <items>
         <FXCollections fx:factory="observableArrayList" />
       </items>

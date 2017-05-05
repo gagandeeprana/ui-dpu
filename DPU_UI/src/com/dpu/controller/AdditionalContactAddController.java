@@ -1,6 +1,7 @@
 package com.dpu.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -11,6 +12,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.AdditionalContact;
+import com.dpu.model.BillingControllerModel;
 import com.dpu.model.Company;
 import com.dpu.model.Status;
 import com.dpu.model.Type;
@@ -58,7 +60,7 @@ public class AdditionalContactAddController implements Initializable {
 	private CheckBox chkOrderConfirmation;
 
 	@FXML
-	private ComboBox<String> ddlStatus,ddlFunction;
+	private ComboBox<String> ddlStatus, ddlFunction;
 
 	@FXML
 	private TextField txtAdditionalContact;
@@ -86,7 +88,7 @@ public class AdditionalContactAddController implements Initializable {
 
 	@FXML
 	void btnCancelAdditionalContactAction(ActionEvent event) {
-		 
+
 		CompanyAddController.selectedTabValue = 0;
 		closeAddAdditionalContactScreen(btnCancelAdditionalContact);
 	}
@@ -110,7 +112,7 @@ public class AdditionalContactAddController implements Initializable {
 				String email = txtEmail.getText();
 				String function = ddlFunction.getSelectionModel().getSelectedItem();
 				AdditionalContact bcm1 = new AdditionalContact(additionalContact, position, phone, fax, cellular, email,
-						extension, pager, status,function);
+						extension, pager, status, function);
 				CompanyAddController.selectedTabValue = 1;
 				// if(CompanyAddController.addEditIndex != -1){
 				if (CompanyAddController.addAddtionalContact == 0) {
@@ -118,7 +120,6 @@ public class AdditionalContactAddController implements Initializable {
 				} else if (CompanyAddController.addAddtionalContact == 1) {
 					CompanyEditController.listOfAdditionalContact.add(bcm1);
 				}
-
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -134,9 +135,11 @@ public class AdditionalContactAddController implements Initializable {
 		loginStage.close();
 	}
 
-	 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+
+		
+
 		fetchMasterDataForDropDowns();
 		if (CompanyAddController.addAddtionalContact != 1) {
 			if (CompanyAddController.additionalContactModel != null) {
@@ -164,13 +167,13 @@ public class AdditionalContactAddController implements Initializable {
 			public void run() {
 				try {
 					ObjectMapper mapper = new ObjectMapper();
-					String response = GetAPIClient
-							.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/openAddAdditionalContact", null);
+					String response = GetAPIClient.callGetAPI(
+							Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/openAddAdditionalContact", null);
 					Company company = mapper.readValue(response, Company.class);
-					 
+
 					List<Status> statusList = company.getStatusList();
 					fillDropDown(ddlStatus, statusList);
-					
+
 					List<Type> functionList = company.getFunctionList();
 					fillDropDown(ddlFunction, functionList);
 
@@ -182,11 +185,11 @@ public class AdditionalContactAddController implements Initializable {
 	}
 
 	private void fillDropDown(ComboBox<String> comboBox, List<?> list) {
-		
+
 		for (int i = 0; i < list.size(); i++) {
-			
+
 			Object object = list.get(i);
-			
+
 			if (object != null && object instanceof Type) {
 				Type type = (Type) object;
 				comboBox.getItems().add(type.getTypeName());
@@ -200,7 +203,7 @@ public class AdditionalContactAddController implements Initializable {
 		}
 	}
 
-  // validation Applying
+	// validation Applying
 	@FXML
 	Label additionalContactMsg;
 
@@ -210,7 +213,7 @@ public class AdditionalContactAddController implements Initializable {
 
 		boolean result = true;
 		String additionalContact = txtAdditionalContact.getText();
-	 
+
 		boolean blnAdditionalContact = validate.validateEmptyness(additionalContact);
 		if (!blnAdditionalContact) {
 			result = false;
@@ -219,7 +222,7 @@ public class AdditionalContactAddController implements Initializable {
 			additionalContactMsg.setText("Additional Contact is Mandatory");
 			additionalContactMsg.setTextFill(Color.RED);
 		}
-		
+
 		return result;
 	}
 
@@ -228,14 +231,14 @@ public class AdditionalContactAddController implements Initializable {
 
 		String name = txtAdditionalContact.getText();
 		boolean result = validate.validateEmptyness(name);
-		
+
 		if (!result) {
 			txtAdditionalContact.setStyle("-fx-focus-color: red;");
 			txtAdditionalContact.requestFocus();
 			additionalContactMsg.setVisible(true);
 			additionalContactMsg.setText("Additional Contact is Mandatory");
 			additionalContactMsg.setTextFill(Color.RED);
-		}  else{
+		} else {
 			txtAdditionalContact.setStyle("-fx-focus-color: skyblue;");
 			additionalContactMsg.setVisible(false);
 		}

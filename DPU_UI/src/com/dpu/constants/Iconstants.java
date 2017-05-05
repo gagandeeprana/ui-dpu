@@ -155,9 +155,15 @@ public class Iconstants {
 	public static final String TAX_CODE_BASE_PACKAGE = "com/dpu/taxcodes/xml/";
 	public static final String XML_TAX_CODE_ADD_SCREEN = "AddTaxCodes.fxml";
 	public static final String XML_TAX_CODE_SCREEN = "TaxCodeListing.fxml";
+	public static final String XML_TAX_CODE_EDIT_SCREEN = "EditTaxCodes.fxml";
 
 	public static final String YES = "YES";
 	public static final String NO = "NO";
 
+	public static final String URL_ACCOUNTS_API = "account";
+	public static final String ACCOUNTS_BASE_PACKAGE = "com/dpu/accounts/xml/";
+	public static final String XML_ACCOUNTS_SCREEN = "AccountsListing.fxml";
+	public static final String XML_ACCOUNTS_ADD_SCREEN = "AddAccounts.fxml";
+	public static final String XML_ACCOUNTS_EDIT_SCREEN = "EditAccounts.fxml";
 
 }

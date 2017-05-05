@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="331.0" prefWidth="443.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.database.TaxCodeAddController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="331.0" prefWidth="443.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.database.TaxCodeEditController">
    <children>
       <Text layoutX="19.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tax Code" wrappingWidth="107.759765625" AnchorPane.bottomAnchor="238.486328125" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="289.240234375" AnchorPane.topAnchor="13.892578125">
          <font>
@@ -45,7 +45,7 @@
       <Label fx:id="lblStatus" layoutX="159.0" layoutY="179.0" prefHeight="17.0" prefWidth="240.0" />
       <TextField fx:id="txtDescription" layoutX="188.0" layoutY="63.0" prefHeight="25.0" prefWidth="240.0" />
       <TextField fx:id="txtPercentage" layoutX="188.0" layoutY="154.0" prefHeight="25.0" prefWidth="240.0" />
-      <TextField fx:id="txtAccountSales" layoutX="188.0" layoutY="204.0" prefHeight="25.0" prefWidth="240.0" />
+      <TextField fx:id="txtAccountSales" layoutX="188.0" layoutY="204.0" onKeyPressed="#txtAccountSalesKeyPressed" prefHeight="25.0" prefWidth="240.0" />
       <Text layoutX="19.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="G/L Account for sales" wrappingWidth="131.759765625">
          <font>
             <Font size="14.0" />
@@ -56,6 +56,11 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <TextField fx:id="txtAccountRevenue" layoutX="188.0" layoutY="249.0" prefHeight="25.0" prefWidth="240.0" />
+      <TextField fx:id="txtAccountRevenue" layoutX="188.0" layoutY="249.0" onKeyPressed="#txtAccountRevenueKeyPressed" prefHeight="25.0" prefWidth="240.0" />
+      <Button fx:id="btnEdit" layoutX="197.0" layoutY="288.0" mnemonicParsing="false" onAction="#handleEditAction" prefHeight="25.0" prefWidth="65.0" text="Edit">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
