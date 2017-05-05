@@ -318,65 +318,64 @@ public class HandlingController extends Application implements Initializable {
 			}
 		});
 
-		/*
-		 * // Create ContextMenu ContextMenu contextMenu = new ContextMenu();
-		 * 
-		 * MenuItem item1 = new MenuItem("ADD"); item1.setOnAction(new
-		 * EventHandler<ActionEvent>() {
-		 * 
-		 * @Override public void handle(ActionEvent event) { }
-		 * 
-		 * }); MenuItem item2 = new MenuItem("EDIT"); item2.setOnAction(new
-		 * EventHandler<ActionEvent>() {
-		 * 
-		 * @Override public void handle(ActionEvent event) {
-		 * 
-		 * } });
-		 * 
-		 * MenuItem item3 = new MenuItem("DELETE"); item3.setOnAction(new
-		 * EventHandler<ActionEvent>() {
-		 * 
-		 * @Override public void handle(ActionEvent event) {
-		 * 
-		 * } });
-		 * 
-		 * MenuItem item4 = new MenuItem("PERSONALIZE"); item1.setOnAction(new
-		 * EventHandler<ActionEvent>() {
-		 * 
-		 * @Override public void handle(ActionEvent event) { }
-		 * 
-		 * }); MenuItem item5 = new MenuItem("DUPLICATE"); item2.setOnAction(new
-		 * EventHandler<ActionEvent>() {
-		 * 
-		 * @Override public void handle(ActionEvent event) {
-		 * 
-		 * } });
-		 * 
-		 * MenuItem item6 = new MenuItem("FILTER BY"); item3.setOnAction(new
-		 * EventHandler<ActionEvent>() {
-		 * 
-		 * @Override public void handle(ActionEvent event) {
-		 * 
-		 * } });
-		 * 
-		 * 
-		 * 
-		 * // Add MenuItem to ContextMenu contextMenu.getItems().addAll(item1,
-		 * item2, item3, item4, item5, item6); if (tblServicerMenuCount == 0) {
-		 * tblServicerMenuCount++; // When user right-click on Table
-		 * tblHandling.setOnContextMenuRequested(new
-		 * EventHandler<ContextMenuEvent>() {
-		 * 
-		 * @Override public void handle(ContextMenuEvent event) {
-		 * contextMenu.show(tblHandling, event.getScreenX(),
-		 * event.getScreenY());
-		 * 
-		 * }
-		 * 
-		 * });
-		 * 
-		 * }
-		 */
+		// Create ContextMenu ContextMenu contextMenu = new ContextMenu();
+
+		// MenuItem item1 = new MenuItem("ADD"); item1.setOnAction(new
+		// EventHandler<ActionEvent>() {
+		//
+		// @Override public void handle(ActionEvent event) { }
+		//
+		// }); MenuItem item2 = new MenuItem("EDIT"); item2.setOnAction(new
+		// EventHandler<ActionEvent>() {
+		//
+		// @Override public void handle(ActionEvent event) {
+		//
+		// } });
+		//
+		// MenuItem item3 = new MenuItem("DELETE"); item3.setOnAction(new
+		// EventHandler<ActionEvent>() {
+		//
+		// @Override public void handle(ActionEvent event) {
+		//
+		// } });
+		//
+		// MenuItem item4 = new MenuItem("PERSONALIZE"); item1.setOnAction(new
+		// EventHandler<ActionEvent>() {
+		//
+		// @Override public void handle(ActionEvent event) { }
+		//
+		// }); MenuItem item5 = new MenuItem("DUPLICATE"); item2.setOnAction(new
+		// EventHandler<ActionEvent>() {
+		//
+		// @Override public void handle(ActionEvent event) {
+		//
+		// } });
+		//
+		// MenuItem item6 = new MenuItem("FILTER BY"); item3.setOnAction(new
+		// EventHandler<ActionEvent>() {
+		//
+		// @Override public void handle(ActionEvent event) {
+		//
+		// } });
+		//
+		//
+		//
+		// // Add MenuItem to ContextMenu contextMenu.getItems().addAll(item1,
+		// item2, item3, item4, item5, item6); if (tblServicerMenuCount == 0) {
+		// tblServicerMenuCount++; // When user right-click on Table
+		// tblHandling.setOnContextMenuRequested(new
+		// EventHandler<ContextMenuEvent>() {
+		//
+		// @Override public void handle(ContextMenuEvent event) {
+		// contextMenu.show(tblHandling, event.getScreenX(),
+		// event.getScreenY());
+		//
+		// }
+		//
+		// });
+		//
+		// }
+		//
 	}
 
 }

@@ -80,6 +80,7 @@
                         <ComboBox fx:id="ddlStatusPARS" layoutX="550.0" layoutY="396.0" onAction="#ddlStatusPARSAction" prefHeight="25.0" prefWidth="290.0" />
                         <Label layoutX="450.0" layoutY="400.0" text="Status" />
                         <Label fx:id="lblType" layoutX="749.0" layoutY="35.0" prefHeight="17.0" prefWidth="102.0" />
+                        <Button fx:id="btnEdit" onAction="#handleEditAction" layoutX="657.0" layoutY="449.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Edit" />
                      </children>
                   </AnchorPane>
                </content>
