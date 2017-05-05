@@ -35,6 +35,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -382,10 +383,28 @@ public class TruckController extends Application implements Initializable {
 			if (tblTruckMenuCount == 0) {
 				tblTruckMenuCount++;
 				// When user right-click on Table
-				tblTruck.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+				tblTruck.setOnMouseClicked(new EventHandler<MouseEvent>() {
+					int click = 0;
+
 					@Override
-					public void handle(ContextMenuEvent event) {
-						contextMenu.show(tblTruck, event.getScreenX(), event.getScreenY());
+					public void handle(MouseEvent mouseEvent) {
+
+						if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
+
+							if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.SECONDARY)) {
+								contextMenu.show(tblTruck, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+
+							} else {
+								contextMenu.hide();
+								click++;
+
+							}
+							if (click == 2) {
+								btnEditTruckAction();
+								click = 0;
+							}
+
+						}
 
 					}
 

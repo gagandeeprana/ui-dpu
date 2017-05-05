@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
@@ -5,38 +6,54 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1247.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.CarrierController">
-   <children>
-      <Pane prefHeight="49.0" prefWidth="1239.0" style="-fx-background-color: lightgrey;" />
-      <TableView fx:id="tblCarrier" layoutY="42.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="584.0" prefWidth="1239.0">
-         <columns>
-            <TableColumn fx:id="unitNo" prefWidth="90.0" text="Carrier Name" />
-            <TableColumn fx:id="name" prefWidth="84.0" text="Address" />
-            <TableColumn fx:id="email" prefWidth="90.0" text="Unit #" />
-            <TableColumn fx:id="city" prefWidth="78.0" text="City" />
-            <TableColumn fx:id="ps" prefWidth="85.0" text="P/S" />
-            <TableColumn fx:id="phone" prefWidth="93.0" text="Postal Code" />
-            <TableColumn fx:id="home" prefWidth="104.0" text="Contact" />
-            <TableColumn fx:id="fax" prefWidth="72.0" text="Contact Position" />
-            <TableColumn fx:id="afterHours" prefWidth="76.0" text="Phone Number" />
-            <TableColumn prefWidth="74.0" text="Extension" />
-            <TableColumn prefWidth="74.0" text="Fax Number" />
-            <TableColumn prefWidth="75.0" text="Toll Free" />
-            <TableColumn prefWidth="75.0" text="Email" />
-            <TableColumn prefWidth="68.0" text="A/P Code(CDN)" />
-            <TableColumn prefWidth="82.0" text="A/P Code(U.S)" />
-         </columns>
-      </TableView>
-      <Label layoutX="15.0" layoutY="15.0" text="Quick Filter">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </Label>
-      <Button fx:id="btnDeleteCarrier" layoutX="523.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnDeleteCarrierAction" prefHeight="25.0" prefWidth="55.0" text="Delete" />
-      <Button fx:id="btnEditCarrier" layoutX="463.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnEditCarrierAction" prefHeight="25.0" prefWidth="55.0" text="  Edit  " />
-      <Button fx:id="btnGoCarrier" layoutX="287.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnGoCarrierAction" prefHeight="25.0" prefWidth="32.0" text="Go" />
-      <TextField fx:id="txtGoCarrier" layoutX="82.0" layoutY="11.0" prefHeight="25.0" prefWidth="200.0" promptText="Enter company name to search..." />
-      <Button id="btnAddCarrier" fx:id="btnAddCarrier" layoutX="402.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnAddCarrierAction" prefHeight="25.0" prefWidth="55.0" text="Add" />
-      <CheckBox layoutX="327.0" layoutY="15.0" mnemonicParsing="false" text="Show All" />
-   </children>
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0"
+	prefWidth="1247.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="com.dpu.controller.CarrierController">
+	<children>
+		<Pane prefHeight="49.0" prefWidth="1239.0"
+			style="-fx-background-color: lightgrey;" />
+		<TableView fx:id="tblCarrier" onMouseClicked="#handleRowSelect"
+			layoutY="42.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+			minWidth="-Infinity" prefHeight="584.0" prefWidth="1239.0">
+			<columns>
+				<TableColumn fx:id="unitNo" prefWidth="90.0" text="Carrier Name" />
+				<TableColumn fx:id="name" prefWidth="84.0" text="Address" />
+				<TableColumn fx:id="email" prefWidth="90.0" text="Unit #" />
+				<TableColumn fx:id="city" prefWidth="78.0" text="City" />
+				<TableColumn fx:id="ps" prefWidth="85.0" text="P/S" />
+				<TableColumn fx:id="phone" prefWidth="93.0" text="Postal Code" />
+				<TableColumn fx:id="home" prefWidth="104.0" text="Contact" />
+				<TableColumn fx:id="fax" prefWidth="72.0" text="Contact Position" />
+				<TableColumn fx:id="afterHours" prefWidth="76.0" text="Phone Number" />
+				<TableColumn prefWidth="74.0" text="Extension" />
+				<TableColumn prefWidth="74.0" text="Fax Number" />
+				<TableColumn prefWidth="75.0" text="Toll Free" />
+				<TableColumn prefWidth="75.0" text="Email" />
+				<TableColumn prefWidth="68.0" text="A/P Code(CDN)" />
+				<TableColumn prefWidth="82.0" text="A/P Code(U.S)" />
+			</columns>
+		</TableView>
+		<Label layoutX="15.0" layoutY="15.0" text="Quick Filter">
+			<font>
+				<Font size="13.0" />
+			</font>
+		</Label>
+		<Button fx:id="btnDeleteCarrier" layoutX="523.0" layoutY="11.0"
+			mnemonicParsing="false" onAction="#btnDeleteCarrierAction"
+			prefHeight="25.0" prefWidth="55.0" text="Delete" />
+		<Button fx:id="btnEditCarrier" layoutX="463.0" layoutY="11.0"
+			mnemonicParsing="false" onAction="#btnEditCarrierAction" prefHeight="25.0"
+			prefWidth="55.0" text="  Edit  " />
+		<Button fx:id="btnGoCarrier" layoutX="287.0" layoutY="11.0"
+			mnemonicParsing="false" onAction="#btnGoCarrierAction" prefHeight="25.0"
+			prefWidth="32.0" text="Go" />
+		<TextField fx:id="txtGoCarrier" layoutX="82.0" layoutY="11.0"
+			prefHeight="25.0" prefWidth="200.0" promptText="Enter company name to search..." />
+		<Button id="btnAddCarrier" fx:id="btnAddCarrier" layoutX="402.0"
+			layoutY="11.0" mnemonicParsing="false" onAction="#btnAddCarrierAction"
+			prefHeight="25.0" prefWidth="55.0" text="Add" />
+		<CheckBox layoutX="327.0" layoutY="15.0" mnemonicParsing="false"
+			text="Show All" />
+	</children>
 </Pane>
