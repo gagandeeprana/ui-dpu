@@ -64,7 +64,7 @@ public class AdditionalContactEditController implements Initializable {
 	private TextField txtAdditionalContact;
 
 	@FXML
-	private TextField txtCellular;
+	private TextField txtCellular,txtStatus,txtFunction;
 
 	@FXML
 	private TextField txtEmail;
@@ -107,7 +107,7 @@ public class AdditionalContactEditController implements Initializable {
 				String cellular = txtCellular.getText();
 				String status = ddlStatus.getSelectionModel().getSelectedItem();
 				String email = txtEmail.getText();
-				String function = "";
+				String function = ddlFunction.getSelectionModel().getSelectedItem();
 				AdditionalContact bcm1 = new AdditionalContact(additionalContact, position, phone, fax, cellular, email,
 						extension, pager, status,function);
 				CompanyEditController.selectedTabValue = 1;
@@ -149,7 +149,8 @@ public class AdditionalContactEditController implements Initializable {
 				txtEmail.setText(CompanyEditController.additionalContactModel.getEmail());
 				txtPager.setText(CompanyEditController.additionalContactModel.getPrefix());
 				txtPhone.setText(CompanyEditController.additionalContactModel.getPhone());
-				// ddlStatus.getSelectionModel().getSelectedItem();
+			//	txtStatus.setText("Active");
+				txtFunction.setText(CompanyEditController.additionalContactModel.getFunction());
 
 			}
 		}

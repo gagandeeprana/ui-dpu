@@ -68,8 +68,6 @@ public class CompanyAddController extends Application implements Initializable {
 	@FXML
 	private Pane addCompanyPane;
 
-
-
 	@FXML
 	private TableColumn<AdditionalContact, String> additionalContact;
 
@@ -759,7 +757,7 @@ public class CompanyAddController extends Application implements Initializable {
 		company.setZip(txtZip.getText());
 		company.setEmail(txtEmail.getText());
 		company.setWebsite(txtWebsite.getText());
-		 
+
 		company.setDivisionId(divisionList.get(ddlDivision.getSelectionModel().getSelectedIndex()).getDivisionId());
 		company.setCategoryId(categoryList.get(ddlCategory.getSelectionModel().getSelectedIndex()).getCategoryId());
 		company.setSaleId(saleList.get(ddlSale.getSelectionModel().getSelectedIndex()).getSaleId());
@@ -778,11 +776,11 @@ public class CompanyAddController extends Application implements Initializable {
 				// need to get Status
 				billingLocation.setStatus(1);
 				billingLocation.setContact(billingModel.getContact());
-				billingLocation.setPosition(txtPosition.getText());
+				// billingLocation.setPosition(txtPosition.getText());
 				billingLocation.setEmail(txtEmail.getText());
-				billingLocation.setCellular(txtCellular.getText());
+				// billingLocation.setCellular(txtCellular.getText());
 				billingLocation.setPhone(billingModel.getPhone());
-				billingLocation.setExt(txtExt.getText());
+				// billingLocation.setExt(txtExt.getText());
 				billingLocation.setFax(billingModel.getFax());
 				billingLocation.setTollfree(billingModel.getName());
 				billingLocations.add(billingLocation);
@@ -807,8 +805,15 @@ public class CompanyAddController extends Application implements Initializable {
 				additionalContact.setPrefix(additionalContactModel.getPrefix());
 				additionalContact.setCellular(additionalContactModel.getCellular());
 				// need to set Status here
-				additionalContact.setStatus(0l);
+				if (additionalContactModel.getStatusId().equals("Active"))
+					additionalContact.setStatus(0l);
+				else
+					additionalContact.setStatus(1l);
 				additionalContact.setEmail(additionalContactModel.getEmail());
+				if (additionalContactModel.getFunction().equals("Primary"))
+					additionalContact.setFunctionId(83l);
+				else
+					additionalContact.setFunctionId(84l);
 
 				additionalContacts.add(additionalContact);
 			}
@@ -895,10 +900,10 @@ public class CompanyAddController extends Application implements Initializable {
 			}
 		}
 	}
-	
+
 	// validation Appllying
 	@FXML
-	Label  companyMsg, countryMsg , lblZip, lblProvince;
+	Label companyMsg, countryMsg, lblZip, lblProvince;
 
 	Validate validate = new Validate();
 
@@ -925,10 +930,10 @@ public class CompanyAddController extends Application implements Initializable {
 		if (result) {
 			countryMsg.setVisible(false);
 			ddlCountry.setStyle("-fx-focus-color: skyBlue;");
-			if(ddlCountry.getSelectionModel().getSelectedItem().equals("usa")){
+			if (ddlCountry.getSelectionModel().getSelectedItem().equals("usa")) {
 				lblZip.setText("Zip");
 				lblProvince.setText("State");
-			}else if(ddlCountry.getSelectionModel().getSelectedItem().equals("canada")){
+			} else if (ddlCountry.getSelectionModel().getSelectedItem().equals("canada")) {
 				lblZip.setText("Postal");
 				lblProvince.setText("Province");
 			}
@@ -938,7 +943,6 @@ public class CompanyAddController extends Application implements Initializable {
 			countryMsg.setVisible(true);
 		}
 	}
-	 
 
 	private boolean validateAddCompanyScreen() {
 		boolean result = true;

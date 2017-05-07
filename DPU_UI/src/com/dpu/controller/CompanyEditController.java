@@ -71,31 +71,8 @@ public class CompanyEditController extends Application implements Initializable 
 	private TabPane tabPane;
 
 	@FXML
-	private TableColumn<AdditionalContact, String> additionalContact;
+	private TableColumn<AdditionalContact, String> additionalContact,position,phoneNo,faxNo,cellular,email,extension,pager,status,function;
 
-	@FXML
-	private TableColumn<AdditionalContact, String> position;
-
-	@FXML
-	private TableColumn<AdditionalContact, String> phoneNo;
-
-	@FXML
-	private TableColumn<AdditionalContact, String> faxNo;
-
-	@FXML
-	private TableColumn<AdditionalContact, String> cellular;
-
-	@FXML
-	private TableColumn<AdditionalContact, String> email;
-
-	@FXML
-	private TableColumn<AdditionalContact, String> extension;
-
-	@FXML
-	private TableColumn<AdditionalContact, String> pager;
-
-	@FXML
-	private TableColumn<AdditionalContact, String> status;
 
 	@FXML
 	private TableColumn<BillingControllerModel, String> address;
@@ -254,6 +231,7 @@ public class CompanyEditController extends Application implements Initializable 
 		company.setProvinceState(txtProvince.getText());
 		company.setZip(txtZip.getText());
 		company.setEmail(txtEmail.getText());
+		company.setWebsite (txtWebsite.getText());
 		company.setDivisionId(divisionList.get(ddlDivision.getSelectionModel().getSelectedIndex()).getDivisionId());
 		company.setCategoryId(categoryList.get(ddlCategory.getSelectionModel().getSelectedIndex()).getCategoryId());
 		company.setSaleId(saleList.get(ddlSale.getSelectionModel().getSelectedIndex()).getSaleId());
@@ -276,16 +254,9 @@ public class CompanyEditController extends Application implements Initializable 
 				billingLocation.setPhone(billingModel.getPhone());
 				billingLocation.setContact(billingModel.getContact());
 				billingLocation.setZip(billingModel.getZip());
-				// need to get Status
 				billingLocation.setStatus(1);
 				billingLocation.setFax(billingModel.getFax());
-			//	billingLocation.setPosition(txtPosition.getText());
-			//	billingLocation.setEmail(txtEmail.getText());
-			//	billingLocation.setCellular(txtCellular.getText());
-			//	billingLocation.setPhone(billingModel.getPhone());
-			//	billingLocation.setExt(txtExt.getText());
-			//	billingLocation.setFax(billingModel.getFax());
-			//	billingLocation.setTollfree(billingModel.getName());
+				 
 				billingLocations.add(billingLocation);
 			}
 		}
@@ -309,7 +280,15 @@ public class CompanyEditController extends Application implements Initializable 
 				additionalContact.setFax(additionalContactModel.getFax());
 				additionalContact.setPrefix(additionalContactModel.getPrefix());
 				additionalContact.setCellular(additionalContactModel.getCellular());
-				additionalContact.setStatus(1l);
+				if (additionalContactModel.getStatusId().equalsIgnoreCase("Active"))
+					additionalContact.setStatus(0l);
+				else
+					additionalContact.setStatus(1l);
+
+				if (additionalContactModel.getFunction().equalsIgnoreCase("primary"))
+					additionalContact.setFunctionId(83l);
+				else
+					additionalContact.setFunctionId(84l);
 				additionalContact.setEmail(additionalContactModel.getEmail());
 				additionalContacts.add(additionalContact);
 			}
@@ -356,9 +335,9 @@ public class CompanyEditController extends Application implements Initializable 
 		}
 
 		for (int i = 0; i < companyModel.getCategoryList().size(); i++) {
-			 
+
 			Category category = companyModel.getCategoryList().get(i);
-			if (category != null ) {
+			if (category != null) {
 				if (category.getName() != null) {
 					ddlCategory.getItems().add(category.getName());
 					if (category.getCategoryId() == companyModel.getCategoryId()) {
@@ -369,12 +348,12 @@ public class CompanyEditController extends Application implements Initializable 
 		}
 
 		for (int i = 0; i < companyModel.getCountryList().size(); i++) {
-			 
+
 			Type country = companyModel.getCountryList().get(i);
 			if (country != null) {
 				if (country.getTypeName() != null) {
 					ddlCountry.getItems().add(country.getTypeName());
-					 
+
 					if (country.getTypeId() == companyModel.getCountryId()) {
 						ddlCountry.getSelectionModel().select(i);
 					}
@@ -537,8 +516,11 @@ public class CompanyEditController extends Application implements Initializable 
 					String response = PutAPIClient.callPutAPI(
 							Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + companyId, null, payload);
 
+					mapper.writeValueAsString(response);
 					if (response != null) {
-						JOptionPane.showMessageDialog(null, "Company Updated Successfully.", "Info", 1);
+						Success success = mapper.readValue(response, Success.class);
+						String message= success.getMessage();
+						JOptionPane.showMessageDialog(null, message, "Info", 1);
 					} else {
 						JOptionPane.showMessageDialog(null, "Failed to Updated Company.", "Info", 1);
 					}
@@ -761,7 +743,7 @@ public class CompanyEditController extends Application implements Initializable 
 			@Override
 			public void run() {
 				try {
-					 
+
 					if (listOfAdditionalContact != null & !(listOfAdditionalContact.isEmpty())) {
 						ObservableList<AdditionalContact> data = FXCollections
 								.observableArrayList(listOfAdditionalContact);
@@ -860,6 +842,15 @@ public class CompanyEditController extends Application implements Initializable 
 						return new SimpleStringProperty(param.getValue().getStatusId() + "");
 					}
 				});
+
+		function.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<AdditionalContact, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<AdditionalContact, String> param) {
+						return new SimpleStringProperty(param.getValue().getFunction() + "");
+					}
+				});
 	}
 
 	private void setColumnValues() {
@@ -920,12 +911,12 @@ public class CompanyEditController extends Application implements Initializable 
 						return new SimpleStringProperty(param.getValue().getFax() + "");
 					}
 				});
+		 
 	}
 
-	
 	// validation applying
 	@FXML
-	Label  companyMsg, countryMsg , lblZip, lblProvince;
+	Label companyMsg, countryMsg, lblZip, lblProvince;
 
 	Validate validate = new Validate();
 
@@ -952,10 +943,10 @@ public class CompanyEditController extends Application implements Initializable 
 		if (result) {
 			countryMsg.setVisible(false);
 			ddlCountry.setStyle("-fx-focus-color: skyBlue;");
-			if(ddlCountry.getSelectionModel().getSelectedItem().equals("usa")){
+			if (ddlCountry.getSelectionModel().getSelectedItem().equals("usa")) {
 				lblZip.setText("Zip");
 				lblProvince.setText("State");
-			}else if(ddlCountry.getSelectionModel().getSelectedItem().equals("canada")){
+			} else if (ddlCountry.getSelectionModel().getSelectedItem().equals("canada")) {
 				lblZip.setText("Postal");
 				lblProvince.setText("Province");
 			}
@@ -965,7 +956,6 @@ public class CompanyEditController extends Application implements Initializable 
 			countryMsg.setVisible(true);
 		}
 	}
-	 
 
 	private boolean validateAddCompanyScreen() {
 		boolean result = true;
@@ -993,6 +983,5 @@ public class CompanyEditController extends Application implements Initializable 
 		return result;
 
 	}
-
 
 }

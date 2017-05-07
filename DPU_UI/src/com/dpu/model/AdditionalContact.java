@@ -13,12 +13,60 @@ public class AdditionalContact {
 	private String prefix;
 	private String cellular;
 	private String statusId;
+	private Long functionId;
+
+	private String functionType;
 	private String email;
 	public Long companyId;
 	private String function;
+	private Type functionObj;
 	public Long additionalContactId = null;
-	private Long status;
+	private String status;
+	 
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public List<Status> statusList;
+
+	public Long getFunctionId() {
+		return functionId;
+	}
+
+	public String getFunctionType() {
+		return functionType;
+	}
+
+	public void setFunctionType(String functionType) {
+		this.functionType = functionType;
+	}
+
+	public void setFunctionId(Long functionId) {
+		this.functionId = functionId;
+	}
+
+	 
+
+	public String getStatusId() {
+		return statusId;
+	}
+
+	public void setStatusId(String statusId) {
+		this.statusId = statusId;
+	}
+
+	public Type getFunctionObj() {
+		return functionObj;
+	}
+
+	public void setFunctionObj(Type functionObj) {
+		this.functionObj = functionObj;
+	}
 
 	public List<Status> getStatusList() {
 		return statusList;
@@ -28,16 +76,8 @@ public class AdditionalContact {
 		this.statusList = statusList;
 	}
 
-	public Long getStatus() {
-		return status;
-	}
-
-	public void setStatus(Long status) {
-		this.status = status;
-	}
-
 	public AdditionalContact(String additionalContact, String position2, String phone2, String fax2, String cellular2,
-			String email2, String extension, String pager, String status,String function ) {
+			String email2, String extension, String pager, String status, String function) {
 		this.customerName = additionalContact;
 		this.position = position2;
 		this.phone = phone2;
@@ -48,12 +88,8 @@ public class AdditionalContact {
 		this.statusId = status;
 		this.email = email2;
 		this.function = function;
-		 
-	}
 
-	
-	 
-	 
+	}
 
 	public String getFunction() {
 		return function;
@@ -137,14 +173,6 @@ public class AdditionalContact {
 
 	public void setCellular(String cellular) {
 		this.cellular = cellular;
-	}
-
-	public String getStatusId() {
-		return statusId;
-	}
-
-	public void setStatusId(String statusId) {
-		this.statusId = statusId;
 	}
 
 	public String getEmail() {

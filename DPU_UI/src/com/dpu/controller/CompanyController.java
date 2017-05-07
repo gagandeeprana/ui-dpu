@@ -154,7 +154,7 @@ public class CompanyController extends Application implements Initializable {
 	public static List<CompanyModel> cList = new ArrayList<CompanyModel>();
 
 	@FXML
-	TableColumn<CompanyModel, String> unitNo, name, email, city, ps, category, division, sale, country;
+	TableColumn<CompanyModel, String> unitNo, name, email, city, ps, category, division, sale, country,website;
 
 	@FXML
 	private void btnAddCompanyAction() {
@@ -171,6 +171,8 @@ public class CompanyController extends Application implements Initializable {
 
 	@FXML
 	private void btnEditCompanyAction() {
+		
+		 
 		CompanyEditController.listOfBilling = new ArrayList<BillingControllerModel>();
 		CompanyEditController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
 		CompanyEditController.company = new CompanyModel();
@@ -231,13 +233,13 @@ public class CompanyController extends Application implements Initializable {
 									additionalContact.setPrefix(c.getAdditionalContacts().get(j).getCellular());
 									additionalContact.setPhone(c.getAdditionalContacts().get(j).getPhone());
 									additionalContact.setPosition(c.getAdditionalContacts().get(j).getPosition());
-									additionalContact.setStatusId("Active");
-
+									additionalContact.setStatusId( c.getAdditionalContacts().get(j).getStausName());
+									additionalContact.setFunction(c.getAdditionalContacts().get(j).getFunctionName());
 									CompanyEditController.listOfAdditionalContact.add(additionalContact);
 								}
 							}
 
-							// -----------------------------------------------------
+							 
 							CompanyEditController companyAddController = (CompanyEditController) openEditCompanyScreen();
 							companyAddController.initData(c);
 						}
@@ -561,6 +563,7 @@ public class CompanyController extends Application implements Initializable {
 						return new SimpleStringProperty(param.getValue().getCountryName() + "");
 					}
 				});
+		
 	}
 
 	// ADD MENU
@@ -615,7 +618,7 @@ public class CompanyController extends Application implements Initializable {
 
 						}
 						if (click == 2) {
-							btnEditCompanyAction();
+							//btnEditCompanyAction();
 							click = 0;
 						}
 
@@ -755,7 +758,7 @@ public class CompanyController extends Application implements Initializable {
 											additionalContact.setPhone(c.getAdditionalContacts().get(j).getPhone());
 											additionalContact
 													.setPosition(c.getAdditionalContacts().get(j).getPosition());
-											additionalContact.setStatusId("Active");
+											additionalContact.setStatusId(String.valueOf(c.getAdditionalContacts().get(j).getStatus()));
 
 											CompanyEditController.listOfAdditionalContact.add(additionalContact);
 										}
@@ -872,7 +875,7 @@ public class CompanyController extends Application implements Initializable {
 											additionalContact.setPhone(c.getAdditionalContacts().get(j).getPhone());
 											additionalContact
 													.setPosition(c.getAdditionalContacts().get(j).getPosition());
-											additionalContact.setStatusId("Active");
+											additionalContact.setStatusId(String.valueOf(c.getAdditionalContacts().get(j).getStatus()));
 
 											CompanyEditController.listOfAdditionalContact.add(additionalContact);
 										}

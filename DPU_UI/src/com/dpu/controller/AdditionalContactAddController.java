@@ -1,7 +1,6 @@
 package com.dpu.controller;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -12,7 +11,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.AdditionalContact;
-import com.dpu.model.BillingControllerModel;
 import com.dpu.model.Company;
 import com.dpu.model.Status;
 import com.dpu.model.Type;
@@ -96,6 +94,7 @@ public class AdditionalContactAddController implements Initializable {
 	@FXML
 	void btnSaveAdditionalContactAction(ActionEvent event) {
 
+	     
 		boolean result = validateAddCompanyScreen();
 		if (result) {
 			try {
@@ -107,10 +106,10 @@ public class AdditionalContactAddController implements Initializable {
 				String fax = txtFax.getText();
 				String pager = txtPager.getText();
 				String cellular = txtCellular.getText();
-
 				String status = ddlStatus.getSelectionModel().getSelectedItem();
 				String email = txtEmail.getText();
 				String function = ddlFunction.getSelectionModel().getSelectedItem();
+				
 				AdditionalContact bcm1 = new AdditionalContact(additionalContact, position, phone, fax, cellular, email,
 						extension, pager, status, function);
 				CompanyAddController.selectedTabValue = 1;
