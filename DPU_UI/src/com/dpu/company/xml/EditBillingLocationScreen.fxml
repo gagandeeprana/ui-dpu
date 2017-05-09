@@ -13,7 +13,7 @@
       <BorderPane layoutX="9.0" layoutY="35.0" prefHeight="147.0" prefWidth="639.0" style="-fx-border-color: lightgray;" />
     <Pane layoutY="26.0" prefHeight="190.0" prefWidth="657.0">
       <children>
-        <Label fx:id="lblCompany" layoutX="15.0" layoutY="23.0" text="Company">
+        <Label fx:id="lblCompany" layoutX="15.0" layoutY="23.0" text="Name">
                <font>
                   <Font size="14.0" />
                </font>
