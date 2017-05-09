@@ -110,8 +110,12 @@ public class AdditionalContactEditController implements Initializable {
 				String function = ddlFunction.getSelectionModel().getSelectedItem();
 				AdditionalContact bcm1 = new AdditionalContact(additionalContact, position, phone, fax, cellular, email,
 						extension, pager, status,function);
+				if(CompanyEditController.additionalContactIdPri != 0l)
+					bcm1.setAdditionalContactId(CompanyEditController.additionalContactIdPri);
+					
 				CompanyEditController.selectedTabValue = 1;
-				// if(CompanyAddController.addEditIndex != -1){
+			
+					// if(CompanyAddController.addEditIndex != -1){
 				if (CompanyEditController.addAddtionalContact == 0) {
 					CompanyEditController.listOfAdditionalContact.set(CompanyEditController.editIndex, bcm1);
 				} else if (CompanyEditController.addAddtionalContact == 1) {
