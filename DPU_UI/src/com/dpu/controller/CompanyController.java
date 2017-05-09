@@ -154,7 +154,8 @@ public class CompanyController extends Application implements Initializable {
 	public static List<CompanyModel> cList = new ArrayList<CompanyModel>();
 
 	@FXML
-	TableColumn<CompanyModel, String> unitNo, name, email, city, ps, category, division, sale, country,website;
+	TableColumn<CompanyModel, String> unitNo, name, email, city, ps, category, division, sale, country,website,
+	contactName,designation,phoneNo,extensionNo,faxNo,emergencyNo,cellular,status,emailContact,function;
 
 	@FXML
 	private void btnAddCompanyAction() {
@@ -342,7 +343,17 @@ public class CompanyController extends Application implements Initializable {
 	static boolean divisionn = true;
 	static boolean salee = true;
 	static boolean countryy = true;
-
+	static boolean contactNamee=true;
+	static boolean designationn = true;
+	static boolean phoneNoo = true;
+	static boolean extensionNoo = true;
+	static boolean faxNoo = true;
+	static boolean emergencyNoo = true;
+	static boolean cellularr = true;
+	static boolean statuss = true;
+	static boolean emailContactt = true;
+	static boolean functionn = true;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -359,6 +370,16 @@ public class CompanyController extends Application implements Initializable {
 		division.setVisible(divisionn);
 		sale.setVisible(salee);
 		country.setVisible(countryy);
+		contactName.setVisible(contactNamee);
+		designation.setVisible(designationn);
+		phoneNo.setVisible(phoneNoo);
+		extensionNo.setVisible(extensionNoo);
+		faxNo.setVisible(faxNoo);
+		emergencyNo.setVisible(emergencyNoo);
+		cellular.setVisible(cellularr);
+		status.setVisible(statuss);
+		emailContact.setVisible(emailContactt);
+		function.setVisible(functionn);
 	}
 
 	@FXML
@@ -387,6 +408,16 @@ public class CompanyController extends Application implements Initializable {
 		division = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(6);
 		sale = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(7);
 		country = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(8);
+		contactName = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(9);
+		designation= (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(10);
+		phoneNo = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(11);
+		extensionNo = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(12);
+		faxNo = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(13);
+		emergencyNo = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(14);
+		cellular = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(15);
+		status = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(16);
+		emailContact = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(17);
+		function = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(18);
 	}
 
 	public void fetchCompanies() {
@@ -564,6 +595,119 @@ public class CompanyController extends Application implements Initializable {
 					}
 				});
 		
+		contactName.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<CompanyModel, String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
+						if(param.getValue().getAdditionalContacts() != null && !param.getValue().getAdditionalContacts().isEmpty()){
+							return new SimpleStringProperty(param.getValue().getAdditionalContacts().get(0).getCustomerName() + "");
+					}else{
+						return new SimpleStringProperty("");
+					}
+						}
+				});
+		
+		//-----------------------
+		designation.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<CompanyModel, String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
+						if(param.getValue().getAdditionalContacts() != null && !param.getValue().getAdditionalContacts().isEmpty()){
+							return new SimpleStringProperty(param.getValue().getAdditionalContacts().get(0).getPosition() + "");
+					}else{
+						return new SimpleStringProperty("");
+					}
+						}
+				});
+		phoneNo.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<CompanyModel, String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
+						if(param.getValue().getAdditionalContacts() != null && !param.getValue().getAdditionalContacts().isEmpty()){
+							return new SimpleStringProperty(param.getValue().getAdditionalContacts().get(0).getPhone() + "");
+					}else{
+						return new SimpleStringProperty("");
+					}
+						}
+				});
+		extensionNo.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<CompanyModel, String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
+						if(param.getValue().getAdditionalContacts() != null && !param.getValue().getAdditionalContacts().isEmpty()){
+							return new SimpleStringProperty(param.getValue().getAdditionalContacts().get(0).getExt() + "");
+					}else{
+						return new SimpleStringProperty("");
+					}
+						}
+				});
+		faxNo.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<CompanyModel, String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
+						if(param.getValue().getAdditionalContacts() != null && !param.getValue().getAdditionalContacts().isEmpty()){
+							return new SimpleStringProperty(param.getValue().getAdditionalContacts().get(0).getFax() + "");
+					}else{
+						return new SimpleStringProperty("");
+					}
+						}
+				});
+		emergencyNo.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<CompanyModel, String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
+						if(param.getValue().getAdditionalContacts() != null && !param.getValue().getAdditionalContacts().isEmpty()){
+							return new SimpleStringProperty(param.getValue().getAdditionalContacts().get(0).getPrefix() + "");
+					}else{
+						return new SimpleStringProperty("");
+					}
+						}
+				});
+		cellular.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<CompanyModel, String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
+						if(param.getValue().getAdditionalContacts() != null && !param.getValue().getAdditionalContacts().isEmpty()){
+							return new SimpleStringProperty(param.getValue().getAdditionalContacts().get(0).getCellular() + "");
+					}else{
+						return new SimpleStringProperty("");
+					}
+						}
+				});
+		status.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<CompanyModel, String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
+						if(param.getValue().getAdditionalContacts() != null && !param.getValue().getAdditionalContacts().isEmpty()){
+							return new SimpleStringProperty(param.getValue().getAdditionalContacts().get(0).getStausName() + "");
+					}else{
+						return new SimpleStringProperty("");
+					}
+						}
+				});
+		emailContact.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<CompanyModel, String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
+						if(param.getValue().getAdditionalContacts() != null && !param.getValue().getAdditionalContacts().isEmpty()){
+							return new SimpleStringProperty(param.getValue().getAdditionalContacts().get(0).getEmail() + "");
+					}else{
+						return new SimpleStringProperty("");
+					}
+						}
+				});
+		function.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<CompanyModel, String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<CompanyModel, String> param) {
+						if(param.getValue().getAdditionalContacts() != null && !param.getValue().getAdditionalContacts().isEmpty()){
+							return new SimpleStringProperty(param.getValue().getAdditionalContacts().get(0).getFunctionName() + "");
+					}else{
+						return new SimpleStringProperty("");
+					}
+						}
+				});
+		
 	}
 
 	// ADD MENU
@@ -618,7 +762,7 @@ public class CompanyController extends Application implements Initializable {
 
 						}
 						if (click == 2) {
-							//btnEditCompanyAction();
+							btnEditCompanyAction();
 							click = 0;
 						}
 

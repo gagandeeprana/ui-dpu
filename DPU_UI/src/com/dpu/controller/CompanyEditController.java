@@ -239,7 +239,7 @@ public class CompanyEditController extends Application implements Initializable 
 		company.setWebsite(txtWebsite.getText());
 		company.setCity(txtCity.getText());
 
-		// need to use for loop here
+		// need to use for loop hereddlCountry.set
 
 		if (listOfBilling != null) {
 			int sizeOfBilling = listOfBilling.size();

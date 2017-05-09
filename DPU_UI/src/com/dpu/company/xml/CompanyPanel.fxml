@@ -35,15 +35,26 @@
          </children></Pane>
       <TableView fx:id="tblCompany" layoutY="42.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#handleAddContMouseClick" prefHeight="584.0" prefWidth="1015.0">
         <columns>
-          <TableColumn fx:id="unitNo" prefWidth="112.0" text="UnitNo" />
-          <TableColumn fx:id="name" prefWidth="112.0" text="Name" />
-            <TableColumn fx:id="email" prefWidth="112.0" text="Email" />
-            <TableColumn fx:id="city" prefWidth="112.0" text="City" />
-            <TableColumn fx:id="ps" prefWidth="112.0" text="P/S" />
-            <TableColumn fx:id="category" prefWidth="112.0" text="Category" />
-            <TableColumn fx:id="division" prefWidth="112.0" text="Division" />
-            <TableColumn fx:id="sale" prefWidth="112.0" text="Sale" />
-            <TableColumn fx:id="country" prefWidth="112.0" text="Country" />
+          	<TableColumn fx:id="unitNo" prefWidth="80.0" text="UnitNo" />
+          	<TableColumn fx:id="name" prefWidth="80.0" text="Name" />
+            <TableColumn fx:id="email" prefWidth="80.0" text="Email" />
+            <TableColumn fx:id="city" prefWidth="50.0" text="City" />
+            <TableColumn fx:id="ps" prefWidth="80.0" text="P/S" />
+            <TableColumn fx:id="category" prefWidth="80.0" text="Category" />
+            <TableColumn fx:id="division" prefWidth="80.0" text="Division" />
+            <TableColumn fx:id="sale" prefWidth="80.0" text="Sale" />
+            <TableColumn fx:id="country" prefWidth="80.0" text="Country" />
+            
+            <TableColumn fx:id="contactName" prefWidth="80.0" text="ContactName" />
+          	<TableColumn fx:id="designation" prefWidth="80.0" text="Designation" />
+            <TableColumn fx:id="phoneNo" prefWidth="50.0" text="PhoneNo" />
+            <TableColumn fx:id="extensionNo" prefWidth="80.0" text="ExtensionNo" />
+            <TableColumn fx:id="faxNo" prefWidth="40.0" text="FaxNo" />
+            <TableColumn fx:id="emergencyNo" prefWidth="80.0" text="EmergencyNo" />
+            <TableColumn fx:id="cellular" prefWidth="80.0" text="Cellular" />
+            <TableColumn fx:id="status" prefWidth="40.0" text="Status" />
+            <TableColumn fx:id="emailContact" prefWidth="50.0" text="Email" />
+            <TableColumn fx:id="function" prefWidth="70.0" text="Function" />
         </columns>
       </TableView>
    </children>

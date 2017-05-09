@@ -149,8 +149,8 @@ public class AdditionalContactEditController implements Initializable {
 				txtEmail.setText(CompanyEditController.additionalContactModel.getEmail());
 				txtPager.setText(CompanyEditController.additionalContactModel.getPrefix());
 				txtPhone.setText(CompanyEditController.additionalContactModel.getPhone());
-			//	txtStatus.setText("Active");
-				txtFunction.setText(CompanyEditController.additionalContactModel.getFunction());
+			//	ddlStatus.setText("Active");
+			//	ddlFunction.setText(CompanyEditController.additionalContactModel.getFunction());
 
 			}
 		}
