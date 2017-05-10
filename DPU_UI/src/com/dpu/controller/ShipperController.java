@@ -54,6 +54,7 @@ public class ShipperController extends Application implements Initializable {
 
 	@FXML
 	AnchorPane anchorPaneShipper, root;
+	public static int flag = 0;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -73,6 +74,34 @@ public class ShipperController extends Application implements Initializable {
 
 	@FXML
 	private void btnEditShipperAction() {
+		flag=2;
+		Shipper shipper = tblShipper.getSelectionModel().getSelectedItem();
+		System.out.println(shipper);
+		if (shipper != null) {
+			Platform.runLater(new Runnable() {
+
+				@Override
+				public void run() {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						String response = GetAPIClient.callGetAPI(
+								Iconstants.URL_SERVER + Iconstants.URL_SHIPPER_API + "/" + shipper.getShipperId(),
+								null);
+						if (response != null && response.length() > 0) {
+							Shipper c = mapper.readValue(response, Shipper.class);
+							ShipperEditController shipperEditController = (ShipperEditController) openEditShipperScreen();
+							shipperEditController.initData(c);
+						}
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+					}
+				}
+			});
+		}
+	}
+
+	private void editShipperAction() {
+		flag=1;
 		Shipper shipper = tblShipper.getSelectionModel().getSelectedItem();
 		System.out.println(shipper);
 		if (shipper != null) {
@@ -468,7 +497,7 @@ public class ShipperController extends Application implements Initializable {
 
 						}
 						if (click == 2) {
-							btnEditShipperAction();
+							editShipperAction();
 							click = 0;
 						}
 

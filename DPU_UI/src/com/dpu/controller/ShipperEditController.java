@@ -22,6 +22,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -32,7 +33,7 @@ import javafx.stage.Stage;
 public class ShipperEditController extends Application implements Initializable {
 
 	@FXML
-	Button btnUpdateShipper;
+	Button btnUpdateShipper, btnEdit, btnDirections, btnHours, btnNotes, btnReports, btnAC;
 
 	@FXML
 	TextField txtLocationName, txtContact, txtAddress, txtPosition, txtUnitNo, txtPhone, txtExt, txtCity, txtFax,
@@ -45,6 +46,9 @@ public class ShipperEditController extends Application implements Initializable 
 	@FXML
 	ComboBox<String> ddlStatus;
 
+	@FXML
+	CheckBox ETAToPickupAlert, ETAToDeliverAlert, RegisteredCSAFacility, RegisteredCTPATFacility,
+			WarehouseorCrossDockFacility;
 	private Long shipperId = 0l;
 
 	@FXML
@@ -132,8 +136,57 @@ public class ShipperEditController extends Application implements Initializable 
 
 	}
 
+	private void disableFields(boolean v) {
+		btnUpdateShipper.setDisable(v);
+		btnAC.setDisable(v);
+		btnDirections.setDisable(v);
+		btnHours.setDisable(v);
+		btnNotes.setDisable(v);
+		btnReports.setDisable(v);
+		txtAddress.setDisable(v);
+		txtCellNumber.setDisable(v);
+		txtCity.setDisable(v);
+		txtContact.setDisable(v);
+		txtEmail.setDisable(v);
+		txtExt.setDisable(v);
+		txtFax.setDisable(v);
+		txtImporter.setDisable(v);
+		txtInternalNotes.setDisable(v);
+		txtLeadTime.setDisable(v);
+		txtLocationName.setDisable(v);
+		txtPhone.setDisable(v);
+		txtPlant.setDisable(v);
+		txtPosition.setDisable(v);
+		txtPrefix.setDisable(v);
+		txtProvince.setDisable(v);
+		txtStandardNotes.setDisable(v);
+		txtTimeZone.setDisable(v);
+		txtTollFree.setDisable(v);
+		txtUnitNo.setDisable(v);
+		txtZone.setDisable(v);
+		ddlStatus.setDisable(v);
+		ETAToPickupAlert.setDisable(v);
+		ETAToDeliverAlert.setDisable(v);
+		RegisteredCSAFacility.setDisable(v);
+		RegisteredCTPATFacility.setDisable(v);
+		WarehouseorCrossDockFacility.setDisable(v);
+
+	}
+
+	@FXML
+	public void handleEditAction() {
+		btnEdit.setDisable(true);
+		disableFields(false);
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		if (ShipperController.flag == 1) {
+			disableFields(true);
+		}
+		if (ShipperController.flag == 2) {
+			btnEdit.setVisible(false);
+		}
 
 	}
 

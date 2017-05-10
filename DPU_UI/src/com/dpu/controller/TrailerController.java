@@ -57,6 +57,7 @@ public class TrailerController extends Application implements Initializable {
 
 	@FXML
 	Pane trailerPane;
+	public static int flag = 0;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -71,6 +72,33 @@ public class TrailerController extends Application implements Initializable {
 
 	@FXML
 	private void btnEditTrailerAction() {
+		flag = 2;
+		Trailer trailer = tblTrailer.getSelectionModel().getSelectedItem();
+		if (trailer != null) {
+			Platform.runLater(new Runnable() {
+
+				@Override
+				public void run() {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						String response = GetAPIClient.callGetAPI(
+								Iconstants.URL_SERVER + Iconstants.URL_TRAILER_API + "/" + trailer.getTrailerId(),
+								null);
+						if (response != null && response.length() > 0) {
+							Trailer c = mapper.readValue(response, Trailer.class);
+							TrailerEditController trailerEditController = (TrailerEditController) openEditTrailerScreen();
+							trailerEditController.initData(c);
+						}
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+					}
+				}
+			});
+		}
+	}
+
+	private void editTrailerAction() {
+		flag = 1;
 		Trailer trailer = tblTrailer.getSelectionModel().getSelectedItem();
 		if (trailer != null) {
 			Platform.runLater(new Runnable() {
@@ -414,7 +442,7 @@ public class TrailerController extends Application implements Initializable {
 
 						}
 						if (click == 2) {
-							btnEditTrailerAction();
+							editTrailerAction();
 							click = 0;
 						}
 

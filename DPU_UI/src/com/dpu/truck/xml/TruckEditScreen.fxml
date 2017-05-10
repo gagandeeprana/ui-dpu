@@ -7,7 +7,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="393.0" prefWidth="705.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.dpu.controller.TruckEditController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="393.0" prefWidth="705.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.TruckEditController">
   <children>
     <TabPane layoutX="7.0" layoutY="26.0" prefHeight="368.0" prefWidth="694.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
@@ -46,6 +46,7 @@
                 </Button>
                 <Button fx:id="btnUpdateTruck" font="$x2" layoutX="531.0" layoutY="278.0" mnemonicParsing="false" onAction="#btnUpdateTruckAction" prefHeight="25.0" prefWidth="65.0" text="Update" />
                 <Label fx:id="unitMsg" layoutX="93.0" layoutY="34.0" prefWidth="240.0" text="" />
+                        <Button fx:id="btnEdit" onAction="#handleEditAction" layoutX="468.0" layoutY="280.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="52.0" text="Edit" />
               </children>
             </AnchorPane>
           </content>

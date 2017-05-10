@@ -36,7 +36,7 @@ import javafx.stage.Stage;
 public class TruckEditController extends Application implements Initializable {
 
 	@FXML
-	Button btnUpdateTruck;
+	Button btnUpdateTruck,btnEdit;
 
 	Long truckId = 0l;
 
@@ -57,7 +57,6 @@ public class TruckEditController extends Application implements Initializable {
 		}
 	}
 
- 
 	private void closeEditTruckScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
 		loginStage.close();
@@ -104,8 +103,35 @@ public class TruckEditController extends Application implements Initializable {
 		});
 	}
 
+	private void disableFields(boolean v) {
+		btnUpdateTruck.setDisable(v);
+		txtFinance.setDisable(v);
+		txtOoName.setDisable(v);
+		txtOwner.setDisable(v);
+		txtUnitNo.setDisable(v);
+		txtUsage.setDisable(v);
+		ddlCategory.setDisable(v);
+		ddlDivision.setDisable(v);
+		ddlStatus.setDisable(v);
+		ddlTerminal.setDisable(v);
+		ddlTruckType.setDisable(v);
+
+	}
+
+	@FXML
+	private void handleEditAction() {
+		btnEdit.setDisable(true);
+		disableFields(false);
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		if (TruckController.flag == 1) {
+			disableFields(true);
+		}
+		if (TruckController.flag == 2) {
+			btnEdit.setVisible(false);
+		}
 		txtUnitNo.addEventFilter(KeyEvent.KEY_TYPED, Validate.numeric_Validation(10));
 	}
 
@@ -188,46 +214,46 @@ public class TruckEditController extends Application implements Initializable {
 			}
 		}
 	}
-	
+
 	// validation Applying
 
-				@FXML
-				Label unitMsg;
+	@FXML
+	Label unitMsg;
 
-				Validate validate = new Validate();
+	Validate validate = new Validate();
 
-				private boolean validateEditTruckScreen() {
+	private boolean validateEditTruckScreen() {
 
-					boolean result = true;
-					String additionalContact = txtUnitNo.getText();
+		boolean result = true;
+		String additionalContact = txtUnitNo.getText();
 
-					boolean blnAdditionalContact = validate.validateEmptyness(additionalContact);
-					if (!blnAdditionalContact) {
-						result = false;
-						txtUnitNo.setStyle("-fx-text-box-border: red;");
-						unitMsg.setVisible(true);
-						unitMsg.setText("Unit No is Mandatory");
-						unitMsg.setTextFill(Color.RED);
-					}
+		boolean blnAdditionalContact = validate.validateEmptyness(additionalContact);
+		if (!blnAdditionalContact) {
+			result = false;
+			txtUnitNo.setStyle("-fx-text-box-border: red;");
+			unitMsg.setVisible(true);
+			unitMsg.setText("Unit No is Mandatory");
+			unitMsg.setTextFill(Color.RED);
+		}
 
-					return result;
-				}
+		return result;
+	}
 
-				@FXML
-				private void truckUnitKeyPressed() {
+	@FXML
+	private void truckUnitKeyPressed() {
 
-					String name = txtUnitNo.getText();
-					boolean result = validate.validateEmptyness(name);
+		String name = txtUnitNo.getText();
+		boolean result = validate.validateEmptyness(name);
 
-					if (!result) {
-						txtUnitNo.setStyle("-fx-focus-color: red;");
-						txtUnitNo.requestFocus();
-						unitMsg.setVisible(true);
-						unitMsg.setText("Unit No is Mandatory");
-						unitMsg.setTextFill(Color.RED);
-					} else {
-						txtUnitNo.setStyle("-fx-focus-color: skyblue;");
-						unitMsg.setVisible(false);
-					}
-				}
+		if (!result) {
+			txtUnitNo.setStyle("-fx-focus-color: red;");
+			txtUnitNo.requestFocus();
+			unitMsg.setVisible(true);
+			unitMsg.setText("Unit No is Mandatory");
+			unitMsg.setTextFill(Color.RED);
+		} else {
+			txtUnitNo.setStyle("-fx-focus-color: skyblue;");
+			unitMsg.setVisible(false);
+		}
+	}
 }

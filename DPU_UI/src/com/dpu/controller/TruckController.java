@@ -47,41 +47,42 @@ public class TruckController extends Application implements Initializable {
 
 	@FXML
 	TableView<Truck> tblTruck;
-	
+
 	@FXML
 	TableColumn<Truck, String> unitNo, owner, oOName, category, status, usage, division, terminal, truckType, finance;
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		Login.setWidthForAll(root, tblTruck);
 		Login.setWidthForAll(TruckMain, null);
 		fetchTrucks();
 	}
-	
+
 	@FXML
 	Pane TruckMain;
 
 	@FXML
 	AnchorPane root;
-	
+	public static int flag = 0;
+
 	@FXML
 	private void btnAddTruckAction() {
 		openAddTruckScreen();
 	}
-	
+
 	List<Truck> truckList = null;
-	
+
 	ObjectMapper mapper = new ObjectMapper();
-	
+
 	public void fillTruck(String response) {
-		
+
 		try {
 			ObservableList<Truck> data = null;
 			truckList = new ArrayList<Truck>();
 			setColumnValues();
-			if(response != null && response.length() > 0) {
+			if (response != null && response.length() > 0) {
 				Truck c[] = mapper.readValue(response, Truck[].class);
-				for(Truck ccl : c) {
+				for (Truck ccl : c) {
 					truckList.add(ccl);
 				}
 				data = FXCollections.observableArrayList(truckList);
@@ -89,52 +90,82 @@ public class TruckController extends Application implements Initializable {
 				data = FXCollections.observableArrayList(truckList);
 			}
 			tblTruck.setItems(data);
-            tblTruck.setVisible(true);
+			tblTruck.setVisible(true);
 		} catch (Exception e) {
-			System.out.println("TruckController: fillTruck(): "+ e.getMessage());
+			System.out.println("TruckController: fillTruck(): " + e.getMessage());
 		}
 	}
-	
+
 	@FXML
 	private void btnEditTruckAction() {
+		flag=2;
 		Truck truck = tblTruck.getSelectionModel().getSelectedItem();
-		if(truck != null) {
+		if (truck != null) {
 			Platform.runLater(new Runnable() {
-				
+
 				@Override
 				public void run() {
 					try {
 						ObjectMapper mapper = new ObjectMapper();
 						System.out.println(truck.getTruckId());
-						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_TRUCK_API + "/" + truck.getTruckId(), null);
+						String response = GetAPIClient.callGetAPI(
+								Iconstants.URL_SERVER + Iconstants.URL_TRUCK_API + "/" + truck.getTruckId(), null);
 						System.out.println(response);
-						if(response != null && response.length() > 0) {
+						if (response != null && response.length() > 0) {
 							Truck t = mapper.readValue(response, Truck.class);
 							TruckEditController truckEditController = (TruckEditController) openEditTruckScreen();
 							truckEditController.initData(t);
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
-						JOptionPane.showMessageDialog(null, "Try Again.." + e , "Info", 1);
+						JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
 					}
 				}
 			});
 		}
 	}
-	
+	private void editTruckAction() {
+		flag=1;
+		Truck truck = tblTruck.getSelectionModel().getSelectedItem();
+		if (truck != null) {
+			Platform.runLater(new Runnable() {
+
+				@Override
+				public void run() {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						System.out.println(truck.getTruckId());
+						String response = GetAPIClient.callGetAPI(
+								Iconstants.URL_SERVER + Iconstants.URL_TRUCK_API + "/" + truck.getTruckId(), null);
+						System.out.println(response);
+						if (response != null && response.length() > 0) {
+							Truck t = mapper.readValue(response, Truck.class);
+							TruckEditController truckEditController = (TruckEditController) openEditTruckScreen();
+							truckEditController.initData(t);
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+						JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+					}
+				}
+			});
+		}
+	}
+
 	@FXML
 	private void btnDeleteTruckAction() {
 		Truck truck = tblTruck.getSelectionModel().getSelectedItem();
-		if(truck != null) {
+		if (truck != null) {
 			Platform.runLater(new Runnable() {
-				
+
 				@SuppressWarnings("unchecked")
 				@Override
 				public void run() {
 					try {
-						String response = DeleteAPIClient.callDeleteAPI(Iconstants.URL_SERVER + Iconstants.URL_TRUCK_API + "/" + truck.getTruckId(), null);
+						String response = DeleteAPIClient.callDeleteAPI(
+								Iconstants.URL_SERVER + Iconstants.URL_TRUCK_API + "/" + truck.getTruckId(), null);
 						System.out.println(response);
-//						fillTruck(response);
+						// fillTruck(response);
 						try {
 							Success success = mapper.readValue(response, Success.class);
 							List<Truck> truckList = (List<Truck>) success.getResultList();
@@ -145,34 +176,37 @@ public class TruckController extends Application implements Initializable {
 							Failed failed = mapper.readValue(response, Failed.class);
 							JOptionPane.showMessageDialog(null, failed.getMessage());
 						}
-						/*if(response != null && response.contains("message")) {
-							Success success = mapper.readValue(response, Success.class);
-							JOptionPane.showMessageDialog(null, success.getMessage() , "Info", 1);
-						} else {
-							Failed failed = mapper.readValue(response, Failed.class);
-							JOptionPane.showMessageDialog(null, failed.getMessage(), "Info", 1);
-						}*/
+						/*
+						 * if(response != null && response.contains("message"))
+						 * { Success success = mapper.readValue(response,
+						 * Success.class); JOptionPane.showMessageDialog(null,
+						 * success.getMessage() , "Info", 1); } else { Failed
+						 * failed = mapper.readValue(response, Failed.class);
+						 * JOptionPane.showMessageDialog(null,
+						 * failed.getMessage(), "Info", 1); }
+						 */
 					} catch (Exception e) {
 						e.printStackTrace();
-						JOptionPane.showMessageDialog(null, "Try Again.." , "Info", 1);
+						JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
 					}
 				}
 			});
 		}
 	}
-	
+
 	private Object openEditTruckScreen() {
 		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.TRUCK_BASE_PACKAGE + Iconstants.XML_TRUCK_EDIT_SCREEN));
-			
-	        Parent root = (Parent) fxmlLoader.load();
-	        
-	        Stage stage = new Stage();
-	        stage.initModality(Modality.APPLICATION_MODAL);
-	        stage.setTitle("Edit Truck");
-	        stage.setScene(new Scene(root)); 
-	        stage.show();
-	        return fxmlLoader.getController();
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
+					.getResource(Iconstants.TRUCK_BASE_PACKAGE + Iconstants.XML_TRUCK_EDIT_SCREEN));
+
+			Parent root = (Parent) fxmlLoader.load();
+
+			Stage stage = new Stage();
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setTitle("Edit Truck");
+			stage.setScene(new Scene(root));
+			stage.show();
+			return fxmlLoader.getController();
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -181,15 +215,16 @@ public class TruckController extends Application implements Initializable {
 
 	private void openAddTruckScreen() {
 		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.TRUCK_BASE_PACKAGE + Iconstants.XML_TRUCK_ADD_SCREEN));
-			
-	        Parent root = (Parent) fxmlLoader.load();
-	        
-	        Stage stage = new Stage();
-	        stage.initModality(Modality.APPLICATION_MODAL);
-	        stage.setTitle("Add New Truck");
-	        stage.setScene(new Scene(root)); 
-	        stage.show();
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
+					.getResource(Iconstants.TRUCK_BASE_PACKAGE + Iconstants.XML_TRUCK_ADD_SCREEN));
+
+			Parent root = (Parent) fxmlLoader.load();
+
+			Stage stage = new Stage();
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setTitle("Add New Truck");
+			stage.setScene(new Scene(root));
+			stage.show();
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -212,12 +247,12 @@ public class TruckController extends Application implements Initializable {
 		truckType = (TableColumn<Truck, String>) tblTruck.getColumns().get(8);
 		finance = (TableColumn<Truck, String>) tblTruck.getColumns().get(9);
 	}
-	
+
 	public void fetchTrucks() {
-		
+
 		fetchColumns();
 		Platform.runLater(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				try {
@@ -225,192 +260,199 @@ public class TruckController extends Application implements Initializable {
 					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_TRUCK_API, null);
 					Truck c[] = mapper.readValue(response, Truck[].class);
 					List<Truck> tList = new ArrayList<Truck>();
-					for(Truck truck : c) {
+					for (Truck truck : c) {
 						tList.add(truck);
 					}
 					ObservableList<Truck> data = FXCollections.observableArrayList(tList);
-					
+
 					setColumnValues();
 					tblTruck.setItems(data);
-		
+
 					tblTruck.setVisible(true);
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "Try Again.." + e , "Info", 1);
+					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
 				}
 			}
 		});
 	}
-	
+
 	private void setColumnValues() {
-		
-		unitNo.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Truck,String>, ObservableValue<String>>() {
-			
-			@Override
-			public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
-				return new SimpleStringProperty(param.getValue().getUnitNo() + "");
-			}
-		});
-		owner.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Truck,String>, ObservableValue<String>>() {
-			
+
+		unitNo.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Truck, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
+						return new SimpleStringProperty(param.getValue().getUnitNo() + "");
+					}
+				});
+		owner.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Truck, String>, ObservableValue<String>>() {
+
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
 				return new SimpleStringProperty(param.getValue().getOwner() + "");
 			}
 		});
-		oOName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Truck,String>, ObservableValue<String>>() {
-					
+		oOName.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Truck, String>, ObservableValue<String>>() {
+
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
 						return new SimpleStringProperty(param.getValue().getoOName() + "");
 					}
 				});
-		category.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Truck,String>, ObservableValue<String>>() {
-			
-			@Override
-			public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
-				return new SimpleStringProperty(param.getValue().getCatogoryName() + "");
-			}
-		});
-		status.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Truck,String>, ObservableValue<String>>() {
-			
-			@Override
-			public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
-				return new SimpleStringProperty(param.getValue().getStatusName() + "");
-			}
-		});
-		usage.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Truck,String>, ObservableValue<String>>() {
-			
+		category.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Truck, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
+						return new SimpleStringProperty(param.getValue().getCatogoryName() + "");
+					}
+				});
+		status.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Truck, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
+						return new SimpleStringProperty(param.getValue().getStatusName() + "");
+					}
+				});
+		usage.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Truck, String>, ObservableValue<String>>() {
+
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
 				return new SimpleStringProperty(param.getValue().getTruchUsage() + "");
 			}
 		});
-		division.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Truck,String>, ObservableValue<String>>() {
-			
-			@Override
-			public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
-				return new SimpleStringProperty(param.getValue().getDivisionName() + "");
-			}
-		});
-		terminal.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Truck,String>, ObservableValue<String>>() {
-			
-			@Override
-			public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
-				return new SimpleStringProperty(param.getValue().getTerminalName() + "");
-			}
-		});
-		truckType.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Truck,String>, ObservableValue<String>>() {
-			
-			@Override
-			public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
-				return new SimpleStringProperty(param.getValue().getTruckType() + "");
-			}
-		});
-		finance.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Truck,String>, ObservableValue<String>>() {
-			
-			@Override
-			public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
-				return new SimpleStringProperty(param.getValue().getFinance() + "");
-			}
-		});
+		division.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Truck, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
+						return new SimpleStringProperty(param.getValue().getDivisionName() + "");
+					}
+				});
+		terminal.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Truck, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
+						return new SimpleStringProperty(param.getValue().getTerminalName() + "");
+					}
+				});
+		truckType.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Truck, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
+						return new SimpleStringProperty(param.getValue().getTruckType() + "");
+					}
+				});
+		finance.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Truck, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<Truck, String> param) {
+						return new SimpleStringProperty(param.getValue().getFinance() + "");
+					}
+				});
 	}
-	
 
 	// ADD MENU
 
-		public int tblTruckMenuCount = 0;
+	public int tblTruckMenuCount = 0;
 
-		@FXML
-		public void handleAddContMouseClick(MouseEvent event) {
+	@FXML
+	public void handleAddContMouseClick(MouseEvent event) {
 
-			// Create ContextMenu
-			ContextMenu contextMenu = new ContextMenu();
+		// Create ContextMenu
+		ContextMenu contextMenu = new ContextMenu();
 
-			MenuItem item1 = new MenuItem("ADD");
-			item1.setOnAction(new EventHandler<ActionEvent>() {
+		MenuItem item1 = new MenuItem("ADD");
+		item1.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+			}
+
+		});
+		MenuItem item2 = new MenuItem("EDIT");
+		item2.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+
+			}
+		});
+
+		MenuItem item3 = new MenuItem("DELETE");
+		item3.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+
+			}
+		});
+
+		MenuItem item4 = new MenuItem("PERSONALIZE");
+		item1.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+			}
+
+		});
+		MenuItem item5 = new MenuItem("DUPLICATE");
+		item2.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+
+			}
+		});
+
+		MenuItem item6 = new MenuItem("FILTER BY");
+		item3.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+
+			}
+		});
+
+		// Add MenuItem to ContextMenu
+		contextMenu.getItems().addAll(item1, item2, item3, item4, item5, item6);
+		if (tblTruckMenuCount == 0) {
+			tblTruckMenuCount++;
+			// When user right-click on Table
+			tblTruck.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				int click = 0;
 
 				@Override
-				public void handle(ActionEvent event) {
-				}
+				public void handle(MouseEvent mouseEvent) {
 
-			});
-			MenuItem item2 = new MenuItem("EDIT");
-			item2.setOnAction(new EventHandler<ActionEvent>() {
+					if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
 
-				@Override
-				public void handle(ActionEvent event) {
+						if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.SECONDARY)) {
+							contextMenu.show(tblTruck, mouseEvent.getScreenX(), mouseEvent.getScreenY());
 
-				}
-			});
+						} else {
+							contextMenu.hide();
+							click++;
 
-			MenuItem item3 = new MenuItem("DELETE");
-			item3.setOnAction(new EventHandler<ActionEvent>() {
-
-				@Override
-				public void handle(ActionEvent event) {
-
-				}
-			});
-			
-			MenuItem item4 = new MenuItem("PERSONALIZE");
-			item1.setOnAction(new EventHandler<ActionEvent>() {
-
-				@Override
-				public void handle(ActionEvent event) {
-				}
-
-			});
-			MenuItem item5 = new MenuItem("DUPLICATE");
-			item2.setOnAction(new EventHandler<ActionEvent>() {
-
-				@Override
-				public void handle(ActionEvent event) {
-
-				}
-			});
-
-			MenuItem item6 = new MenuItem("FILTER BY");
-			item3.setOnAction(new EventHandler<ActionEvent>() {
-
-				@Override
-				public void handle(ActionEvent event) {
-
-				}
-			});
- 
-			// Add MenuItem to ContextMenu
-			contextMenu.getItems().addAll(item1, item2, item3, item4, item5, item6);
-			if (tblTruckMenuCount == 0) {
-				tblTruckMenuCount++;
-				// When user right-click on Table
-				tblTruck.setOnMouseClicked(new EventHandler<MouseEvent>() {
-					int click = 0;
-
-					@Override
-					public void handle(MouseEvent mouseEvent) {
-
-						if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
-
-							if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.SECONDARY)) {
-								contextMenu.show(tblTruck, mouseEvent.getScreenX(), mouseEvent.getScreenY());
-
-							} else {
-								contextMenu.hide();
-								click++;
-
-							}
-							if (click == 2) {
-								btnEditTruckAction();
-								click = 0;
-							}
-
+						}
+						if (click == 2) {
+							editTruckAction();
+							click = 0;
 						}
 
 					}
 
-				});
+				}
 
-			}
+			});
 
 		}
+
+	}
 }

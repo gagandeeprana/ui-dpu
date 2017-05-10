@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane prefHeight="371.0" prefWidth="761.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.dpu.controller.TrailerEditController">
+<Pane prefHeight="371.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.TrailerEditController">
   <children>
     <TabPane layoutX="5.0" layoutY="23.0" prefHeight="348.0" prefWidth="756.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
@@ -40,6 +40,7 @@
                 </Button>
                 <Button font="$x1" layoutX="615.0" layoutY="278.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Cancel" />
                 <Label fx:id="unitMsg" layoutX="92.0" layoutY="37.0" prefWidth="240.0" text="" />
+                        <Button fx:id="btnEdit" layoutX="473.0" layoutY="279.0" mnemonicParsing="false" onAction="#handleEditAction" prefHeight="27.0" prefWidth="54.0" text="Edit" />
               </children>
             </AnchorPane>
           </content>
@@ -48,9 +49,9 @@
           <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>
-                <TextArea layoutX="3.0" prefHeight="176.0" prefWidth="600.0" />
-                <Button layoutX="609.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Date Stamp" />
-                <Button layoutX="609.0" layoutY="45.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Print" />
+                <TextArea fx:id="txtNotes" layoutX="3.0" prefHeight="176.0" prefWidth="600.0" />
+                <Button fx:id="btnDateStamp" layoutX="609.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Date Stamp" />
+                <Button fx:id="btnPrint" layoutX="609.0" layoutY="45.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Print" />
               </children>
             </AnchorPane>
           </content>

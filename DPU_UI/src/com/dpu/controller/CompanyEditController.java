@@ -71,14 +71,14 @@ public class CompanyEditController extends Application implements Initializable 
 	private TabPane tabPane;
 
 	@FXML
-	private TableColumn<AdditionalContact, String> additionalContact,position,phoneNo,faxNo,cellular,email,extension,pager,status,function;
-
+	private TableColumn<AdditionalContact, String> additionalContact, position, phoneNo, faxNo, cellular, email,
+			extension, pager, status, function;
 
 	@FXML
 	private TableColumn<BillingControllerModel, String> address;
 
 	@FXML
-	private Button btnSaveCompany;
+	private Button btnSaveCompany, btnEdit;
 
 	@FXML
 	private Button btnCancelCompany;
@@ -197,8 +197,37 @@ public class CompanyEditController extends Application implements Initializable 
 
 	}
 
+	@FXML
+	private void handleEditAction() {
+		btnEdit.setDisable(true);
+		disableFields(false);
+	}
+
+	private void disableFields(boolean v) {
+		btnSaveCompany.setDisable(v);
+		txtAddress.setDisable(v);
+		txtCity.setDisable(v);
+		txtCompany.setDisable(v);
+		txtEmail.setDisable(v);
+		txtProvince.setDisable(v);
+		txtUnitNo.setDisable(v);
+		txtWebsite.setDisable(v);
+		txtZip.setDisable(v);
+		ddlCategory.setDisable(v);
+		ddlCountry.setDisable(v);
+		ddlDivision.setDisable(v);
+		ddlSale.setDisable(v);
+
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		if (CompanyController.flag == 1) {
+			disableFields(true);
+		}
+		if (CompanyController.flag == 2) {
+			btnEdit.setVisible(false);
+		}
 		duplicateTableBillingLocations = tableBillingLocations;
 		duplicateTableAdditionalContact = tableAdditionalContact;
 		fetchBillingLocations();
@@ -231,7 +260,7 @@ public class CompanyEditController extends Application implements Initializable 
 		company.setProvinceState(txtProvince.getText());
 		company.setZip(txtZip.getText());
 		company.setEmail(txtEmail.getText());
-		company.setWebsite (txtWebsite.getText());
+		company.setWebsite(txtWebsite.getText());
 		company.setDivisionId(divisionList.get(ddlDivision.getSelectionModel().getSelectedIndex()).getDivisionId());
 		company.setCategoryId(categoryList.get(ddlCategory.getSelectionModel().getSelectedIndex()).getCategoryId());
 		company.setSaleId(saleList.get(ddlSale.getSelectionModel().getSelectedIndex()).getSaleId());
@@ -256,7 +285,7 @@ public class CompanyEditController extends Application implements Initializable 
 				billingLocation.setZip(billingModel.getZip());
 				billingLocation.setStatus(1);
 				billingLocation.setFax(billingModel.getFax());
-				 
+
 				billingLocations.add(billingLocation);
 			}
 		}
@@ -304,6 +333,7 @@ public class CompanyEditController extends Application implements Initializable 
 	List<Type> countryList = null;
 
 	public void initData(CompanyModel companyModel) {
+//		System.out.println("initData:::");
 		companyId = companyModel.getCompanyId();
 		txtCompany.setText(companyModel.getName());
 		txtAddress.setText(companyModel.getAddress());
@@ -360,6 +390,12 @@ public class CompanyEditController extends Application implements Initializable 
 				}
 			}
 		}
+		// if (CompanyController.flag == 1) {
+		// disableFields(true);
+		// }
+		// if (CompanyController.flag == 2) {
+		// btnEdit.setVisible(false);
+		// }
 	}
 
 	@FXML
@@ -519,7 +555,7 @@ public class CompanyEditController extends Application implements Initializable 
 					mapper.writeValueAsString(response);
 					if (response != null) {
 						Success success = mapper.readValue(response, Success.class);
-						String message= success.getMessage();
+						String message = success.getMessage();
 						JOptionPane.showMessageDialog(null, message, "Info", 1);
 					} else {
 						JOptionPane.showMessageDialog(null, "Failed to Updated Company.", "Info", 1);
@@ -911,7 +947,7 @@ public class CompanyEditController extends Application implements Initializable 
 						return new SimpleStringProperty(param.getValue().getFax() + "");
 					}
 				});
-		 
+
 	}
 
 	// validation applying

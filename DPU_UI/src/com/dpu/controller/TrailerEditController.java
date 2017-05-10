@@ -27,6 +27,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -34,13 +35,14 @@ import javafx.stage.Stage;
 public class TrailerEditController extends Application implements Initializable {
 
 	@FXML
-	Button btnUpdateTrailer;
+	Button btnUpdateTrailer, btnEdit, btnDateStamp, btnPrint;
 
 	Long trailerId = 0l;
 
 	@FXML
 	TextField txtUnitNo, txtUsage, txtOwner, txtOoName, txtFinance;
-
+	@FXML
+	TextArea txtNotes;
 	@FXML
 	ComboBox<String> ddlStatus, ddlCategory, ddlDivision, ddlTerminal, ddlTrailerType;
 
@@ -110,8 +112,38 @@ public class TrailerEditController extends Application implements Initializable 
 
 	}
 
+	private void disableFields(boolean v) {
+		btnDateStamp.setDisable(v);
+		btnPrint.setDisable(v);
+		btnUpdateTrailer.setDisable(v);
+		txtFinance.setDisable(v);
+		txtNotes.setDisable(v);
+		txtOoName.setDisable(v);
+		txtOwner.setDisable(v);
+		txtUnitNo.setDisable(v);
+		txtUsage.setDisable(v);
+		ddlCategory.setDisable(v);
+		ddlDivision.setDisable(v);
+		ddlStatus.setDisable(v);
+		ddlTerminal.setDisable(v);
+		ddlTrailerType.setDisable(v);
+
+	}
+
+	@FXML
+	private void handleEditAction() {
+		btnEdit.setDisable(true);
+		disableFields(false);
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		if (TrailerController.flag == 1) {
+			disableFields(true);
+		}
+		if (TrailerController.flag == 2) {
+			btnEdit.setVisible(false);
+		}
 	}
 
 	@Override
@@ -223,6 +255,4 @@ public class TrailerEditController extends Application implements Initializable 
 		}
 	}
 
-	
-	 
 }
