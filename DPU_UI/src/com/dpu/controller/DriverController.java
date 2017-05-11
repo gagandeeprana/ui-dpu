@@ -49,6 +49,7 @@ public class DriverController extends Application implements Initializable {
 	TableView<Driver> tblDriver;
 
 	public List<Driver> dList = null;
+	public static int flag = 0;
 
 	@FXML
 	TableColumn<Driver, String> driverCode, firstName, lastName, address, unit, city, province, postalCode, home, faxNo,
@@ -249,6 +250,33 @@ public class DriverController extends Application implements Initializable {
 
 	@FXML
 	private void btnEditDriverAction() {
+		flag = 2;
+		Driver driver = tblDriver.getSelectionModel().getSelectedItem();
+		System.out.println(driver + "   driver:: ");
+		if (driver != null) {
+			Platform.runLater(new Runnable() {
+
+				@Override
+				public void run() {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						String response = GetAPIClient.callGetAPI(
+								Iconstants.URL_SERVER + Iconstants.URL_DRIVER_API + "/" + driver.getDriverId(), null);
+						if (response != null && response.length() > 0) {
+							Driver c = mapper.readValue(response, Driver.class);
+							DriverEditController driverEditController = (DriverEditController) openEditDriverScreen();
+							driverEditController.initData(c);
+						}
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+					}
+				}
+			});
+		}
+	}
+
+	private void editDriverAction() {
+		flag = 1;
 		Driver driver = tblDriver.getSelectionModel().getSelectedItem();
 		System.out.println(driver + "   driver:: ");
 		if (driver != null) {
@@ -489,7 +517,7 @@ public class DriverController extends Application implements Initializable {
 
 						}
 						if (click == 2) {
-							btnEditDriverAction();
+							editDriverAction();
 							click = 0;
 						}
 

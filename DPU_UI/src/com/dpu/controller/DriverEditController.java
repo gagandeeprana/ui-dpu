@@ -34,7 +34,7 @@ import javafx.stage.Stage;
 public class DriverEditController extends Application implements Initializable {
 
 	@FXML
-	Button btnUpdateDriver;
+	Button btnUpdateDriver,btnEdit;
 
 	Long driverId = 0l;
 
@@ -101,9 +101,44 @@ public class DriverEditController extends Application implements Initializable {
 			}
 		});
 	}
+	@FXML
+	public void handleEditAction() {
+		btnEdit.setDisable(true);
+		disableFields(false);
+	}
+
+	private void disableFields(boolean v) {
+		btnUpdateDriver.setDisable(v);
+		txtAddress.setDisable(v);
+		txtCellular.setDisable(v);
+		txtCity.setDisable(v);
+		txtCode.setDisable(v);
+		txtDivision.setDisable(v);
+		txtEmail.setDisable(v);
+		txtFaxNo.setDisable(v);
+		txtFirstName.setDisable(v);
+		txtHome.setDisable(v);
+		txtLastName.setDisable(v);
+		txtPager.setDisable(v);
+		txtPostal.setDisable(v);
+		txtProvince.setDisable(v);
+		txtUnit.setDisable(v);
+		ddlCategory.setDisable(v);
+		ddlDivision.setDisable(v);
+		ddlDriverClass.setDisable(v);
+		ddlRole.setDisable(v);
+		ddlStatus.setDisable(v);
+		ddlTerminal.setDisable(v);
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		if (DriverController.flag == 1) {
+			disableFields(true);
+		}
+		if (DriverController.flag == 2) {
+			btnEdit.setVisible(false);
+		}
 	}
 
 	@Override

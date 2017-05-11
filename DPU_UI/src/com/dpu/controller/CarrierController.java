@@ -14,7 +14,6 @@ import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.AddtionalCarrierContact;
 import com.dpu.model.CarrierModel;
-import com.dpu.request.CompanyModel;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -30,8 +29,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -41,6 +40,7 @@ public class CarrierController extends Application implements Initializable {
 	public List<CarrierModel> cList = new ArrayList<CarrierModel>();
 	@FXML
 	TableView<CarrierModel> tblCarrier;
+	public static int flag = 0;
 
 	@FXML
 	TableColumn<CarrierModel, String> carrierName, address, unit, city, ps, postalCode, contact, contactPosition,
@@ -279,6 +279,69 @@ public class CarrierController extends Application implements Initializable {
 
 	@FXML
 	private void btnEditCarrierAction() {
+		flag = 2;
+		CarrierEditController.listOfAdditionalContact = new ArrayList<AddtionalCarrierContact>();
+		CarrierEditController.carrierModel = new CarrierModel();
+		CarrierEditController.selectedTabValue = 1;
+		CarrierModel carrierModel1 = cList.get(tblCarrier.getSelectionModel().getSelectedIndex());
+		carrierId = carrierModel1.getCarrierId();
+		CarrierModel carrierModel = cList.get(tblCarrier.getSelectionModel().getSelectedIndex());
+		if (carrierModel != null) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						String response = GetAPIClient.callGetAPI(
+								Iconstants.URL_SERVER + Iconstants.URL_CARRIER_API + "/" + carrierModel.getCarrierId(),
+								null);
+						if (response != null && response.length() > 1) {
+							CarrierModel carrierModel = mapper.readValue(response, CarrierModel.class);
+
+							if (carrierModel.getCarrierAdditionalContactModel() != null) {
+								int addtionalContactSize = carrierModel.getCarrierAdditionalContactModel().size();
+								for (int j = 0; j < addtionalContactSize; j++) {
+									AddtionalCarrierContact additionalContact = new AddtionalCarrierContact();
+
+									additionalContact.setCarrierId(carrierModel.getCarrierId());
+									additionalContact.setAdditionalContactId(carrierModel
+											.getCarrierAdditionalContactModel().get(j).getAdditionalContactId());
+									additionalContact.setCustomerName(
+											carrierModel.getCarrierAdditionalContactModel().get(j).getCustomerName());
+									additionalContact.setCellular(
+											carrierModel.getCarrierAdditionalContactModel().get(j).getCellular());
+									additionalContact.setEmail(
+											carrierModel.getCarrierAdditionalContactModel().get(j).getEmail());
+									additionalContact
+											.setExt(carrierModel.getCarrierAdditionalContactModel().get(j).getExt());
+									additionalContact
+											.setFax(carrierModel.getCarrierAdditionalContactModel().get(j).getFax());
+									additionalContact.setPrefix(
+											carrierModel.getCarrierAdditionalContactModel().get(j).getCellular());
+									additionalContact.setPhone(
+											carrierModel.getCarrierAdditionalContactModel().get(j).getPhone());
+									additionalContact.setPosition(
+											carrierModel.getCarrierAdditionalContactModel().get(j).getPosition());
+									additionalContact.setStatusId("Active");
+
+									CarrierEditController.listOfAdditionalContact.add(additionalContact);
+								}
+							}
+
+							CarrierEditController carrierEditController = (CarrierEditController) openEditCarrierScreen();
+							carrierEditController.initData(carrierModel);
+						}
+
+					} catch (Exception e) {
+						e.printStackTrace();
+						JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
+					}
+				}
+			});
+		}
+	}
+
+	private void editCarrierAction() {
 		CarrierEditController.listOfAdditionalContact = new ArrayList<AddtionalCarrierContact>();
 		CarrierEditController.carrierModel = new CarrierModel();
 		CarrierEditController.selectedTabValue = 1;
@@ -364,13 +427,17 @@ public class CarrierController extends Application implements Initializable {
 
 	}
 
+	/*
+	 * for open edit screen on double click
+	 */
 	@FXML
 	private void handleRowSelect() {
+		flag = 1;
 		tblCarrier.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-					btnEditCarrierAction();
+					editCarrierAction();
 				}
 			}
 		});

@@ -364,6 +364,7 @@ public class CarrierContractController extends Application implements Initializa
 
 	@FXML
 	private void handleRowSelect() {
+		flag = 1;
 		tableCarrierContract.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -384,7 +385,7 @@ public class CarrierContractController extends Application implements Initializa
 													+ "/" + carrierContractModel.getContractNoId(), null);
 									if (response != null && response.length() > 0) {
 										CarrierContractModel c = mapper.readValue(response, CarrierContractModel.class);
-										System.out.println("muiles::  " + c.getMiles());
+//										System.out.println("muiles::  " + c.getMiles());
 										CarrierContractEditController carrierContractEditController = (CarrierContractEditController) openEditCarrierContractScreen();
 										carrierContractEditController.initData(c);
 									}

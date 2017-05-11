@@ -71,22 +71,19 @@ public class CarrierContractEditController extends Application implements Initia
 
 	private void disableFields(boolean v) {
 		btnUpdateCarrierContract.setDisable(v);
+
 		txtCargo.setDisable(v);
-		txtCarrierInfo.setDisable(v);
-		txtCarrierRat.setDisable(v);
-		txtContractNo.setDisable(v);
 		txtContractRate.setDisable(v);
-		txtCreatedBy.setDisable(v);
-		txtDispatched.setDisable(v);
-		txtDivisionName.setDisable(v);
-		txtDotNo.setDisable(v);
-		txtEquipment.setDisable(v);
+		txtCarrierRat.setDisable(v);
 		txtHrs.setDisable(v);
+		txtMiles.setDisable(v);
+		txtContractNo.setDisable(v);
+		txtCreatedBy.setDisable(v);
 		txtincExpires.setDisable(v);
 		txtLibility.setDisable(v);
-		txtMcNo.setDisable(v);
-		txtMiles.setDisable(v);
 		txtTransDoc.setDisable(v);
+		txtMcNo.setDisable(v);
+		txtDotNo.setDisable(v);
 		ddlArrangedWith.setDisable(v);
 		ddlCarrier.setDisable(v);
 		ddlCategory.setDisable(v);

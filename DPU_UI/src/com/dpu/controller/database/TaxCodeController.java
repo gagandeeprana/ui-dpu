@@ -24,16 +24,21 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -177,6 +182,32 @@ public class TaxCodeController extends Application implements Initializable {
 		}
 	}
 
+	private void editTaxCodeAction() {
+		flag = 1;
+		TaxCode dpuTaxCode = TaxCodes.get(tblTaxCode.getSelectionModel().getSelectedIndex());
+		if (dpuTaxCode != null) {
+			Platform.runLater(new Runnable() {
+
+				@Override
+				public void run() {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						String response = GetAPIClient.callGetAPI(
+								Iconstants.URL_SERVER + Iconstants.URL_TAX_CODE_API + "/" + dpuTaxCode.getTaxCodeId(),
+								null);
+						if (response != null && response.length() > 0) {
+							TaxCode c = mapper.readValue(response, TaxCode.class);
+							TaxCodeEditController taxCodeEditController = (TaxCodeEditController) openEditTaxCodeScreen();
+							taxCodeEditController.initData(c);
+						}
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+					}
+				}
+			});
+		}
+	}
+
 	private Object openEditTaxCodeScreen() {
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
@@ -231,7 +262,8 @@ public class TaxCodeController extends Application implements Initializable {
 			public void run() {
 				try {
 					ObjectMapper mapper = new ObjectMapper();
-					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_TAX_CODE_API, null);
+					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_TAX_CODE_API,
+							null);
 					TaxCode s[] = mapper.readValue(response, TaxCode[].class);
 					TaxCodes = new ArrayList<TaxCode>();
 					for (TaxCode ccl : s) {
@@ -343,94 +375,94 @@ public class TaxCodeController extends Application implements Initializable {
 
 	@FXML
 	public void handleAddContMouseClick(MouseEvent event) {
-		tblTaxCode.setOnMousePressed(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-					// System.out.println(":::::::clicked::::::::");
-					flag = 1;
-					TaxCode dpuTaxCode = TaxCodes.get(tblTaxCode.getSelectionModel().getSelectedIndex());
-					if (dpuTaxCode != null) {
-						Platform.runLater(new Runnable() {
+		// Create ContextMenu
 
-							@Override
-							public void run() {
-								try {
-									ObjectMapper mapper = new ObjectMapper();
-									String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER
-											+ Iconstants.URL_TAX_CODE_API + "/" + dpuTaxCode.getTaxCodeId(), null);
-									if (response != null && response.length() > 0) {
-										TaxCode c = mapper.readValue(response, TaxCode.class);
-//										TaxCodeEditController TaxCodeEditController = (TaxCodeEditController) openEditTaxCodeScreen();
-//										TaxCodeEditController.initData(c);
-									}
-								} catch (Exception e) {
-									JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
-								}
-							}
-						});
-					}
-				}
+		ContextMenu contextMenu = new ContextMenu();
+
+		MenuItem item1 = new MenuItem("ADD");
+		item1.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+			}
+
+		});
+		MenuItem item2 = new MenuItem("EDIT");
+		item2.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+
 			}
 		});
 
-		// Create ContextMenu
-		/*
-		 * ContextMenu contextMenu = new ContextMenu();
-		 * 
-		 * MenuItem item1 = new MenuItem("ADD"); item1.setOnAction(new
-		 * EventHandler<ActionEvent>() {
-		 * 
-		 * @Override public void handle(ActionEvent event) { }
-		 * 
-		 * }); MenuItem item2 = new MenuItem("EDIT"); item2.setOnAction(new
-		 * EventHandler<ActionEvent>() {
-		 * 
-		 * @Override public void handle(ActionEvent event) {
-		 * 
-		 * } });
-		 * 
-		 * MenuItem item3 = new MenuItem("DELETE"); item3.setOnAction(new
-		 * EventHandler<ActionEvent>() {
-		 * 
-		 * @Override public void handle(ActionEvent event) {
-		 * 
-		 * } });
-		 * 
-		 * MenuItem item4 = new MenuItem("PERSONALIZE"); item1.setOnAction(new
-		 * EventHandler<ActionEvent>() {
-		 * 
-		 * @Override public void handle(ActionEvent event) { }
-		 * 
-		 * }); MenuItem item5 = new MenuItem("DUPLICATE"); item2.setOnAction(new
-		 * EventHandler<ActionEvent>() {
-		 * 
-		 * @Override public void handle(ActionEvent event) {
-		 * 
-		 * } });
-		 * 
-		 * MenuItem item6 = new MenuItem("FILTER BY"); item3.setOnAction(new
-		 * EventHandler<ActionEvent>() {
-		 * 
-		 * @Override public void handle(ActionEvent event) {
-		 * 
-		 * } });
-		 * 
-		 * // Add MenuItem to ContextMenu contextMenu.getItems().addAll(item1,
-		 * item2, item3, item4, item5, item6); if (tblTaxCoderMenuCount == 0) {
-		 * tblTaxCoderMenuCount++; // When user right-click on Table
-		 * tblTaxCode.setOnContextMenuRequested(new
-		 * EventHandler<ContextMenuEvent>() {
-		 * 
-		 * @Override public void handle(ContextMenuEvent event) {
-		 * contextMenu.show(tblTaxCode, event.getScreenX(), event.getScreenY());
-		 * 
-		 * }
-		 * 
-		 * });
-		 * 
-		 * }
-		 */
+		MenuItem item3 = new MenuItem("DELETE");
+		item3.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+
+			}
+		});
+
+		MenuItem item4 = new MenuItem("PERSONALIZE");
+		item1.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+			}
+
+		});
+		MenuItem item5 = new MenuItem("DUPLICATE");
+		item2.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+
+			}
+		});
+
+		MenuItem item6 = new MenuItem("FILTER BY");
+		item3.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+
+			}
+		});
+
+		// Add MenuItem to ContextMenu contextMenu.getItems().addAll(item1,
+		contextMenu.getItems().addAll(item1, item2, item3, item4, item5, item6);
+		if (tblTaxCoderMenuCount == 0) {
+			tblTaxCoderMenuCount++; // When user right-click on Table
+			tblTaxCode.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				int click = 0;
+
+				@Override
+				public void handle(MouseEvent mouseEvent) {
+
+					if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
+
+						if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.SECONDARY)) {
+							contextMenu.show(tblTaxCode, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+
+						} else {
+							contextMenu.hide();
+							click++;
+
+						}
+						if (click == 2) {
+							editTaxCodeAction();
+							click = 0;
+						}
+
+					}
+
+				}
+
+			});
+
+		}
 
 	}
 

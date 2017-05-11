@@ -89,7 +89,7 @@ public class CarrierEditController extends Application implements Initializable 
 	private TableView<AddtionalCarrierContact> tableAdditionalContact;
 
 	@FXML
-	private Button btnSaveCarrier;
+	private Button btnSaveCarrier, btnEdit;
 
 	@FXML
 	private Button btnCancelCarrier;
@@ -508,9 +508,41 @@ public class CarrierEditController extends Application implements Initializable 
 		});
 	}
 
+	private void disableFields(boolean v) {
+		btnSaveCarrier.setDisable(v);
+		txtAddress.setDisable(v);
+		txtCarrier.setDisable(v);
+		txtCell.setDisable(v);
+		txtCity.setDisable(v);
+		txtContact.setDisable(v);
+		txtEmail.setDisable(v);
+		txtExt.setDisable(v);
+		txtFax.setDisable(v);
+		txtPCZe.setDisable(v);
+		txtPhone.setDisable(v);
+		txtPosition.setDisable(v);
+		txtPrefix.setDisable(v);
+		txtPS.setDisable(v);
+		txtTollFree.setDisable(v);
+		txtUnit.setDisable(v);
+		txtWebsite.setDisable(v);
+	}
+
+	@FXML
+	private void handleEditAction() {
+		btnEdit.setDisable(true);
+		disableFields(false);
+	}
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		System.out.println("::::initialize:::::");
+		if (CarrierController.flag == 1) {
+			disableFields(true);
+		}
+		if (CarrierController.flag == 2) {
+			btnEdit.setVisible(false);
+		}
 		// tabPane.getSelectionModel().select(1);
 		fetchAdditionalCarrierContacts();
 		txtAddress.setText(carrierModel.getAddress());

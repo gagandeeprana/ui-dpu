@@ -11,12 +11,10 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.controller.CarrierContractController;
 import com.dpu.controller.MainScreen;
 import com.dpu.model.CustomBroker;
 import com.dpu.model.CustomBrokerTypeModel;
 import com.dpu.model.Failed;
-import com.dpu.model.HandlingModel;
 import com.dpu.model.Status;
 import com.dpu.model.Success;
 import com.dpu.model.Type;
@@ -564,6 +562,14 @@ public class CustomBrokerEditController extends Application implements Initializ
 		txtExtensionPARS.setDisable(v);
 		txtTrackerLinkPAPS.setDisable(v);
 		txtTrackerLinkPARS.setDisable(v);
+		ddl24HoursPAPS.setDisable(v);
+		ddl24HoursPARS.setDisable(v);
+		ddlOperationPAPS.setDisable(v);
+		ddlOperationPARS.setDisable(v);
+		ddlStatus.setDisable(v);
+		ddlStatusPAPS.setDisable(v);
+		ddlStatusPARS.setDisable(v);
+		ddlType.setDisable(v);
 	}
 
 	@Override
