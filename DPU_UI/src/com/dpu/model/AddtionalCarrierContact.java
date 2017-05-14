@@ -30,12 +30,50 @@ public class AddtionalCarrierContact {
 
 	private String email;
 
+	private Long functionId;
+
+	private String functionType;
+	private String function;
+	private Type functionObj;
+
+	public Long getFunctionId() {
+		return functionId;
+	}
+
+	public void setFunctionId(Long functionId) {
+		this.functionId = functionId;
+	}
+
+	public String getFunctionType() {
+		return functionType;
+	}
+
+	public void setFunctionType(String functionType) {
+		this.functionType = functionType;
+	}
+
+	public String getFunction() {
+		return function;
+	}
+
+	public void setFunction(String function) {
+		this.function = function;
+	}
+
+	public Type getFunctionObj() {
+		return functionObj;
+	}
+
+	public void setFunctionObj(Type functionObj) {
+		this.functionObj = functionObj;
+	}
+
 	public AddtionalCarrierContact() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public AddtionalCarrierContact(String customerName, String position, String phone, String ext, String fax,
-			String prefix, String cellular, String statusId, String email) {
+			String prefix, String cellular, String statusName, String email, String function) {
 		super();
 		this.customerName = customerName;
 		this.position = position;
@@ -44,8 +82,9 @@ public class AddtionalCarrierContact {
 		this.fax = fax;
 		this.prefix = prefix;
 		this.cellular = cellular;
-		this.statusId = statusId;
+		this.statusName = statusName;
 		this.email = email;
+		this.function = function;
 	}
 
 	public Long getCarrierId() {
@@ -119,7 +158,6 @@ public class AddtionalCarrierContact {
 	public void setCellular(String cellular) {
 		this.cellular = cellular;
 	}
-
 
 	public String getStatusId() {
 		return statusId;

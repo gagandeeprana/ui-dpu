@@ -50,7 +50,7 @@ public class AdditionCaarierContactEditController implements Initializable {
 	private CheckBox chkOrderConfirmation;
 
 	@FXML
-	private ComboBox<String> ddlStatus;
+	private ComboBox<String> ddlStatus,ddlFunction;
 
 	@FXML
 	private TextField txtAdditionalContact;
@@ -107,9 +107,10 @@ public class AdditionCaarierContactEditController implements Initializable {
 			String cellular = txtCellular.getText();
 			String status = ddlStatus.getSelectionModel().getSelectedItem();
 			String email = txtEmail.getText();
+			String function = ddlFunction.getSelectionModel().getSelectedItem();
 
 			AddtionalCarrierContact addtionalCarrierContact = new AddtionalCarrierContact(additionalContact, position,
-					phone, extension, fax, pager, cellular, status, email);
+					phone, extension, fax, pager, cellular, status, email,function);
 			if (CarrierEditController.addAddtionalContact == 0) {
 				CarrierEditController.listOfAdditionalContact.set(CarrierAddController.addEditIndex,
 						addtionalCarrierContact);
@@ -142,14 +143,14 @@ public class AdditionCaarierContactEditController implements Initializable {
 		// TODO Auto-generated method stub
 		if (CarrierEditController.addAddtionalContact != 1) {
 			if (CarrierEditController.additionalContactModel != null) {
-				txtAdditionalContact.setText(CarrierAddController.additionalContactModel.getCustomerName());
-				txtPosition.setText(CarrierAddController.additionalContactModel.getPosition());
-				txtExtension.setText(CarrierAddController.additionalContactModel.getExt());
-				txtFax.setText(CarrierAddController.additionalContactModel.getFax());
-				txtCellular.setText(CarrierAddController.additionalContactModel.getCellular());
-				txtEmail.setText(CarrierAddController.additionalContactModel.getEmail());
-				txtPager.setText(CarrierAddController.additionalContactModel.getPrefix());
-				txtPhone.setText(CarrierAddController.additionalContactModel.getPhone());
+				txtAdditionalContact.setText(CarrierEditController.additionalContactModel.getCustomerName());
+				txtPosition.setText(CarrierEditController.additionalContactModel.getPosition());
+				txtExtension.setText(CarrierEditController.additionalContactModel.getExt());
+				txtFax.setText(CarrierEditController.additionalContactModel.getFax());
+				txtCellular.setText(CarrierEditController.additionalContactModel.getCellular());
+				txtEmail.setText(CarrierEditController.additionalContactModel.getEmail());
+				txtPager.setText(CarrierEditController.additionalContactModel.getPrefix());
+				txtPhone.setText(CarrierEditController.additionalContactModel.getPhone());
 			}
 		}
 

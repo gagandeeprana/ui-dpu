@@ -86,6 +86,9 @@ public class CarrierEditController extends Application implements Initializable 
 	private TableColumn<AddtionalCarrierContact, String> status;
 
 	@FXML
+	private TableColumn<AddtionalCarrierContact, String> function;
+
+	@FXML
 	private TableView<AddtionalCarrierContact> tableAdditionalContact;
 
 	@FXML
@@ -238,20 +241,20 @@ public class CarrierEditController extends Application implements Initializable 
 						return new SimpleStringProperty(param.getValue().getExt() + "");
 					}
 				});
-		pager.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
-
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<AddtionalCarrierContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getPrefix() + "");
-					}
-				});
 		status.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<AddtionalCarrierContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getStatusId() + "");
+						return new SimpleStringProperty(param.getValue().getStatusName() + "");
+					}
+				});
+		function.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<AddtionalCarrierContact, String> param) {
+						return new SimpleStringProperty(param.getValue().getFunction() + "");
 					}
 				});
 
@@ -319,6 +322,8 @@ public class CarrierEditController extends Application implements Initializable 
 			e.printStackTrace();
 		}
 	}
+
+	int additionalContactCountMenu = 0;
 
 	@FXML
 	void handleAddContMouseClick(MouseEvent event) {
@@ -405,15 +410,19 @@ public class CarrierEditController extends Application implements Initializable 
 		// Add MenuItem to ContextMenu
 		contextMenu.getItems().addAll(item1, item2, item3);
 
-		// When user right-click on Table
-		tableAdditionalContact.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
-			@Override
-			public void handle(ContextMenuEvent event) {
-				contextMenu.show(tableAdditionalContact, event.getScreenX(), event.getScreenY());
+		if (additionalContactCountMenu == 0) {
+			additionalContactCountMenu++;
+			// When user right-click on Table
+			tableAdditionalContact.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+				@Override
+				public void handle(ContextMenuEvent event) {
+					contextMenu.show(tableAdditionalContact, event.getScreenX(), event.getScreenY());
 
-			}
+				}
 
-		});
+			});
+
+		}
 
 	}
 
