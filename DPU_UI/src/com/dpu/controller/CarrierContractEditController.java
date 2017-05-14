@@ -10,9 +10,11 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.model.AddtionalCarrierContact;
 import com.dpu.model.CarrierContractModel;
 import com.dpu.model.CarrierModel;
 import com.dpu.model.Category;
+import com.dpu.model.DispatcherModel;
 import com.dpu.model.Division;
 import com.dpu.model.Driver;
 import com.dpu.model.Equipment;
@@ -241,9 +243,9 @@ public class CarrierContractEditController extends Application implements Initia
 			}
 		}
 		for (int i = 0; i < carrierContractModel.getArrangedWithList().size(); i++) {
-			Type type = carrierContractModel.getArrangedWithList().get(i);
-			ddlArrangedWith.getItems().add(type.getTypeName());
-			if (type.getTypeId() == carrierContractModel.getArrangedWithId()) {
+			AddtionalCarrierContact type = carrierContractModel.getArrangedWithList().get(i);
+			ddlArrangedWith.getItems().add(type.getCustomerName());
+			if (type.getAdditionalContactId() == carrierContractModel.getArrangedWithId()) {
 				ddlArrangedWith.getSelectionModel().select(i);
 			}
 		}
@@ -269,9 +271,9 @@ public class CarrierContractEditController extends Application implements Initia
 			}
 		}
 		for (int i = 0; i < carrierContractModel.getDispatcherList().size(); i++) {
-			Type type = carrierContractModel.getDispatcherList().get(i);
-			ddlDispatcher.getItems().add(type.getTypeName());
-			if (type.getTypeId() == carrierContractModel.getDispatcherId()) {
+			DispatcherModel type = carrierContractModel.getDispatcherList().get(i);
+			ddlDispatcher.getItems().add(type.getArrangedWith());
+			if (type.getId() == carrierContractModel.getDispatcherId()) {
 				ddlDispatcher.getSelectionModel().select(i);
 			}
 		}

@@ -1,7 +1,6 @@
 package com.dpu.controller;
 
 import java.net.URL;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -12,9 +11,11 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.GetAPIClient;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
+import com.dpu.model.AddtionalCarrierContact;
 import com.dpu.model.CarrierContractModel;
 import com.dpu.model.CarrierModel;
 import com.dpu.model.Category;
+import com.dpu.model.DispatcherModel;
 import com.dpu.model.Division;
 import com.dpu.model.Driver;
 import com.dpu.model.Equipment;
@@ -51,11 +52,11 @@ public class CarrierContractAddController extends Application implements Initial
 	List<Driver> driverList = null;
 	List<Category> categoryList = null;
 	List<Equipment> equipmentList = null;
-	List<Type> arrangedWithList = null;
+	List<AddtionalCarrierContact> arrangedWithList = null;
 	List<Type> currencyList = null;
 	List<Type> roleList = null;
 	List<Type> commodityList = null;
-	List<Type> dispatcherList = null;
+	List<DispatcherModel> dispatcherList = null;
 
 	private void fetchMasterDataForDropDowns() {
 
@@ -137,20 +138,28 @@ public class CarrierContractAddController extends Application implements Initial
 				Type type = (Type) object;
 				comboBox.getItems().add(type.getTypeName());
 			}
+			if (object != null && object instanceof DispatcherModel) {
+				DispatcherModel type = (DispatcherModel) object;
+				comboBox.getItems().add(String.valueOf(type.getId()));
+			}
+			if (object != null && object instanceof AddtionalCarrierContact) {
+				AddtionalCarrierContact type = (AddtionalCarrierContact) object;
+				comboBox.getItems().add(type.getCustomerName());
+			}
 		}
 	}
 
 	private CarrierContractModel setCarrierContractValue() {
 		CarrierContractModel carrierContractModel = new CarrierContractModel();
 		carrierContractModel.setArrangedWithId(
-				arrangedWithList.get(ddlArrangedWith.getSelectionModel().getSelectedIndex()).getTypeId());
+				arrangedWithList.get(ddlArrangedWith.getSelectionModel().getSelectedIndex()).getAdditionalContactId());
 		carrierContractModel
 				.setCurrencyId(currencyList.get(ddlCurrancy.getSelectionModel().getSelectedIndex()).getTypeId());
 		carrierContractModel.setRoleId(roleList.get(ddlRole.getSelectionModel().getSelectedIndex()).getTypeId());
 		carrierContractModel
 				.setCommodityId(commodityList.get(ddlCommodity.getSelectionModel().getSelectedIndex()).getTypeId());
 		carrierContractModel
-				.setDispatcherId(dispatcherList.get(ddlDispatcher.getSelectionModel().getSelectedIndex()).getTypeId());
+				.setDispatcherId(dispatcherList.get(ddlDispatcher.getSelectionModel().getSelectedIndex()).getId());
 		carrierContractModel
 				.setCarrierId(carrierList.get(ddlCarrier.getSelectionModel().getSelectedIndex()).getCarrierId());
 		carrierContractModel
@@ -161,6 +170,7 @@ public class CarrierContractAddController extends Application implements Initial
 				.setCategoryId(categoryList.get(ddlCategory.getSelectionModel().getSelectedIndex()).getCategoryId());
 		carrierContractModel.setEquipmentId(
 				equipmentList.get(ddlEquipment.getSelectionModel().getSelectedIndex()).getEquipmentId());
+
 		carrierContractModel.setContractRate(Double.parseDouble(txtContractRate.getText()));
 		carrierContractModel.setCarrierRat(txtCarrierRat.getText());
 		carrierContractModel.setHours(txtHrs.getText());
