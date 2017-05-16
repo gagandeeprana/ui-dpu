@@ -4,11 +4,21 @@
 package com.dpu.controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.swing.JOptionPane;
+
+import org.codehaus.jackson.map.ObjectMapper;
+
+import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.AddtionalCarrierContact;
+import com.dpu.model.Company;
+import com.dpu.model.Status;
+import com.dpu.model.Type;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -50,7 +60,7 @@ public class AdditionCaarierContactEditController implements Initializable {
 	private CheckBox chkOrderConfirmation;
 
 	@FXML
-	private ComboBox<String> ddlStatus,ddlFunction;
+	private ComboBox<String> ddlStatus, ddlFunction;
 
 	@FXML
 	private TextField txtAdditionalContact;
@@ -110,21 +120,25 @@ public class AdditionCaarierContactEditController implements Initializable {
 			String function = ddlFunction.getSelectionModel().getSelectedItem();
 
 			AddtionalCarrierContact addtionalCarrierContact = new AddtionalCarrierContact(additionalContact, position,
-					phone, extension, fax, pager, cellular, status, email,function);
+					phone, extension, fax, pager, cellular, status, email, function);
+
+			if (CarrierEditController.additionalContactIdPri != 0l)
+				addtionalCarrierContact.setAdditionalContactId(CarrierEditController.additionalContactIdPri);
+
 			if (CarrierEditController.addAddtionalContact == 0) {
-				CarrierEditController.listOfAdditionalContact.set(CarrierAddController.addEditIndex,
+				CarrierEditController.listOfAdditionalContact.set(CarrierEditController.addEditIndex,
 						addtionalCarrierContact);
 			} else if (CarrierEditController.addAddtionalContact == 1) {
 				CarrierEditController.listOfAdditionalContact.add(addtionalCarrierContact);
 			}
 			// CarrierAddController.listOfAdditionalContact.add(addtionalCarrierContact);
-			openAddCarrierScree();
 
+			CarrierEditController.fetchAdditionalContactsUsingDuplicate();
+			closeEditAdditionalContactScreen(btnSaveAdditionalContact);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		closeEditAdditionalContactScreen(btnSaveAdditionalContact);
 	}
 
 	@FXML
@@ -138,8 +152,54 @@ public class AdditionCaarierContactEditController implements Initializable {
 		loginStage.close();
 	}
 
+	private void fetchMasterDataForDropDowns() {
+
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					ObjectMapper mapper = new ObjectMapper();
+					String response = GetAPIClient.callGetAPI(
+							Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/openAddAdditionalContact", null);
+					Company company = mapper.readValue(response, Company.class);
+
+					List<Status> statusList = company.getStatusList();
+					fillDropDown(ddlStatus, statusList);
+
+					List<Type> functionList = company.getFunctionList();
+					fillDropDown(ddlFunction, functionList);
+
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+				}
+			}
+		});
+	}
+
+	private void fillDropDown(ComboBox<String> comboBox, List<?> list) {
+
+		for (int i = 0; i < list.size(); i++) {
+
+			Object object = list.get(i);
+
+			if (object != null && object instanceof Type) {
+				Type type = (Type) object;
+				comboBox.getItems().add(type.getTypeName());
+			}
+
+			if (object != null && object instanceof Status) {
+				Status status = (Status) object;
+				comboBox.getItems().add(status.getStatus());
+			}
+
+		}
+	}
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		fetchMasterDataForDropDowns();
+		System.out.println("size::" + CarrierEditController.listOfAdditionalContact.size());
 		// TODO Auto-generated method stub
 		if (CarrierEditController.addAddtionalContact != 1) {
 			if (CarrierEditController.additionalContactModel != null) {
