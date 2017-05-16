@@ -98,7 +98,7 @@ public class TruckController extends Application implements Initializable {
 
 	@FXML
 	private void btnEditTruckAction() {
-		flag=2;
+		flag = 2;
 		Truck truck = tblTruck.getSelectionModel().getSelectedItem();
 		if (truck != null) {
 			Platform.runLater(new Runnable() {
@@ -124,8 +124,9 @@ public class TruckController extends Application implements Initializable {
 			});
 		}
 	}
+
 	private void editTruckAction() {
-		flag=1;
+		flag = 1;
 		Truck truck = tblTruck.getSelectionModel().getSelectedItem();
 		if (truck != null) {
 			Platform.runLater(new Runnable() {
@@ -426,24 +427,24 @@ public class TruckController extends Application implements Initializable {
 			tblTruckMenuCount++;
 			// When user right-click on Table
 			tblTruck.setOnMouseClicked(new EventHandler<MouseEvent>() {
-				int click = 0;
 
 				@Override
 				public void handle(MouseEvent mouseEvent) {
 
 					if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
 
-						if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.SECONDARY)) {
-							contextMenu.show(tblTruck, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+						if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
 
-						} else {
-							contextMenu.hide();
-							click++;
+							if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.SECONDARY)) {
+								contextMenu.show(tblTruck, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+							} else if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.PRIMARY)
+									&& ((MouseEvent) mouseEvent).getClickCount() == 2) {
+								editTruckAction();
 
-						}
-						if (click == 2) {
-							editTruckAction();
-							click = 0;
+							} else if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.PRIMARY)) {
+								contextMenu.hide();
+
+							}
 						}
 
 					}

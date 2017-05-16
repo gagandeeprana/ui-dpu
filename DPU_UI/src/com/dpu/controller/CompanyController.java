@@ -321,7 +321,7 @@ public class CompanyController extends Application implements Initializable {
 
 							CompanyEditController companyAddController = (CompanyEditController) openEditCompanyScreen();
 							companyAddController.initData(c);
-				
+
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -817,8 +817,8 @@ public class CompanyController extends Application implements Initializable {
 	ContextMenu contextMenu = new ContextMenu();
 
 	@FXML
-	public void handleAddContMouseClick(MouseEvent arg0) {
-		me = arg0;
+	public void handleAddContMouseClick(MouseEvent mouseEvent) {
+		me = mouseEvent;
 		contextMenu = new ContextMenu();
 		MenuItem add = new MenuItem("Add");
 		menuAdd(add);
@@ -845,7 +845,6 @@ public class CompanyController extends Application implements Initializable {
 			tblCompanyMenuCount++;
 			// When user right-click on Table
 			tblCompany.setOnMouseClicked(new EventHandler<MouseEvent>() {
-				int click = 0;
 
 				@Override
 				public void handle(MouseEvent mouseEvent) {
@@ -854,18 +853,14 @@ public class CompanyController extends Application implements Initializable {
 
 						if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.SECONDARY)) {
 							contextMenu.show(tblCompany, mouseEvent.getScreenX(), mouseEvent.getScreenY());
-
-						} else {
-							contextMenu.hide();
-							click++;
-
-						}
-						if (click == 2) {
+						} else if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.PRIMARY)
+								&& ((MouseEvent) mouseEvent).getClickCount() == 2) {
 							editCompanyAction();
-//							btnEditCompanyAction();
-							click = 0;
-						}
 
+						} else if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.PRIMARY)) {
+							contextMenu.hide();
+
+						}
 					}
 
 				}

@@ -426,24 +426,24 @@ public class TrailerController extends Application implements Initializable {
 			tblTrailerMenuCount++;
 			// When user right-click on Table
 			tblTrailer.setOnMouseClicked(new EventHandler<MouseEvent>() {
-				int click = 0;
 
 				@Override
 				public void handle(MouseEvent mouseEvent) {
 
 					if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
 
-						if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.SECONDARY)) {
-							contextMenu.show(tblTrailer, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+						if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
 
-						} else {
-							contextMenu.hide();
-							click++;
+							if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.SECONDARY)) {
+								contextMenu.show(tblTrailer, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+							} else if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.PRIMARY)
+									&& ((MouseEvent) mouseEvent).getClickCount() == 2) {
+								editTrailerAction();
 
-						}
-						if (click == 2) {
-							editTrailerAction();
-							click = 0;
+							} else if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.PRIMARY)) {
+								contextMenu.hide();
+
+							}
 						}
 
 					}

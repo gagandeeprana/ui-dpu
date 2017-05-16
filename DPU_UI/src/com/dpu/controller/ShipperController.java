@@ -74,7 +74,7 @@ public class ShipperController extends Application implements Initializable {
 
 	@FXML
 	private void btnEditShipperAction() {
-		flag=2;
+		flag = 2;
 		Shipper shipper = tblShipper.getSelectionModel().getSelectedItem();
 		System.out.println(shipper);
 		if (shipper != null) {
@@ -101,7 +101,7 @@ public class ShipperController extends Application implements Initializable {
 	}
 
 	private void editShipperAction() {
-		flag=1;
+		flag = 1;
 		Shipper shipper = tblShipper.getSelectionModel().getSelectedItem();
 		System.out.println(shipper);
 		if (shipper != null) {
@@ -481,24 +481,24 @@ public class ShipperController extends Application implements Initializable {
 			tblShipperMenuCount++;
 			// When user right-click on Table
 			tblShipper.setOnMouseClicked(new EventHandler<MouseEvent>() {
-				int click = 0;
 
 				@Override
 				public void handle(MouseEvent mouseEvent) {
 
 					if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
 
-						if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.SECONDARY)) {
-							contextMenu.show(tblShipper, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+						if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
 
-						} else {
-							contextMenu.hide();
-							click++;
+							if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.SECONDARY)) {
+								contextMenu.show(tblShipper, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+							} else if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.PRIMARY)
+									&& ((MouseEvent) mouseEvent).getClickCount() == 2) {
+								editShipperAction();
 
-						}
-						if (click == 2) {
-							editShipperAction();
-							click = 0;
+							} else if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.PRIMARY)) {
+								contextMenu.hide();
+
+							}
 						}
 
 					}

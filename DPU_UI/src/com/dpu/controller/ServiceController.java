@@ -37,6 +37,7 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -158,6 +159,32 @@ public class ServiceController extends Application implements Initializable {
 	@FXML
 	private void btnEditServiceAction() {
 		flag = 2;
+		DPUService dpuService = services.get(tblService.getSelectionModel().getSelectedIndex());
+		if (dpuService != null) {
+			Platform.runLater(new Runnable() {
+
+				@Override
+				public void run() {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						String response = GetAPIClient.callGetAPI(
+								Iconstants.URL_SERVER + Iconstants.URL_SERVICE_API + "/" + dpuService.getServiceId(),
+								null);
+						if (response != null && response.length() > 0) {
+							DPUService c = mapper.readValue(response, DPUService.class);
+							ServiceEditController serviceEditController = (ServiceEditController) openEditServiceScreen();
+							serviceEditController.initData(c);
+						}
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+					}
+				}
+			});
+		}
+	}
+
+	private void editServiceAction() {
+		flag = 1;
 		DPUService dpuService = services.get(tblService.getSelectionModel().getSelectedIndex());
 		if (dpuService != null) {
 			Platform.runLater(new Runnable() {
@@ -356,94 +383,91 @@ public class ServiceController extends Application implements Initializable {
 
 	@FXML
 	public void handleAddContMouseClick(MouseEvent event) {
-		tblService.setOnMousePressed(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-					// System.out.println(":::::::clicked::::::::");
-					flag = 1;
-					DPUService dpuService = services.get(tblService.getSelectionModel().getSelectedIndex());
-					if (dpuService != null) {
-						Platform.runLater(new Runnable() {
 
-							@Override
-							public void run() {
-								try {
-									ObjectMapper mapper = new ObjectMapper();
-									String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER
-											+ Iconstants.URL_SERVICE_API + "/" + dpuService.getServiceId(), null);
-									if (response != null && response.length() > 0) {
-										DPUService c = mapper.readValue(response, DPUService.class);
-										ServiceEditController serviceEditController = (ServiceEditController) openEditServiceScreen();
-										serviceEditController.initData(c);
-									}
-								} catch (Exception e) {
-									JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
-								}
-							}
-						});
-					}
-				}
+		// Create ContextMenu
+
+		ContextMenu contextMenu = new ContextMenu();
+
+		MenuItem item1 = new MenuItem("ADD");
+		item1.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+			}
+
+		});
+		MenuItem item2 = new MenuItem("EDIT");
+		item2.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+
 			}
 		});
 
-		// Create ContextMenu
-		/*
-		 * ContextMenu contextMenu = new ContextMenu();
-		 * 
-		 * MenuItem item1 = new MenuItem("ADD"); item1.setOnAction(new
-		 * EventHandler<ActionEvent>() {
-		 * 
-		 * @Override public void handle(ActionEvent event) { }
-		 * 
-		 * }); MenuItem item2 = new MenuItem("EDIT"); item2.setOnAction(new
-		 * EventHandler<ActionEvent>() {
-		 * 
-		 * @Override public void handle(ActionEvent event) {
-		 * 
-		 * } });
-		 * 
-		 * MenuItem item3 = new MenuItem("DELETE"); item3.setOnAction(new
-		 * EventHandler<ActionEvent>() {
-		 * 
-		 * @Override public void handle(ActionEvent event) {
-		 * 
-		 * } });
-		 * 
-		 * MenuItem item4 = new MenuItem("PERSONALIZE"); item1.setOnAction(new
-		 * EventHandler<ActionEvent>() {
-		 * 
-		 * @Override public void handle(ActionEvent event) { }
-		 * 
-		 * }); MenuItem item5 = new MenuItem("DUPLICATE"); item2.setOnAction(new
-		 * EventHandler<ActionEvent>() {
-		 * 
-		 * @Override public void handle(ActionEvent event) {
-		 * 
-		 * } });
-		 * 
-		 * MenuItem item6 = new MenuItem("FILTER BY"); item3.setOnAction(new
-		 * EventHandler<ActionEvent>() {
-		 * 
-		 * @Override public void handle(ActionEvent event) {
-		 * 
-		 * } });
-		 * 
-		 * // Add MenuItem to ContextMenu contextMenu.getItems().addAll(item1,
-		 * item2, item3, item4, item5, item6); if (tblServicerMenuCount == 0) {
-		 * tblServicerMenuCount++; // When user right-click on Table
-		 * tblService.setOnContextMenuRequested(new
-		 * EventHandler<ContextMenuEvent>() {
-		 * 
-		 * @Override public void handle(ContextMenuEvent event) {
-		 * contextMenu.show(tblService, event.getScreenX(), event.getScreenY());
-		 * 
-		 * }
-		 * 
-		 * });
-		 * 
-		 * }
-		 */
+		MenuItem item3 = new MenuItem("DELETE");
+		item3.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+
+			}
+		});
+
+		MenuItem item4 = new MenuItem("PERSONALIZE");
+		item1.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+			}
+
+		});
+		MenuItem item5 = new MenuItem("DUPLICATE");
+		item2.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+
+			}
+		});
+
+		MenuItem item6 = new MenuItem("FILTER BY");
+		item3.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+
+			}
+		});
+
+		// Add MenuItem to ContextMenu contextMenu.getItems().addAll(item1,
+		contextMenu.getItems().addAll(item2, item3, item4, item5, item6);
+		if (tblServicerMenuCount == 0) {
+			tblServicerMenuCount++; // When user right-click on Table
+			tblService.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+				@Override
+				public void handle(MouseEvent mouseEvent) {
+
+					if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
+
+						if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.SECONDARY)) {
+							contextMenu.show(tblService, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+						} else if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.PRIMARY)
+								&& ((MouseEvent) mouseEvent).getClickCount() == 2) {
+							editServiceAction();
+
+						} else if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.PRIMARY)) {
+							contextMenu.hide();
+
+						}
+					}
+
+				}
+
+			});
+
+		}
 
 	}
 
