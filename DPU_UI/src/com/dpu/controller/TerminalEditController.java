@@ -155,7 +155,7 @@ public class TerminalEditController extends Application implements Initializable
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		System.out.println("initilize");
+//		System.out.println("initilize");
 		if (TerminalPanelController.flag == 1) {
 			disableFields(true);
 		}
@@ -166,7 +166,7 @@ public class TerminalEditController extends Application implements Initializable
 
 	private void disableFields(boolean v) {
 		btnUpdateTerminal.setDisable(v);
-		txtLocation.setDisable(v);
+//		txtLocation.setDisable(v);
 		txtTerminalName.setDisable(v);
 		ddlAvailableServices.setDisable(v);
 		ddlLocation.setDisable(v);

@@ -257,7 +257,7 @@ public class TerminalPanelController extends Application implements Initializabl
 			stage.show();
 			return fxmlLoader.getController();
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 		return null;
 	}
