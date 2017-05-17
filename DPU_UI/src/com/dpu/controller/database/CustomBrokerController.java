@@ -137,33 +137,6 @@ public class CustomBrokerController extends Application implements Initializable
 		}
 	}
 
-	@FXML
-	private void btnEditCustomBrokerAction() {
-		flag = 2;
-		CustomBroker customBroker = tblCustomBroker.getSelectionModel().getSelectedItem();
-		if (customBroker != null) {
-			Platform.runLater(new Runnable() {
-
-				@Override
-				public void run() {
-					try {
-						ObjectMapper mapper = new ObjectMapper();
-						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER
-								+ Iconstants.URL_CUSTOM_BROKER_API + "/" + customBroker.getCustomBrokerId(), null);
-						System.out.println(response);
-						if (response != null && response.length() > 0) {
-							CustomBroker c = mapper.readValue(response, CustomBroker.class);
-							CustomBrokerEditController customBrokerEditController = (CustomBrokerEditController) openEditCustomBrokerScreen();
-							customBrokerEditController.initData(c);
-						}
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
-					}
-				}
-			});
-		}
-	}
-
 	private Object openEditCustomBrokerScreen() {
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
@@ -449,7 +422,8 @@ public class CustomBrokerController extends Application implements Initializable
 	private void tblCustomBrokerAction() {
 		// tblCustomBroker.getScene().getStylesheets().add(Iconstants.CUSTOM_BROKER_BASE_PACKAGE
 		// + "sample.css");
-		tblCustomBroker.getScene().getStylesheets().add(Iconstants.CUSTOM_BROKER_BASE_PACKAGE + "sample.css");
+		// tblCustomBroker.getScene().getStylesheets().add(Iconstants.CUSTOM_BROKER_BASE_PACKAGE
+		// + "sample.css");
 		tblCustomBroker.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -473,6 +447,7 @@ public class CustomBrokerController extends Application implements Initializable
 										customBrokerEditController.initData(c);
 									}
 								} catch (Exception e) {
+									e.printStackTrace();
 									JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
 								}
 							}
@@ -481,6 +456,33 @@ public class CustomBrokerController extends Application implements Initializable
 				}
 			}
 		});
+	}
+
+	@FXML
+	private void btnEditCustomBrokerAction() {
+		flag = 2;
+		CustomBroker customBroker = tblCustomBroker.getSelectionModel().getSelectedItem();
+		if (customBroker != null) {
+			Platform.runLater(new Runnable() {
+
+				@Override
+				public void run() {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER
+								+ Iconstants.URL_CUSTOM_BROKER_API + "/" + customBroker.getCustomBrokerId(), null);
+						System.out.println(response);
+						if (response != null && response.length() > 0) {
+							CustomBroker c = mapper.readValue(response, CustomBroker.class);
+							CustomBrokerEditController customBrokerEditController = (CustomBrokerEditController) openEditCustomBrokerScreen();
+							customBrokerEditController.initData(c);
+						}
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+					}
+				}
+			});
+		}
 	}
 
 	// ADD MENU

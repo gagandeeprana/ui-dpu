@@ -15,7 +15,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.GetAPIClient;
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.model.AdditionalContact;
 import com.dpu.model.AddtionalCarrierContact;
 import com.dpu.model.CarrierModel;
 import com.dpu.util.Validate;

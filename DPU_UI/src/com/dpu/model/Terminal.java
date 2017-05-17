@@ -3,9 +3,10 @@ package com.dpu.model;
 import java.util.Date;
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonSerialize(include = Inclusion.NON_NULL)
 public class Terminal {
 	private Long terminalId;
@@ -22,6 +23,7 @@ public class Terminal {
 	private List<DPUService> serviceList;
 	private Long shipperId;
 	private String shipperName;
+	private List<Shipper> shipperList;
 	
 	public List<DPUService> getServiceList() {
 		return serviceList;
@@ -38,7 +40,6 @@ public class Terminal {
 	public void setServiceIds(List<Long> serviceIds) {
 		this.serviceIds = serviceIds;
 	}
-	private List<Shipper> shipperList;
 	
 	public Long getTerminalId() {
 		return terminalId;
