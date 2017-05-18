@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -43,7 +44,7 @@
                <font>
                   <Font size="14.0" />
                </font></Label>
-        <Label fx:id="lblHome"  layoutX="345.0" layoutY="43.0" text="Home">
+        <Label fx:id="lblHome" layoutX="345.0" layoutY="43.0" text="Home">
                <font>
                   <Font size="14.0" />
                </font></Label>
@@ -55,7 +56,7 @@
                <font>
                   <Font size="14.0" />
                </font></Label>
-        <Label fx:id="lblTerminal"  layoutX="346.0" layoutY="139.0" text="Terminal">
+        <Label fx:id="lblTerminal" layoutX="346.0" layoutY="139.0" text="Terminal">
                <font>
                   <Font size="14.0" />
                </font></Label>
@@ -97,39 +98,39 @@
             </Tab>
           </tabs>
         </TabPane>
-        <TextField fx:id="txtCode" onKeyPressed="#driverCodeKeyPressed" layoutX="90.0" layoutY="8.0" prefHeight="25.0" prefWidth="240.0" />
-        <TextField fx:id="txtFirstName" onKeyPressed="#driverFirstNameKeyPressed" layoutX="90.0" layoutY="40.0" prefHeight="25.0" prefWidth="240.0" />
-        <TextField fx:id="txtLastName" onKeyPressed="#driverLastNameKeyPressed" layoutX="90.0" layoutY="72.0" prefHeight="25.0" prefWidth="240.0" />
-        <TextField fx:id="txtAddress"  onKeyPressed="#driverAddressKeyPressed" layoutX="90.0" layoutY="104.0" prefHeight="25.0" prefWidth="240.0" />
-        <TextField fx:id="txtUnit" onKeyPressed="#driverUnitKeyPressed" layoutX="90.0" layoutY="136.0" prefHeight="25.0" prefWidth="240.0" />
-        <TextField fx:id="txtCity" onKeyPressed="#driverCityKeyPressed" layoutX="90.0" layoutY="168.0" prefHeight="25.0" prefWidth="240.0" />
-        <TextField fx:id="txtPostal" onKeyPressed="#driverPostalKeyPressed" layoutX="90.0" layoutY="200.0" prefHeight="25.0" prefWidth="240.0" />
-        <TextField fx:id="txtEmail" onKeyPressed="#driverEmailKeyPressed"  layoutX="410.0" layoutY="8.0" prefHeight="25.0" prefWidth="240.0" />
-        <TextField fx:id="txtHome"  onKeyPressed="#driverHomeKeyPressed" layoutX="410.0" layoutY="40.0" prefHeight="25.0" prefWidth="80.0" />
-        <TextField fx:id="txtCellular" onKeyPressed="#driverCellularKeyPressed"  layoutX="410.0" layoutY="72.0" prefHeight="25.0" prefWidth="80.0" />
-        <TextField fx:id="txtFaxNo" onKeyPressed="#driverFaxKeyPressed" layoutX="541.0" layoutY="41.0" prefHeight="25.0" prefWidth="109.0" />
-        <TextField fx:id="txtPager" onKeyPressed="#driverPagerKeyPressed"  layoutX="541.0" layoutY="72.0" prefHeight="25.0" prefWidth="109.0" />
-        <ComboBox fx:id="ddlTerminal"  fx:id="ddlTerminal" layoutX="410.0" layoutY="136.0" prefHeight="25.0" prefWidth="240.0">
+        <TextField fx:id="txtCode" layoutX="90.0" layoutY="8.0" onKeyPressed="#driverCodeKeyPressed" prefHeight="25.0" prefWidth="240.0" />
+        <TextField fx:id="txtFirstName" layoutX="90.0" layoutY="40.0" onKeyPressed="#driverFirstNameKeyPressed" prefHeight="25.0" prefWidth="240.0" />
+        <TextField fx:id="txtLastName" layoutX="90.0" layoutY="72.0" onKeyPressed="#driverLastNameKeyPressed" prefHeight="25.0" prefWidth="240.0" />
+        <TextField fx:id="txtAddress" layoutX="90.0" layoutY="104.0" onKeyPressed="#driverAddressKeyPressed" prefHeight="25.0" prefWidth="240.0" />
+        <TextField fx:id="txtUnit" layoutX="90.0" layoutY="136.0" onKeyPressed="#driverUnitKeyPressed" prefHeight="25.0" prefWidth="240.0" />
+        <TextField fx:id="txtCity" layoutX="90.0" layoutY="168.0" onKeyPressed="#driverCityKeyPressed" prefHeight="25.0" prefWidth="240.0" />
+        <TextField fx:id="txtPostal" layoutX="90.0" layoutY="200.0" onKeyPressed="#driverPostalKeyPressed" prefHeight="25.0" prefWidth="240.0" />
+        <TextField fx:id="txtEmail" layoutX="410.0" layoutY="8.0" onKeyPressed="#driverEmailKeyPressed" prefHeight="25.0" prefWidth="240.0" />
+        <TextField fx:id="txtHome" layoutX="410.0" layoutY="40.0" onKeyPressed="#driverHomeKeyPressed" prefHeight="25.0" prefWidth="80.0" />
+        <TextField fx:id="txtCellular" layoutX="410.0" layoutY="72.0" onKeyPressed="#driverCellularKeyPressed" prefHeight="25.0" prefWidth="80.0" />
+        <TextField fx:id="txtFaxNo" layoutX="541.0" layoutY="41.0" onKeyPressed="#driverFaxKeyPressed" prefHeight="25.0" prefWidth="109.0" />
+        <TextField fx:id="txtPager" layoutX="541.0" layoutY="72.0" onKeyPressed="#driverPagerKeyPressed" prefHeight="25.0" prefWidth="109.0" />
+        <ComboBox fx:id="ddlTerminal" layoutX="410.0" layoutY="136.0" prefHeight="25.0" prefWidth="240.0">
           <items>
             <FXCollections fx:factory="observableArrayList" />
           </items>
         </ComboBox>
-        <ComboBox fx:id="ddlCategory" fx:id="ddlCategory" layoutX="410.0" layoutY="168.0" prefHeight="25.0" prefWidth="80.0">
+        <ComboBox fx:id="ddlCategory" layoutX="410.0" layoutY="168.0" prefHeight="25.0" prefWidth="80.0">
           <items>
             <FXCollections fx:factory="observableArrayList" />
           </items>
         </ComboBox>
-        <ComboBox fx:id="ddlRole" onKeyPressed="#ddlRoleKeyPressed" layoutX="541.0" layoutY="169.0" prefHeight="25.0" prefWidth="109.0">
+        <ComboBox fx:id="ddlRole" layoutX="541.0" layoutY="169.0" onKeyPressed="#ddlRoleKeyPressed" prefHeight="25.0" prefWidth="109.0">
           <items>
             <FXCollections fx:factory="observableArrayList" />
           </items>
         </ComboBox>
-        <ComboBox fx:id="ddlStatus" onKeyPressed="#ddlStatusKeyPressed" layoutX="410.0" layoutY="200.0" prefHeight="25.0" prefWidth="80.0">
+        <ComboBox fx:id="ddlStatus" layoutX="410.0" layoutY="200.0" onKeyPressed="#ddlStatusKeyPressed" prefHeight="25.0" prefWidth="80.0">
           <items>
             <FXCollections fx:factory="observableArrayList" />
           </items>
         </ComboBox>
-        <ComboBox fx:id="ddlDriverClass" onKeyPressed="#ddlDriverClassKeyPressed"  layoutX="541.0" layoutY="200.0" prefHeight="25.0" prefWidth="109.0">
+        <ComboBox fx:id="ddlDriverClass" layoutX="541.0" layoutY="200.0" onKeyPressed="#ddlDriverClassKeyPressed" prefHeight="25.0" prefWidth="109.0">
           <items>
             <FXCollections fx:factory="observableArrayList" />
           </items>
@@ -142,16 +143,17 @@
                <font>
                   <Font size="13.0" />
                </font></Button>
-            <ComboBox fx:id="ddlDivision" onKeyPressed="#ddlDivisionKeyPressed" layoutX="410.0" layoutY="105.0" prefHeight="25.0" prefWidth="240.0">
+            <ComboBox fx:id="ddlDivision" layoutX="410.0" layoutY="105.0" onKeyPressed="#ddlDivisionKeyPressed" prefHeight="25.0" prefWidth="240.0">
                <items>
                   <FXCollections fx:factory="observableArrayList" />
                </items>
             </ComboBox>
-            <TextField fx:id="txtProvince" onKeyPressed="#driverProvinceKeyPressed" layoutX="90.0" layoutY="232.0" prefHeight="25.0" prefWidth="240.0" />
+            <TextField fx:id="txtProvince" layoutX="90.0" layoutY="232.0" onKeyPressed="#driverProvinceKeyPressed" prefHeight="25.0" prefWidth="240.0" />
             <Label layoutX="14.0" layoutY="235.0" text="Province">
                <font>
                   <Font size="14.0" />
                </font></Label>
+            <Button fx:id="btnEdit" onMouseClicked="#handleEditAction" layoutX="461.0" layoutY="473.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="52.0" text="Edit" />
       </children>
     </Pane>
       <Label layoutX="-1.0" prefHeight="27.0" prefWidth="667.0" style="-fx-background-color: lightgrey; -fx-border-color: black;" text="  Edit Driver">
