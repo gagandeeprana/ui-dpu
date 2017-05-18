@@ -262,12 +262,14 @@ public class DriverController extends Application implements Initializable {
 						ObjectMapper mapper = new ObjectMapper();
 						String response = GetAPIClient.callGetAPI(
 								Iconstants.URL_SERVER + Iconstants.URL_DRIVER_API + "/" + driver.getDriverId(), null);
+						System.out.println("ID: "+driver.getDriverId());
 						if (response != null && response.length() > 0) {
 							Driver c = mapper.readValue(response, Driver.class);
 							DriverEditController driverEditController = (DriverEditController) openEditDriverScreen();
 							driverEditController.initData(c);
 						}
 					} catch (Exception e) {
+						e.printStackTrace();
 						JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
 					}
 				}
@@ -288,6 +290,7 @@ public class DriverController extends Application implements Initializable {
 						ObjectMapper mapper = new ObjectMapper();
 						String response = GetAPIClient.callGetAPI(
 								Iconstants.URL_SERVER + Iconstants.URL_DRIVER_API + "/" + driver.getDriverId(), null);
+						System.out.println("DriverID:  "+driver.getDriverId());
 						if (response != null && response.length() > 0) {
 							Driver c = mapper.readValue(response, Driver.class);
 							DriverEditController driverEditController = (DriverEditController) openEditDriverScreen();
@@ -307,7 +310,6 @@ public class DriverController extends Application implements Initializable {
 					.getResource(Iconstants.DRIVER_BASE_PACKAGE + Iconstants.XML_DRIVER_EDIT_SCREEN));
 
 			Parent root = (Parent) fxmlLoader.load();
-
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.setTitle("Edit Driver");
@@ -315,7 +317,7 @@ public class DriverController extends Application implements Initializable {
 			stage.show();
 			return fxmlLoader.getController();
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 		return null;
 	}

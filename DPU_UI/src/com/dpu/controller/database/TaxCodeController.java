@@ -436,24 +436,24 @@ public class TaxCodeController extends Application implements Initializable {
 		if (tblTaxCoderMenuCount == 0) {
 			tblTaxCoderMenuCount++; // When user right-click on Table
 			tblTaxCode.setOnMouseClicked(new EventHandler<MouseEvent>() {
-				int click = 0;
-
+				
 				@Override
 				public void handle(MouseEvent mouseEvent) {
 
 					if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
 
-						if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.SECONDARY)) {
-							contextMenu.show(tblTaxCode, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+						if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
 
-						} else {
-							contextMenu.hide();
-							click++;
+							if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.SECONDARY)) {
+								contextMenu.show(tblTaxCode, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+							} else if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.PRIMARY)
+									&& ((MouseEvent) mouseEvent).getClickCount() == 2) {
+								editTaxCodeAction();
 
-						}
-						if (click == 2) {
-							editTaxCodeAction();
-							click = 0;
+							} else if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.PRIMARY)) {
+								contextMenu.hide();
+
+							}
 						}
 
 					}

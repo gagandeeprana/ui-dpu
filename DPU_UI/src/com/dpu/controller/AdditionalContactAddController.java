@@ -94,7 +94,6 @@ public class AdditionalContactAddController implements Initializable {
 	@FXML
 	void btnSaveAdditionalContactAction(ActionEvent event) {
 
-	     
 		boolean result = validateAddCompanyScreen();
 		if (result) {
 			try {
@@ -109,7 +108,7 @@ public class AdditionalContactAddController implements Initializable {
 				String status = ddlStatus.getSelectionModel().getSelectedItem();
 				String email = txtEmail.getText();
 				String function = ddlFunction.getSelectionModel().getSelectedItem();
-				
+
 				AdditionalContact bcm1 = new AdditionalContact(additionalContact, position, phone, fax, cellular, email,
 						extension, pager, status, function);
 				CompanyAddController.selectedTabValue = 1;
@@ -136,8 +135,6 @@ public class AdditionalContactAddController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
-		
 
 		fetchMasterDataForDropDowns();
 		if (CompanyAddController.addAddtionalContact != 1) {
@@ -176,6 +173,7 @@ public class AdditionalContactAddController implements Initializable {
 					List<Type> functionList = company.getFunctionList();
 					fillDropDown(ddlFunction, functionList);
 
+					
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
 				}

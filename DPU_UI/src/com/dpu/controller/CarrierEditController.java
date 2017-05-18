@@ -86,8 +86,11 @@ public class CarrierEditController extends Application implements Initializable 
 	private TableColumn<AddtionalCarrierContact, String> status;
 
 	@FXML
-	private TableView<AddtionalCarrierContact> tableAdditionalContact;
+	private TableColumn<AddtionalCarrierContact, String> function;
 
+	@FXML
+	private TableView<AddtionalCarrierContact> tableAdditionalContact;
+	public static TableView<AddtionalCarrierContact> duplicateTableAdditionalContact;
 	@FXML
 	private Button btnSaveCarrier, btnEdit;
 
@@ -238,20 +241,20 @@ public class CarrierEditController extends Application implements Initializable 
 						return new SimpleStringProperty(param.getValue().getExt() + "");
 					}
 				});
-		pager.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
-
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<AddtionalCarrierContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getPrefix() + "");
-					}
-				});
 		status.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<AddtionalCarrierContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getStatusId() + "");
+						return new SimpleStringProperty(param.getValue().getStatusName() + "");
+					}
+				});
+		function.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<AddtionalCarrierContact, String> param) {
+						return new SimpleStringProperty(param.getValue().getFunction() + "");
 					}
 				});
 
@@ -320,6 +323,9 @@ public class CarrierEditController extends Application implements Initializable 
 		}
 	}
 
+	int additionalContactCountMenu = 0;
+	public static Long additionalContactIdPri = 0l;
+
 	@FXML
 	void handleAddContMouseClick(MouseEvent event) {
 
@@ -348,14 +354,14 @@ public class CarrierEditController extends Application implements Initializable 
 				carrierModel.setWebsite(txtWebsite.getText());
 				carrierModel.setName(txtCarrier.getText());
 
-				openAddAdditionalContactScreen();
-
-				try {
-					closeEditCarrierScreen(btnSaveCarrier);
-				} catch (Exception e) {
-					e.printStackTrace();
-					System.exit(0);
-				}
+				openEditAdditionalContactScreen();
+				//
+				// try {
+				// closeEditCarrierScreen(btnSaveCarrier);
+				// } catch (Exception e) {
+				// e.printStackTrace();
+				// System.exit(0);
+				// }
 
 			}
 		});
@@ -369,8 +375,11 @@ public class CarrierEditController extends Application implements Initializable 
 				addAddtionalContact = 0;
 				addEditIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
 				additionalContactModel = tableAdditionalContact.getSelectionModel().getSelectedItem();
+				if (additionalContactModel.getAdditionalContactId() != null) {
+					additionalContactIdPri = additionalContactModel.getAdditionalContactId();
+				}
 				openEditAdditionalContactScreen();
-				closeEditCarrierScreen(btnSaveCarrier);
+				// closeEditCarrierScreen(btnSaveCarrier);
 
 			}
 		});
@@ -405,15 +414,19 @@ public class CarrierEditController extends Application implements Initializable 
 		// Add MenuItem to ContextMenu
 		contextMenu.getItems().addAll(item1, item2, item3);
 
-		// When user right-click on Table
-		tableAdditionalContact.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
-			@Override
-			public void handle(ContextMenuEvent event) {
-				contextMenu.show(tableAdditionalContact, event.getScreenX(), event.getScreenY());
+		if (additionalContactCountMenu == 0) {
+			additionalContactCountMenu++;
+			// When user right-click on Table
+			tableAdditionalContact.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+				@Override
+				public void handle(ContextMenuEvent event) {
+					contextMenu.show(tableAdditionalContact, event.getScreenX(), event.getScreenY());
 
-			}
+				}
 
-		});
+			});
+
+		}
 
 	}
 
@@ -471,7 +484,7 @@ public class CarrierEditController extends Application implements Initializable 
 	}
 
 	ObjectMapper mapper = new ObjectMapper();
-	public List<AddtionalCarrierContact> cList = new ArrayList<AddtionalCarrierContact>();
+	public ArrayList<AddtionalCarrierContact> cList = new ArrayList<AddtionalCarrierContact>();
 
 	private void fetchAdditionalContacts() {
 
@@ -484,12 +497,15 @@ public class CarrierEditController extends Application implements Initializable 
 					String response = GetAPIClient.callGetAPI(
 							Iconstants.URL_SERVER + Iconstants.URL_CARRIER_CONTACTS + "/" + carrierModel.getCarrierId(),
 							null);
+					System.out.println("cID   " + carrierModel.getCarrierId());
 					if (response != null && response.length() > 0) {
 						AddtionalCarrierContact c[] = mapper.readValue(response, AddtionalCarrierContact[].class);
 						cList = new ArrayList<AddtionalCarrierContact>();
 						for (AddtionalCarrierContact ccl : c) {
 							cList.add(ccl);
 						}
+						CarrierEditController.listOfAdditionalContact = cList;
+						System.out.println("size1   "+CarrierEditController.listOfAdditionalContact.size());
 						data = FXCollections.observableArrayList(cList);
 					} else {
 						data = FXCollections.observableArrayList(cList);
@@ -505,6 +521,40 @@ public class CarrierEditController extends Application implements Initializable 
 
 				}
 			}
+		});
+	}
+
+	public static void fetchAdditionalContactsUsingDuplicate() {
+
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+
+					if (listOfAdditionalContact != null & !(listOfAdditionalContact.isEmpty())) {
+						ObservableList<AddtionalCarrierContact> data = FXCollections
+								.observableArrayList(listOfAdditionalContact);
+//						setAdditionalContactColumnValues();
+						System.out.println("duplicateTableAdditionalContact size:   "+data.size());
+						duplicateTableAdditionalContact.setItems(data);
+						duplicateTableAdditionalContact.setVisible(true);
+					} else {
+						// listOfAdditionalContact = new
+						// ArrayList<AdditionalContact>();
+						ObservableList<AddtionalCarrierContact> data = FXCollections
+								.observableArrayList(listOfAdditionalContact);
+						// setAdditionalContactColumnValues();
+						duplicateTableAdditionalContact.setItems(data);
+						duplicateTableAdditionalContact.setVisible(true);
+					}
+					System.out.println("size2   "+CarrierEditController.listOfAdditionalContact.size());
+				} catch (Exception e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Try Again..  " + e, "Info", 1);
+				}
+			}
+
 		});
 	}
 
@@ -536,7 +586,7 @@ public class CarrierEditController extends Application implements Initializable 
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		System.out.println("::::initialize:::::");
+		// System.out.println("::::initialize:::::");
 		if (CarrierController.flag == 1) {
 			disableFields(true);
 		}
@@ -544,7 +594,7 @@ public class CarrierEditController extends Application implements Initializable 
 			btnEdit.setVisible(false);
 		}
 		// tabPane.getSelectionModel().select(1);
-		fetchAdditionalCarrierContacts();
+		// fetchAdditionalCarrierContacts();
 		txtAddress.setText(carrierModel.getAddress());
 		txtCarrier.setText(carrierModel.getName());
 		txtCell.setText(carrierModel.getCellular());

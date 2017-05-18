@@ -450,24 +450,24 @@ public class AccountsController extends Application implements Initializable {
 		if (tblAccountsrMenuCount == 0) {
 			tblAccountsrMenuCount++; // When user right-click on Table
 			tblAccounts.setOnMouseClicked(new EventHandler<MouseEvent>() {
-				int click = 0;
 
 				@Override
 				public void handle(MouseEvent mouseEvent) {
 
 					if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
 
-						if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.SECONDARY)) {
-							contextMenu.show(tblAccounts, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+						if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
 
-						} else {
-							contextMenu.hide();
-							click++;
+							if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.SECONDARY)) {
+								contextMenu.show(tblAccounts, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+							} else if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.PRIMARY)
+									&& ((MouseEvent) mouseEvent).getClickCount() == 2) {
+								editAccountsAction();
 
-						}
-						if (click == 2) {
-							editAccountsAction();
-							click = 0;
+							} else if (((MouseEvent) mouseEvent).getButton().equals(MouseButton.PRIMARY)) {
+								contextMenu.hide();
+
+							}
 						}
 
 					}

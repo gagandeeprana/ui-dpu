@@ -155,6 +155,7 @@ public class TerminalEditController extends Application implements Initializable
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+//		System.out.println("initilize");
 		if (TerminalPanelController.flag == 1) {
 			disableFields(true);
 		}
@@ -165,7 +166,7 @@ public class TerminalEditController extends Application implements Initializable
 
 	private void disableFields(boolean v) {
 		btnUpdateTerminal.setDisable(v);
-		txtLocation.setDisable(v);
+//		txtLocation.setDisable(v);
 		txtTerminalName.setDisable(v);
 		ddlAvailableServices.setDisable(v);
 		ddlLocation.setDisable(v);
@@ -192,11 +193,13 @@ public class TerminalEditController extends Application implements Initializable
 	List<DPUService> serviceList = null;
 
 	public void initData(Terminal t) {
+		System.out.println("initData");
 		terminalId = t.getTerminalId();
 		txtTerminalName.setText(t.getTerminalName());
 		shipperList = t.getShipperList();
 		for (int i = 0; i < t.getShipperList().size(); i++) {
 			Shipper shipper = t.getShipperList().get(i);
+			System.out.println(t.getShipperList().size()+" :::  locationName: "+shipper.getLocationName());
 			ddlLocation.getItems().add(shipper.getLocationName());
 			if (shipper.getShipperId() == t.getShipperId()) {
 				ddlLocation.getSelectionModel().select(i);

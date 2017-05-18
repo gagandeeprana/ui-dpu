@@ -566,7 +566,7 @@ public class CustomBrokerEditController extends Application implements Initializ
 		ddl24HoursPARS.setDisable(v);
 		ddlOperationPAPS.setDisable(v);
 		ddlOperationPARS.setDisable(v);
-		ddlStatus.setDisable(v);
+//		ddlStatus.setDisable(v);
 		ddlStatusPAPS.setDisable(v);
 		ddlStatusPARS.setDisable(v);
 		ddlType.setDisable(v);

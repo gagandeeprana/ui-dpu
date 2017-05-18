@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane fx:id="addCompanyPane" prefHeight="646.0" prefWidth="705.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.CarrierEditController">
+<Pane fx:id="addCompanyPane" prefHeight="648.0" prefWidth="735.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.CarrierEditController">
   <children>
     <Label layoutX="14.0" layoutY="41.0" text="Carrier">
       <font>
@@ -38,7 +38,7 @@
     <TextField fx:id="txtPosition" layoutX="426.0" layoutY="69.0" prefHeight="25.0" prefWidth="240.0" />
     <TextField fx:id="txtContact" layoutX="426.0" layoutY="37.0" prefHeight="25.0" prefWidth="240.0" />
     <Label font="$x1" layoutX="346.0" layoutY="40.0" text="Contact" />
-    <TabPane fx:id="tabPane" layoutX="6.0" layoutY="245.0" prefHeight="338.0" prefWidth="669.0" tabClosingPolicy="UNAVAILABLE">
+    <TabPane fx:id="tabPane" layoutX="6.0" layoutY="245.0" prefHeight="338.0" prefWidth="729.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
         <Tab text="Insurance">
           <content>
@@ -49,17 +49,17 @@
           <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>
-                <TableView fx:id="tableAdditionalContact" layoutX="0.0" layoutY="0.0" onMouseClicked="#handleAddContMouseClick" prefHeight="283.0" prefWidth="955.0">
+                <TableView fx:id="tableAdditionalContact" onMouseClicked="#handleAddContMouseClick" prefHeight="283.0" prefWidth="729.0">
                   <columns>
                     <TableColumn fx:id="additionalContact" maxWidth="5000.0" minWidth="10.0" prefWidth="111.0" text="Additional Contact" />
-                    <TableColumn fx:id="position" prefWidth="101.0" text="Position" />
-                    <TableColumn fx:id="phoneNo" prefWidth="106.0" text="Phone No" />
-                    <TableColumn fx:id="faxNo" prefWidth="106.0" text="Fax No" />
-                    <TableColumn fx:id="cellular" prefWidth="106.0" text="Cellullar" />
-                    <TableColumn fx:id="email" prefWidth="106.0" text="Email" />
-                    <TableColumn fx:id="extension" prefWidth="106.0" text="Extension" />
-                    <TableColumn fx:id="pager" maxWidth="5000.0" minWidth="10.0" prefWidth="106.0" text="Pager" />
-                    <TableColumn fx:id="status" prefWidth="106.0" text="Status" />
+                    <TableColumn fx:id="position" prefWidth="79.0" text="Designation" />
+                    <TableColumn fx:id="phoneNo" prefWidth="75.0" text="Phone No" />
+                    <TableColumn fx:id="faxNo" prefWidth="77.0" text="Fax No" />
+                    <TableColumn fx:id="cellular" prefWidth="76.0" text="Cellullar" />
+                    <TableColumn fx:id="email" prefWidth="74.0" text="Email" />
+                    <TableColumn fx:id="extension" prefWidth="84.0" text="Extension" />
+                    <TableColumn fx:id="status" prefWidth="76.0" text="Status" />
+                              <TableColumn fx:id="function" prefWidth="75.0" text="Function" />
                   </columns>
                 </TableView>
               </children>
@@ -93,9 +93,9 @@
         </Tab>
       </tabs>
     </TabPane>
-    <Button fx:id="btnSaveCarrier" font="$x1" layoutX="547.0" layoutY="602.0" mnemonicParsing="false" onAction="#btnSaveCarrierAction" prefHeight="25.0" prefWidth="65.0" text="Save" />
-    <Button fx:id="btnCancelCarrier" font="$x1" layoutX="616.0" layoutY="602.0" mnemonicParsing="false" onAction="#btnCancelCarrierAction" prefHeight="25.0" prefWidth="65.0" text="Cancel" />
-    <Label layoutX="-1.0" prefHeight="27.0" prefWidth="702.0" style="-fx-background-color: lightgrey; -fx-border-color: black;" text="New Carrier">
+    <Button fx:id="btnSaveCarrier" font="$x1" layoutX="587.0" layoutY="604.0" mnemonicParsing="false" onAction="#btnSaveCarrierAction" prefHeight="25.0" prefWidth="65.0" text="Save" />
+    <Button fx:id="btnCancelCarrier" font="$x1" layoutX="656.0" layoutY="604.0" mnemonicParsing="false" onAction="#btnCancelCarrierAction" prefHeight="25.0" prefWidth="65.0" text="Cancel" />
+    <Label layoutX="-1.0" prefHeight="27.0" prefWidth="735.0" style="-fx-background-color: lightgrey; -fx-border-color: black;" text="New Carrier">
       <font>
         <Font name="System Bold" size="16.0" />
       </font>
@@ -109,6 +109,6 @@
     <Button layoutX="298.0" layoutY="211.0" mnemonicParsing="false" text="*" />
     <Button layoutX="641.0" layoutY="196.0" mnemonicParsing="false" text="*" />
     <Label fx:id="carrierMsg" layoutX="80.0" layoutY="59.0" prefWidth="240.0" text="" />
-      <Button fx:id="btnEdit" onAction="#handleEditAction" layoutX="489.0" layoutY="602.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="52.0" text="Edit" />
+      <Button fx:id="btnEdit" layoutX="529.0" layoutY="604.0" mnemonicParsing="false" onAction="#handleEditAction" prefHeight="30.0" prefWidth="52.0" text="Edit" />
   </children>
 </Pane>

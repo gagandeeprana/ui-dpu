@@ -44,7 +44,7 @@ public class CarrierContractModel {
 
 	private String arrangedWithName;
 	private Long arrangedWithId;
-	private List<Type> arrangedWithList;
+	private List<AddtionalCarrierContact> arrangedWithList;
 
 	private String driverName;
 	private Long driverId;
@@ -76,7 +76,23 @@ public class CarrierContractModel {
 
 	private String dispatcherName;
 	private Long dispatcherId;
-	private List<Type> dispatcherList;
+	private List<DispatcherModel> dispatcherList;
+
+	public List<DispatcherModel> getDispatcherList() {
+		return dispatcherList;
+	}
+
+	public void setDispatcherList(List<DispatcherModel> dispatcherList) {
+		this.dispatcherList = dispatcherList;
+	}
+
+	public List<AddtionalCarrierContact> getArrangedWithList() {
+		return arrangedWithList;
+	}
+
+	public void setArrangedWithList(List<AddtionalCarrierContact> arrangedWithList) {
+		this.arrangedWithList = arrangedWithList;
+	}
 
 	public String getCarrierName() {
 		return carrierName;
@@ -116,14 +132,6 @@ public class CarrierContractModel {
 
 	public void setArrangedWithId(Long arrangedWithId) {
 		this.arrangedWithId = arrangedWithId;
-	}
-
-	public List<Type> getArrangedWithList() {
-		return arrangedWithList;
-	}
-
-	public void setArrangedWithList(List<Type> arrangedWithList) {
-		this.arrangedWithList = arrangedWithList;
 	}
 
 	public String getDriverName() {
@@ -308,14 +316,6 @@ public class CarrierContractModel {
 
 	public void setDispatcherId(Long dispatcherId) {
 		this.dispatcherId = dispatcherId;
-	}
-
-	public List<Type> getDispatcherList() {
-		return dispatcherList;
-	}
-
-	public void setDispatcherList(List<Type> dispatcherList) {
-		this.dispatcherList = dispatcherList;
 	}
 
 	public Long getContractNoId() {

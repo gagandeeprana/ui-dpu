@@ -83,7 +83,8 @@ public class CarrierAddController extends Application implements Initializable {
 
 	@FXML
 	private TableColumn<AddtionalCarrierContact, String> status;
-
+	@FXML
+	private TableColumn<AddtionalCarrierContact, String> function;
 	@FXML
 	private TableView<AddtionalCarrierContact> tableAdditionalContact;
 
@@ -248,6 +249,7 @@ public class CarrierAddController extends Application implements Initializable {
 				selectedTabValue = 1;
 				addAddtionalContact = 0;
 				addEditIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
+				System.out.println("index: " + addEditIndex);
 				additionalContactModel = tableAdditionalContact.getSelectionModel().getSelectedItem();
 				openAddAdditionalContactScreen();
 				closeAddCarrierScreen(btnSaveCarrier);
@@ -285,15 +287,19 @@ public class CarrierAddController extends Application implements Initializable {
 		// Add MenuItem to ContextMenu
 		contextMenu.getItems().addAll(item1, item2, item3);
 
-		// When user right-click on Table
-		tableAdditionalContact.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
-			@Override
-			public void handle(ContextMenuEvent event) {
-				contextMenu.show(tableAdditionalContact, event.getScreenX(), event.getScreenY());
+		if (additionalContactCountMenu == 0) {
+			additionalContactCountMenu++;
+			// When user right-click on Table
+			tableAdditionalContact.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+				@Override
+				public void handle(ContextMenuEvent event) {
+					contextMenu.show(tableAdditionalContact, event.getScreenX(), event.getScreenY());
 
-			}
+				}
 
-		});
+			});
+
+		}
 
 	}
 
@@ -458,20 +464,21 @@ public class CarrierAddController extends Application implements Initializable {
 						return new SimpleStringProperty(param.getValue().getExt() + "");
 					}
 				});
-		pager.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
 
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<AddtionalCarrierContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getPrefix() + "");
-					}
-				});
 		status.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<AddtionalCarrierContact, String> param) {
-						return new SimpleStringProperty(param.getValue().getStatusId() + "");
+						return new SimpleStringProperty(param.getValue().getStatusName() + "");
+					}
+				});
+		function.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<AddtionalCarrierContact, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<AddtionalCarrierContact, String> param) {
+						return new SimpleStringProperty(param.getValue().getFunction() + "");
 					}
 				});
 
