@@ -2,12 +2,14 @@ package com.dpu.controller.order;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.controlsfx.control.textfield.AutoCompletionBinding;
 
 import com.dpu.client.GetAPIClient;
 import com.dpu.client.PostAPIClient;
@@ -25,6 +27,7 @@ import com.dpu.model.Success;
 import com.dpu.model.Type;
 import com.dpu.util.Validate;
 
+import impl.org.controlsfx.autocompletion.AutoCompletionTextFieldBinding;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -40,10 +43,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class OrderAddController extends Application implements Initializable {
 
@@ -198,6 +203,11 @@ public class OrderAddController extends Application implements Initializable {
 		}
 	}
 	
+	@FXML
+	TextField txtCustomer, txtBillTo;
+	
+	List<String> companyStringList = null;
+	
 	private void fetchMasterDataForDropDowns() {
 		
 		Platform.runLater(new Runnable() {
@@ -208,7 +218,11 @@ public class OrderAddController extends Application implements Initializable {
 					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_ORDER_API + "/openAdd", null);
 					OrderModel orderModel = mapper.readValue(response, OrderModel.class);
 					companyList = orderModel.getCompanyList();
-					fillDropDown(ddlCustomer, companyList);
+//					fillDropDown(ddlCustomer, companyList);
+					companyStringList = new ArrayList<>();
+					for(Company company: companyList) {
+						companyStringList.add(company.getName());
+					}
 					shipperList = orderModel.getShipperConsineeList();
 					fillDropDown(ddlShipper, shipperList);
 					consigneeList = orderModel.getShipperConsineeList();
@@ -228,6 +242,118 @@ public class OrderAddController extends Application implements Initializable {
 				}
 			}
 		});
+	}
+
+	List<String> additionalContactsStringList, billingLocationsStringList = null;
+	
+	@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+	@FXML
+	private void txtCustomerKeyPressed(KeyEvent event) {
+	
+		String value = event.getText().trim();
+		if(!value.equals("")) {
+//			AutoCompletionTextFieldBinding aa = null;
+			
+			String finalValue = new AutoCompletionTextFieldBinding(txtCustomer, new Callback<AutoCompletionBinding.ISuggestionRequest, Collection>() {
+				@Override
+				public Collection call(AutoCompletionBinding.ISuggestionRequest param) {
+					List<String> filteredList = new ArrayList<>();
+					for(int i=0;i<companyStringList.size();i++) {
+						if(companyStringList.get(i).contains(param.getUserText())) {
+							filteredList.add(companyStringList.get(i));
+						}
+					}
+					
+					return filteredList;
+				}
+			}).getCompletionTarget().getText();
+			
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						long companyId = 0;
+						for(int i=0;i<companyList.size();i++) {
+							if(companyList.get(i).getName().equals(finalValue)) {
+								companyId = companyList.get(i).getCompanyId();
+								break;
+							}
+						}
+						if(companyId != 0) {
+							
+							String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_ORDER_API + "/" + companyId + "/getData", null);
+							Company companyResponse = mapper.readValue(response, Company.class);
+							additionalContactsList = companyResponse.getAdditionalContacts();
+							additionalContactsStringList = new ArrayList<>();
+							for(AdditionalContact additionalContact: additionalContactsList) {
+								additionalContactsStringList.add(additionalContact.getCustomerName());
+							}
+							
+							billingLocations = companyResponse.getBillingLocations();
+							billingLocationsStringList = new ArrayList<>();
+							for(BillingControllerModel billing: billingLocations) {
+								billingLocationsStringList.add(billing.getName());
+							}
+							System.out.println("billingLocations : " + billingLocations.size());
+							System.out.println("billingLocationsString : " + billingLocationsStringList.size());
+
+						}
+					} catch (Exception e) {
+						
+					}
+				}
+			});
+			
+		} 
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked"})
+	@FXML
+	private void txtCallerNameKeyPressed(KeyEvent event) {
+	
+		String value = event.getText().trim();
+		if(!value.equals("")) {
+//			AutoCompletionTextFieldBinding aa = null;
+			
+			new AutoCompletionTextFieldBinding(txtCallerName, new Callback<AutoCompletionBinding.ISuggestionRequest, Collection>() {
+				@Override
+				public Collection call(AutoCompletionBinding.ISuggestionRequest param) {
+					List<String> filteredList = new ArrayList<>();
+					for(int i=0;i<additionalContactsStringList.size();i++) {
+						if(additionalContactsStringList.get(i).contains(param.getUserText())) {
+							filteredList.add(additionalContactsStringList.get(i));
+						}
+					}
+					
+					return filteredList;
+				}
+			});
+		} 
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked"})
+	@FXML
+	private void txtBillToKeyPressed(KeyEvent event) {
+	
+		String value = event.getText().trim();
+		if(!value.equals("")) {
+//			AutoCompletionTextFieldBinding aa = null;
+			
+			new AutoCompletionTextFieldBinding(txtBillTo, new Callback<AutoCompletionBinding.ISuggestionRequest, Collection>() {
+				@Override
+				public Collection call(AutoCompletionBinding.ISuggestionRequest param) {
+					List<String> filteredList = new ArrayList<>();
+					for(int i=0;i<billingLocationsStringList.size();i++) {
+						if(billingLocationsStringList.get(i).contains(param.getUserText())) {
+							filteredList.add(billingLocationsStringList.get(i));
+						}
+					}
+					
+					return filteredList;
+				}
+			});
+		} 
 	}
 	
 	private void fillDropDown(ComboBox<String> comboBox, List<?> list) {
@@ -341,7 +467,7 @@ public class OrderAddController extends Application implements Initializable {
 		probillDropDownList.add(1);
 		ddlProbill.getItems().add(1 + "");
 		ddlProbill.getSelectionModel().select(0);
-		ddlCustomer.valueProperty().addListener(new ChangeListener<String>() {
+		/*ddlCustomer.valueProperty().addListener(new ChangeListener<String>() {
 	        
 			@SuppressWarnings("rawtypes")
 			@Override public void changed(ObservableValue ov, String t, String t1) {
@@ -371,7 +497,7 @@ public class OrderAddController extends Application implements Initializable {
 				});
 			}
 			
-	    });
+	    });*/
 		ddlShipper.valueProperty().addListener(new ChangeListener<String>() {
 	        
 			@SuppressWarnings("rawtypes")
