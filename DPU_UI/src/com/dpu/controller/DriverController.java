@@ -256,15 +256,17 @@ public class DriverController extends Application implements Initializable {
 		if (driver != null) {
 			Platform.runLater(new Runnable() {
 
+				@SuppressWarnings("unchecked")
 				@Override
 				public void run() {
 					try {
 						ObjectMapper mapper = new ObjectMapper();
 						String response = GetAPIClient.callGetAPI(
 								Iconstants.URL_SERVER + Iconstants.URL_DRIVER_API + "/" + driver.getDriverId(), null);
-						System.out.println("ID: "+driver.getDriverId());
+						Success s = mapper.readValue(response, Success.class);
+						String s1 = mapper.writeValueAsString(s.getResultList());
 						if (response != null && response.length() > 0) {
-							Driver c = mapper.readValue(response, Driver.class);
+							Driver c = mapper.readValue(s1, Driver.class);
 							DriverEditController driverEditController = (DriverEditController) openEditDriverScreen();
 							driverEditController.initData(c);
 						}

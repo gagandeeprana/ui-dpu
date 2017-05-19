@@ -14,6 +14,7 @@ import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.CarrierContractModel;
 import com.dpu.model.Driver;
+import com.dpu.model.Success;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -344,11 +345,11 @@ public class CarrierContractController extends Application implements Initializa
 					try {
 						System.out.println("id   " + carrierContractModel.getContractNoId());
 						ObjectMapper mapper = new ObjectMapper();
-						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER
-								+ Iconstants.URL_CARRIER_CONTRACT_API + "/" + carrierContractModel.getContractNoId(),
-								null);
+						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_CARRIER_CONTRACT_API + "/" + carrierContractModel.getContractNoId(), null);
+						Success s = mapper.readValue(response, Success.class);
+						String s1 = mapper.writeValueAsString(s.getResultList());
 						if (response != null && response.length() > 0) {
-							CarrierContractModel c = mapper.readValue(response, CarrierContractModel.class);
+							CarrierContractModel c = mapper.readValue(s1, CarrierContractModel.class);
 							System.out.println("muiles::  " + c.getMiles());
 							CarrierContractEditController carrierContractEditController = (CarrierContractEditController) openEditCarrierContractScreen();
 							carrierContractEditController.initData(c);

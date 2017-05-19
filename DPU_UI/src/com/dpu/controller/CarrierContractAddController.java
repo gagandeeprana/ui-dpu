@@ -12,6 +12,7 @@ import com.dpu.client.GetAPIClient;
 import com.dpu.client.PostAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.AddtionalCarrierContact;
+import com.dpu.model.ArrangedWithModel;
 import com.dpu.model.CarrierContractModel;
 import com.dpu.model.CarrierModel;
 import com.dpu.model.Category;
@@ -52,7 +53,7 @@ public class CarrierContractAddController extends Application implements Initial
 	List<Driver> driverList = null;
 	List<Category> categoryList = null;
 	List<Equipment> equipmentList = null;
-	List<AddtionalCarrierContact> arrangedWithList = null;
+	List<ArrangedWithModel> arrangedWithList = null;
 	List<Type> currencyList = null;
 	List<Type> roleList = null;
 	List<Type> commodityList = null;
@@ -120,7 +121,7 @@ public class CarrierContractAddController extends Application implements Initial
 			}
 			if (object != null && object instanceof Driver) {
 				Driver driver = (Driver) object;
-				comboBox.getItems().add(driver.getFirstName() + "" + driver.getLastName());
+				comboBox.getItems().add(driver.getFirstName() + " " + driver.getLastName());
 			}
 			if (object != null && object instanceof Category) {
 				Category category = (Category) object;
@@ -142,9 +143,9 @@ public class CarrierContractAddController extends Application implements Initial
 				DispatcherModel type = (DispatcherModel) object;
 				comboBox.getItems().add(String.valueOf(type.getId()));
 			}
-			if (object != null && object instanceof AddtionalCarrierContact) {
-				AddtionalCarrierContact type = (AddtionalCarrierContact) object;
-				comboBox.getItems().add(type.getCustomerName());
+			if (object != null && object instanceof ArrangedWithModel) {
+				ArrangedWithModel type = (ArrangedWithModel) object;
+				comboBox.getItems().add(type.getArrangedWith());
 			}
 		}
 	}
@@ -152,7 +153,7 @@ public class CarrierContractAddController extends Application implements Initial
 	private CarrierContractModel setCarrierContractValue() {
 		CarrierContractModel carrierContractModel = new CarrierContractModel();
 		carrierContractModel.setArrangedWithId(
-				arrangedWithList.get(ddlArrangedWith.getSelectionModel().getSelectedIndex()).getAdditionalContactId());
+				arrangedWithList.get(ddlArrangedWith.getSelectionModel().getSelectedIndex()).getId());
 		carrierContractModel
 				.setCurrencyId(currencyList.get(ddlCurrancy.getSelectionModel().getSelectedIndex()).getTypeId());
 		carrierContractModel.setRoleId(roleList.get(ddlRole.getSelectionModel().getSelectedIndex()).getTypeId());

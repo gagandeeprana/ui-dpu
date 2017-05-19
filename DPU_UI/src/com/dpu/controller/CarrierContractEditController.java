@@ -11,6 +11,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.AddtionalCarrierContact;
+import com.dpu.model.ArrangedWithModel;
 import com.dpu.model.CarrierContractModel;
 import com.dpu.model.CarrierModel;
 import com.dpu.model.Category;
@@ -243,9 +244,9 @@ public class CarrierContractEditController extends Application implements Initia
 			}
 		}
 		for (int i = 0; i < carrierContractModel.getArrangedWithList().size(); i++) {
-			AddtionalCarrierContact type = carrierContractModel.getArrangedWithList().get(i);
-			ddlArrangedWith.getItems().add(type.getCustomerName());
-			if (type.getAdditionalContactId() == carrierContractModel.getArrangedWithId()) {
+			ArrangedWithModel type = carrierContractModel.getArrangedWithList().get(i);
+			ddlArrangedWith.getItems().add(type.getArrangedWith());
+			if (type.getId() == carrierContractModel.getArrangedWithId()) {
 				ddlArrangedWith.getSelectionModel().select(i);
 			}
 		}

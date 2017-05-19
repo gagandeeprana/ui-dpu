@@ -1,15 +1,26 @@
 package com.dpu.controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.swing.JOptionPane;
+
+import org.codehaus.jackson.map.ObjectMapper;
+
+import com.dpu.client.GetAPIClient;
+import com.dpu.constants.Iconstants;
 import com.dpu.model.BillingControllerModel;
+import com.dpu.model.Company;
+import com.dpu.model.Type;
 import com.dpu.util.Validate;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
@@ -24,32 +35,21 @@ public class BillingAddController implements Initializable {
 	private URL location;
 
 	@FXML
-	private Button btnCancelBillingLocation;
+	private Button btnCancelBillingLocation, btnSaveBillingLocation;
 
 	@FXML
-	private Button btnSaveBillingLocation;
+	private TextField txtAddress, txtAddress1, txtCity, txtProvince, txtCompany, txtContact, txtFax, txtPhone, txtZip;
 
 	@FXML
-	private TextField txtAddress;
-
+	private ComboBox<String> ddlCountry;
+	
 	@FXML
-	private TextField txtCity;
-
-	@FXML
-	private TextField txtCompany;
-
-	@FXML
-	private TextField txtContact;
-
-	@FXML
-	private TextField txtFax;
-
-	@FXML
-	private TextField txtPhone;
-
-	@FXML
-	private TextField txtZip;
-
+	public void txtProvinceKeyPressed() {
+		
+	}
+	
+	List<Type> countryList = null;
+	
 	@FXML
 	void btnSaveBillingLocationAction(ActionEvent event) {
 
@@ -59,11 +59,14 @@ public class BillingAddController implements Initializable {
 
 				String company = txtCompany.getText();
 				String address = txtAddress.getText();
+				String address2 = txtAddress1.getText();
 				String city = txtCity.getText();
+				String province = txtProvince.getText();
 				String phone = txtPhone.getText();
 				String contact = txtContact.getText();
 				String zip = txtZip.getText();
 				String fax = txtFax.getText();
+//				Long countryId = coun
 				// Long statusId = Long.parseLong("1");
 				BillingControllerModel bcm1 = new BillingControllerModel(company, address, city, phone, contact, zip,
 						fax);
@@ -93,7 +96,7 @@ public class BillingAddController implements Initializable {
 		closeAddBillingScreen(btnCancelBillingLocation);
 	}
 
-	public void initialize(URL location, ResourceBundle resources) {
+	public void initialize() {
 
 		txtPhone.addEventFilter(KeyEvent.KEY_TYPED, Validate.numeric_Validation(10));
 		//txtCompany.addEventFilter(KeyEvent.KEY_TYPED, Validate.letter_Validation(10));
@@ -111,7 +114,41 @@ public class BillingAddController implements Initializable {
 		}
 
 	}
+	
+	/*private void fetchMasterDataForDropDowns() {
 
+		Platform.runLater(new Runnable() {
+			ObjectMapper mapper = new ObjectMapper();
+
+			@Override
+			public void run() {
+				try {
+					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_ + "/openAdd", null);
+					Company company = mapper.readValue(response, Company.class);
+
+					categoryList = company.getCategoryList();
+					if (categoryList != null)
+						fillDropDown(ddlCategory, categoryList);
+
+					divisionList = company.getDivisionList();
+					if (divisionList != null)
+						fillDropDown(ddlDivision, divisionList);
+
+					saleList = company.getSaleList();
+					if (saleList != null)
+						fillDropDown(ddlSale, saleList);
+
+					countryList = company.getCountryList();
+					if (countryList != null)
+						fillDropDown(ddlCountry, countryList);
+
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Try Again.." + e, "Info", 1);
+				}
+			}
+		});
+	}
+*/
 	@FXML
 	Label lblCompany, lblAddress, lblCity, lblZip, lblFax, lblPhone, lblContact;
 
@@ -313,6 +350,12 @@ public class BillingAddController implements Initializable {
 
 		return result;
 
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
