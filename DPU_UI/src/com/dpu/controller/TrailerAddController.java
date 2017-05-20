@@ -29,6 +29,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -37,6 +38,9 @@ public class TrailerAddController extends Application implements Initializable {
 	@FXML
 	Button btnSaveTrailer;
 
+	@FXML
+	Button btnCancelTrailer;
+	
 	@FXML
 	TextField txtUnitNo, txtUsage, txtOwner, txtOoName, txtFinance;
 
@@ -50,6 +54,11 @@ public class TrailerAddController extends Application implements Initializable {
 			addTrailer();
 			closeAddTrailerScreen(btnSaveTrailer);
 		}
+	}
+	
+	@FXML
+	private void btnCancelTrailerAction() {
+		closeAddTrailerScreen(btnCancelTrailer);
 	}
 
 	private void addTrailer() {
@@ -183,6 +192,7 @@ public class TrailerAddController extends Application implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		fetchMasterDataForDropDowns();
+		 txtUnitNo.addEventFilter(KeyEvent.KEY_TYPED, Validate.numeric_Validation(10));
 	}
 
 	@Override
@@ -207,7 +217,7 @@ public class TrailerAddController extends Application implements Initializable {
 			result = false;
 			txtUnitNo.setStyle("-fx-text-box-border: red;");
 			unitMsg.setVisible(true);
-			unitMsg.setText("Unit No is Mandatory");
+			unitMsg.setText("Unit No is Mandatory and Must be Numeric");
 			unitMsg.setTextFill(Color.RED);
 		}
 
@@ -224,7 +234,7 @@ public class TrailerAddController extends Application implements Initializable {
 			txtUnitNo.setStyle("-fx-focus-color: red;");
 			txtUnitNo.requestFocus();
 			unitMsg.setVisible(true);
-			unitMsg.setText("Unit No is Mandatory");
+			unitMsg.setText("Unit No is Mandatory and Must be Numeric");
 			unitMsg.setTextFill(Color.RED);
 		} else {
 			txtUnitNo.setStyle("-fx-focus-color: skyblue;");

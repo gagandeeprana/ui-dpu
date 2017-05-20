@@ -90,7 +90,7 @@
             <Font size="13.0" fx:id="x2" />
           </font>
         </Button>
-        <Button font="$x2" layoutX="589.0" layoutY="474.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Cancel" />
+        <Button fx:id="btnCancelDriver" font="$x2" layoutX="589.0" layoutY="474.0" mnemonicParsing="false" onAction="#btnCancelDriverAction" prefHeight="25.0" prefWidth="65.0" text="Cancel" />
         <ComboBox fx:id="ddlDivision" layoutX="409.0" layoutY="104.0"   prefHeight="25.0" prefWidth="240.0">
           <items>
             <FXCollections fx:factory="observableArrayList" />

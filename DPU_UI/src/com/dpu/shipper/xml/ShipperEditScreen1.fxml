@@ -59,7 +59,7 @@
     <Button fx:id="btnReports" font="$x2" layoutX="233.0" layoutY="543.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Reports" />
     <Button fx:id="btnAC" font="$x2" layoutX="303.0" layoutY="543.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="AC" />
     <Button fx:id="btnUpdateShipper" font="$x2" layoutX="537.0" layoutY="543.0" mnemonicParsing="false" onAction="#btnUpdateShipperAction" prefHeight="25.0" prefWidth="65.0" text="Update" />
-    <Button font="$x2" layoutX="608.0" layoutY="543.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Cancel" />
+    <Button fx:id="btnCancelShipper" font="$x2" layoutX="608.0" layoutY="543.0" mnemonicParsing="false"  onAction="#btnCancelShipperAction" prefHeight="25.0" prefWidth="65.0" text="Cancel" />
     <TextField fx:id="txtContact" layoutX="432.0" layoutY="36.0" prefHeight="25.0" prefWidth="240.0" />
     <TextField fx:id="txtPosition" layoutX="432.0" layoutY="70.0" prefHeight="25.0" prefWidth="240.0" />
     <TextField fx:id="txtPhone" layoutX="432.0" layoutY="103.0" prefWidth="80.0" />

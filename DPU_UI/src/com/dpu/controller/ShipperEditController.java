@@ -60,6 +60,14 @@ public class ShipperEditController extends Application implements Initializable 
 			closeEditShipperScreen(btnUpdateShipper);
 		}
 	}
+	
+	@FXML
+	Button btnCancelShipper;
+	
+	@FXML
+	private void btnCancelShipperAction() {
+			closeEditShipperScreen(btnCancelShipper);
+	}
 
 	private void editShipper() {
 

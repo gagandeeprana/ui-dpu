@@ -36,7 +36,7 @@ import javafx.stage.Stage;
 public class TruckEditController extends Application implements Initializable {
 
 	@FXML
-	Button btnUpdateTruck,btnEdit;
+	Button btnUpdateTruck,btnEdit, btnCancelTruck;
 
 	Long truckId = 0l;
 
@@ -55,6 +55,11 @@ public class TruckEditController extends Application implements Initializable {
 			editTruck();
 			closeEditTruckScreen(btnUpdateTruck);
 		}
+	}
+	
+	@FXML
+	private void btnCancelTruckAction() {
+			closeEditTruckScreen(btnCancelTruck);
 	}
 
 	private void closeEditTruckScreen(Button clickedButton) {

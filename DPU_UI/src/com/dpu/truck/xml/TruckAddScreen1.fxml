@@ -44,7 +44,7 @@
                     <Font size="13.0" fx:id="x2" />
                   </font>
                 </Button>
-                <Button font="$x2" layoutX="615.0" layoutY="271.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Cancel" />
+                <Button fx:id="btnCancelTruck" font="$x2" layoutX="615.0" layoutY="271.0" mnemonicParsing="false" onAction="#btnCancelTruckAction" prefHeight="25.0" prefWidth="65.0" text="Cancel" />
                 <Label fx:id="unitMsg" layoutX="94.0" layoutY="35.0" prefWidth="239.0" text=" " />
               </children>
             </AnchorPane>

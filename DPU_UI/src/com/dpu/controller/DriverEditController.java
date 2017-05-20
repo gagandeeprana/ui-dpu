@@ -36,6 +36,9 @@ public class DriverEditController extends Application implements Initializable {
 	@FXML
 	Button btnUpdateDriver,btnEdit;
 
+	@FXML
+	Button btnCancelDriver;
+	
 	Long driverId = 0l;
 
 	@FXML
@@ -45,6 +48,12 @@ public class DriverEditController extends Application implements Initializable {
 	@FXML
 	ComboBox<String> ddlTerminal, ddlCategory, ddlRole, ddlStatus, ddlDriverClass, ddlDivision;
 
+
+	@FXML
+	private void btnCancelDriverAction() {
+		closeEditDriverScreen(btnCancelDriver);
+	}
+	
 	@FXML
 	private void btnUpdateDriverAction() {
 		boolean result = validateAddDriverScreen();

@@ -139,7 +139,7 @@
                <font>
                   <Font size="13.0" />
                </font></Button>
-        <Button layoutX="588.0" layoutY="473.0" mnemonicParsing="false" prefWidth="65.0" text="Cancel">
+        <Button fx:id="btnCancelDriver" layoutX="588.0" layoutY="473.0" mnemonicParsing="false" onAction="#btnCancelDriverAction" prefWidth="65.0" text="Cancel">
                <font>
                   <Font size="13.0" />
                </font></Button>

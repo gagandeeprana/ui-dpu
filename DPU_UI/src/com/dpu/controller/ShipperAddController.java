@@ -34,6 +34,9 @@ public class ShipperAddController extends Application implements Initializable {
 
 	@FXML
 	Button btnSaveShipper;
+	
+	@FXML
+	Button btnCancelShipper;
 
 	@FXML
 	TextField txtLocationName, txtContact, txtAddress, txtPosition, txtUnitNo, txtPhone, txtExt, txtCity, txtFax,
@@ -56,6 +59,11 @@ public class ShipperAddController extends Application implements Initializable {
 		}
 	}
 
+	@FXML
+	private void btnCancelShipperAction() {
+			closeAddShipperScreen(btnCancelShipper);
+	}
+	
 	private void closeAddShipperScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
 		loginStage.close();

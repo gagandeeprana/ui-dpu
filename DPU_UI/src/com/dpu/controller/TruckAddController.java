@@ -37,7 +37,7 @@ import javafx.stage.Stage;
 public class TruckAddController extends Application implements Initializable {
 
 	@FXML
-	Button btnSaveTruck;
+	Button btnSaveTruck, btnCancelTruck;
 
 	@FXML
 	TextField txtUnitNo, txtUsage, txtOwner, txtOoName, txtFinance;
@@ -45,13 +45,6 @@ public class TruckAddController extends Application implements Initializable {
 	@FXML
 	ComboBox<String> ddlStatus, ddlCategory, ddlDivision, ddlTerminal, ddlTruckType;
 
-	
-	// ---------------------------==================--------------------========================-------------
-	 
-
-	 
-
-	 
 
 	@FXML
 	private void btnSaveTruckAction() {
@@ -61,6 +54,10 @@ public class TruckAddController extends Application implements Initializable {
 		}
 	}
 
+	@FXML
+	private void btnCancelTruckAction() {
+			closeAddTruckScreen(btnCancelTruck);
+	}
 	
 
 	private void closeAddTruckScreen(Button clickedButton) {

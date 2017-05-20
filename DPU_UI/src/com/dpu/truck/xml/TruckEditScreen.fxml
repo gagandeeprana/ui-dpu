@@ -39,7 +39,7 @@
                 <ComboBox fx:id="ddlDivision" layoutX="442.0" layoutY="62.0" prefHeight="25.0" prefWidth="240.0" />
                 <ComboBox fx:id="ddlTerminal" layoutX="444.0" layoutY="117.0" prefHeight="25.0" prefWidth="240.0" />
                 <ComboBox fx:id="ddlTruckType" layoutX="444.0" layoutY="168.0" prefHeight="25.0" prefWidth="240.0" />
-                <Button layoutX="608.0" layoutY="278.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Cancel">
+                <Button lfx:id="btnCancelTruck" ayoutX="608.0" layoutY="278.0" mnemonicParsing="false" onAction="#btnCancelTruckAction" prefHeight="25.0" prefWidth="65.0" text="Cancel">
                   <font>
                     <Font size="13.0" fx:id="x2" />
                   </font>

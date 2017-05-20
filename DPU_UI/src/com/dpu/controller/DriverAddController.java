@@ -44,6 +44,9 @@ public class DriverAddController extends Application implements Initializable {
 
 	@FXML
 	Button btnSaveDriver;
+	
+	@FXML
+	Button btnCancelDriver;
 
 	@FXML
 	TextField txtCode, txtFirstName, txtLastName, txtAddress, txtUnit, txtPostal, txtHome, txtCity, txtFaxNo,
@@ -67,6 +70,11 @@ public class DriverAddController extends Application implements Initializable {
 				closeAddDriverScreen(btnSaveDriver);
 			}
 		}
+	}
+
+	@FXML
+	private void btnCancelDriverAction() {
+		closeAddDriverScreen(btnCancelDriver);
 	}
 
 	private void showProvinces() {

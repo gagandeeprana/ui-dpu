@@ -38,7 +38,7 @@
                     <Font size="13.0" fx:id="x1" />
                   </font>
                 </Button>
-                <Button font="$x1" layoutX="617.0" layoutY="278.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Cancel" />
+                <Button fx:id="btnCancelTrailer" font="$x1" layoutX="617.0" layoutY="278.0" mnemonicParsing="false" prefHeight="25.0" onAction="#btnCancelTrailerAction" prefWidth="65.0" text="Cancel" />
                 <Label fx:id="unitMsg" layoutX="92.0" layoutY="36.0" prefWidth="240.0" text="" />
               </children>
             </AnchorPane>
