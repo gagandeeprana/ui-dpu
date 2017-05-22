@@ -105,9 +105,9 @@ public class AdditionalContactEditController implements Initializable {
 				String fax = txtFax.getText();
 				String pager = txtPager.getText();
 				String cellular = txtCellular.getText();
-				String status = ddlStatus.getSelectionModel().getSelectedItem();
+				Long status = statusList.get(ddlStatus.getSelectionModel().getSelectedIndex()).getId();
 				String email = txtEmail.getText();
-				String function = ddlFunction.getSelectionModel().getSelectedItem();
+				Long function = functionList.get(ddlFunction.getSelectionModel().getSelectedIndex()).getTypeId();
 				AdditionalContact bcm1 = new AdditionalContact(additionalContact, position, phone, fax, cellular, email,
 						extension, pager, status,function);
 				if(CompanyEditController.additionalContactIdPri != 0l)
@@ -138,10 +138,12 @@ public class AdditionalContactEditController implements Initializable {
 		loginStage.close();
 	}
 
-	 
+	public List<Status> statusList = null;
+	public List<Type> functionList = null;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		fetchMasterDataForDropDowns();
+//		fetchMasterDataForDropDowns();
 		if (CompanyEditController.addAddtionalContact != 1) {
 			if (CompanyEditController.additionalContactModel != null) {
 
@@ -155,7 +157,34 @@ public class AdditionalContactEditController implements Initializable {
 				txtPhone.setText(CompanyEditController.additionalContactModel.getPhone());
 			//	ddlStatus.setText("Active");
 			//	ddlFunction.setText(CompanyEditController.additionalContactModel.getFunction());
+				if(AdditionalContactAddController.statusList == null) {
+					
+					fetchMasterDataForDropDowns();
+				} else {
+					statusList = AdditionalContactAddController.statusList;
+					functionList = AdditionalContactAddController.functionList;
+					
+				}
+				
+				if(statusList != null && statusList.size() > 0) {
+					for(int i=0;i<statusList.size();i++) {
 
+						ddlStatus.getItems().add(statusList.get(i).getStatus());
+						if(statusList.get(i).getId().equals(CompanyEditController.additionalContactModel.getStatusId())) {
+							ddlStatus.getSelectionModel().select(i);
+						}
+					}
+				}
+				
+				if(functionList != null && functionList.size() > 0) {
+					for(int i=0;i<functionList.size();i++) {
+
+						ddlFunction.getItems().add(functionList.get(i).getTypeName());
+						if(functionList.get(i).getTypeId().equals(CompanyEditController.additionalContactModel.getFunction())) {
+							ddlFunction.getSelectionModel().select(i);
+						}
+					}
+				}
 			}
 		}
 
@@ -173,10 +202,10 @@ public class AdditionalContactEditController implements Initializable {
 							.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/openAddAdditionalContact", null);
 					Company company = mapper.readValue(response, Company.class);
 					 
-					List<Status> statusList = company.getStatusList();
+					statusList = company.getStatusList();
 					fillDropDown(ddlStatus, statusList);
 					
-					List<Type> functionList = company.getFunctionList();
+					functionList = company.getFunctionList();
 					fillDropDown(ddlFunction, functionList);
 
 				} catch (Exception e) {

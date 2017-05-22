@@ -309,15 +309,15 @@ public class CompanyEditController extends Application implements Initializable 
 				additionalContact.setFax(additionalContactModel.getFax());
 				additionalContact.setPrefix(additionalContactModel.getPrefix());
 				additionalContact.setCellular(additionalContactModel.getCellular());
-				if (additionalContactModel.getStatusId().equalsIgnoreCase("Active"))
-					additionalContact.setStatus(0l);
-				else
-					additionalContact.setStatus(1l);
+//				if (additionalContactModel.getStatusId().equalsIgnoreCase("Active"))
+					additionalContact.setStatus(additionalContactModel.getStatusId());
+//				else
+//					additionalContact.setStatus(1l);
 
-				if (additionalContactModel.getFunction().equalsIgnoreCase("primary"))
-					additionalContact.setFunctionId(83l);
-				else
-					additionalContact.setFunctionId(84l);
+//				if (additionalContactModel.getFunction().equalsIgnoreCase("primary"))
+					additionalContact.setFunctionId(additionalContactModel.getFunctionId());
+//				else
+//					additionalContact.setFunctionId(84l);
 				additionalContact.setEmail(additionalContactModel.getEmail());
 				additionalContacts.add(additionalContact);
 			}
@@ -444,7 +444,7 @@ public class CompanyEditController extends Application implements Initializable 
 				selectedTabValue = 1;
 				addAddtionalContact = 0;
 				editIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
-				additionalContactModel = tableAdditionalContact.getSelectionModel().getSelectedItem();
+				additionalContactModel = listOfAdditionalContact.get(tableAdditionalContact.getSelectionModel().getSelectedIndex());
 
 				if (additionalContactModel.getAdditionalContactId() != null)
 					additionalContactIdPri = additionalContactModel.getAdditionalContactId();
@@ -604,7 +604,7 @@ public class CompanyEditController extends Application implements Initializable 
 				// setValuesToCmpanyTextField();
 				addBillingLocation = 0;
 				editIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
-				billingControllerModel = tableBillingLocations.getSelectionModel().getSelectedItem();
+				billingControllerModel = listOfBilling.get(tableBillingLocations.getSelectionModel().getSelectedIndex());
 
 				if (billingControllerModel.getBillingLocationId() != null)
 					billingLocationIdPri = billingControllerModel.getBillingLocationId();

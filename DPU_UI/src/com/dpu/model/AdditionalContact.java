@@ -12,17 +12,24 @@ public class AdditionalContact {
 	private String fax;
 	private String prefix;
 	private String cellular;
-	private String statusId;
+	private Long statusId;
 	private Long functionId;
 
 	private String functionType;
 	private String email;
 	public Long companyId;
-	private String function;
+	private Long function;
 	private Type functionObj;
 	public Long additionalContactId = null;
 	private String status;
 	 
+	public Long getStatusId() {
+		return statusId;
+	}
+
+	public void setStatusId(Long statusId) {
+		this.statusId = statusId;
+	}
 
 	public String getStatus() {
 		return status;
@@ -50,16 +57,6 @@ public class AdditionalContact {
 		this.functionId = functionId;
 	}
 
-	 
-
-	public String getStatusId() {
-		return statusId;
-	}
-
-	public void setStatusId(String statusId) {
-		this.statusId = statusId;
-	}
-
 	public Type getFunctionObj() {
 		return functionObj;
 	}
@@ -77,7 +74,7 @@ public class AdditionalContact {
 	}
 
 	public AdditionalContact(String additionalContact, String position2, String phone2, String fax2, String cellular2,
-			String email2, String extension, String pager, String status, String function) {
+			String email2, String extension, String pager, Long status2, Long function2) {
 		this.customerName = additionalContact;
 		this.position = position2;
 		this.phone = phone2;
@@ -85,17 +82,16 @@ public class AdditionalContact {
 		this.fax = fax2;
 		this.prefix = pager;
 		this.cellular = cellular2;
-		this.statusId = status;
+		this.statusId = status2;
 		this.email = email2;
-		this.function = function;
-
+		this.function = function2;
 	}
 
-	public String getFunction() {
+	public Long getFunction() {
 		return function;
 	}
 
-	public void setFunction(String function) {
+	public void setFunction(Long function) {
 		this.function = function;
 	}
 

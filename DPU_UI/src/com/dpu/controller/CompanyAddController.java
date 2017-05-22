@@ -228,8 +228,8 @@ public class CompanyAddController extends Application implements Initializable {
 				selectedTabValue = 1;
 				addAddtionalContact = 0;
 				addEditIndex = tableAdditionalContact.getSelectionModel().getSelectedIndex();
-				additionalContactModel = tableAdditionalContact.getSelectionModel().getSelectedItem();
-				openAddAdditionalContactScreen();
+				CompanyEditController.additionalContactModel = CompanyEditController.listOfAdditionalContact.get(tableAdditionalContact.getSelectionModel().getSelectedIndex());
+				openEditAdditionalContactScreen();
 
 			}
 		});
@@ -552,6 +552,8 @@ public class CompanyAddController extends Application implements Initializable {
 
 		CompanyEditController.listOfBilling = new ArrayList<BillingControllerModel>();
 		CompanyEditController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
+		tableBillingLocations.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY); 
+		tableAdditionalContact.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY); 
 		duplicateTableBillingLocations = tableBillingLocations;
 		duplicateTableAdditionalContact = tableAdditionalContact;
 		fetchBillingLocations();
@@ -560,11 +562,11 @@ public class CompanyAddController extends Application implements Initializable {
 		setAdditionalContactColumnValues();
 		tabPane.getSelectionModel().select(selectedTabValue);
 		fetchMasterDataForDropDowns();
-
+		
 	}
 
 	int billingLocationCountMenu = 0;
-
+	
 	@FXML
 	public void handleMouseClick(MouseEvent arg0) {
 
@@ -590,7 +592,7 @@ public class CompanyAddController extends Application implements Initializable {
 				selectedTabValue = 0;
 				add = 0;
 				addEditIndex = tableBillingLocations.getSelectionModel().getSelectedIndex();
-				billingControllerModel = tableBillingLocations.getSelectionModel().getSelectedItem();
+				CompanyEditController.billingControllerModel = listOfBilling.get(tableBillingLocations.getSelectionModel().getSelectedIndex());
 				openAddBillingLocationScreen();
 
 			}
@@ -655,6 +657,23 @@ public class CompanyAddController extends Application implements Initializable {
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.setTitle("Add Additional Contact");
+			stage.setScene(new Scene(root));
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void openEditAdditionalContactScreen() {
+		try {
+
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
+					.getResource(Iconstants.COMPANY_BASE_PACKAGE + Iconstants.XML_EDIT_ADDITIONAL_CONTACT_SCREEN));
+			Parent root = (Parent) fxmlLoader.load();
+
+			Stage stage = new Stage();
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setTitle("Edit Additional Contact");
 			stage.setScene(new Scene(root));
 			stage.show();
 		} catch (Exception e) {

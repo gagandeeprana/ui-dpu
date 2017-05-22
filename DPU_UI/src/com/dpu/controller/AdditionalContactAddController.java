@@ -105,9 +105,9 @@ public class AdditionalContactAddController implements Initializable {
 				String fax = txtFax.getText();
 				String pager = txtPager.getText();
 				String cellular = txtCellular.getText();
-				String status = ddlStatus.getSelectionModel().getSelectedItem();
+				Long status = statusList.get(ddlStatus.getSelectionModel().getSelectedIndex()).getId();
 				String email = txtEmail.getText();
-				String function = ddlFunction.getSelectionModel().getSelectedItem();
+				Long function = functionList.get(ddlFunction.getSelectionModel().getSelectedIndex()).getTypeId();
 
 				AdditionalContact bcm1 = new AdditionalContact(additionalContact, position, phone, fax, cellular, email,
 						extension, pager, status, function);
@@ -155,6 +155,9 @@ public class AdditionalContactAddController implements Initializable {
 
 	}
 
+	public static List<Status> statusList = null;
+	public static List<Type> functionList = null;
+	
 	private void fetchMasterDataForDropDowns() {
 
 		Platform.runLater(new Runnable() {
@@ -167,10 +170,10 @@ public class AdditionalContactAddController implements Initializable {
 							Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/openAddAdditionalContact", null);
 					Company company = mapper.readValue(response, Company.class);
 
-					List<Status> statusList = company.getStatusList();
+					statusList = company.getStatusList();
 					fillDropDown(ddlStatus, statusList);
 
-					List<Type> functionList = company.getFunctionList();
+					functionList = company.getFunctionList();
 					fillDropDown(ddlFunction, functionList);
 
 					

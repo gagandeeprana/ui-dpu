@@ -234,8 +234,8 @@ public class CompanyController extends Application implements Initializable {
 									additionalContact.setPrefix(c.getAdditionalContacts().get(j).getCellular());
 									additionalContact.setPhone(c.getAdditionalContacts().get(j).getPhone());
 									additionalContact.setPosition(c.getAdditionalContacts().get(j).getPosition());
-									additionalContact.setStatusId(c.getAdditionalContacts().get(j).getStausName());
-									additionalContact.setFunction(c.getAdditionalContacts().get(j).getFunctionName());
+									additionalContact.setStatusId(c.getAdditionalContacts().get(j).getStatus());
+									additionalContact.setFunctionId(c.getAdditionalContacts().get(j).getFunctionId());
 									CompanyEditController.listOfAdditionalContact.add(additionalContact);
 								}
 							}
@@ -313,8 +313,8 @@ public class CompanyController extends Application implements Initializable {
 									additionalContact.setPrefix(c.getAdditionalContacts().get(j).getCellular());
 									additionalContact.setPhone(c.getAdditionalContacts().get(j).getPhone());
 									additionalContact.setPosition(c.getAdditionalContacts().get(j).getPosition());
-									additionalContact.setStatusId(c.getAdditionalContacts().get(j).getStausName());
-									additionalContact.setFunction(c.getAdditionalContacts().get(j).getFunctionName());
+									additionalContact.setStatusId(c.getAdditionalContacts().get(j).getStatus());
+									additionalContact.setFunctionId(c.getAdditionalContacts().get(j).getFunctionId());
 									CompanyEditController.listOfAdditionalContact.add(additionalContact);
 								}
 							}
@@ -997,8 +997,7 @@ public class CompanyController extends Application implements Initializable {
 											additionalContact.setPhone(c.getAdditionalContacts().get(j).getPhone());
 											additionalContact
 													.setPosition(c.getAdditionalContacts().get(j).getPosition());
-											additionalContact.setStatusId(
-													String.valueOf(c.getAdditionalContacts().get(j).getStatus()));
+											additionalContact.setStatusId(c.getAdditionalContacts().get(j).getStatus());
 
 											CompanyEditController.listOfAdditionalContact.add(additionalContact);
 										}
@@ -1115,8 +1114,7 @@ public class CompanyController extends Application implements Initializable {
 											additionalContact.setPhone(c.getAdditionalContacts().get(j).getPhone());
 											additionalContact
 													.setPosition(c.getAdditionalContacts().get(j).getPosition());
-											additionalContact.setStatusId(
-													String.valueOf(c.getAdditionalContacts().get(j).getStatus()));
+											additionalContact.setStatusId(c.getAdditionalContacts().get(j).getStatus());
 
 											CompanyEditController.listOfAdditionalContact.add(additionalContact);
 										}
