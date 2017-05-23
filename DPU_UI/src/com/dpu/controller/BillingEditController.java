@@ -1,15 +1,18 @@
 package com.dpu.controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.dpu.model.BillingControllerModel;
+import com.dpu.model.Country;
 import com.dpu.util.Validate;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
@@ -24,31 +27,13 @@ public class BillingEditController implements Initializable {
 	private URL location;
 
 	@FXML
-	private Button btnCancelBillingLocation;
+	private Button btnCancelBillingLocation, btnUpdateBillingLocation;
 
 	@FXML
-	private Button btnUpdateBillingLocation;
+	private TextField txtAddress, txtAddress1, txtCity, txtProvince, txtCompany, txtContact, txtFax, txtPhone, txtZip;
 
 	@FXML
-	private TextField txtAddress;
-
-	@FXML
-	private TextField txtCity;
-
-	@FXML
-	private TextField txtCompany;
-
-	@FXML
-	private TextField txtContact;
-
-	@FXML
-	private TextField txtFax;
-
-	@FXML
-	private TextField txtPhone;
-
-	@FXML
-	private TextField txtZip;
+	private ComboBox<String> ddlCountry;
 
 	@FXML
 	void btnUpdateBillingLocationAction(ActionEvent event) {
@@ -59,14 +44,16 @@ public class BillingEditController implements Initializable {
 
 				String company = txtCompany.getText();
 				String address = txtAddress.getText();
+				String address2 = txtAddress1.getText();
 				String city = txtCity.getText();
+				String province = txtProvince.getText();
 				String phone = txtPhone.getText();
 				String contact = txtContact.getText();
 				String zip = txtZip.getText();
 				String fax = txtFax.getText();
-				//Long statusId = Long.parseLong("1");
-				BillingControllerModel bcm1 = new BillingControllerModel(company, address, city, phone, contact, zip,
-						fax);
+				Long countryId = countryList.get(ddlCountry.getSelectionModel().getSelectedIndex()).getCountryId();
+
+				BillingControllerModel bcm1 = new BillingControllerModel(company, address, city, phone, contact, zip, fax, address2, province, countryId);
 
 				if (CompanyEditController.addBillingLocation == 0) {
 					if (CompanyEditController.billingLocationIdPri != 0l
@@ -100,7 +87,8 @@ public class BillingEditController implements Initializable {
 		closeAddBillingScreen(btnCancelBillingLocation);
 	}
  
-
+	List<Country> countryList = null;
+	
 	public void initialize(URL location, ResourceBundle resources) {
 
 		txtPhone.addEventFilter(KeyEvent.KEY_TYPED, Validate.numeric_Validation(10));
@@ -116,6 +104,19 @@ public class BillingEditController implements Initializable {
 				txtContact.setText(CompanyEditController.billingControllerModel.getContact());
 				txtZip.setText(CompanyEditController.billingControllerModel.getZip());
 				txtFax.setText(CompanyEditController.billingControllerModel.getFax());
+				txtAddress1.setText(CompanyEditController.billingControllerModel.getAddress2());
+				txtProvince.setText(CompanyEditController.billingControllerModel.getProvince());
+				countryList = CompanyEditController.billingControllerModel.getCountryList();
+				if(countryList != null && countryList.size() > 0) {
+
+					for(int i=0;i<countryList.size();i++) {
+						Country c = countryList.get(i);
+						ddlCountry.getItems().add(c.getCountryName());
+						if(c.getCountryId().equals(CompanyEditController.billingControllerModel.getCountryId())) {
+							ddlCountry.getSelectionModel().select(i);
+						}
+					}
+				}
 			}
 		}
 

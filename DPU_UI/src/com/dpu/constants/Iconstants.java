@@ -168,4 +168,6 @@ public class Iconstants {
 	public static final String XML_ACCOUNTS_ADD_SCREEN = "AddAccounts.fxml";
 	public static final String XML_ACCOUNTS_EDIT_SCREEN = "EditAccounts.fxml";
 
+	public static final String URL_GET_COUNTRIES = "country";
+
 }

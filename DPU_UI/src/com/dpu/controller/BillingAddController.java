@@ -11,8 +11,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.BillingControllerModel;
-import com.dpu.model.Company;
-import com.dpu.model.Type;
+import com.dpu.model.Country;
 import com.dpu.util.Validate;
 
 import javafx.application.Platform;
@@ -48,8 +47,6 @@ public class BillingAddController implements Initializable {
 		
 	}
 	
-	List<Type> countryList = null;
-	
 	@FXML
 	void btnSaveBillingLocationAction(ActionEvent event) {
 
@@ -66,10 +63,10 @@ public class BillingAddController implements Initializable {
 				String contact = txtContact.getText();
 				String zip = txtZip.getText();
 				String fax = txtFax.getText();
-//				Long countryId = coun
+				Long countryId = countryList.get(ddlCountry.getSelectionModel().getSelectedIndex()).getCountryId();
 				// Long statusId = Long.parseLong("1");
 				BillingControllerModel bcm1 = new BillingControllerModel(company, address, city, phone, contact, zip,
-						fax);
+						fax, address2, province, countryId);
 
 				if (CompanyAddController.add == 0) {
 					CompanyEditController.listOfBilling.set(CompanyAddController.addEditIndex, bcm1);
@@ -96,26 +93,9 @@ public class BillingAddController implements Initializable {
 		closeAddBillingScreen(btnCancelBillingLocation);
 	}
 
-	public void initialize() {
-
-		txtPhone.addEventFilter(KeyEvent.KEY_TYPED, Validate.numeric_Validation(10));
-		//txtCompany.addEventFilter(KeyEvent.KEY_TYPED, Validate.letter_Validation(10));
-
-		if (CompanyAddController.add != 1) {
-			if (CompanyAddController.billingControllerModel != null) {
-				txtCompany.setText(CompanyAddController.billingControllerModel.getName());
-				txtPhone.setText(CompanyAddController.billingControllerModel.getPhone());
-				txtAddress.setText(CompanyAddController.billingControllerModel.getAddress());
-				txtCity.setText(CompanyAddController.billingControllerModel.getCity());
-				txtContact.setText(CompanyAddController.billingControllerModel.getContact());
-				txtZip.setText(CompanyAddController.billingControllerModel.getZip());
-				txtFax.setText(CompanyAddController.billingControllerModel.getFax());
-			}
-		}
-
-	}
+	List<Country> countryList = null;
 	
-	/*private void fetchMasterDataForDropDowns() {
+	private void fetchMasterDataForDropDowns() {
 
 		Platform.runLater(new Runnable() {
 			ObjectMapper mapper = new ObjectMapper();
@@ -123,22 +103,10 @@ public class BillingAddController implements Initializable {
 			@Override
 			public void run() {
 				try {
-					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_ + "/openAdd", null);
-					Company company = mapper.readValue(response, Company.class);
+					String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_GET_COUNTRIES + "/openAdd", null);
+					Country country = mapper.readValue(response, Country.class);
 
-					categoryList = company.getCategoryList();
-					if (categoryList != null)
-						fillDropDown(ddlCategory, categoryList);
-
-					divisionList = company.getDivisionList();
-					if (divisionList != null)
-						fillDropDown(ddlDivision, divisionList);
-
-					saleList = company.getSaleList();
-					if (saleList != null)
-						fillDropDown(ddlSale, saleList);
-
-					countryList = company.getCountryList();
+//					countryList = country.getCountryList();
 					if (countryList != null)
 						fillDropDown(ddlCountry, countryList);
 
@@ -148,7 +116,17 @@ public class BillingAddController implements Initializable {
 			}
 		});
 	}
-*/
+	
+	private void fillDropDown(ComboBox<String> comboBox, List<?> list) {
+		for(int i=0;i<list.size();i++) {
+			Object object = list.get(i);
+			if(object != null && object instanceof Country) {
+				Country country = (Country) object;
+				comboBox.getItems().add(country.getCountryName());
+			}
+		}
+	}
+
 	@FXML
 	Label lblCompany, lblAddress, lblCity, lblZip, lblFax, lblPhone, lblContact;
 
@@ -354,8 +332,22 @@ public class BillingAddController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-		
+
+		txtPhone.addEventFilter(KeyEvent.KEY_TYPED, Validate.numeric_Validation(10));
+		//txtCompany.addEventFilter(KeyEvent.KEY_TYPED, Validate.letter_Validation(10));
+
+		if (CompanyAddController.add != 1) {
+			if (CompanyAddController.billingControllerModel != null) {
+				txtCompany.setText(CompanyAddController.billingControllerModel.getName());
+				txtPhone.setText(CompanyAddController.billingControllerModel.getPhone());
+				txtAddress.setText(CompanyAddController.billingControllerModel.getAddress());
+				txtCity.setText(CompanyAddController.billingControllerModel.getCity());
+				txtContact.setText(CompanyAddController.billingControllerModel.getContact());
+				txtZip.setText(CompanyAddController.billingControllerModel.getZip());
+				txtFax.setText(CompanyAddController.billingControllerModel.getFax());
+			}
+		}
+		fetchMasterDataForDropDowns();
 	}
 
 }

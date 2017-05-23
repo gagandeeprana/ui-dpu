@@ -1,6 +1,8 @@
 
 package com.dpu.model;
 
+import java.util.List;
+
 public class BillingControllerModel {
 
 	private String name;
@@ -10,12 +12,24 @@ public class BillingControllerModel {
 	private String contact;
 	private String zip;
 	private String fax;
-
+	private String address2;
+	private String province;
+	private Long countryId;
 	public Long companyId;
 	public Long billingLocationId = null;
+	
+	private List<Country> countryList;
+	
+	public List<Country> getCountryList() {
+		return countryList;
+	}
+
+	public void setCountryList(List<Country> countryList) {
+		this.countryList = countryList;
+	}
 
 	public BillingControllerModel(String company, String address, String city, String phone, String contact, String zip,
-			String fax) {
+			String fax, String address2, String province, Long countryId) {
 		this.name = company;
 		this.address = address;
 		this.city = city;
@@ -23,11 +37,38 @@ public class BillingControllerModel {
 		this.contact = contact;
 		this.zip = zip;
 		this.fax = fax;
+		this.address2 = address2;
+		this.province = province;
+		this.countryId = countryId;
 
 	}
 
 	public BillingControllerModel() {
 
+	}
+	
+	public String getAddress2() {
+		return address2;
+	}
+
+	public void setAddress2(String address2) {
+		this.address2 = address2;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public Long getCountryId() {
+		return countryId;
+	}
+
+	public void setCountryId(Long countryId) {
+		this.countryId = countryId;
 	}
 
 	public Long getCompanyId() {
