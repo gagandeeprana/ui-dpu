@@ -35,7 +35,7 @@ import javafx.stage.Stage;
 public class ServiceEditController extends Application implements Initializable {
 
 	@FXML
-	Button btnUpdateService, btnEdit;
+	Button btnUpdateService, btnEdit, btnCancel;
 
 	Long serviceId = 0l;
 
@@ -64,6 +64,11 @@ public class ServiceEditController extends Application implements Initializable 
 			lblService.setText("Service Name is Mandatory");
 			lblService.setTextFill(Color.RED);
 		}
+	}
+	
+	@FXML
+	private void btnCancelAction() {
+		closeEditServiceScreen(btnCancel);
 	}
 
 	@FXML

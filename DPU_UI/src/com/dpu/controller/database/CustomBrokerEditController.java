@@ -36,7 +36,7 @@ import javafx.stage.Stage;
 public class CustomBrokerEditController extends Application implements Initializable {
 
 	@FXML
-	Button btnUpdateCustomBroker, btnEdit;
+	Button btnUpdateCustomBroker, btnEdit, btnCancel;
 
 	@FXML
 	TextField txtCustomerBrokerName, txtContactNamePAPS, txtCentralPhonePAPS, txtExtensionPAPS, txtCentralFaxPAPS,
@@ -57,6 +57,11 @@ public class CustomBrokerEditController extends Application implements Initializ
 
 	@FXML
 	ComboBox<String> ddlStatus;
+	
+	@FXML
+	private void btnCancelAction() {
+		closeEditCustomBrokerScreen(btnCancel);
+	}
 
 	/*
 	 * private boolean validateEditHandlingScreen() { String name =

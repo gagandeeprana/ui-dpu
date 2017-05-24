@@ -73,8 +73,17 @@ public class AdditionalContact {
 		this.statusList = statusList;
 	}
 
-	public AdditionalContact(String additionalContact, String position2, String phone2, String fax2, String cellular2,
-			String email2, String extension, String pager, Long status2, Long function2) {
+
+	public Long getFunction() {
+		return function;
+	}
+
+	public void setFunction(Long function) {
+		this.function = function;
+	}
+
+	public AdditionalContact(String additionalContact, String position2, String phone2, String fax2, String cellular2, String email2, String extension, String pager, Long status2, Long function2) {
+
 		this.customerName = additionalContact;
 		this.position = position2;
 		this.phone = phone2;
@@ -87,16 +96,9 @@ public class AdditionalContact {
 		this.function = function2;
 	}
 
-	public Long getFunction() {
-		return function;
-	}
-
-	public void setFunction(Long function) {
-		this.function = function;
-	}
 
 	public AdditionalContact() {
-
+		// TODO Auto-generated constructor stub
 	}
 
 	public Long getCompanyId() {

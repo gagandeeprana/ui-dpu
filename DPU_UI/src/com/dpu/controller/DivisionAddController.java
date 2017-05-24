@@ -62,6 +62,11 @@ public class DivisionAddController extends Application implements Initializable 
 			closeAddDivisionScreen(btnSaveDivision);
 		}
 	}
+	
+	@FXML
+	private void btnCancelAction() {
+		closeAddDivisionScreen(btnCancel);
+	}
 
 	List<Status> cList = null;
 

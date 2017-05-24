@@ -11,7 +11,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.controller.MainScreen;
-import com.dpu.controller.ServiceController;
 import com.dpu.model.Failed;
 import com.dpu.model.HandlingModel;
 import com.dpu.model.Status;
@@ -26,14 +25,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class HandlingEditController extends Application implements Initializable {
 
 	@FXML
-	Button btnUpdateHandling, btnEdit;
+	Button btnUpdateHandling, btnEdit, btnCancel;
 
 	Long handlingId = 0l;
 
@@ -76,6 +74,11 @@ public class HandlingEditController extends Application implements Initializable
 		return response;
 	}
 
+	@FXML
+	private void btnCancelAction() {
+		closeEditHandlingScreen(btnCancel);
+	}
+	
 	@FXML
 	private void btnUpdateHandlingAction() {
 		boolean response = validateEditHandlingScreen();

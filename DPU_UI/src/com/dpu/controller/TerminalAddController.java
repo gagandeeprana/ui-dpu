@@ -38,7 +38,7 @@ public class TerminalAddController extends Application implements Initializable 
 	Button btnSaveTerminal;
 
 	@FXML
-	Button btnCancelTerminal, btnAddAvailableServices, btnAddNewLocation;
+	Button btnCancel, btnAddAvailableServices, btnAddNewLocation;
 
 	@FXML
 	TextField txtTerminalName;
@@ -57,6 +57,11 @@ public class TerminalAddController extends Application implements Initializable 
 			addTerminal();
 			closeAddTerminalScreen(btnSaveTerminal);
 		}
+	}
+	
+	@FXML
+	private void btnCancelAction() {
+		closeAddTerminalScreen(btnCancel);
 	}
 
 	private void closeAddTerminalScreen(Button clickedButton) {

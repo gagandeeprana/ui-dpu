@@ -95,11 +95,6 @@
     </TabPane>
     <Button fx:id="btnSaveCarrier" font="$x1" layoutX="581.0" layoutY="601.0" mnemonicParsing="false" onAction="#btnSaveCarrierAction" prefHeight="25.0" prefWidth="65.0" text="Save" />
     <Button fx:id="btnCancelCarrier" font="$x1" layoutX="657.0" layoutY="601.0" mnemonicParsing="false" onAction="#btnCancelCarrierAction" prefHeight="25.0" prefWidth="65.0" text="Cancel" />
-    <Label layoutX="-1.0" prefHeight="27.0" prefWidth="743.0" style="-fx-background-color: lightgrey; -fx-border-color: black;" text="New Carrier">
-      <font>
-        <Font name="System Bold" size="16.0" />
-      </font>
-    </Label>
     <Label font="$x1" layoutX="527.0" layoutY="103.0" text="Ext" />
     <TextField fx:id="txtExt" layoutX="564.0" layoutY="100.0" prefHeight="25.0" prefWidth="99.0" />
     <TextField fx:id="txtPrefix" layoutX="564.0" layoutY="132.0" prefHeight="25.0" prefWidth="99.0" />

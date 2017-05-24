@@ -36,7 +36,7 @@ import javafx.stage.Stage;
 public class ServiceAddController<T> extends Application implements Initializable {
 
 	@FXML
-	Button btnSaveService;
+	Button btnSaveService, btnCancel;
 
 	@FXML
 	TextField txtService;
@@ -65,6 +65,11 @@ public class ServiceAddController<T> extends Application implements Initializabl
 	private void closeAddServiceScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
 		loginStage.close();
+	}
+	
+	@FXML
+	private void btnCancelAction() {
+		closeAddServiceScreen(btnCancel);
 	}
 
 	@FXML

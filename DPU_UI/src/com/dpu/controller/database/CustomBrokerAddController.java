@@ -16,7 +16,6 @@ import com.dpu.controller.MainScreen;
 import com.dpu.model.CustomBroker;
 import com.dpu.model.CustomBrokerTypeModel;
 import com.dpu.model.Failed;
-import com.dpu.model.Shipper;
 import com.dpu.model.Status;
 import com.dpu.model.Success;
 import com.dpu.model.Type;
@@ -38,7 +37,7 @@ import javafx.stage.Stage;
 public class CustomBrokerAddController<T> extends Application implements Initializable{
 
 	@FXML
-	Button btnSaveCustomBroker;
+	Button btnSaveCustomBroker, btnCancel;
 	
 	@FXML
 	TextField txtCustomerBrokerName, txtContactNamePAPS, txtCentralPhonePAPS, txtExtensionPAPS, txtCentralFaxPAPS, txtEmailPAPS, txtTrackerLinkPAPS,
@@ -66,6 +65,11 @@ public class CustomBrokerAddController<T> extends Application implements Initial
 			addCustomBroker();
 			closeAddCustomBrokerScreen(btnSaveCustomBroker);
 		}
+	}
+	
+	@FXML
+	private void btnCancelAction() {
+		closeAddCustomBrokerScreen(btnCancel);
 	}
 	
 	private boolean validateAddCustomBrokerScreen() {

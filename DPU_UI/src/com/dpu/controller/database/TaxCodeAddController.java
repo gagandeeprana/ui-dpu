@@ -19,7 +19,6 @@ import com.dpu.model.Accounts;
 import com.dpu.model.Failed;
 import com.dpu.model.Success;
 import com.dpu.model.TaxCode;
-import com.dpu.model.Type;
 import com.dpu.util.Validate;
 
 import impl.org.controlsfx.autocompletion.AutoCompletionTextFieldBinding;
@@ -37,7 +36,7 @@ import javafx.util.Callback;
 public class TaxCodeAddController extends Application implements Initializable {
 
 	@FXML
-	Button btnSaveTaxCode;
+	Button btnSaveTaxCode, btnCancel;
 
 	@FXML
 	TextField txtTaxCode, txtDescription, txtPercentage, txtAccountSales, txtAccountRevenue;
@@ -60,6 +59,11 @@ public class TaxCodeAddController extends Application implements Initializable {
 			addTaxCode();
 			closeAddTaxCodeScreen(btnSaveTaxCode);
 //		}
+	}
+	
+	@FXML
+	private void btnCancelAction() {
+		closeAddTaxCodeScreen(btnCancel);
 	}
 
 	private void closeAddTaxCodeScreen(Button clickedButton) {

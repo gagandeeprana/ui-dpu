@@ -26,24 +26,19 @@ import impl.org.controlsfx.autocompletion.AutoCompletionTextFieldBinding;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class TaxCodeEditController extends Application implements Initializable {
 
 	@FXML
-	Button btnUpdateTaxCode, btnEdit;
+	Button btnUpdateTaxCode, btnEdit, btnCancel;
 
 	Long taxCodeId = 0l;
 
@@ -57,6 +52,11 @@ public class TaxCodeEditController extends Application implements Initializable 
 
 	@FXML
 	ComboBox<String> ddlTaxable;
+	
+	@FXML
+	private void btnCancel() {
+		closeEditTaxCodeScreen(btnCancel);
+	}
 
 	/*
 	 * @FXML private void taxCodeNameKeyPressed() { String name =

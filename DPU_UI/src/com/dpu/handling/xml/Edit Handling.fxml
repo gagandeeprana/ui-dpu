@@ -18,7 +18,7 @@
             <Font size="13.0" />
          </font>
       </Button>
-      <Button layoutX="310.0" layoutY="132.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Cancel">
+      <Button fx:id="btnCancel" layoutX="310.0" layoutY="132.0" mnemonicParsing="false" onAction="#btnCancelAction" prefHeight="25.0" prefWidth="65.0" text="Cancel">
          <font>
             <Font size="13.0" />
          </font>
@@ -27,7 +27,7 @@
       <Text layoutX="24.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status" />
       <Label id="lblHandling" layoutX="145.0" layoutY="52.0" prefHeight="17.0" prefWidth="230.0" />
       <Label id="lblStatus" layoutX="145.0" layoutY="103.0" prefHeight="17.0" prefWidth="230.0" />
-      <Button fx:id="btnEdit" onAction="#handleEditAction" layoutX="163.0" layoutY="132.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="65.0" text="Edit" />
+      <Button fx:id="btnEdit" layoutX="163.0" layoutY="132.0" mnemonicParsing="false" onAction="#handleEditAction" prefHeight="29.0" prefWidth="65.0" text="Edit" />
    </children>
    
 </AnchorPane>

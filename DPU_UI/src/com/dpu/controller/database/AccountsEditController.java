@@ -14,11 +14,10 @@ import org.controlsfx.control.textfield.AutoCompletionBinding;
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.controller.MainScreen;
+import com.dpu.model.Accounts;
 import com.dpu.model.Failed;
-import com.dpu.model.Status;
 import com.dpu.model.Success;
 import com.dpu.model.TaxCode;
-import com.dpu.model.Accounts;
 import com.dpu.model.Type;
 import com.dpu.util.Validate;
 
@@ -39,7 +38,7 @@ import javafx.util.Callback;
 public class AccountsEditController extends Application implements Initializable {
 
 	@FXML
-	Button btnUpdateAccounts, btnEdit;
+	Button btnUpdateAccounts, btnEdit, btnCancel;
 
 	@FXML
 	TextField txtAccountNo, txtAccountName, txtSubAccount, txtDefaultTaxCode;
@@ -57,6 +56,11 @@ public class AccountsEditController extends Application implements Initializable
 
 	@FXML
 	ComboBox<String> ddlTaxable;
+	
+	@FXML
+	private void btnCancelAction() {
+		closeEditAccountsScreen(btnCancel);
+	}
 
 	/*
 	 * @FXML private void AccountsNameKeyPressed() { String name =

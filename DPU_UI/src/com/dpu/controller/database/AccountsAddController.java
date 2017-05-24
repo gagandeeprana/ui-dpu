@@ -39,7 +39,7 @@ import javafx.util.Callback;
 public class AccountsAddController extends Application implements Initializable {
 
 	@FXML
-	Button btnSaveAccounts;
+	Button btnSaveAccounts, btnCancel;
 
 	@FXML
 	TextField txtAccountNo, txtAccountName, txtSubAccount, txtDefaultTaxCode;
@@ -65,6 +65,11 @@ public class AccountsAddController extends Application implements Initializable 
 //		}
 	}
 
+	@FXML
+	private void btnCancelAction() {
+		closeAddAccountsScreen(btnCancel);
+	}
+	
 	private void closeAddAccountsScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
 		loginStage.close();

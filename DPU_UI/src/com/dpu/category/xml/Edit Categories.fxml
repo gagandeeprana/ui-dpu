@@ -7,7 +7,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="226.0" prefWidth="373.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.CategoryEditController">
     <children>
-      <Button layoutX="286.0" layoutY="190.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Cancel">
+      <Button fx:id="btnCancel" layoutX="286.0" layoutY="190.0" mnemonicParsing="false" onAction="#btnCancelAction" prefHeight="25.0" prefWidth="65.0" text="Cancel">
          <font>
             <Font size="13.0" />
          </font>
@@ -44,6 +44,6 @@
       <Label fx:id="lblCategory" layoutX="111.0" layoutY="85.0" prefHeight="17.0" prefWidth="240.0" />
       <Label fx:id="lblStatus" layoutX="111.0" layoutY="127.0" prefHeight="17.0" prefWidth="240.0" />
       <Label fx:id="lblHighlight" layoutX="111.0" layoutY="175.0" prefHeight="17.0" prefWidth="240.0" />
-      <Button fx:id="btnEdit" onAction="#handleEditAction" layoutX="133.0" layoutY="190.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="65.0" text="Edit" />
+      <Button fx:id="btnEdit" layoutX="133.0" layoutY="190.0" mnemonicParsing="false" onAction="#handleEditAction" prefHeight="29.0" prefWidth="65.0" text="Edit" />
    </children>
 </AnchorPane>

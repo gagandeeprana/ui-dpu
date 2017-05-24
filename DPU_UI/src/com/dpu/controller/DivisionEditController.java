@@ -65,6 +65,11 @@ public class DivisionEditController extends Application implements Initializable
 
 	}
 
+	@FXML
+	private void btnCancelAction() {
+		closeEditDivisionScreen(btnCancel);
+	}
+	
 	private void closeEditDivisionScreen(Button clickedButton) {
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
 		loginStage.close();

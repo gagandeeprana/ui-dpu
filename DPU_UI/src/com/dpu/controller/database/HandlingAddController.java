@@ -26,14 +26,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class HandlingAddController<T> extends Application implements Initializable {
 
 	@FXML
-	Button btnSaveHandling;
+	Button btnSaveHandling, btnCancel;
 
 	@FXML
 	TextField txtHandling;
@@ -55,6 +54,11 @@ public class HandlingAddController<T> extends Application implements Initializab
 			addHandling();
 			closeAddHandlingScreen(btnSaveHandling);
 		}
+	}
+	
+	@FXML
+	private void btnCancelAction() {
+		closeAddHandlingScreen(btnCancel);
 	}
 
 	private void closeAddHandlingScreen(Button clickedButton) {

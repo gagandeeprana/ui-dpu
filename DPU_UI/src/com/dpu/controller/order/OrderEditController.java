@@ -16,7 +16,6 @@ import com.dpu.controller.MainScreen;
 import com.dpu.model.AdditionalContact;
 import com.dpu.model.BillingControllerModel;
 import com.dpu.model.Company;
-import com.dpu.model.CompanyAdditionalContacts;
 import com.dpu.model.Failed;
 import com.dpu.model.OrderModel;
 import com.dpu.model.OrderPickUpDeliveryModel;
@@ -25,7 +24,6 @@ import com.dpu.model.Shipper;
 import com.dpu.model.Status;
 import com.dpu.model.Success;
 import com.dpu.model.Type;
-import com.dpu.request.BillingLocation;
 import com.dpu.util.Validate;
 
 import javafx.application.Application;
@@ -49,7 +47,7 @@ import javafx.stage.Stage;
 public class OrderEditController extends Application implements Initializable{
 
 	@FXML
-	Button btnUpdateOrder;
+	Button btnUpdateOrder, btnCancel;
 	
 	@FXML
 	TextField txtCallerName, txtPONo;
@@ -75,6 +73,11 @@ public class OrderEditController extends Application implements Initializable{
 	List<Type> typeList, operationList, timeZoneList;
 	Long papsCustomBrokerTypeId, parsCustomBrokerTypeId = 0l;
 	ObjectMapper mapper = new ObjectMapper();
+	
+	@FXML
+	private void btnCancelAction() {
+		closeEditOrderScreen(btnCancel);
+	}
 	
 	@FXML
 	private void btnAddProbillAction() {

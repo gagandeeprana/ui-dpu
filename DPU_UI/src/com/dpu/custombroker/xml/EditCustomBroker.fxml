@@ -69,7 +69,7 @@
                            </children>
                         </Pane>
                         <Button fx:id="btnUpdateCustomBroker" layoutX="723.0" layoutY="449.0" mnemonicParsing="false" onAction="#btnUpdateCustomBrokerAction" prefHeight="25.0" prefWidth="59.0" text="Update" />
-                        <Button fx:id="btnCancel" layoutX="792.0" layoutY="449.0" mnemonicParsing="false" text="Cancel" />
+                        <Button fx:id="btnCancel" layoutX="792.0" layoutY="449.0" mnemonicParsing="false" onAction="#btnCancelAction" text="Cancel" />
                         <Label layoutX="14.0" layoutY="14.0" text="Custom Broker Name" />
                         <TextField fx:id="txtCustomerBrokerName" layoutX="152.0" layoutY="10.0" onKeyReleased="#customerBrokerNameKeyReleased" prefHeight="25.0" prefWidth="306.0" />
                         <Label layoutX="716.0" layoutY="14.0" text="Type" />
@@ -80,7 +80,7 @@
                         <ComboBox fx:id="ddlStatusPARS" layoutX="550.0" layoutY="396.0" onAction="#ddlStatusPARSAction" prefHeight="25.0" prefWidth="290.0" />
                         <Label layoutX="450.0" layoutY="400.0" text="Status" />
                         <Label fx:id="lblType" layoutX="749.0" layoutY="35.0" prefHeight="17.0" prefWidth="102.0" />
-                        <Button fx:id="btnEdit" onAction="#handleEditAction" layoutX="657.0" layoutY="449.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Edit" />
+                        <Button fx:id="btnEdit" layoutX="657.0" layoutY="449.0" mnemonicParsing="false" onAction="#handleEditAction" prefHeight="25.0" prefWidth="59.0" text="Edit" />
                      </children>
                   </AnchorPane>
                </content>

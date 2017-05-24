@@ -35,7 +35,7 @@ import javafx.stage.Stage;
 public class CategoryEditController extends Application implements Initializable {
 
 	@FXML
-	Button btnUpdateCategory, btnEdit;
+	Button btnUpdateCategory, btnEdit, btnCancel;
 
 	Long categoryId = 0l;
 
@@ -58,6 +58,11 @@ public class CategoryEditController extends Application implements Initializable
 
 		}
 
+	}
+	
+	@FXML
+	private void btnCancelAction() {
+		closeEditCategoryScreen(btnCancel);
 	}
 
 	private void closeEditCategoryScreen(Button clickedButton) {

@@ -7,7 +7,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="263.0" prefWidth="375.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dpu.controller.CategoryAddController">
    <children>
-      <Button layoutX="286.0" layoutY="208.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Cancel">
+      <Button fx:id="btnCancel" layoutX="286.0" layoutY="208.0" mnemonicParsing="false" onAction="#btnCancelAction" prefHeight="25.0" prefWidth="65.0" text="Cancel">
          <font>
             <Font size="13.0" />
          </font>

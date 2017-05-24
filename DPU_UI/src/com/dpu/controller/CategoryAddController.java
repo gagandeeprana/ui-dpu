@@ -36,7 +36,7 @@ import javafx.stage.Stage;
 public class CategoryAddController extends Application implements Initializable {
 
 	@FXML
-	Button btnSaveCategory;
+	Button btnSaveCategory, btnCancel;
 
 	@FXML
 	TextField txtCategory;
@@ -63,7 +63,12 @@ public class CategoryAddController extends Application implements Initializable 
 		Stage loginStage = (Stage) clickedButton.getScene().getWindow();
 		loginStage.close();
 	}
-
+	
+	@FXML
+	private void btnCancelAction() {
+		closeAddCategoryScreen(btnCancel);
+	}
+	
 	private boolean validateAddCategoryScreen() {
 		boolean response = true;
 		String name = txtCategory.getText();

@@ -9,7 +9,7 @@
    <children>
       <AnchorPane layoutX="-5.0" layoutY="-9.0" prefHeight="229.0" prefWidth="386.0">
          <children>
-            <Button layoutX="297.0" layoutY="174.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Cancel">
+            <Button fx:id="btnCancel" layoutX="297.0" layoutY="174.0" mnemonicParsing="false" onAction="#btnCancelAction" prefHeight="25.0" prefWidth="65.0" text="Cancel">
                <font>
                   <Font size="13.0" />
                </font>

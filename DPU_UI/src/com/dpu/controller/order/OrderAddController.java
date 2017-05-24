@@ -53,7 +53,7 @@ import javafx.util.Callback;
 public class OrderAddController extends Application implements Initializable {
 
 	@FXML
-	Button btnSaveOrder;
+	Button btnSaveOrder, btnCancel;
 	
 	@FXML
 	TextField txtCallerName, txtPONo;
@@ -73,6 +73,11 @@ public class OrderAddController extends Application implements Initializable {
 	static public List<Type> temperatureList = null, temperatureTypeList = null;
 	ObjectMapper mapper = new ObjectMapper();
 
+	@FXML
+	private void btnCancelAction() {
+		closeAddOrderScreen(btnCancel);
+	}
+	
 	@FXML
 	TextField txtPickpupScheduledDate, txtPickpupScheduledTime, txtPickpupMABDate, txtPickpupMABTime,
 	txtDeliverScheduledDate, txtDeliverScheduledTime, txtDeliverMABDate, txtDeliverMABTime, txtDelivery1, txtPickup1;
@@ -246,7 +251,7 @@ public class OrderAddController extends Application implements Initializable {
 
 	List<String> additionalContactsStringList, billingLocationsStringList = null;
 	
-	@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+	@SuppressWarnings({ "rawtypes", "unchecked"})
 	@FXML
 	private void txtCustomerKeyPressed(KeyEvent event) {
 	

@@ -95,11 +95,6 @@
                <font>
                   <Font size="13.0" />
                </font></Button>
-            <Label layoutX="-1.0" prefHeight="27.0" prefWidth="468.0" style="-fx-background-color: lightgrey; -fx-border-color: black;" text="   Edit Additional Contacts">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-            </Label>
         
       </children>
     </Pane>

@@ -34,7 +34,7 @@ import javafx.stage.Stage;
 public class EquipmentEditController extends Application implements Initializable {
 
 	@FXML
-	Button btnUpdateEquipment, btnEdit;
+	Button btnUpdateEquipment, btnEdit, btnCancel;
 
 	Long equipmentId = 0l;
 
@@ -54,6 +54,11 @@ public class EquipmentEditController extends Application implements Initializabl
 			editEquipment();
 			closeEditEquipmentScreen(btnUpdateEquipment);
 		}
+	}
+	
+	@FXML
+	private void btnCancelAction() {
+		closeEditEquipmentScreen(btnCancel);
 	}
 
 	private void closeEditEquipmentScreen(Button clickedButton) {

@@ -29,7 +29,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -37,7 +36,7 @@ import javafx.stage.Stage;
 public class EquipmentAddController extends Application implements Initializable {
 
 	@FXML
-	Button btnSaveEquipment;
+	Button btnSaveEquipment, btnCancel;
 
 	@FXML
 	TextField txtName, txtDescription;
@@ -57,6 +56,11 @@ public class EquipmentAddController extends Application implements Initializable
 	@FXML
 	private void ddlTypeAction() {
 		ddlType.setStyle("-fx-focus-color: #87CEEB;");
+	}
+	
+	@FXML
+	private void btnCancelAction() {
+		closeAddEquipmentScreen(btnCancel);
 	}
 
 	private boolean validateAddEquipmentScreen() {

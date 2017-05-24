@@ -11,7 +11,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.dpu.client.PutAPIClient;
 import com.dpu.constants.Iconstants;
-import com.dpu.controller.database.HandlingController;
 import com.dpu.model.DPUService;
 import com.dpu.model.Failed;
 import com.dpu.model.Shipper;
@@ -32,7 +31,7 @@ import javafx.stage.Stage;
 
 public class TerminalEditController extends Application implements Initializable {
 	@FXML
-	Button btnUpdateTerminal, btnEdit;
+	Button btnUpdateTerminal, btnEdit, btnCancel;
 
 	Long terminalId = 0l;
 
@@ -53,6 +52,11 @@ public class TerminalEditController extends Application implements Initializable
 			closeEditTerminalScreen(btnUpdateTerminal);
 		}
 
+	}
+	
+	@FXML
+	private void btnCancelAction() {
+		closeEditTerminalScreen(btnCancel);
 	}
 
 	private boolean validateEditTerminalScreen() {
