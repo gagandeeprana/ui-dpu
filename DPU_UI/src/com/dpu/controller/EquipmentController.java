@@ -33,6 +33,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -129,7 +130,7 @@ public class EquipmentController extends Application implements Initializable {
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add New Equipment");
+			stage.setTitle(Iconstants.ADD_NEW_EQUIPMENT);
 			stage.setScene(new Scene(root));
 			stage.show();
 		} catch (Exception e) {
@@ -253,7 +254,7 @@ public class EquipmentController extends Application implements Initializable {
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Edit Equipment");
+			stage.setTitle(Iconstants.EDIT_EQUIPMENT);
 			stage.setScene(new Scene(root));
 			stage.show();
 			return fxmlLoader.getController();
@@ -265,6 +266,9 @@ public class EquipmentController extends Application implements Initializable {
 
 	@FXML
 	AnchorPane equipmentParentAnchorPane;
+
+	@FXML
+	ImageView btnGoEquipment;
 
 	public void fetchEquipments() {
 
@@ -299,6 +303,14 @@ public class EquipmentController extends Application implements Initializable {
 				}
 			}
 		});
+		
+		double width = Login.width;
+		int noOfColumns = tblEquipment.getColumns().size();
+		for (int i = 0; i < noOfColumns; i++) {
+			tblEquipment.getColumns().get(i).setMinWidth(width / noOfColumns);
+		}
+		txtSearchEquipment.setLayoutX(width - (txtSearchEquipment.getPrefWidth() + btnGoEquipment.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
+		btnGoEquipment.setLayoutX(width - (btnGoEquipment.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
 
 	}
 

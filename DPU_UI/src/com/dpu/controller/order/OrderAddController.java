@@ -200,7 +200,7 @@ public class OrderAddController extends Application implements Initializable {
 	        
 	        Stage stage = new Stage();
 	        stage.initModality(Modality.APPLICATION_MODAL);
-	        stage.setTitle("Temperature");
+	        stage.setTitle(Iconstants.TEMPERATURE_SCREEN);
 	        stage.setScene(new Scene(root)); 
 	        stage.show();
 		} catch (Exception e) {

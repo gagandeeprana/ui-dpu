@@ -34,7 +34,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
-import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -73,6 +74,12 @@ public class TruckController extends Application implements Initializable {
 	List<Truck> truckList = null;
 
 	ObjectMapper mapper = new ObjectMapper();
+
+	@FXML
+	TextField txtSearchTruck;
+
+	@FXML
+	ImageView btnGoTruck;
 
 	public void fillTruck(String response) {
 
@@ -204,7 +211,7 @@ public class TruckController extends Application implements Initializable {
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Edit Truck");
+			stage.setTitle(Iconstants.EDIT_TRUCK);
 			stage.setScene(new Scene(root));
 			stage.show();
 			return fxmlLoader.getController();
@@ -223,7 +230,7 @@ public class TruckController extends Application implements Initializable {
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add New Truck");
+			stage.setTitle(Iconstants.ADD_NEW_TRUCK);
 			stage.setScene(new Scene(root));
 			stage.show();
 		} catch (Exception e) {
@@ -275,6 +282,14 @@ public class TruckController extends Application implements Initializable {
 				}
 			}
 		});
+		
+		double width = Login.width;
+		int noOfColumns = tblTruck.getColumns().size();
+		for (int i = 0; i < noOfColumns; i++) {
+			tblTruck.getColumns().get(i).setMinWidth(width / noOfColumns);
+		}
+		txtSearchTruck.setLayoutX(width - (txtSearchTruck.getPrefWidth() + btnGoTruck.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
+		btnGoTruck.setLayoutX(width - (btnGoTruck.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
 	}
 
 	private void setColumnValues() {

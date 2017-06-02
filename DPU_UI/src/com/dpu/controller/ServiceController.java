@@ -36,7 +36,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -120,6 +120,9 @@ public class ServiceController extends Application implements Initializable {
 	}
 
 	List<DPUService> services = null;
+
+	@FXML
+	ImageView btnGoService;
 
 	/*
 	 * public void newMethod() {
@@ -218,7 +221,7 @@ public class ServiceController extends Application implements Initializable {
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Edit Service");
+			stage.setTitle(Iconstants.EDIT_SERVICE);
 			stage.setScene(new Scene(root));
 			stage.show();
 			return fxmlLoader.getController();
@@ -237,7 +240,7 @@ public class ServiceController extends Application implements Initializable {
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add New Service");
+			stage.setTitle(Iconstants.ADD_NEW_SERVICE);
 			stage.setScene(new Scene(root));
 			stage.show();
 		} catch (Exception e) {
@@ -280,6 +283,14 @@ public class ServiceController extends Application implements Initializable {
 				}
 			}
 		});
+		
+		double width = Login.width;
+		int noOfColumns = tblService.getColumns().size();
+		for (int i = 0; i < noOfColumns; i++) {
+			tblService.getColumns().get(i).setMinWidth(width / noOfColumns);
+		}
+		txtSearchService.setLayoutX(width - (txtSearchService.getPrefWidth() + btnGoService.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
+		btnGoService.setLayoutX(width - (btnGoService.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
 	}
 
 	@FXML

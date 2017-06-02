@@ -152,6 +152,9 @@ public class VendorController extends Application implements Initializable {
 
 	@FXML
 	TableColumn<Vendor, String> unitNo, name, email, city, ps, phone, home, fax, afterHours;
+	
+	@FXML
+	TextField txtSearchVendor;
 
 	@FXML
 	private void btnAddVendorAction() {
@@ -291,7 +294,7 @@ public class VendorController extends Application implements Initializable {
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add New Vendor");
+			stage.setTitle(Iconstants.ADD_NEW_VENDOR);
 			stage.setScene(new Scene(root));
 			stage.show();
 
@@ -309,7 +312,7 @@ public class VendorController extends Application implements Initializable {
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Update Vendor");
+			stage.setTitle(Iconstants.EDIT_VENDOR);
 			stage.setScene(new Scene(root));
 			stage.show();
 			return fxmlLoader.getController();
@@ -419,6 +422,14 @@ public class VendorController extends Application implements Initializable {
 				}
 			}
 		});
+		
+		double width = Login.width;
+		int noOfColumns = tblVendor.getColumns().size();
+		for (int i = 0; i < noOfColumns; i++) {
+			tblVendor.getColumns().get(i).setMinWidth(width / noOfColumns);
+		}
+		txtSearchVendor.setLayoutX(width - (txtSearchVendor.getPrefWidth() + btnGoVendor.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
+		btnGoVendor.setLayoutX(width - (btnGoVendor.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
 	}
 	
 	public void fetchVendors(String response) {

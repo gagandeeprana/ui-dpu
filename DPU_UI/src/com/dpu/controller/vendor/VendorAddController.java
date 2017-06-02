@@ -352,9 +352,9 @@ public class VendorAddController extends Application implements Initializable {
 		VendorAddControllerBillingLocationRightMenu rightMenu = new VendorAddControllerBillingLocationRightMenu();
 		ContextMenu contextMenu = new ContextMenu();
 		MenuItem add = new MenuItem("Add");
-		rightMenu.menuAdd(add, Iconstants.VENDOR_BASE_PACKAGE, Iconstants.XML_VENDOR_BILLING_LOCATION_ADD_SCREEN, "Add New Billing Location");
+		rightMenu.menuAdd(add, Iconstants.VENDOR_BASE_PACKAGE, Iconstants.XML_VENDOR_BILLING_LOCATION_ADD_SCREEN, Iconstants.ADD_NEW_BILLING_LOCATION);
 		MenuItem edit = new MenuItem("Edit");
-		rightMenu.menuEdit(edit, Iconstants.VENDOR_BASE_PACKAGE, Iconstants.XML_VENDOR_BILLING_LOCATION_EDIT_SCREEN, "Edit Billing Location");
+		rightMenu.menuEdit(edit, Iconstants.VENDOR_BASE_PACKAGE, Iconstants.XML_VENDOR_BILLING_LOCATION_EDIT_SCREEN, Iconstants.EDIT_BILLING_LOCATION);
 		MenuItem delete = new MenuItem("Delete");
 		rightMenu.menuDelete(delete, null, null, null);
 		MenuItem duplicate = new MenuItem("Duplicate");

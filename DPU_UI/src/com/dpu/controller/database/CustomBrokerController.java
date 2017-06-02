@@ -37,7 +37,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -67,6 +67,9 @@ public class CustomBrokerController extends Application implements Initializable
 
 	@FXML
 	Pane TruckMain;
+	
+	@FXML
+	ImageView btnGoCustomBroker;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -150,7 +153,7 @@ public class CustomBrokerController extends Application implements Initializable
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Edit CustomBroker");
+			stage.setTitle(Iconstants.EDIT_CUSTOM_BROKER);
 			stage.setScene(new Scene(root));
 			stage.show();
 			return fxmlLoader.getController();
@@ -169,7 +172,7 @@ public class CustomBrokerController extends Application implements Initializable
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add New CustomBroker");
+			stage.setTitle(Iconstants.ADD_NEW_CUSTOM_BROKER);
 			stage.setScene(new Scene(root));
 			stage.show();
 		} catch (Exception e) {
@@ -214,7 +217,6 @@ public class CustomBrokerController extends Application implements Initializable
 		});
 		double width = Login.width;
 		int noOfColumns = tblCustomBroker.getColumns().size();
-		System.out.println("width: " + width);
 		for (int i = 0; i < noOfColumns; i++) {
 			tblCustomBroker.getColumns().get(i).setMinWidth(width / noOfColumns);
 			if (tblCustomBroker.getColumns().get(i).getColumns() != null
@@ -223,12 +225,12 @@ public class CustomBrokerController extends Application implements Initializable
 
 				for (int j = 0; j < noOfInnerColumns; j++) {
 					double mainColumnWidth = tblCustomBroker.getColumns().get(i).getWidth();
-					tblCustomBroker.getColumns().get(i).getColumns().get(j)
-							.setMinWidth(mainColumnWidth / noOfInnerColumns);
+					tblCustomBroker.getColumns().get(i).getColumns().get(j).setMinWidth(mainColumnWidth / noOfInnerColumns);
 				}
 			}
 		}
-		txtSearchCustomBroker.setLayoutX(Login.width);
+		txtSearchCustomBroker.setLayoutX(width - (txtSearchCustomBroker.getPrefWidth() + btnGoCustomBroker.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
+		btnGoCustomBroker.setLayoutX(width - (btnGoCustomBroker.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
 	}
 
 	@FXML

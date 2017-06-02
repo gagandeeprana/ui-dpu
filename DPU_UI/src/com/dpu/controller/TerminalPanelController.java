@@ -35,7 +35,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -108,6 +108,9 @@ public class TerminalPanelController extends Application implements Initializabl
 	List<Terminal> dList = null;
 
 	ObjectMapper mapper = new ObjectMapper();
+
+	@FXML
+	ImageView btnGoTerminal;
 
 	public void fillTerminal(String response) {
 
@@ -235,7 +238,7 @@ public class TerminalPanelController extends Application implements Initializabl
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add New Terminal");
+			stage.setTitle(Iconstants.ADD_NEW_TERMINAL);
 			stage.setScene(new Scene(root));
 			stage.show();
 		} catch (Exception e) {
@@ -252,7 +255,7 @@ public class TerminalPanelController extends Application implements Initializabl
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Edit Terminal");
+			stage.setTitle(Iconstants.EDIT_TERMINAL);
 			stage.setScene(new Scene(root));
 			stage.show();
 			return fxmlLoader.getController();
@@ -311,6 +314,14 @@ public class TerminalPanelController extends Application implements Initializabl
 				}
 			}
 		});
+		
+		double width = Login.width;
+		int noOfColumns = tblTerminal.getColumns().size();
+		for (int i = 0; i < noOfColumns; i++) {
+			tblTerminal.getColumns().get(i).setMinWidth(width / noOfColumns);
+		}
+		txtSearchTerminal.setLayoutX(width - (txtSearchTerminal.getPrefWidth() + btnGoTerminal.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
+		btnGoTerminal.setLayoutX(width - (btnGoTerminal.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
 	}
 
 	private void setColumnValues() {

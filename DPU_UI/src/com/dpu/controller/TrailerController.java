@@ -34,7 +34,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
-import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -58,6 +59,12 @@ public class TrailerController extends Application implements Initializable {
 	@FXML
 	Pane trailerPane;
 	public static int flag = 0;
+	
+	@FXML
+	TextField txtSearchTrailer;
+	
+	@FXML
+	ImageView btnGoTrailer;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -132,7 +139,7 @@ public class TrailerController extends Application implements Initializable {
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Edit Trailer");
+			stage.setTitle(Iconstants.EDIT_TRAILER);
 			stage.setScene(new Scene(root));
 			stage.show();
 			return fxmlLoader.getController();
@@ -192,7 +199,7 @@ public class TrailerController extends Application implements Initializable {
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add New Trailer");
+			stage.setTitle(Iconstants.ADD_NEW_TRAILER);
 			stage.setScene(new Scene(root));
 			stage.show();
 		} catch (Exception e) {
@@ -272,6 +279,13 @@ public class TrailerController extends Application implements Initializable {
 				}
 			}
 		});
+		double width = Login.width;
+		int noOfColumns = tblTrailer.getColumns().size();
+		for (int i = 0; i < noOfColumns; i++) {
+			tblTrailer.getColumns().get(i).setMinWidth(width / noOfColumns);
+		}
+		txtSearchTrailer.setLayoutX(width - (txtSearchTrailer.getPrefWidth() + btnGoTrailer.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
+		btnGoTrailer.setLayoutX(width - (btnGoTrailer.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
 	}
 
 	private void setColumnValues() {

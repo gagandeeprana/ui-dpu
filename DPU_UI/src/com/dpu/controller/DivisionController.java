@@ -35,6 +35,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -215,7 +216,7 @@ public class DivisionController extends Application implements Initializable {
 			Parent root = (Parent) fxmlLoader.load();
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add New Division");
+			stage.setTitle(Iconstants.ADD_NEW_DIVISION);
 			stage.setScene(new Scene(root));
 			stage.show();
 		} catch (Exception e) {
@@ -230,7 +231,7 @@ public class DivisionController extends Application implements Initializable {
 			Parent root = (Parent) fxmlLoader.load();
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Edit Division");
+			stage.setTitle(Iconstants.EDIT_DIVISION);
 			stage.setScene(new Scene(root));
 			stage.show();
 			return fxmlLoader.getController();
@@ -272,6 +273,9 @@ public class DivisionController extends Application implements Initializable {
 
 	@FXML
 	AnchorPane anchorPaneDivision;
+
+	@FXML
+	ImageView btnGoDivision;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -321,6 +325,14 @@ public class DivisionController extends Application implements Initializable {
 				}
 			}
 		});
+		
+		double width = Login.width;
+		int noOfColumns = tblDivision.getColumns().size();
+		for (int i = 0; i < noOfColumns; i++) {
+			tblDivision.getColumns().get(i).setMinWidth(width / noOfColumns);
+		}
+		txtSearchDivision.setLayoutX(width - (txtSearchDivision.getPrefWidth() + btnGoDivision.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
+		btnGoDivision.setLayoutX(width - (btnGoDivision.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
 	}
 
 	private void setColumnValues() {

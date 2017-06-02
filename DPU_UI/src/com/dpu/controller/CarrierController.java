@@ -30,7 +30,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -46,9 +49,13 @@ public class CarrierController extends Application implements Initializable {
 	TableColumn<CarrierModel, String> carrierName, address, unit, city, ps, postalCode, contact, contactPosition,
 			phoneNumber, extension, faxNumber, tollFree, email, apCodeCDN, apCodeUS;
 
+	@FXML
+	Pane innerRootPane, root;
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
+		Login.setWidthForAll(root, tblCarrier);
+		Login.setWidthForAll(innerRootPane, null);
 		fetchCarriers();
 
 	}
@@ -250,6 +257,14 @@ public class CarrierController extends Application implements Initializable {
 				}
 			}
 		});
+		
+		double width = Login.width;
+		int noOfColumns = tblCarrier.getColumns().size();
+		for (int i = 0; i < noOfColumns; i++) {
+			tblCarrier.getColumns().get(i).setMinWidth(width / noOfColumns);
+		}
+		txtSearchCarrier.setLayoutX(width - (txtSearchCarrier.getPrefWidth() + btnGoCarrier.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
+		btnGoCarrier.setLayoutX(width - (btnGoCarrier.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
 	}
 
 	@FXML
@@ -412,7 +427,7 @@ public class CarrierController extends Application implements Initializable {
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Edit Carrier");
+			stage.setTitle(Iconstants.EDIT_CARRIER);
 			stage.setScene(new Scene(root));
 			stage.show();
 			return fxmlLoader.getController();
@@ -450,6 +465,12 @@ public class CarrierController extends Application implements Initializable {
 		openAddCarrierScreen();
 	}
 
+	@FXML
+	TextField txtSearchCarrier;
+	
+	@FXML
+	ImageView btnGoCarrier;
+	
 	private void openAddCarrierScreen() {
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
@@ -459,7 +480,7 @@ public class CarrierController extends Application implements Initializable {
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add New Carrier");
+			stage.setTitle(Iconstants.ADD_NEW_CARRIER);
 			stage.setScene(new Scene(root));
 			stage.show();
 

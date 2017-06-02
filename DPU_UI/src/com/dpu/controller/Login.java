@@ -108,7 +108,7 @@ public class Login extends Application implements Initializable{
 			Scene scene = new Scene(parent);
 			primaryStage.getIcons().add(new Image(getClass().getClassLoader().getResourceAsStream(Iconstants.COMMON_BASE_PACKAGE + "application-image.png")));
 			primaryStage.setScene(scene);
-			primaryStage.setTitle("Login");
+			primaryStage.setTitle(Iconstants.LOGIN);
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -155,18 +155,23 @@ public class Login extends Application implements Initializable{
 	        Stage stage = new Stage();
 	        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 	        stage.getIcons().add(new Image(getClass().getClassLoader().getResourceAsStream(Iconstants.COMMON_BASE_PACKAGE + "application-image.png")));
-	        stage.initModality(Modality.APPLICATION_MODAL);
-	//        stage.initStyle(StageStyle.UNDECORATED);
-	        stage.setTitle("Dashboard");
+	       
+	        /**
+	         * following line has been commented to disallow minimize window functionality
+	         */
+	        
+	        //stage.initModality(Modality.APPLICATION_MODAL);
+	        //stage.initStyle(StageStyle.UNDECORATED);
+	        stage.setTitle(Iconstants.DASHBOARD);
 	        stage.setScene(new Scene(root)); 
-//	        stage.setMaximized(true);
+	        //stage.setMaximized(true);
 	        width = primaryScreenBounds.getWidth();
 	        double height = primaryScreenBounds.getHeight();
 	        stage.setMinWidth(width);
 	        stage.setMinHeight(height);
 	        this.stage = stage;
 	        mnuBar.prefWidthProperty().bind(stage.widthProperty());
-	//        fxmlLoader.setController(MainScreen.class);
+	        //fxmlLoader.setController(MainScreen.class);
 	        stage.show();
 		} catch (Exception e) {
 			System.out.println(e);

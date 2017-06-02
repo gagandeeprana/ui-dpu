@@ -11,7 +11,7 @@
    <children>
       <Pane fx:id="headerPaneVendor" prefHeight="49.0" prefWidth="1015.0" style="-fx-background-color: #d6eaf8;">
          <children>
-            <TextField fx:id="txtGoVendor" focusTraversable="false" layoutX="768.0" layoutY="5.0" prefHeight="32.0" prefWidth="200.0" promptText="Enter vendor name to search..." />
+            <TextField fx:id="txtSearchVendor" focusTraversable="false" layoutX="768.0" layoutY="5.0" prefHeight="32.0" prefWidth="200.0" promptText="Enter vendor name to search..." />
             <ImageView fx:id="btnGoVendor" fitHeight="32.0" fitWidth="32.0" layoutX="974.0" layoutY="5.0" onMouseClicked="#btnGoVendorAction" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="com/dpu/common/xml/search.png" />

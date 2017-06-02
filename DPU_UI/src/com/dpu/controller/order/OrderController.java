@@ -37,6 +37,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -78,7 +79,7 @@ public class OrderController extends Application implements Initializable {
 	        Parent root = (Parent) fxmlLoader.load();
 	        Stage stage = new Stage();
 	        stage.initModality(Modality.APPLICATION_MODAL);
-	        stage.setTitle("Edit Order");
+	        stage.setTitle(Iconstants.EDIT_ORDER);
 	        stage.setScene(new Scene(root)); 
 	        stage.show();
 	        return fxmlLoader.getController();
@@ -126,7 +127,7 @@ public class OrderController extends Application implements Initializable {
 	        
 	        Stage stage = new Stage();
 	        stage.initModality(Modality.APPLICATION_MODAL);
-	        stage.setTitle("Add New Order");
+	        stage.setTitle(Iconstants.ADD_NEW_ORDER);
 	        stage.setScene(new Scene(root)); 
 	        stage.show();
 		} catch (Exception e) {
@@ -185,6 +186,9 @@ public class OrderController extends Application implements Initializable {
 	
 	@FXML
 	AnchorPane root, anchorPaneOrder;
+
+	@FXML
+	ImageView btnGoOrder;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -323,25 +327,6 @@ public class OrderController extends Application implements Initializable {
 		}
 	}*/
 	
-	private Object openEditEquipmentScreen() {
-		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Iconstants.EQUIPMENT_BASE_PACKAGE + Iconstants.XML_EQUIPMENT_EDIT_SCREEN));
-			
-	        Parent root = (Parent) fxmlLoader.load();
-	        
-	        Stage stage = new Stage();
-	        stage.initModality(Modality.APPLICATION_MODAL);
-	        stage.setTitle("Edit Equipment");
-	        stage.setScene(new Scene(root)); 
-	        stage.show();
-	        return fxmlLoader.getController();
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return null;
-	}
-	
-	
 	public void fetchOrders() {
 	
 		fetchColumns();
@@ -357,6 +342,14 @@ public class OrderController extends Application implements Initializable {
 				}
 			}
 		});
+		
+		double width = Login.width;
+		int noOfColumns = tblOrder.getColumns().size();
+		for (int i = 0; i < noOfColumns; i++) {
+			tblOrder.getColumns().get(i).setMinWidth(width / noOfColumns);
+		}
+		txtSearchOrders.setLayoutX(width - (txtSearchOrders.getPrefWidth() + btnGoOrder.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
+		btnGoOrder.setLayoutX(width - (btnGoOrder.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
 
 	}
 	

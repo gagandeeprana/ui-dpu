@@ -51,7 +51,7 @@
                   <Image url="com/dpu/common/xml/delete.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="btnGoDriver" fitHeight="32.0" fitWidth="32.0" layoutX="974.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="btnGoTruck" fitHeight="32.0" fitWidth="32.0" layoutX="974.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="com/dpu/common/xml/search.png" />
                </image>

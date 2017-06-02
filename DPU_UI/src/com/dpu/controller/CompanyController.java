@@ -33,7 +33,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TablePosition;
@@ -43,6 +46,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -357,6 +361,8 @@ public class CompanyController extends Application implements Initializable {
 		}
 	}
 
+	
+	
 	private void openAddCompanyScreen() {
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader()
@@ -366,7 +372,8 @@ public class CompanyController extends Application implements Initializable {
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add New Company");
+			stage.setResizable(false);
+			stage.setTitle(Iconstants.ADD_NEW_CUSTOMER);
 			stage.setScene(new Scene(root));
 			stage.show();
 
@@ -384,7 +391,7 @@ public class CompanyController extends Application implements Initializable {
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Update Company");
+			stage.setTitle(Iconstants.EDIT_CUSTOMER);
 			stage.setScene(new Scene(root));
 			stage.show();
 			return fxmlLoader.getController();
@@ -403,7 +410,7 @@ public class CompanyController extends Application implements Initializable {
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add Company");
+			stage.setTitle(Iconstants.ADD_NEW_CUSTOMER);
 			stage.setScene(new Scene(root));
 			stage.show();
 			return fxmlLoader.getController();
@@ -433,11 +440,17 @@ public class CompanyController extends Application implements Initializable {
 	static boolean emailContactt = true;
 	static boolean functionn = true;
 
+	@FXML
+	ScrollPane scrollPanel;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
 		Login.setWidthForAll(root, tblCompany);
-		Login.setWidthForAll(headerPaneCompany, null);
+		Login.setWidthForAll(headerPaneCompany, tblCompany);
+		Login.setWidthForAll(anchorPane, tblCompany);
+		Login.setWidthForAll(scrollPanel, tblCompany);
+
 		// textfield.setVisible(false);
 		fetchCompanies();
 		unitNo.setVisible(unitNumber);
@@ -499,6 +512,10 @@ public class CompanyController extends Application implements Initializable {
 		function = (TableColumn<CompanyModel, String>) tblCompany.getColumns().get(18);
 	}
 
+	
+	@FXML
+	AnchorPane anchorPane;
+	
 	public void fetchCompanies() {
 
 		fetchColumns();
@@ -531,6 +548,18 @@ public class CompanyController extends Application implements Initializable {
 				}
 			}
 		});
+		
+		ScrollPane scrollPane = new ScrollPane();
+		scrollPane.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
+		tblCompany.setPlaceholder(new Label(""));
+		scrollPane.setContent(tblCompany);
+		double width = Login.width;
+		int noOfColumns = tblCompany.getColumns().size();
+		for (int i = 0; i < noOfColumns; i++) {
+			tblCompany.getColumns().get(i).setMinWidth(width / noOfColumns);
+		}
+		txtGoCompany.setLayoutX(width - (txtGoCompany.getPrefWidth() + btnGoCompany.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
+		btnGoCompany.setLayoutX(width - (btnGoCompany.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
 	}
 
 	private void fetchCompanies(String response) {

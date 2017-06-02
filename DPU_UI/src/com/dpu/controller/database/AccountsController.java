@@ -37,7 +37,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -119,6 +119,9 @@ public class AccountsController extends Application implements Initializable {
 	}
 
 	List<Accounts> Accountss = null;
+
+	@FXML
+	ImageView btnGoAccounts;
 
 	/*
 	 * public void newMethod() {
@@ -217,7 +220,7 @@ public class AccountsController extends Application implements Initializable {
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Edit Accounts");
+			stage.setTitle(Iconstants.EDIT_ACCOUNT);
 			stage.setScene(new Scene(root));
 			stage.show();
 			return fxmlLoader.getController();
@@ -237,7 +240,7 @@ public class AccountsController extends Application implements Initializable {
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add New Accounts");
+			stage.setTitle(Iconstants.ADD_NEW_ACCOUNT);
 			stage.setScene(new Scene(root));
 			stage.show();
 		} catch (Exception e) {
@@ -281,6 +284,14 @@ public class AccountsController extends Application implements Initializable {
 				}
 			}
 		});
+		
+		double width = Login.width;
+		int noOfColumns = tblAccounts.getColumns().size();
+		for (int i = 0; i < noOfColumns; i++) {
+			tblAccounts.getColumns().get(i).setMinWidth(width / noOfColumns);
+		}
+		txtSearchAccounts.setLayoutX(width - (txtSearchAccounts.getPrefWidth() + btnGoAccounts.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
+		btnGoAccounts.setLayoutX(width - (btnGoAccounts.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
 	}
 
 	@FXML

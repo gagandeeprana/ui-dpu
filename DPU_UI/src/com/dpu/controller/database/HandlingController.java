@@ -23,20 +23,17 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -118,6 +115,9 @@ public class HandlingController extends Application implements Initializable {
 
 	List<HandlingModel> handlings = null;
 
+	@FXML
+	ImageView btnGoHandling;
+
 	public void fillHandling(String response) {
 
 		try {
@@ -177,7 +177,7 @@ public class HandlingController extends Application implements Initializable {
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Edit Handling");
+			stage.setTitle(Iconstants.EDIT_HANDLING);
 			stage.setScene(new Scene(root));
 			stage.show();
 			return fxmlLoader.getController();
@@ -196,7 +196,7 @@ public class HandlingController extends Application implements Initializable {
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add New Handling");
+			stage.setTitle(Iconstants.ADD_NEW_HANDLING);
 			stage.setScene(new Scene(root));
 			stage.show();
 		} catch (Exception e) {
@@ -237,6 +237,14 @@ public class HandlingController extends Application implements Initializable {
 				}
 			}
 		});
+		
+		double width = Login.width;
+		int noOfColumns = tblHandling.getColumns().size();
+		for (int i = 0; i < noOfColumns; i++) {
+			tblHandling.getColumns().get(i).setMinWidth(width / noOfColumns);
+		}
+		txtSearchHandling.setLayoutX(width - (txtSearchHandling.getPrefWidth() + btnGoHandling.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
+		btnGoHandling.setLayoutX(width - (btnGoHandling.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
 	}
 
 	@FXML

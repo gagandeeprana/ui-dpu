@@ -44,7 +44,7 @@
             </ImageView>
             <Pane layoutX="131.0" prefHeight="32.0" prefWidth="625.0" HBox.hgrow="ALWAYS" />
             <TextField fx:id="txtSearchTrailer" focusTraversable="false" layoutX="762.0" layoutY="5.0" prefHeight="32.0" prefWidth="200.0" promptText="Enter trailer name to search..." />
-            <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="969.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="btnGoTrailer" fitHeight="32.0" fitWidth="32.0" layoutX="969.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="com/dpu/common/xml/search.png" />
                </image>

@@ -27,6 +27,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
@@ -35,7 +36,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -54,7 +55,11 @@ public class ShipperController extends Application implements Initializable {
 
 	@FXML
 	AnchorPane anchorPaneShipper, root;
+
 	public static int flag = 0;
+
+	@FXML
+	ImageView btnGoShipper;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -136,7 +141,7 @@ public class ShipperController extends Application implements Initializable {
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Edit Shipper");
+			stage.setTitle(Iconstants.EDIT_SHIPPER);
 			stage.setScene(new Scene(root));
 			stage.show();
 			return fxmlLoader.getController();
@@ -195,7 +200,7 @@ public class ShipperController extends Application implements Initializable {
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add New Shipper");
+			stage.setTitle(Iconstants.ADD_NEW_SHIPPER);
 			stage.setScene(new Scene(root));
 			stage.show();
 		} catch (Exception e) {
@@ -245,6 +250,15 @@ public class ShipperController extends Application implements Initializable {
 				}
 			}
 		});
+		
+		double width = Login.width;
+		int noOfColumns = tblShipper.getColumns().size();
+		for (int i = 0; i < noOfColumns; i++) {
+			tblShipper.getColumns().get(i).setMinWidth(width / noOfColumns);
+		}
+		txtSearchShipper.setLayoutX(width - (txtSearchShipper.getPrefWidth() + btnGoShipper.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
+		btnGoShipper.setLayoutX(width - (btnGoShipper.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
+		
 	}
 
 	List<Shipper> shippers = null;

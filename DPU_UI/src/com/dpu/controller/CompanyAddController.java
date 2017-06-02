@@ -44,13 +44,16 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
@@ -188,6 +191,12 @@ public class CompanyAddController extends Application implements Initializable {
 
 	@FXML
 	public TableColumn<BillingControllerModel, String> zip;
+	
+	@FXML
+	AnchorPane billingLocationTableAnchorPane, additionalContactsAnchorPane;
+	
+	@FXML
+	ScrollPane additionalContactsScrollPane;
 
 	public static int addEditIndex = -1;
 	// public static int editIndex = -1;
@@ -549,11 +558,21 @@ public class CompanyAddController extends Application implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
+		Login.setWidthForAll(billingLocationTableAnchorPane, tableBillingLocations);
+		Login.setWidthForAll(additionalContactsAnchorPane, tableAdditionalContact);
+//		ScrollPane scrollPane = new ScrollPane();
+//		scrollPane.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
+//		tableAdditionalContact.setPlaceholder(new Label(""));
+//		scrollPane.setContent(tableAdditionalContact);
+		double width = Login.width;
+		int noOfColumns = tableAdditionalContact.getColumns().size();
+		for (int i = 0; i < noOfColumns; i++) {
+			tableAdditionalContact.getColumns().get(i).setMinWidth(width / noOfColumns);
+		}
 		CompanyEditController.listOfBilling = new ArrayList<BillingControllerModel>();
 		CompanyEditController.listOfAdditionalContact = new ArrayList<AdditionalContact>();
-		tableBillingLocations.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY); 
-		tableAdditionalContact.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY); 
+//		tableBillingLocations.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY); 
+//		tableAdditionalContact.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY); 
 		duplicateTableBillingLocations = tableBillingLocations;
 		duplicateTableAdditionalContact = tableAdditionalContact;
 		fetchBillingLocations();

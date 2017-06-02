@@ -13,7 +13,6 @@ import com.dpu.client.DeleteAPIClient;
 import com.dpu.client.GetAPIClient;
 import com.dpu.constants.Iconstants;
 import com.dpu.model.CarrierContractModel;
-import com.dpu.model.Driver;
 import com.dpu.model.Success;
 
 import javafx.application.Application;
@@ -30,8 +29,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -42,11 +44,20 @@ public class CarrierContractController extends Application implements Initializa
 	@FXML
 	TableView<CarrierContractModel> tableCarrierContract;
 	public static int flag = 0;
+	
+	@FXML
+	Pane root, innerRootPane;
 
 	@FXML
 	TableColumn<CarrierContractModel, String> contractNo, contractRate, carrierRat, hours, miles, dispatched, createdBy,
 			insExpires, cargo, liabity, transDoc, mCno, dOTno, carrierName, arrangedWithName, driverName, currencyName,
 			categoryName, roleName, equipmentName, commodityName, divisionName, dispatcherName;
+	
+	@FXML
+	TextField txtSearchCarrierContract;
+	
+	@FXML
+	ImageView btnGo;
 
 	@SuppressWarnings("unchecked")
 	private void fetchColumns() {
@@ -271,6 +282,14 @@ public class CarrierContractController extends Application implements Initializa
 				}
 			}
 		});
+		
+		double width = Login.width;
+		int noOfColumns = tableCarrierContract.getColumns().size();
+		for (int i = 0; i < noOfColumns; i++) {
+			tableCarrierContract.getColumns().get(i).setMinWidth(width / noOfColumns);
+		}
+		txtSearchCarrierContract.setLayoutX(width - (txtSearchCarrierContract.getPrefWidth() + btnGo.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
+		btnGo.setLayoutX(width - (btnGo.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
 	}
 
 	@FXML
@@ -305,7 +324,7 @@ public class CarrierContractController extends Application implements Initializa
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add New Carrier Contract");
+			stage.setTitle(Iconstants.ADD_NEW_CARRIER_CONTRACT);
 			stage.setScene(new Scene(root));
 			stage.show();
 		} catch (Exception e) {
@@ -323,7 +342,7 @@ public class CarrierContractController extends Application implements Initializa
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Edit Carrier Contract");
+			stage.setTitle(Iconstants.EDIT_CARRIER_CONTRACT);
 			stage.setScene(new Scene(root));
 			stage.show();
 			return fxmlLoader.getController();
@@ -343,14 +362,12 @@ public class CarrierContractController extends Application implements Initializa
 				@Override
 				public void run() {
 					try {
-						System.out.println("id   " + carrierContractModel.getContractNoId());
 						ObjectMapper mapper = new ObjectMapper();
 						String response = GetAPIClient.callGetAPI(Iconstants.URL_SERVER + Iconstants.URL_CARRIER_CONTRACT_API + "/" + carrierContractModel.getContractNoId(), null);
 						Success s = mapper.readValue(response, Success.class);
 						String s1 = mapper.writeValueAsString(s.getResultList());
 						if (response != null && response.length() > 0) {
 							CarrierContractModel c = mapper.readValue(s1, CarrierContractModel.class);
-							System.out.println("muiles::  " + c.getMiles());
 							CarrierContractEditController carrierContractEditController = (CarrierContractEditController) openEditCarrierContractScreen();
 							carrierContractEditController.initData(c);
 						}
@@ -414,6 +431,8 @@ public class CarrierContractController extends Application implements Initializa
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		Login.setWidthForAll(root, tableCarrierContract);
+		Login.setWidthForAll(innerRootPane, null);
 		fetchCarriersContracts();
 
 	}

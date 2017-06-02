@@ -462,9 +462,9 @@ public class VendorEditController extends Application implements Initializable {
 
 		ContextMenu contextMenu = new ContextMenu();
 		MenuItem add = new MenuItem("Add");
-		rightMenuAdditionalContact.menuAdd(add, Iconstants.VENDOR_BASE_PACKAGE, Iconstants.XML_VENDOR_ADDITIONAL_CONTACT_ADD_SCREEN, "Add New Additional Contact");
+		rightMenuAdditionalContact.menuAdd(add, Iconstants.VENDOR_BASE_PACKAGE, Iconstants.XML_VENDOR_ADDITIONAL_CONTACT_ADD_SCREEN, Iconstants.ADD_NEW_ADDITIONAL_CONTACT);
 		MenuItem edit = new MenuItem("Edit");
-		rightMenuAdditionalContact.menuEdit(edit, Iconstants.VENDOR_BASE_PACKAGE, Iconstants.XML_VENDOR_ADDITIONAL_CONTACT_EDIT_SCREEN, "Edit Additional Contact");
+		rightMenuAdditionalContact.menuEdit(edit, Iconstants.VENDOR_BASE_PACKAGE, Iconstants.XML_VENDOR_ADDITIONAL_CONTACT_EDIT_SCREEN, Iconstants.EDIT_ADDITIONAL_CONTACT);
 		MenuItem delete = new MenuItem("Delete");
 		rightMenuAdditionalContact.menuDelete(delete, null, null, null);
 		MenuItem duplicate = new MenuItem("Duplicate");

@@ -103,7 +103,7 @@
          <menus>
             <Menu fx:id="mnuCompany" mnemonicParsing="false">
                <graphic>
-                  <Label fx:id="lblCompanyHeader" onMouseClicked="#lblCompanyHeaderAction" text="Company" textFill="#186a3b" />
+                  <Label fx:id="lblCompanyHeader" onMouseClicked="#lblCompanyHeaderAction" text="Customer" textFill="#186a3b" />
                </graphic>
             </Menu>
             <Menu fx:id="mnuLocation" mnemonicParsing="false">

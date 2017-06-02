@@ -35,7 +35,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -67,6 +67,9 @@ public class DriverController extends Application implements Initializable {
 	}
 
 	ObjectMapper mapper = new ObjectMapper();
+
+	@FXML
+	ImageView btnGoDriver;
 
 	public void fillDriver(String response) {
 
@@ -138,7 +141,7 @@ public class DriverController extends Application implements Initializable {
 
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Add New Driver");
+			stage.setTitle(Iconstants.ADD_NEW_DRIVER);
 			stage.setScene(new Scene(root));
 			stage.show();
 		} catch (Exception e) {
@@ -187,6 +190,13 @@ public class DriverController extends Application implements Initializable {
 				}
 			}
 		});
+		double width = Login.width;
+		int noOfColumns = tblDriver.getColumns().size();
+		for (int i = 0; i < noOfColumns; i++) {
+			tblDriver.getColumns().get(i).setMinWidth(width / noOfColumns);
+		}
+		txtSearchDriver.setLayoutX(width - (txtSearchDriver.getPrefWidth() + btnGoDriver.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
+		btnGoDriver.setLayoutX(width - (btnGoDriver.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -314,7 +324,7 @@ public class DriverController extends Application implements Initializable {
 			Parent root = (Parent) fxmlLoader.load();
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("Edit Driver");
+			stage.setTitle(Iconstants.EDIT_DRIVER);
 			stage.setScene(new Scene(root));
 			stage.show();
 			return fxmlLoader.getController();
