@@ -329,7 +329,7 @@ public class DivisionController extends Application implements Initializable {
 		double width = Login.width;
 		int noOfColumns = tblDivision.getColumns().size();
 		for (int i = 0; i < noOfColumns; i++) {
-			tblDivision.getColumns().get(i).setMinWidth(width / noOfColumns);
+			tblDivision.getColumns().get(i).setMinWidth((width / noOfColumns) + Iconstants.MIN_WIDTH_COLUMN);
 		}
 		txtSearchDivision.setLayoutX(width - (txtSearchDivision.getPrefWidth() + btnGoDivision.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
 		btnGoDivision.setLayoutX(width - (btnGoDivision.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));

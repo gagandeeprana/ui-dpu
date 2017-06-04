@@ -282,7 +282,7 @@ public class TrailerController extends Application implements Initializable {
 		double width = Login.width;
 		int noOfColumns = tblTrailer.getColumns().size();
 		for (int i = 0; i < noOfColumns; i++) {
-			tblTrailer.getColumns().get(i).setMinWidth(width / noOfColumns);
+			tblTrailer.getColumns().get(i).setMinWidth((width / noOfColumns) + 100);
 		}
 		txtSearchTrailer.setLayoutX(width - (txtSearchTrailer.getPrefWidth() + btnGoTrailer.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
 		btnGoTrailer.setLayoutX(width - (btnGoTrailer.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));

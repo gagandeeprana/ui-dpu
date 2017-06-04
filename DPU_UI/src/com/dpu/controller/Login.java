@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 import com.dpu.constants.Iconstants;
 
 import javafx.application.Application;
-import javafx.beans.property.DoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,12 +17,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -49,6 +48,13 @@ public class Login extends Application implements Initializable{
 	public static void setWidthForAll(Object obj, TableView<?> tableView) {
 		if(obj != null && obj instanceof Pane) {
 			Pane pane = (Pane) obj;
+			pane.prefWidthProperty().bind(stage.widthProperty());
+			if(tableView != null)
+				tableView.prefWidthProperty().bind(stage.widthProperty());
+		}
+		
+		if(obj != null && obj instanceof ScrollPane) {
+			ScrollPane pane = (ScrollPane) obj;
 			pane.prefWidthProperty().bind(stage.widthProperty());
 			if(tableView != null)
 				tableView.prefWidthProperty().bind(stage.widthProperty());

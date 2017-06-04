@@ -27,11 +27,11 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
@@ -65,7 +65,9 @@ public class ShipperController extends Application implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		Login.setWidthForAll(root, tblShipper);
 		Login.setWidthForAll(anchorPaneShipper, null);
+		Login.setWidthForAll(scrollPane, null);
 		fetchShippers();
+//		anchorPaneShipper.set
 	}
 
 	@Override
@@ -224,6 +226,9 @@ public class ShipperController extends Application implements Initializable {
 		importer = (TableColumn<Shipper, String>) tblShipper.getColumns().get(11);
 	}
 
+	@FXML
+	ScrollPane scrollPane;
+	
 	public void fetchShippers() {
 
 		fetchColumns();
@@ -254,7 +259,7 @@ public class ShipperController extends Application implements Initializable {
 		double width = Login.width;
 		int noOfColumns = tblShipper.getColumns().size();
 		for (int i = 0; i < noOfColumns; i++) {
-			tblShipper.getColumns().get(i).setMinWidth(width / noOfColumns);
+			tblShipper.getColumns().get(i).setMinWidth((width / noOfColumns) + Iconstants.MIN_WIDTH_COLUMN);
 		}
 		txtSearchShipper.setLayoutX(width - (txtSearchShipper.getPrefWidth() + btnGoShipper.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
 		btnGoShipper.setLayoutX(width - (btnGoShipper.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));

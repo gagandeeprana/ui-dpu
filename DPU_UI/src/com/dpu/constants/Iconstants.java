@@ -213,5 +213,6 @@ public class Iconstants {
 	public static final String LOGIN = "Login";
 	public static final String DASHBOARD = "Dashboard";
 	public static final double FIX_WIDTH_FROM_RIGHT = 30;
+	public static final double MIN_WIDTH_COLUMN = 50;
 
 }
