@@ -19,6 +19,7 @@ import com.dpu.model.Success;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -54,7 +55,7 @@ public class ShipperController extends Application implements Initializable {
 			importer;
 
 	@FXML
-	AnchorPane anchorPaneShipper, root;
+	AnchorPane anchorPaneShipper, root, secondOuterAnchorPane;
 
 	public static int flag = 0;
 
@@ -66,6 +67,7 @@ public class ShipperController extends Application implements Initializable {
 		Login.setWidthForAll(root, tblShipper);
 		Login.setWidthForAll(anchorPaneShipper, null);
 		Login.setWidthForAll(scrollPane, null);
+		Login.setWidthForAll(secondOuterAnchorPane, null);
 		fetchShippers();
 //		anchorPaneShipper.set
 	}
@@ -261,8 +263,46 @@ public class ShipperController extends Application implements Initializable {
 		for (int i = 0; i < noOfColumns; i++) {
 			tblShipper.getColumns().get(i).setMinWidth((width / noOfColumns) + Iconstants.MIN_WIDTH_COLUMN);
 		}
+//		System.out.println(Login.height + " height at shipper" );
+//		tblShipper.setPrefHeight(Login.stage.getHeight() - Iconstants.TABLE_VIEW_HEIGHT);
+//		scrollPane.setFitToHeight(false);
 		txtSearchShipper.setLayoutX(width - (txtSearchShipper.getPrefWidth() + btnGoShipper.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
 		btnGoShipper.setLayoutX(width - (btnGoShipper.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
+		scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+		System.out.println("Table di height: " + tblShipper.getMaxHeight() + " : " + tblShipper.getMinHeight() + " : " + tblShipper.getPrefHeight());
+		Login.scene.widthProperty().addListener(new ChangeListener<Number>() {
+	        	
+	        	@Override 
+	        	public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+	        		double width = (double) newSceneWidth;
+	        		root.setMaxWidth(width);
+	        		anchorPaneShipper.setMaxWidth(width);
+	        		tblShipper.setMaxWidth(width);
+	        		scrollPane.setMaxWidth(width);
+	        		secondOuterAnchorPane.setMaxWidth(width);
+	        		txtSearchShipper.setLayoutX(width - (txtSearchShipper.getPrefWidth() + btnGoShipper.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
+	        		btnGoShipper.setLayoutX(width - (btnGoShipper.getFitWidth() + Iconstants.FIX_WIDTH_FROM_RIGHT));
+	        		
+	        		width = Login.width;
+	        		int noOfColumns = tblShipper.getColumns().size();
+	        		for (int i = 0; i < noOfColumns; i++) {
+	        			tblShipper.getColumns().get(i).setMinWidth((width / noOfColumns) + Iconstants.MIN_WIDTH_COLUMN);
+	        		}
+	        	}
+
+     	});
+     	Login.scene.heightProperty().addListener(new ChangeListener<Number>() {
+	        	@Override 
+	        	public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
+	        		double height = (double) newSceneHeight;
+	        		root.setMaxHeight(height);
+	        		anchorPaneShipper.setMaxHeight(height);
+	        		secondOuterAnchorPane.setMaxHeight(height);
+	        		scrollPane.setPrefHeight(height);
+	        		tblShipper.setMinHeight(-1.0);
+	        		System.out.println(newSceneHeight + " newSceneHeight: " + tblShipper.getPrefHeight() + " table di height");
+	        	}
+     	});
 		
 	}
 

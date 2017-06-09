@@ -214,5 +214,8 @@ public class Iconstants {
 	public static final String DASHBOARD = "Dashboard";
 	public static final double FIX_WIDTH_FROM_RIGHT = 30;
 	public static final double MIN_WIDTH_COLUMN = 50;
+	public static final double TABLE_VIEW_HEIGHT = 100;
+	public static final double STAGE_MIN_HEIGHT = 600;
+	public static final double STAGE_MIN_WIDTH = 600;
 
 }

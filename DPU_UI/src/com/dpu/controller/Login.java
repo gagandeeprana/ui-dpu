@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 import com.dpu.constants.Iconstants;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -43,24 +45,30 @@ public class Login extends Application implements Initializable{
 	@FXML
 	MenuBar mnuBarDatamaintenance;
 	
-	public static double width = 0.0;
+	public static double width = 0.0, height = 0.0;
 
 	public static void setWidthForAll(Object obj, TableView<?> tableView) {
 		if(obj != null && obj instanceof Pane) {
 			Pane pane = (Pane) obj;
-			pane.prefWidthProperty().bind(stage.widthProperty());
+			pane.setPrefWidth(stage.getWidth());
 			if(tableView != null)
-				tableView.prefWidthProperty().bind(stage.widthProperty());
+				tableView.setPrefWidth(stage.getWidth());
 		}
 		
 		if(obj != null && obj instanceof ScrollPane) {
+//			ScrollPane pane = (ScrollPane) obj;
+//			pane.prefWidthProperty().bind(stage.widthProperty());
+//			if(tableView != null)
+//				tableView.prefWidthProperty().bind(stage.widthProperty());
 			ScrollPane pane = (ScrollPane) obj;
-			pane.prefWidthProperty().bind(stage.widthProperty());
+			pane.setPrefWidth(stage.getWidth());
 			if(tableView != null)
-				tableView.prefWidthProperty().bind(stage.widthProperty());
+				tableView.setPrefWidth(stage.getWidth());
 		}
+//		if(tableView != null)
+//			tableView.prefWidthProperty().bind(stage.widthProperty());
 		if(tableView != null)
-			tableView.prefWidthProperty().bind(stage.widthProperty());
+			tableView.setPrefWidth(stage.getWidth());
 	}
 	
 	public static void setWidthForAllForPlannerBorderPane(Object obj, TableView<?> tableView) {
@@ -148,6 +156,7 @@ public class Login extends Application implements Initializable{
 	}
 	
 	static Stage stage = null;
+	static Scene scene = null;
 	
 	private void openMainScreen() {
 		try {
@@ -169,12 +178,16 @@ public class Login extends Application implements Initializable{
 	        //stage.initModality(Modality.APPLICATION_MODAL);
 	        //stage.initStyle(StageStyle.UNDECORATED);
 	        stage.setTitle(Iconstants.DASHBOARD);
-	        stage.setScene(new Scene(root)); 
+	        scene = new Scene(root);
+	        stage.setScene(scene); 
+	       
 	        //stage.setMaximized(true);
 	        width = primaryScreenBounds.getWidth();
-	        double height = primaryScreenBounds.getHeight();
-	        stage.setMinWidth(width);
-	        stage.setMinHeight(height);
+	        height = primaryScreenBounds.getHeight();
+	        stage.setWidth(width);
+	        stage.setHeight(height);
+	        stage.setMinHeight(Iconstants.STAGE_MIN_HEIGHT);
+	        stage.setMinWidth(Iconstants.STAGE_MIN_WIDTH);
 	        this.stage = stage;
 	        mnuBar.prefWidthProperty().bind(stage.widthProperty());
 	        //fxmlLoader.setController(MainScreen.class);
