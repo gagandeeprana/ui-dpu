@@ -348,7 +348,8 @@ public class CompanyController extends Application implements Initializable {
 								Iconstants.URL_SERVER + Iconstants.URL_COMPANY_API + "/" + company.getCompanyId(),
 								null);
 						fetchCompanies(response);
-						JOptionPane.showMessageDialog(null, "Company Deleted Successfully", "Info", 1);
+						if(response.contains("Company deleted successfully"))
+						 JOptionPane.showMessageDialog(null, "Company Deleted Successfully", "Info", 1);
 					} catch (Exception e) {
 						e.printStackTrace();
 						JOptionPane.showMessageDialog(null, "Try Again..", "Info", 1);
